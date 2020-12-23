@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Sammlungen.Exceptions;
 
 namespace Sammlungen.Collections
 {
@@ -21,35 +22,48 @@ namespace Sammlungen.Collections
 
         private IDictionary<TReverse, TForward> InternalRevMap => _reverseMap;
 
+        /// <inheritdoc />
         public virtual IReadOnlyDictionary<TForward, TReverse> ForwardMap => _forwardMap;
 
+        /// <inheritdoc />
         public virtual IReadOnlyDictionary<TReverse, TForward> ReverseMap => _reverseMap;
 
+        /// <inheritdoc />
         public virtual int Count => InternalFwdMap.Count;
 
+        /// <inheritdoc />
         public virtual TReverse this[TForward key]
         {
-            set
-            {
-                InternalFwdMap[key] = value;
-                InternalRevMap[value] = key;
-            }
+            set => this.Add(key, value);
+        }
+        
+        /// <inheritdoc />
+        public virtual void Add(TForward fwd, TReverse rev)
+        {
+            if (!TryAdd(fwd, rev))
+                throw new DuplicateKeyException($"Either forward key '{fwd}' or reverse key '{rev}'" +
+                                                $"are already in the {GetType().FullName}");
         }
 
+        /// <inheritdoc />
         public virtual bool TryAdd(TForward fwd, TReverse rev)
         {
             if (InternalFwdMap.ContainsKey(fwd) || InternalRevMap.ContainsKey(rev))
                 return false;
-            this[fwd] = rev;
+            InternalFwdMap[fwd] = rev;
+            InternalRevMap[rev] = fwd;
             return true;
         }
 
+        /// <inheritdoc />
         public virtual bool ForwardRemove(TForward key) =>
             InternalFwdMap.Remove(key, out var value) && InternalRevMap.Remove(value);
 
+        /// <inheritdoc />
         public virtual bool ReverseRemove(TReverse key) =>
             InternalRevMap.Remove(key, out var value) && InternalFwdMap.Remove(value);
 
+        /// <inheritdoc />
         public virtual void Clear()
         {
             InternalFwdMap.Clear();

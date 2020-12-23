@@ -10,15 +10,15 @@ Die Wunschliste umfasst mehrere abstrakte Datenstrukturen. Die Unterpunkte sind 
 Implementierungen dieser Datenstrukturen.
 
 ### Datenstrukturen
- - [ ] IBidiDictionary - Zweiwege Dictionary - Bijektives Mapping
+ - [X] IBidiDictionary - Zweiwege Dictionary - Bijektives Mapping
    - [X] BidiDictionary
      - [X] Implementiert
-     - [ ] Ausgiebig getestet
-     - [ ] Dokumentiert
+     - [X] Ausgiebig getestet
+     - [X] Dokumentiert
    - [X] ConcurrentBidiDictionary
      - [X] Implementiert
-     - [ ] Ausgiebig getestet
-     - [ ] Dokumentiert
+     - [X] Ausgiebig getestet
+     - [X] Dokumentiert
  - [ ] IMultiKeyDictionary - Multi-Key Dictionary - Mehrere Schlüssel, ein Wert
    - [X] MultiKeyDictionary
      - [X] Implementiert
