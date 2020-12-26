@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Sammlung.Exceptions;
 using Sammlung.Interfaces;
 
-namespace Sammlung
+namespace Sammlung.Bases
 {
     public abstract class BidiDictionaryBase<TFwdDict, TRevDict, TForward, TReverse> 
         : IBidiDictionary<TForward, TReverse>

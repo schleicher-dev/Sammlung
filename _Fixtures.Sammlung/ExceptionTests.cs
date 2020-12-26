@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using _Fixtures.Sammlung.Extras;
 using NUnit.Framework;
@@ -5,6 +6,7 @@ using Sammlung.Exceptions;
 
 namespace _Fixtures.Sammlung
 {
+    [ExcludeFromCodeCoverage]
     [TestFixture]
     public class ExceptionTests
     {

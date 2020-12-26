@@ -2,6 +2,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Sammlung.Bases;
 using Sammlung.Interfaces;
 
 namespace Sammlung.Concurrent

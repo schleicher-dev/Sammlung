@@ -64,6 +64,7 @@ namespace _Fixtures.Sammlung
         public void CheckAllCases_Of_InvalidOperationException()
         {
             var heap = new BinaryHeap<int, string>();
+            Assert.IsTrue(heap.IsEmpty());
             Assert.IsFalse(heap.TryPop(out _));
             Assert.Throws<InvalidOperationException>(() => heap.Pop());
             Assert.IsFalse(heap.TryPeek(out _));

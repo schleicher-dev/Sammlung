@@ -1,11 +1,14 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Sammlung.Bases;
 using Sammlung.Interfaces;
 
 namespace Sammlung
 {
-    public sealed class BinaryHeap<TKey, TValue> : IHeap<TKey, TValue>
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = Justifications.PublicApiJustification)]
+    public sealed class BinaryHeap<TKey, TValue> : HeapBase<TKey, TValue>
     {
         private readonly IComparer<TKey> _keyComparer;
         private readonly IEqualityComparer<TValue> _valueComparer;
@@ -37,9 +40,9 @@ namespace Sammlung
             _binaryHeap = new List<KeyValuePair<TKey, TValue>>(capacity);
         }
 
-        public int Count => _binaryHeap.Count;
+        public override int Count => _binaryHeap.Count;
         
-        public bool TryPeek(out TValue value)
+        public override bool TryPeek(out TValue value)
         {
             value = default;
             if (!_binaryHeap.Any()) return false;
@@ -48,7 +51,7 @@ namespace Sammlung
             return true;
         }
 
-        public bool TryPop(out TValue value)
+        public override bool TryPop(out TValue value)
         {
             value = default;
             if (Count == 0) return false;
@@ -67,7 +70,7 @@ namespace Sammlung
             return true;
         }
 
-        public void Push(TKey key, TValue value)
+        public override void Push(TKey key, TValue value)
         {
             var container = KeyValuePair.Create(key, value); 
             _binaryHeap.Add(container);
@@ -75,7 +78,7 @@ namespace Sammlung
             SiftUp(_binaryHeap.Count - 1);
         }
 
-        public bool TryReplace(TKey key, TValue value, out TValue oldValue)
+        public override bool TryReplace(TKey key, TValue value, out TValue oldValue)
         {
             oldValue = default;
             if (Count == 0) return false;
@@ -91,7 +94,7 @@ namespace Sammlung
             return true;
         }
 
-        public bool TryUpdate(TValue value, TKey key)
+        public override bool TryUpdate(TValue value, TKey key)
         {
             if (!TryFindContainer(value, out var index, out var container))
                 return false;
@@ -149,7 +152,7 @@ namespace Sammlung
 
         #region SiftDown
 
-        private int SiftDown(int nodeIndex)
+        private void SiftDown(int nodeIndex)
         {
             var (key, _) = _binaryHeap[nodeIndex];
             while (true)
@@ -159,14 +162,14 @@ namespace Sammlung
                 var rightIndex = nodeIndex * 2 + 2;
 
                 if (Count <= leftIndex)
-                    return nodeIndex;
+                    return;
 
                 // There is only a left node, decide which node is the smaller one.
                 if (Count <= rightIndex)
                 {
                     var leftNode = _binaryHeap[leftIndex];
                     if (_keyComparer.Compare(key, leftNode.Key) < 0)
-                        return nodeIndex;
+                        return;
                     Swap(nodeIndex, leftIndex);
                     nodeIndex = leftIndex;
                     continue;
@@ -176,7 +179,7 @@ namespace Sammlung
                 var (leftKey, _) = _binaryHeap[leftIndex];
                 var (rightKey, _) = _binaryHeap[rightIndex];
                 if (_keyComparer.Compare(key, leftKey) < 0 && _keyComparer.Compare(key, rightKey) < 0)
-                    return nodeIndex;
+                    return;
                 var swapIndex = _keyComparer.Compare(leftKey, rightKey) < 0 ? leftIndex : rightIndex;
                 Swap(nodeIndex, swapIndex);
                 nodeIndex = swapIndex;
