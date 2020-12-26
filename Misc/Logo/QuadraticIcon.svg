@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xl="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:dc="http://purl.org/dc/elements/1.1/" viewBox="0 -1 192 193" width="192" height="193">
+  <defs>
+    <linearGradient x1="0" x2="1" id="Gradient" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#b2dfdb"/>
+      <stop offset="1" stop-color="#80cbc4"/>
+    </linearGradient>
+    <linearGradient id="Obj_Gradient" xl:href="#Gradient" gradientTransform="translate(96 -2842171e-20) rotate(90) scale(192)"/>
+    <font-face font-family="Droid Sans" font-size="30" panose-1="2 11 8 6 3 8 4 2 2 4" units-per-em="1000" underline-position="-75.19531" underline-thickness="49.80469" slope="0" x-height="545.89844" cap-height="713.8672" ascent="931.1523" descent="-240.23438" font-weight="700">
+      <font-face-src>
+        <font-face-name name="DroidSans-Bold"/>
+      </font-face-src>
+    </font-face>
+    <font-face font-family="Droid Sans" font-size="30" panose-1="2 11 6 6 3 8 4 2 2 4" units-per-em="1000" underline-position="-75.19531" underline-thickness="49.80469" slope="0" x-height="536.1328" cap-height="713.8672" ascent="931.1523" descent="-240.23438" font-weight="400">
+      <font-face-src>
+        <font-face-name name="DroidSans"/>
+      </font-face-src>
+    </font-face>
+  </defs>
+  <metadata> Produced by OmniGraffle 7.18\n2020-12-26 22:21:37 +0000</metadata>
+  <g id="Canvas_1" stroke-opacity="1" fill="none" stroke-dasharray="none" fill-opacity="1" stroke="none">
+    <title>Canvas 1</title>
+    <rect fill="white" x="0" y="-1" width="192" height="193"/>
+    <g id="Canvas_1_Layer_1">
+      <title>Layer 1</title>
+      <g id="Graphic_131">
+        <path d="M 16 -14210855e-21 L 176 -14210855e-21 C 184.83656 -13669772e-21 192 7.163444 192 16 L 192 176 C 192 184.83656 184.83656 192 176 192 L 16 192 C 7.163444 192 1082166e-21 184.83656 0 176 L 10658141e-21 16 C 11740307e-21 7.163444 7.163444 -541083e-21 16 0 Z" fill="url(#Obj_Gradient)"/>
+      </g>
+      <g id="Graphic_96">
+        <title>Dreieck (Spitze rechts)</title>
+        <path d="M 0 16 L 96 96 L 0 176 Z" fill="#009688" fill-opacity=".9"/>
+      </g>
+      <g id="Graphic_113">
+        <path d="M 16 14210855e-21 L 96 96 L 16 192 Z" fill="#009688" fill-opacity=".75"/>
+      </g>
+      <g id="Graphic_133">
+        <path d="M 32 14210855e-21 L 96 96 L 32 192 Z" fill="#009688" fill-opacity=".6"/>
+      </g>
+      <g id="Graphic_134">
+        <path d="M 48 0 L 96 96 L 48 192 Z" fill="#009688" fill-opacity=".45"/>
+      </g>
+      <g id="Graphic_135">
+        <path d="M 64 0 L 96 96 L 64 192 Z" fill="#009688" fill-opacity=".3"/>
+      </g>
+      <g id="Graphic_136">
+        <path d="M 80 0 L 96 96 L 80 192 Z" fill="#009688" fill-opacity=".15"/>
+      </g>
+      <g id="Graphic_142">
+        <title>Dreieck (Spitze rechts)</title>
+        <path d="M 192 176 L 96 96 L 192 16 Z" fill="#009688" fill-opacity=".9"/>
+      </g>
+      <g id="Graphic_141">
+        <path d="M 176 192 L 96 96 L 176 0 Z" fill="#009688" fill-opacity=".75"/>
+      </g>
+      <g id="Graphic_140">
+        <path d="M 160 192 L 96 96 L 160 0 Z" fill="#009688" fill-opacity=".6"/>
+      </g>
+      <g id="Graphic_139">
+        <path d="M 144 192 L 96 96 L 144 -14210855e-21 Z" fill="#009688" fill-opacity=".45"/>
+      </g>
+      <g id="Graphic_138">
+        <path d="M 128 192 L 96 96 L 128 -14210855e-21 Z" fill="#009688" fill-opacity=".3"/>
+      </g>
+      <g id="Graphic_137">
+        <path d="M 112 192 L 96 96 L 112 14210855e-21 Z" fill="#009688" fill-opacity=".15"/>
+      </g>
+      <g id="Group_122">
+        <title>Overlay</title>
+        <g id="Graphic_120">
+          <title>Rechteck</title>
+          <rect x="0" y="72.5" width="192" height="47" fill="white"/>
+        </g>
+        <g id="Graphic_117">
+          <title>Rechteck</title>
+          <rect x="0" y="73.5" width="192" height="45" fill="#009688"/>
+        </g>
+        <g id="Graphic_2">
+          <text transform="translate(12.020508 79.5)" fill="white">
+            <tspan font-family="Droid Sans" font-size="30" font-weight="700" fill="white" x="0" y="28">SAMM</tspan>
+            <tspan font-family="Droid Sans" font-size="30" font-weight="400" fill="white" y="28">LUNG</tspan>
+          </text>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

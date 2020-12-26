@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xl="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:dc="http://purl.org/dc/elements/1.1/" viewBox="54 379 1113 192" width="1113" height="192">
+  <defs>
+    <font-face font-family="Droid Sans" font-size="156" panose-1="2 11 8 6 3 8 4 2 2 4" units-per-em="1000" underline-position="-75.19531" underline-thickness="49.80469" slope="0" x-height="545.89844" cap-height="713.8672" ascent="931.1523" descent="-240.23438" font-weight="700">
+      <font-face-src>
+        <font-face-name name="DroidSans-Bold"/>
+      </font-face-src>
+    </font-face>
+    <font-face font-family="Droid Sans" font-size="156" panose-1="2 11 6 6 3 8 4 2 2 4" units-per-em="1000" underline-position="-75.19531" underline-thickness="49.80469" slope="0" x-height="536.1328" cap-height="713.8672" ascent="931.1523" descent="-240.23438" font-weight="400">
+      <font-face-src>
+        <font-face-name name="DroidSans"/>
+      </font-face-src>
+    </font-face>
+  </defs>
+  <metadata> Produced by OmniGraffle 7.18\n2020-12-26 22:23:45 +0000</metadata>
+  <g id="Canvas_1" stroke-opacity="1" fill="none" stroke-dasharray="none" fill-opacity="1" stroke="none">
+    <title>Canvas 1</title>
+    <g id="Canvas_1_Layer_1">
+      <title>Layer 1</title>
+      <g id="Graphic_138">
+        <title>Dreieck (Spitze rechts)</title>
+        <path d="M 54 395 L 150 475 L 54 555 Z" fill="#009688" fill-opacity=".9"/>
+      </g>
+      <g id="Graphic_137">
+        <path d="M 70 379 L 150 475 L 70 571 Z" fill="#009688" fill-opacity=".75"/>
+      </g>
+      <g id="Graphic_136">
+        <path d="M 86 379 L 150 475 L 86 571 Z" fill="#009688" fill-opacity=".6"/>
+      </g>
+      <g id="Graphic_135">
+        <path d="M 102 379 L 150 475 L 102 571 Z" fill="#009688" fill-opacity=".45"/>
+      </g>
+      <g id="Graphic_134">
+        <path d="M 118 379 L 150 475 L 118 571 Z" fill="#009688" fill-opacity=".3"/>
+      </g>
+      <g id="Graphic_133">
+        <path d="M 134 379 L 150 475 L 134 571 Z" fill="#009688" fill-opacity=".15"/>
+      </g>
+      <g id="Graphic_132">
+        <title>Dreieck (Spitze rechts)</title>
+        <path d="M 246 555 L 150 475 L 246 395 Z" fill="#009688" fill-opacity=".9"/>
+      </g>
+      <g id="Graphic_131">
+        <path d="M 230 571 L 150 475 L 230 379 Z" fill="#009688" fill-opacity=".75"/>
+      </g>
+      <g id="Graphic_130">
+        <path d="M 214 571 L 150 475 L 214 379 Z" fill="#009688" fill-opacity=".6"/>
+      </g>
+      <g id="Graphic_129">
+        <path d="M 198 571 L 150 475 L 198 379 Z" fill="#009688" fill-opacity=".45"/>
+      </g>
+      <g id="Graphic_128">
+        <path d="M 182 571 L 150 475 L 182 379 Z" fill="#009688" fill-opacity=".3"/>
+      </g>
+      <g id="Graphic_127">
+        <path d="M 166 571 L 150 475 L 166 379 Z" fill="#009688" fill-opacity=".15"/>
+      </g>
+      <g id="Graphic_124">
+        <text transform="translate(288 384)" fill="#009688">
+          <tspan font-family="Droid Sans" font-size="156" font-weight="700" fill="#009688" x="0" y="145">SAMM</tspan>
+          <tspan font-family="Droid Sans" font-size="156" font-weight="400" fill="#009688" y="145">LUNG</tspan>
+        </text>
+      </g>
+    </g>
+  </g>
+</svg>
