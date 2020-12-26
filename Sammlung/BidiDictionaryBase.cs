@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Sammlungen.Exceptions;
+using Sammlung.Exceptions;
+using Sammlung.Interfaces;
 
-namespace Sammlungen.Collections
+namespace Sammlung
 {
     public abstract class BidiDictionaryBase<TFwdDict, TRevDict, TForward, TReverse> 
         : IBidiDictionary<TForward, TReverse>

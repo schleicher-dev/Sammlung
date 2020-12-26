@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Sammlung.Interfaces;
 
-namespace Sammlungen.Collections
+namespace Sammlung
 {
     /// <summary>
     /// This <see cref="BidiDictionary{TForward,TReverse}"/> implements the

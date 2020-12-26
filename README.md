@@ -10,15 +10,6 @@ Die Wunschliste umfasst mehrere abstrakte Datenstrukturen. Die Unterpunkte sind 
 Implementierungen dieser Datenstrukturen.
 
 ### Datenstrukturen
- - [X] IBidiDictionary - Zweiwege Dictionary - Bijektives Mapping
-   - [X] BidiDictionary
-     - [X] Implementiert
-     - [X] Ausgiebig getestet
-     - [X] Dokumentiert
-   - [X] ConcurrentBidiDictionary
-     - [X] Implementiert
-     - [X] Ausgiebig getestet
-     - [X] Dokumentiert
  - [ ] IMultiKeyDictionary - Multi-Key Dictionary - Mehrere Schlüssel, ein Wert
    - [X] MultiKeyDictionary
      - [X] Implementiert
@@ -46,5 +37,14 @@ Implementierungen dieser Datenstrukturen.
    - [ ] BinarySearchTree
    - [ ] ABSearchTree :: (a,b)-tree
    - [ ] RedBlackSearchTree :: red-black tree
+ - [X] IBidiDictionary - Zweiwege Dictionary - Bijektives Mapping
+   - [X] BidiDictionary
+     - [X] Implementiert
+     - [X] Ausgiebig getestet
+     - [X] Dokumentiert
+   - [X] ConcurrentBidiDictionary
+     - [X] Implementiert
+     - [X] Ausgiebig getestet
+     - [X] Dokumentiert
 
 

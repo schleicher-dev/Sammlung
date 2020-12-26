@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Sammlung.Interfaces;
 
-namespace Sammlungen.Collections
+namespace Sammlung
 {
     public sealed class BinaryHeap<TKey, TValue> : IHeap<TKey, TValue>
     {

@@ -1,6 +1,7 @@
 using System;
+using Sammlung.Interfaces;
 
-namespace Sammlungen.Collections
+namespace Sammlung
 {
     public static class HeapExtensions
     {

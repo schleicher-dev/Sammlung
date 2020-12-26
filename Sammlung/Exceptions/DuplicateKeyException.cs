@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace Sammlungen.Exceptions
+namespace Sammlung.Exceptions
 {
     [Serializable]
     public class DuplicateKeyException : Exception

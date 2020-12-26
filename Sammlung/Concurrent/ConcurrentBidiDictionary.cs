@@ -2,8 +2,9 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Sammlung.Interfaces;
 
-namespace Sammlungen.Collections.Concurrent
+namespace Sammlung.Concurrent
 {
     /// <summary>
     /// This <see cref="ConcurrentBidiDictionary{TForward,TReverse}"/> is a thread-safe variant of the

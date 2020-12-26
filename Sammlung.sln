@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sammlung", "Sammlung\Sammlung.csproj", "{624F9E1C-C8CF-42BC-BEF3-00DF98F3FE01}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "_Fixtures.Sammlung", "_Fixtures.Sammlung\_Fixtures.Sammlung.csproj", "{B7B0D407-7B0D-43E2-AAF9-7EFA342B423E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{624F9E1C-C8CF-42BC-BEF3-00DF98F3FE01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{624F9E1C-C8CF-42BC-BEF3-00DF98F3FE01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{624F9E1C-C8CF-42BC-BEF3-00DF98F3FE01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{624F9E1C-C8CF-42BC-BEF3-00DF98F3FE01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7B0D407-7B0D-43E2-AAF9-7EFA342B423E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7B0D407-7B0D-43E2-AAF9-7EFA342B423E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7B0D407-7B0D-43E2-AAF9-7EFA342B423E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7B0D407-7B0D-43E2-AAF9-7EFA342B423E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

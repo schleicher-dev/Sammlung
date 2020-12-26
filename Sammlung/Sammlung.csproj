@@ -3,5 +3,8 @@
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
     </PropertyGroup>
+    <ItemGroup>
+        <None Include="../README.md" />
+    </ItemGroup>
 
 </Project>

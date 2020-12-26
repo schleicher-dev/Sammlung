@@ -1,7 +1,6 @@
 using System.Collections.Generic;
-using Sammlungen.Exceptions;
 
-namespace Sammlungen.Collections
+namespace Sammlung.Interfaces
 {
     /// <summary>
     /// The <see cref="IBidiDictionary{TForward,TReverse}"/> type establishes a bidirectional mapping between two

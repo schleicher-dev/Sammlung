@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Sammlungen.Collections
+namespace Sammlung.Interfaces
 {
     /// <summary>
     /// The <see cref="IMultiKeyDictionary{TKey,TValue}"/> extends the ability of a
@@ -16,6 +16,12 @@ namespace Sammlungen.Collections
         /// <param name="keys">The keys.</param>
         /// <param name="value">The values.</param>
         void Add(TKey[] keys, TValue value);
+        
+        /// <summary>
+        /// Adds a single value to multiple keys.
+        /// </summary>
+        /// <param name="keys">the keys.</param>
+        new TValue this[TKey keys] { get; set; }
         
         /// <summary>
         /// Adds a single value to multiple keys.

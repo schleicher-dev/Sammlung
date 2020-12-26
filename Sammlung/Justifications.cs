@@ -1,4 +1,4 @@
-namespace Sammlungen
+namespace Sammlung
 {
     internal static class Justifications
     {
