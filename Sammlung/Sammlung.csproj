@@ -5,10 +5,20 @@
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <GitVersionConfig>../GitVersion.yml</GitVersionConfig>
+        <PackageIcon>QuadraticIcon.png</PackageIcon>
+        <PackageLicenseFile>LICENSE</PackageLicenseFile>
         <UpdateVersionProperties>true</UpdateVersionProperties>
         <UseFullSemVerForNuGet>false</UseFullSemVerForNuGet>
         <SignAssembly>true</SignAssembly>
         <AssemblyOriginatorKeyFile>../Sammlung.snk</AssemblyOriginatorKeyFile>
+        <Description>Sammlung (/'zamlʊŋ/) is german for collection and is pronounced some-loong.
+
+This package contains a library for C# containing a plethora of collection types which are not provided by the .NET standard libraries.</Description>
+        <Copyright>Ralf Schleicher © 2020</Copyright>
+        <PackageProjectUrl>https://github.com/schleicher-dev/Sammlung</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/schleicher-dev/Sammlung</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageTags>collections, heap, circular, buffer</PackageTags>
     </PropertyGroup>
 
     <ItemGroup>
@@ -16,6 +26,11 @@
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
+    </ItemGroup>
+    
+    <ItemGroup>
+        <None Include="../Images/QuadraticIcon.png" Pack="true" PackagePath="" />
+        <None Include="../LICENSE" Pack="true" PackagePath="" />
     </ItemGroup>
 
     <Target Name="ShowVersion" AfterTargets="PostBuildEvent">

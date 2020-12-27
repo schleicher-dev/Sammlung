@@ -28,4 +28,5 @@ jobs:
     - name: Package
       run: msbuild -t:Pack -p:Configuration=Release
     - name: Pushing NuGet packages to nuget.org
-      run: dotnet nuget push **/*.*nupkg --api-key ${{ secrets.NUGETAPIKEY }} --source https://api.nuget.org/v3/index.json
+      working-directory: Sammlung/bin/Release/
+      run: dotnet nuget push *.*nupkg --api-key ${{ secrets.NUGETAPIKEY }} --source https://api.nuget.org/v3/index.json
