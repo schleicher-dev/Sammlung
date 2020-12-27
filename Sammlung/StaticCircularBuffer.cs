@@ -95,14 +95,14 @@ namespace Sammlung
             return new Enumerator(_internalArray, indices);
         }
 
-        private class Enumerator : IEnumerator<T>
+        private sealed class Enumerator : IEnumerator<T>
         {
             private readonly T[] _internalArray;
             private readonly IEnumerator<int> _indicesEnumerator;
             
             public T Current => _internalArray[_indicesEnumerator.Current];
 
-            object? IEnumerator.Current => Current;
+            object IEnumerator.Current => Current;
 
             public Enumerator(T[] internalArray, IEnumerable<int> indices)
             {

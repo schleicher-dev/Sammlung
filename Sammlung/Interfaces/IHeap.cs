@@ -79,16 +79,16 @@ namespace Sammlung.Interfaces
         /// <summary>
         /// Updates the key of the passed item.
         /// </summary>
-        /// <param name="item">the item</param>
+        /// <param name="value">the item</param>
         /// <param name="key">the key</param>
         /// <exception cref="System.InvalidOperationException">when element was not found</exception>
-        void Update(TValue item, TKey key);
+        void Update(TValue value, TKey key);
         
         /// <summary>
         /// Tries to updated the key of the passed item.
         /// </summary>
-        /// <param name="item">the item</param>
+        /// <param name="value">the item</param>
         /// <param name="key">the new key</param>
-        bool TryUpdate(TValue item, TKey key);
+        bool TryUpdate(TValue value, TKey key);
     }
 }

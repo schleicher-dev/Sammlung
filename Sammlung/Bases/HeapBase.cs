@@ -50,13 +50,13 @@ namespace Sammlung.Bases
         /// <inheritdoc />
         public abstract bool TryReplace(TKey key, TValue value, out TValue oldValue);
 
-        public void Update(TValue item, TKey key)
+        public void Update(TValue value, TKey key)
         {
-            if (!TryUpdate(item, key))
+            if (!TryUpdate(value, key))
                 throw new InvalidOperationException("Cannot update item in heap. It may not exist.");
         }
 
         /// <inheritdoc />
-        public abstract bool TryUpdate(TValue item, TKey key);
+        public abstract bool TryUpdate(TValue value, TKey key);
     }
 }
