@@ -16,7 +16,7 @@ namespace Sammlung.Utilities.Concurrent
 
         public ILockHandle UseWriteLock() => InternalHandle.CreateWriteHandle(_rwLock);
 
-        public IUpgradableLockHandle UseUpgradableWriteLock() => InternalHandle.CreateUpgradableWriteHandle(_rwLock);
+        public IUpgradableLockHandle UseUpgradableReadLock() => InternalHandle.CreateUpgradableWriteHandle(_rwLock);
         
         public void Dispose()
         {

@@ -1,8 +1,10 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Sammlung.Bases;
 using Sammlung.Interfaces;
+using Sammlung.Utilities.Concurrent;
 
 namespace Sammlung.Concurrent
 {
@@ -14,8 +16,8 @@ namespace Sammlung.Concurrent
     /// <typeparam name="TValue">the value type</typeparam>
     public class ConcurrentMultiKeyDictionary<TKey, TValue> : MultiKeyDictionaryBase<TKey, TValue> where TValue : class
     {
-        private readonly object _lockHandle = new object();
-        
+        private readonly EnhancedReaderWriterLock _rwLock;
+
         /// <summary>
         /// Constructs a new <see cref="ConcurrentMultiKeyDictionary{TKey,TValue}"/> using the default concurrency
         /// level 1.
@@ -104,27 +106,16 @@ namespace Sammlung.Concurrent
         /// <param name="capacity">the capacity</param>
         /// <param name="comparer">the comparer.</param>
         public ConcurrentMultiKeyDictionary(int concurrencyLevel, int capacity, IEqualityComparer<TKey> comparer)
-            : base(new ConcurrentDictionary<TKey, TValue>(concurrencyLevel, capacity, comparer)) { }
-
-        /// <inheritdoc />
-        public override TValue this[params TKey[] keys]
+            : base(new ConcurrentDictionary<TKey, TValue>(concurrencyLevel, capacity, comparer))
         {
-            set
-            {
-                lock (_lockHandle)
-                {
-                    base[keys] = value;
-                }
-            }
+            _rwLock = new EnhancedReaderWriterLock(LockRecursionPolicy.NoRecursion);
         }
 
         /// <inheritdoc />
         public override void Add(TKey[] keys, TValue value)
         {
-            lock (_lockHandle)
-            {
-                base.Add(keys, value);
-            }
+            using var _ = _rwLock.UseWriteLock();
+            base.Add(keys, value);
         }
     }
 }
