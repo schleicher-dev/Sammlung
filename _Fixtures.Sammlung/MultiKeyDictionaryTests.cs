@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -12,14 +13,14 @@ namespace _Fixtures.Sammlung
     [TestFixture]
     public class MultiKeyDictionaryTests
     {
-        public static readonly CtorTuple<int, string>[] CtorTuples =
+        public static readonly MultiKeyDictConstructors<int, string>[] CtorTuples =
         {
-            CtorTuple<int, string>.Create(
+            new MultiKeyDictConstructors<int, string>(
                 () => new MultiKeyDictionary<int, string>(), 
                 d => new MultiKeyDictionary<int, string>(d),
                 c => new MultiKeyDictionary<int, string>(c),
                 e => new MultiKeyDictionary<int, string>(e)),
-            CtorTuple<int, string>.Create(
+            new MultiKeyDictConstructors<int, string>(
                 () => new ConcurrentMultiKeyDictionary<int, string>(), 
                 d => new ConcurrentMultiKeyDictionary<int, string>(1, d),
                 c => new ConcurrentMultiKeyDictionary<int, string>(1, c),
@@ -27,9 +28,9 @@ namespace _Fixtures.Sammlung
         };
         
         [TestCaseSource(nameof(CtorTuples))]
-        public void AddMultipleKeysAndRetrieveThem(CtorTuple<int, string> ctorTuple)
+        public void AddMultipleKeysAndRetrieveThem(MultiKeyDictConstructors<int, string> multiKeyDictConstructors)
         {
-            var (defCtor, dictCtor, capacityCtor, enumCtor) = ctorTuple;
+            var (defCtor, dictCtor, capacityCtor, enumCtor) = multiKeyDictConstructors;
             
             var mkDict = defCtor();
             mkDict[1, 2, 3] = "Hello";

@@ -4,7 +4,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sammlung", "Sammlung\Sammlu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "_Fixtures.Sammlung", "_Fixtures.Sammlung\_Fixtures.Sammlung.csproj", "{B7B0D407-7B0D-43E2-AAF9-7EFA342B423E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{1E869BE4-673D-47B2-A2A1-FF3ACFC6A209}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RootItems", "RootItems", "{1E869BE4-673D-47B2-A2A1-FF3ACFC6A209}"
 ProjectSection(SolutionItems) = preProject
 	README.md = README.md
 	GitVersion.yml = GitVersion.yml
