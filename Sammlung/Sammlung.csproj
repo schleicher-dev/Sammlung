@@ -7,6 +7,8 @@
         <GitVersionConfig>../GitVersion.yml</GitVersionConfig>
         <UpdateVersionProperties>true</UpdateVersionProperties>
         <UseFullSemVerForNuGet>false</UseFullSemVerForNuGet>
+        <SignAssembly>true</SignAssembly>
+        <AssemblyOriginatorKeyFile>../Sammlung.snk</AssemblyOriginatorKeyFile>
     </PropertyGroup>
 
     <ItemGroup>
