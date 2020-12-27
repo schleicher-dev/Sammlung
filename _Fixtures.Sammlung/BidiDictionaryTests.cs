@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -15,18 +16,18 @@ namespace _Fixtures.Sammlung
         [SetUp]
         public void Setup() { }
         
-        public static readonly FuncTuple[] BidiDicts =
+        public static readonly BidiDictConstructors[] BidiDicts =
         {
-            FuncTuple.Create(() => new BidiDictionary<int, int>(), 
+            new BidiDictConstructors(() => new BidiDictionary<int, int>(), 
                 d => new BidiDictionary<int, int>(d),
                 e => new BidiDictionary<int, int>(e)), 
-            FuncTuple.Create(() => new ConcurrentBidiDictionary<int, int>(),
+            new BidiDictConstructors(() => new ConcurrentBidiDictionary<int, int>(),
                 d => new ConcurrentBidiDictionary<int, int>(1, d),
                 e => new ConcurrentBidiDictionary<int, int>(1, e)),
         };
         
         [TestCaseSource(nameof(BidiDicts))]
-        public void InsertPairsFindPairs(FuncTuple tuple)
+        public void InsertPairsFindPairs(BidiDictConstructors tuple)
         {
             var (zf, _, _) = tuple;
             var pairs = Enumerable.Range(1, 100).Zip(Enumerable.Range(100, 100).Reverse()).ToArray();
@@ -44,7 +45,7 @@ namespace _Fixtures.Sammlung
         }
 
         [TestCaseSource(nameof(BidiDicts))]
-        public void ClearClearsAllMaps(FuncTuple tuple)
+        public void ClearClearsAllMaps(BidiDictConstructors tuple)
         {
             var (zf, _, _) = tuple;
             var pairs = Enumerable.Range(1, 100).Zip(Enumerable.Range(100, 100).Reverse()).ToArray();
@@ -59,7 +60,7 @@ namespace _Fixtures.Sammlung
         }
         
         [TestCaseSource(nameof(BidiDicts))]
-        public void ConstructorTests(FuncTuple tuple)
+        public void ConstructorTests(BidiDictConstructors tuple)
         {
             var (_, df, ef) = tuple;
             var d1 = new Dictionary<int, int> {[0] = 100, [1] = 100};
