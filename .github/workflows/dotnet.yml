@@ -20,7 +20,7 @@ jobs:
     - name: Setup NuGet
       uses: NuGet/setup-nuget@v1.0.5
     - name: Restore NuGet Packages
-      run: nuget restore SimpleFrameworkApp.sln
+      run: nuget restore Sammlung.sln
     - name: Build
       run: msbuild -t:Build -p:Configuration=Release
     - name: Test
