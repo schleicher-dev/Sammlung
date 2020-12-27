@@ -27,9 +27,5 @@ jobs:
       run: dotnet test --no-build --verbosity normal --configuration Release
     - name: Package
       run: msbuild -t:Pack -p:Configuration=Release
-    - name: Upload the NuGet package
-      uses: actions/upload-artifact@v2.2.1
-      with:
-        path: |
-          **/*.nupkg
-          **/*.nupkg
+    - name: Pushing NuGet packages to nuget.org
+      run: dotnet nuget push **.*nupkg --api-key ${{ secrets.NUGETAPIKEY }} --source https://api.nuget.org/v3/index.json
