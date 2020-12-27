@@ -9,7 +9,7 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: windows-2019
 
     steps:
     - uses: actions/checkout@v2
@@ -28,10 +28,8 @@ jobs:
     - name: Upload the NuGet package
       uses: actions/upload-artifact@v2.2.1
       with:
-        name: "Sammlung.nupkg"
         path: "**/*.nupkg"
     - name: Upload the NuGet symbol package
       uses: actions/upload-artifact@v2.2.1
       with:
-        name: "Sammlung.snupkg"
         path: "**/*.snupkg"

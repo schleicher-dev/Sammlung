@@ -11,6 +11,11 @@ ProjectSection(SolutionItems) = preProject
 	LICENSE = LICENSE
 EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GitHub", "GitHub", "{8A27F92A-9F69-43F7-ACA5-D702F1D84108}"
+ProjectSection(SolutionItems) = preProject
+	dotnet.yml = .github/workflows/dotnet.yml
+EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
