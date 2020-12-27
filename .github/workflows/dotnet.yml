@@ -25,13 +25,11 @@ jobs:
       run: msbuild -t:Build -p:Configuration=Release
     - name: Test
       run: dotnet test --no-build --verbosity normal --configuration Release
-    - name: Build
+    - name: Package
       run: msbuild -t:Pack -p:Configuration=Release
     - name: Upload the NuGet package
       uses: actions/upload-artifact@v2.2.1
       with:
-        path: "**/*.nupkg"
-    - name: Upload the NuGet symbol package
-      uses: actions/upload-artifact@v2.2.1
-      with:
-        path: "**/*.snupkg"
+        path: |
+          **/*.nupkg
+          **/*.nupkg
