@@ -1,0 +1,3 @@
+[submodule "Wiki"]
+	path = Wiki
+	url = git@gitlab.schleicher.dev:general/Sammlung.wiki.git

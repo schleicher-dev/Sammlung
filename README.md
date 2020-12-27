@@ -1,4 +1,4 @@
-# ![Sammlung](Misc/Logo/LogoWithName.svg)
+# ![Sammlung](Images/LogoWithName.svg)
 
 Sammlung (/'zamlʊŋ/) is german for *collection* and is pronounced *some-loong*.
 
@@ -14,15 +14,27 @@ container types are naïve implementations in most cases.
 ## Vision
 
 Sammlung has the vision to be the go-to NuGet package, when it comes to collections beyond the standard 
-collections. We aim to deliver high-end default collection implementations as well as multiple options
-for specific collection types. Therefore the programmer has the choice to use a particular implementation
-if needed.
+collections.
 
-Moreover we are aiming for collections which perform on the file system. In this case we prefer
-cache oblivious algorithms.
+We aim to deliver:
+ - high-end default collection implementations
+ - multiple options for a container type, if reasonable
+ - container types which operate memory-aware and perform on the file system, in this case
+   we prefer cache-oblivious algorithms.
 
 For every collection class there should be a benchmark, testing the performance of the particular 
 container. When possible we deliver theoretical bounds for the particular operations of a collection.
+
+## Contributing
+
+We encourage everyone to contribute to this project. Open-source lives from participation!
+If you're not a programmer, you can help translating documentations. If you're a graphic artist
+you may help us with illustrations. If you're not familiar with C#, do code reviews with us. If you're
+a theoretical computer scientists, help us calculating bounds. If you encounter a bug, a vulnerability,
+a code quality issue, report it! Every input is welcome.
+
+If you'd like to donate to us. Point out a platform where someone can donate to us. 
+I currently have no clue about this topic.
 
 ## Provided Collections
 
@@ -33,45 +45,54 @@ container. When possible we deliver theoretical bounds for the particular operat
  - Heaps / Priority Queues
    - Binary heap (Single-Threaded, Thread-Safe)
 
-## Further Documentation
-
-1. [Bidirectional Dictionaries](Docs/BidiDictionaries.md)
-1. [Multi-Key Dictionaries](Docs/MultiKeyDictionaries.md)
-1. [Circular Buffers](Docs/CircularBuffers.md)
-1. [Heaps / Priority Queues](Docs/Heaps.md)
-
 ## Missing Collection Types
- - [ ] Circular Buffers
-    - [ ] Circular Buffer w/ fixed size
+- [ ] Circular Buffers
+   - [ ] Circular Buffer w/ fixed size
       - [ ] Concurrent
-    - [ ] Circular Buffer w/ growing behavior
+   - [ ] Circular Buffer w/ growing behavior
       - [ ] Single-Threaded
       - [ ] Concurrent
- - [ ] Heaps
-    - [ ] Pairing Heap
+- [ ] Heaps
+   - [ ] Pairing Heap
       - [ ] Single-Threaded
       - [ ] Concurrent
-    - [ ] Fibonacci Heap
+   - [ ] Fibonacci Heap
       - [ ] Single-Threaded
       - [ ] Concurrent
-    - [ ] Brodal Queue
+   - [ ] Brodal Queue
       - [ ] Single-Threaded
       - [ ] Concurrent
- - [ ] Queues
+- [ ] Queues
    - [ ] Queue w/ growing circular buffer
- - [ ] Graphs
+- [ ] Graphs
    - [ ] Undirected Graph
    - [ ] Directed Graph
    - [ ] Multi Graph
    - [ ] Algorithms on Graphs (poss. Separate NuGet package)
-     - [ ] Breadth-first search (BFS)
-     - [ ] Depth-first search (DFS)
-     - [ ] Dijkstra-Algorithm
-     - [ ] Kruskal-Algorithm
-     - [ ] Minimum Spanning tree (MST)
- - [ ] Search Trees
+      - [ ] Breadth-first search (BFS)
+      - [ ] Depth-first search (DFS)
+      - [ ] Dijkstra-Algorithm
+      - [ ] Kruskal-Algorithm
+      - [ ] Minimum Spanning tree (MST)
+- [ ] Search Trees
    - [ ] Binary Search Tree
    - [ ] ABSearchTree :: (a,b)-tree
    - [ ] RedBlackSearchTree :: red-black tree
+
+## Documentation
+
+1. [Bidirectional Dictionaries](Wiki/Documentation/BidiDictionaries.md)
+1. [Multi-Key Dictionaries](Wiki/Documentation/MultiKeyDictionaries.md)
+1. [Circular Buffers](Wiki/Documentation/CircularBuffers.md)
+1. [Heaps / Priority Queues](Wiki/Documentation/Heaps.md)
+
+## Literature
+
+- [Algorithms and Data Structures - Kurt Mehlhorn, Peter Sanders](https://www.springer.com/de/book/9783540779773) :: ISBN: 978-3-540-77977-3
+
+## Contributors
+
+ - Ralf Schleicher
+
 
 
