@@ -1,8 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework Condition=" '$(OS)' != 'Windows_NT' ">netcoreapp3.1</TargetFramework>
-        <TargetFrameworks Condition=" '$(TargetFramework)' == '' ">net45;netcoreapp3.1</TargetFrameworks>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <GitVersionConfig>../GitVersion.yml</GitVersionConfig>
