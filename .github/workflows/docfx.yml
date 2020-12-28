@@ -1,0 +1,23 @@
+name: DocFx
+
+on:
+  workflow_dispatch: []
+  push:
+    branches: [ master, develop ]
+  pull_request:
+    branches: [ master ]
+    
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - name: Build Documentation
+      uses: nikeee/docfx-action@v1.0.0
+      with:
+        args: .docfx/docfx.json
+    - name: GitHub Pages
+      uses: crazy-max/ghaction-github-pages@v2.2.0
+      with:
+        target_branch: gh-pages
+        build_dir: .docfx/_site
+        jekyll: false
