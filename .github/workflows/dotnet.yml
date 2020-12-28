@@ -32,6 +32,7 @@ jobs:
     - name: GitHub Pages
       uses: crazy-max/ghaction-github-pages@v2.2.0
       with:
+        target_branch: gh-pages
         build_dir: .docfx/_site
         jekyll: false
     - name: Package
