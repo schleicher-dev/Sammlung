@@ -11,6 +11,9 @@ jobs:
   generate-and-public-docs:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
     - name: Build Documentation
       uses: nikeee/docfx-action@v1.0.0
       with:
