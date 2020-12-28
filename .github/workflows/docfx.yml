@@ -20,6 +20,8 @@ jobs:
         args: .docfx/docfx.json
     - name: GitHub Pages
       uses: crazy-max/ghaction-github-pages@v2.2.0
+      env:
+        GH_PATH: ${{ secrets.GH_PATH }}
       with:
         target_branch: gh-pages
         build_dir: .docfx/_site
