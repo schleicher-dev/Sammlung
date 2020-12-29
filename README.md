@@ -64,8 +64,10 @@ topic.
     - [ ] Brodal Queue
         - [ ] Single-Threaded
         - [ ] Concurrent
+- [ ] Deques
+    - [ ] LinkedDeque
+        - [ ] LockFree
 - [ ] Queues
-    - [ ] Queue w/ growing circular buffer
 - [ ] Graphs
     - [ ] Undirected Graph
     - [ ] Directed Graph

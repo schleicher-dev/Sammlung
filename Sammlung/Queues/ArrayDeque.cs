@@ -15,14 +15,14 @@ namespace Sammlung.Queues
     public class ArrayDeque<T> : IDeque<T>
     {
         private T[] _array;
-        private int _frontPointer;
-        private int _backPointer;
+        private int _leftPointer;
+        private int _rightPointer;
 
         public ArrayDeque(int capacity)
         {
             _array = new T[capacity];
-            _frontPointer = 0;
-            _backPointer = 0;
+            _leftPointer = 0;
+            _rightPointer = 0;
             Count = 0;
         }
         
@@ -32,12 +32,12 @@ namespace Sammlung.Queues
             var newSize = Math.Max(1, Capacity * 2);
             var newArray = new T[newSize];
             
-            var frontLen = oldSize - _frontPointer;
-            Array.Copy(_array, _frontPointer, newArray, 0, frontLen);
-            Array.Copy(_array, 0, newArray, frontLen, _backPointer);
+            var frontLen = oldSize - _leftPointer;
+            Array.Copy(_array, _leftPointer, newArray, 0, frontLen);
+            Array.Copy(_array, 0, newArray, frontLen, _rightPointer);
             _array = newArray;
-            _frontPointer = 0;
-            _backPointer = oldSize;
+            _leftPointer = 0;
+            _rightPointer = oldSize;
         }
 
         private void GrowIfNeeded()
@@ -56,60 +56,84 @@ namespace Sammlung.Queues
         public int Count { get; private set; }
 
         /// <inheritdoc />
-        public void Enqueue(T element)
+        public void PushLeft(T element)
         {
             GrowIfNeeded();
             
-            _array[_backPointer] = element;
-            _backPointer = IncrementPointer(_backPointer);
+            _leftPointer = DecrementPointer(_leftPointer);
+            _array[_leftPointer] = element;
             Count += 1;
         }
 
         /// <inheritdoc />
-        public T Dequeue() =>
-            TryDequeue(out var element) ? element : throw ExceptionsHelper.NewEmptyCollectionException();
+        public T PopRight() =>
+            TryPopRight(out var element) ? element : throw ExceptionsHelper.NewEmptyCollectionException();
 
         /// <inheritdoc />
-        public bool TryDequeue(out T element)
+        public bool TryPopRight(out T element)
         {
-            element = default;
-            if (Count <= 0)
+            if (!TryPeekRight(out element))
                 return false;
 
-            _backPointer = DecrementPointer(_backPointer);
-            element = _array[_backPointer];
-            _array[_backPointer] = default;
+            _rightPointer = DecrementPointer(_rightPointer);
+            _array[_rightPointer] = default;
             Count -= 1;
             
             return true;
         }
 
         /// <inheritdoc />
-        public void InverseEnqueue(T element)
+        public T PeekRight()=>
+            TryPeekRight(out var element) ? element : throw ExceptionsHelper.NewEmptyCollectionException();
+
+        /// <inheritdoc />
+        public bool TryPeekRight(out T element)
+        {
+            element = default;
+            if (Count == 0) return false;
+            
+            element = _array[DecrementPointer(_rightPointer)];
+            return true;
+        }
+
+        /// <inheritdoc />
+        public void PushRight(T element)
         {
             GrowIfNeeded();
             
-            _frontPointer = DecrementPointer(_frontPointer);
-            _array[_frontPointer] = element;
+            _array[_rightPointer] = element;
+            _rightPointer = IncrementPointer(_rightPointer);
             Count += 1;
         }
 
         /// <inheritdoc />
-        public T InverseDequeue() =>
-            TryInverseDequeue(out var element) ? element : throw ExceptionsHelper.NewEmptyCollectionException();
+        public T PopLeft() =>
+            TryPopLeft(out var element) ? element : throw ExceptionsHelper.NewEmptyCollectionException();
 
         /// <inheritdoc />
-        public bool TryInverseDequeue(out T element)
+        public bool TryPopLeft(out T element)
         {
-            element = default;
-            if (Count <= 0)
+            if (!TryPeekLeft(out element))
                 return false;
-
-            element = _array[_frontPointer];
-            _array[_frontPointer] = default;
-            _frontPointer = IncrementPointer(_frontPointer);
+            
+            _array[_leftPointer] = default;
+            _leftPointer = IncrementPointer(_leftPointer);
             Count -= 1;
             
+            return true;
+        }
+
+        /// <inheritdoc />
+        public T PeekLeft() =>
+            TryPeekLeft(out var element) ? element : throw ExceptionsHelper.NewEmptyCollectionException();
+
+        /// <inheritdoc />
+        public bool TryPeekLeft(out T element)
+        {
+            element = default;
+            if (Count == 0) return false;
+            
+            element = _array[_leftPointer];
             return true;
         }
 
@@ -142,18 +166,18 @@ namespace Sammlung.Queues
         /// <inheritdoc />
         public void Clear()
         {
-            _frontPointer = 0;
-            _backPointer = 0;
+            _leftPointer = 0;
+            _rightPointer = 0;
             Count = 0;
         }
         
         private IEnumerable<int> GetIndices()
         {
             if (Count == 0) return Enumerable.Empty<int>();
-            var ptrDiff = _backPointer - _frontPointer;
-            if (0 < ptrDiff) return Enumerable.Range(_frontPointer, ptrDiff);
-            return Enumerable.Range(_frontPointer, Capacity - _frontPointer)
-                .Concat(Enumerable.Range(0, _backPointer));
+            var ptrDiff = _rightPointer - _leftPointer;
+            if (0 < ptrDiff) return Enumerable.Range(_leftPointer, ptrDiff);
+            return Enumerable.Range(_leftPointer, Capacity - _leftPointer)
+                .Concat(Enumerable.Range(0, _rightPointer));
         }
 
         private IEnumerable<T> GetValues() => GetIndices().Select(i => _array[i]);

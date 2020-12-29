@@ -16,9 +16,10 @@ namespace _Fixtures.Sammlung
         public static readonly DequeConstructors<int>[] Buffers =
         {
             new DequeConstructors<int>(c => new ArrayDeque<int>(c)),
-            new DequeConstructors<int>(c => BlockingArrayDeque.Wrap(new ArrayDeque<int>(c)))
+            new DequeConstructors<int>(c => BlockingArrayDeque.Wrap(new ArrayDeque<int>(c))),
+            new DequeConstructors<int>(c => new LinkedDeque<int>())
         };
-        
+
         [TestCaseSource(nameof(Buffers))]
         public void Fill_And_Grow(DequeConstructors<int> constructors)
         {
@@ -26,12 +27,12 @@ namespace _Fixtures.Sammlung
 
             var buffer = capCtor(1);
             Assert.IsFalse(buffer.IsReadOnly);
-            buffer.Enqueue(1);
-            buffer.Enqueue(2);
-            buffer.Enqueue(3);
-            buffer.Enqueue(4);
-            buffer.Enqueue(5);
-            Assert.AreEqual(Enumerable.Range(1, 5), buffer);
+            buffer.PushLeft(1);
+            buffer.PushLeft(2);
+            buffer.PushLeft(3);
+            buffer.PushLeft(4);
+            buffer.PushLeft(5);
+            Assert.AreEqual(Enumerable.Range(1, 5).Reverse(), buffer);
             Assert.IsTrue(buffer.Contains(1));
             Assert.IsTrue(buffer.Contains(2));
             Assert.IsTrue(buffer.Contains(3));
@@ -48,7 +49,9 @@ namespace _Fixtures.Sammlung
             var buffer = capCtor(1);
             foreach (var i in Enumerable.Range(1, 100))
             {
-                buffer.Enqueue(i);
+                buffer.PushRight(i);
+                Assert.AreEqual(i, buffer.PeekRight());
+                Assert.AreEqual(1, buffer.PeekLeft());
                 CollectionAssert.AreEqual(Enumerable.Range(1, i), buffer);
             }
         }
@@ -61,7 +64,9 @@ namespace _Fixtures.Sammlung
             var buffer = capCtor(1);
             foreach (var i in Enumerable.Range(1, 100))
             {
-                buffer.InverseEnqueue(i);
+                buffer.PushLeft(i);
+                Assert.AreEqual(i, buffer.PeekLeft());
+                Assert.AreEqual(1, buffer.PeekRight());
                 CollectionAssert.AreEqual(Enumerable.Range(1, i).Reverse(), buffer);
             }
         }
@@ -88,36 +93,42 @@ namespace _Fixtures.Sammlung
             foreach (var (push, popFront, popBack) in sequences)
             {
                 for (var i = 0; i < push && items.MoveNext(); ++i)
-                    buffer.Enqueue(items.Current);
+                    buffer.PushLeft(items.Current);
                 for (var i = 0; i < popFront; ++i)
-                    list.Add(buffer.InverseDequeue());
+                    list.Add(buffer.PopLeft());
                 for (var i = 0; i < popBack; ++i)
-                    list.Add(buffer.Dequeue());
+                    list.Add(buffer.PopRight());
             }
 
-            CollectionAssert.AreEqual(new[] {20, 23}, buffer);
-            CollectionAssert.AreEqual(
-                new[] {4, 1, 6, 2, 10, 9, 3, 5, 18, 17, 16, 15, 7, 8, 11, 12, 22, 21, 13, 14, 24, 19, 25}, list);
+            CollectionAssert.AreEqual(new[] {16, 15}, buffer);
+            
+            var expected = new[]
+            {
+                1, 6, 2, 10, 3, 4, 18, 17, 5, 7, 8, 9, 22, 21, 20, 19, 11, 12, 24, 23, 13, 25, 14
+            };
+            CollectionAssert.AreEqual(expected, list);
             buffer.Clear();
             CollectionAssert.IsEmpty(buffer);
         }
-        
+
         [TestCaseSource(nameof(Buffers))]
-        public void EmptyBufferTests(DequeConstructors<int> constructors) {
+        public void EmptyBufferTests(DequeConstructors<int> constructors)
+        {
             var capCtor = constructors.Item1;
             var buffer = capCtor(1);
-            Assert.IsFalse(buffer.TryDequeue(out _));
-            Assert.Throws<InvalidOperationException>(() => buffer.Dequeue());
-            Assert.IsFalse(buffer.TryInverseDequeue(out _));
-            Assert.Throws<InvalidOperationException>(() => buffer.InverseDequeue());
+            Assert.IsFalse(buffer.TryPopRight(out _));
+            Assert.Throws<InvalidOperationException>(() => buffer.PopRight());
+            Assert.IsFalse(buffer.TryPopLeft(out _));
+            Assert.Throws<InvalidOperationException>(() => buffer.PopLeft());
             CollectionAssert.IsEmpty(buffer);
         }
-        
+
         [TestCaseSource(nameof(Buffers))]
-        public void CopyToWrongLocationInArray(DequeConstructors<int> constructors) {
+        public void CopyToWrongLocationInArray(DequeConstructors<int> constructors)
+        {
             var capCtor = constructors.Item1;
             var buffer = capCtor(1);
-            buffer.Enqueue(0);
+            buffer.PushLeft(0);
             var array = new int[buffer.Count];
             Assert.Throws<ArgumentException>(() => buffer.CopyTo(array, 1));
             buffer.CopyTo(array, 0);
@@ -126,7 +137,8 @@ namespace _Fixtures.Sammlung
 
 
         [TestCaseSource(nameof(Buffers))]
-        public void BufferDoesNotSupportAddAndRemove(DequeConstructors<int> constructors) { 
+        public void BufferDoesNotSupportAddAndRemove(DequeConstructors<int> constructors)
+        {
             var capCtor = constructors.Item1;
             var buffer = capCtor(1);
             Assert.Throws<NotSupportedException>(() => buffer.Add(0));

@@ -7,7 +7,7 @@ using Sammlung.Utilities.Concurrent;
 
 namespace Sammlung.Queues.Concurrent
 {
-    public class BlockingArrayDeque
+    public static class BlockingArrayDeque
     {
         public static IDeque<T> Wrap<T>(IDeque<T> inner) => new BlockingArrayDeque<T>(inner);
     }
@@ -85,45 +85,67 @@ namespace Sammlung.Queues.Concurrent
         }
 
         /// <inheritdoc />
-        public void Enqueue(T element)
+        public void PushLeft(T element)
         {
             using var _ = _rwLock.UseWriteLock();
-            _inner.Enqueue(element);
+            _inner.PushLeft(element);
         }
 
         /// <inheritdoc />
-        public T Dequeue()
+        public T PopRight()
         {
             using var _ = _rwLock.UseWriteLock();
-            return _inner.Dequeue();
+            return _inner.PopRight();
         }
 
         /// <inheritdoc />
-        public bool TryDequeue(out T element)
+        public bool TryPopRight(out T element)
         {
             using var _ = _rwLock.UseWriteLock();
-            return _inner.TryDequeue(out element);
+            return _inner.TryPopRight(out element);
         }
 
         /// <inheritdoc />
-        public void InverseEnqueue(T element)
+        public T PeekRight() => 
+            TryPeekRight(out var element) ? element : throw ExceptionsHelper.NewEmptyCollectionException();
+
+        /// <inheritdoc />
+        public bool TryPeekRight(out T element)
         {
-            using var _ = _rwLock.UseWriteLock();
-            _inner.InverseEnqueue(element);
+            using var _ = _rwLock.UseReadLock();
+            return _inner.TryPeekRight(out element);
         }
 
         /// <inheritdoc />
-        public T InverseDequeue()
+        public void PushRight(T element)
         {
             using var _ = _rwLock.UseWriteLock();
-            return _inner.InverseDequeue();
+            _inner.PushRight(element);
         }
 
         /// <inheritdoc />
-        public bool TryInverseDequeue(out T element)
+        public T PopLeft()
         {
             using var _ = _rwLock.UseWriteLock();
-            return _inner.TryInverseDequeue(out element);
+            return _inner.PopLeft();
+        }
+
+        /// <inheritdoc />
+        public bool TryPopLeft(out T element)
+        {
+            using var _ = _rwLock.UseWriteLock();
+            return _inner.TryPopLeft(out element);
+        }
+
+        /// <inheritdoc />
+        public T PeekLeft() => 
+            TryPeekLeft(out var element) ? element : throw ExceptionsHelper.NewEmptyCollectionException();
+
+        /// <inheritdoc />
+        public bool TryPeekLeft(out T element)
+        {
+            using var _ = _rwLock.UseReadLock();
+            return _inner.TryPeekLeft(out element);
         }
     }
 }
