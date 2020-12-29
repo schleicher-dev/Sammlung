@@ -47,26 +47,47 @@ topic.
 
 ## Missing Collection Types
 
-- [ ] Circular Buffers
-    - [ ] Circular Buffer
-        - [ ] Single-Threaded
-        - [ ] Blocking / Non-Blocking
-    - [ ] BipBuffers
-        - [ ] Single-Threaded
-        - [ ] Non-Blocking
+- [ ] Dictionaries
+    - [ ] Bidirectional Dictionary
+        - [X] Non-Thread-Safe (Sammlung.Dictionaries.BidiDictionary)
+        - [X] Thread-Safe, Blocking (Sammlung.Dictionaries.Concurrent.BlockingBidiDictionary)
+        - [ ] Thread-Safe, Lock-Free
+    - [ ] Multi-Key Dictionary
+        - [X] Non-Thread-Safe (Sammlung.Dictionaries.MultiKeyDictionary)
+        - [X] Thread-Safe, Blocking (Sammlung.Dictionaries.Concurrent.BlockingMultiKeyDictionary)
+        - [ ] Thread-Safe, Lock-Free
 - [ ] Heaps
+    - [ ] Binary Heap
+        - [X] Non-Thread-Safe (Sammlung.Heaps.BinaryHeap)
+        - [ ] Thread-Safe, Blocking
+        - [ ] Thread-Safe, Lock-Free
     - [ ] Pairing Heap
-        - [ ] Single-Threaded
-        - [ ] Concurrent
+        - [ ] Non-Thread-Safe
+        - [ ] Thread-Safe, Blocking
+        - [ ] Thread-Safe, Lock-Free
     - [ ] Fibonacci Heap
-        - [ ] Single-Threaded
-        - [ ] Concurrent
+        - [ ] Non-Thread-Safe
+        - [ ] Thread-Safe, Blocking
+        - [ ] Thread-Safe, Lock-Free
     - [ ] Brodal Queue
-        - [ ] Single-Threaded
-        - [ ] Concurrent
-- [ ] Deques
-    - [ ] LinkedDeque
-        - [ ] LockFree
+        - [ ] Non-Thread-Safe
+        - [ ] Thread-Safe, Blocking
+        - [ ] Thread-Safe, Lock-Free
+- [ ] Queues
+    - [ ] Continuous Queue
+        - [X] Non-Thread-Safe (Sammlung.Queues.ArrayDeque)
+        - [X] Thread-Safe, Blocking (Sammlung.Queues.Concurrent.BlockingArrayDeque)
+        - [ ] Thread-Safe, Lock-Free (Maybe not possible)
+    - [ ] Continuous Deque
+        - [X] Non-Thread-Safe (Sammlung.Queues.ArrayDeque)
+        - [X] Thread-Safe, Blocking (Sammlung.Queues.Concurrent.BlockingArrayDeque)
+        - [ ] **Maybe not possible:** Thread-Safe, Lock-Free
+    - [ ] Pointer Queue
+        - [X] Non-Thread-Safe (Sammlung.Queues.LinkedDeque)
+        - [ ] Thread-Safe, Lock-Free
+    - [ ] Pointer Deque
+        - [X] Non-Thread-Safe (Sammlung.Queues.LinkedDeque)
+        - [ ] Thread-Safe, Lock-Free
 - [ ] Queues
 - [ ] Graphs
     - [ ] Undirected Graph
@@ -82,6 +103,13 @@ topic.
     - [ ] Binary Search Tree
     - [ ] ABSearchTree :: (a,b)-tree
     - [ ] RedBlackSearchTree :: red-black tree
+- [ ] Circular Buffers
+    - [ ] Circular Buffer
+        - [ ] Single-Threaded
+        - [ ] Blocking / Non-Blocking
+    - [ ] BipBuffers
+        - [ ] Single-Threaded
+        - [ ] Non-Blocking
 
 ## Documentation
 

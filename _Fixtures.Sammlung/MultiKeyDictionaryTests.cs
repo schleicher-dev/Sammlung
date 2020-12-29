@@ -22,10 +22,10 @@ namespace _Fixtures.Sammlung
                 c => new MultiKeyDictionary<int, string>(c),
                 e => new MultiKeyDictionary<int, string>(e)),
             new MultiKeyDictConstructors<int, string>(
-                () => new ConcurrentMultiKeyDictionary<int, string>(), 
-                d => new ConcurrentMultiKeyDictionary<int, string>(1, d),
-                c => new ConcurrentMultiKeyDictionary<int, string>(1, c),
-                e => new ConcurrentMultiKeyDictionary<int, string>(1, e)),
+                () => new BlockingMultiKeyDictionary<int, string>(), 
+                d => new BlockingMultiKeyDictionary<int, string>(1, d),
+                c => new BlockingMultiKeyDictionary<int, string>(1, c),
+                e => new BlockingMultiKeyDictionary<int, string>(1, e)),
         };
         
         [TestCaseSource(nameof(CtorTuples))]
