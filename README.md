@@ -36,16 +36,9 @@ welcome.
 If you'd like to donate to us. Point out a platform where someone can donate to us. I currently have no clue about this
 topic.
 
-## Provided Collections
+## Collection List
 
-- Bidirectional Dictionaries (Single-Threaded, Thread-Safe)
-- Multi-Key Dictionaries (Single-Threaded, Thread-Safe)
-- Circular Buffer
-    - Fixed size variant (Single-Threaded)
-- Heaps / Priority Queues
-    - Binary heap (Single-Threaded, Thread-Safe)
-
-## Missing Collection Types
+Ticked means available in the newest package.
 
 - [ ] Dictionaries
     - [ ] Bidirectional Dictionary
@@ -105,23 +98,22 @@ topic.
     - [ ] RedBlackSearchTree :: red-black tree
 - [ ] Circular Buffers
     - [ ] Circular Buffer
-        - [ ] Single-Threaded
-        - [ ] Blocking / Non-Blocking
+        - [ ] Non-Thread-Safe
+        - [ ] Thread-Safe, Blocking
+        - [ ] Thread-Safe, Lock-Free
     - [ ] BipBuffers
-        - [ ] Single-Threaded
-        - [ ] Non-Blocking
-
-## Documentation
-
-1. [Bidirectional Dictionaries](Wiki/Documentation/BidiDictionaries.md)
-1. [Multi-Key Dictionaries](Wiki/Documentation/MultiKeyDictionaries.md)
-1. [Circular Buffers](Wiki/Documentation/CircularBuffers.md)
-1. [Heaps / Priority Queues](Wiki/Documentation/Heaps.md)
+        - [ ] Non-Thread-Safe
+        - [ ] Thread-Safe, Blocking
+        - [ ] Thread-Safe, Lock-Free
 
 ## Literature
 
 - [Algorithms and Data Structures - Kurt Mehlhorn, Peter Sanders](https://www.springer.com/de/book/9783540779773) ::
   ISBN: 978-3-540-77977-3
+  
+## Documentation
+
+Our documentation can be found [here](https://schleicher-dev.github.io/Sammlung/).
 
 ## Contributors
 
