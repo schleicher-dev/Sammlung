@@ -32,6 +32,22 @@ This package contains a library for C# containing a plethora of collection types
         <None Include="../Images/QuadraticIcon.png" Pack="true" PackagePath="" />
         <None Include="../LICENSE" Pack="true" PackagePath="" />
     </ItemGroup>
+    
+    <ItemGroup>
+      <Compile Remove="Queues\Concurrent\ConcurrentStaticContinuousDeque.cs" />
+      <Compile Update="Resources\ErrorMessages.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>ErrorMessages.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
+    
+    <ItemGroup>
+      <EmbeddedResource Update="Resources\ErrorMessages.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>ErrorMessages.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
 
     <Target Name="ShowVersion" AfterTargets="PostBuildEvent">
         <Message Importance="high" Text="Version: $(Version); PackageVersion: $(PackageVersion)" />

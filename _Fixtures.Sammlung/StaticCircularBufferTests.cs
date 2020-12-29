@@ -5,7 +5,8 @@ using System.Linq;
 using _Fixtures.Sammlung.Extras;
 using NUnit.Framework;
 using Sammlung;
-using Sammlung.Concurrent;
+using Sammlung.Deques;
+using Sammlung.Deques.Concurrent;
 
 namespace _Fixtures.Sammlung
 {
@@ -13,14 +14,14 @@ namespace _Fixtures.Sammlung
     [TestFixture]
     public class StaticCircularBufferTests
     {
-        public static readonly StaticCircularBufferConstructors<int>[] Buffers =
+        public static readonly CircularBufferConstructors<int>[] Buffers =
         {
-            new StaticCircularBufferConstructors<int>(c => new StaticCircularBuffer<int>(c)),
-            new StaticCircularBufferConstructors<int>(c => new ConcurrentStaticCircularBuffer<int>(c)), 
+            new CircularBufferConstructors<int>(c => new StaticContinuousDeque<int>(c)),
+            new CircularBufferConstructors<int>(c => new ConcurrentStaticContinuousDeque<int>(c)), 
         };
         
         [TestCaseSource(nameof(Buffers))]
-        public void Fill_CheckContent(StaticCircularBufferConstructors<int> constructors)
+        public void Fill_CheckContent(CircularBufferConstructors<int> constructors)
         {
             var capCtor = constructors.Item1;
             var buffer = capCtor(10);
@@ -31,7 +32,7 @@ namespace _Fixtures.Sammlung
         }
         
         [TestCaseSource(nameof(Buffers))]
-        public void FillAlternating_Match(StaticCircularBufferConstructors<int> constructors)
+        public void FillAlternating_Match(CircularBufferConstructors<int> constructors)
         {
             var capCtor = constructors.Item1;
             var buffer = capCtor(11);
@@ -45,7 +46,7 @@ namespace _Fixtures.Sammlung
         }
         
         [TestCaseSource(nameof(Buffers))]
-        public void Fill_PopAndPushSequences(StaticCircularBufferConstructors<int> constructors)
+        public void Fill_PopAndPushSequences(CircularBufferConstructors<int> constructors)
         {
             var capCtor = constructors.Item1;
             var buffer = capCtor(11);
@@ -65,7 +66,7 @@ namespace _Fixtures.Sammlung
         }
 
         [TestCaseSource(nameof(Buffers))]
-        public void Fill_PushAndPopBack(StaticCircularBufferConstructors<int> constructors)
+        public void Fill_PushAndPopBack(CircularBufferConstructors<int> constructors)
         {
             var capCtor = constructors.Item1;
             var buffer = capCtor(10);
@@ -78,7 +79,7 @@ namespace _Fixtures.Sammlung
         }
 
         [TestCaseSource(nameof(Buffers))]
-        public void Fill_PushAndPopFront(StaticCircularBufferConstructors<int> constructors)
+        public void Fill_PushAndPopFront(CircularBufferConstructors<int> constructors)
         {
             var capCtor = constructors.Item1;
             var buffer = capCtor(10);
@@ -89,7 +90,7 @@ namespace _Fixtures.Sammlung
         }
 
         [TestCaseSource(nameof(Buffers))]
-        public void Pop_EmptyBuffer(StaticCircularBufferConstructors<int> constructors)
+        public void Pop_EmptyBuffer(CircularBufferConstructors<int> constructors)
         {
             var capCtor = constructors.Item1;
             var buffer = capCtor(10);
@@ -100,7 +101,7 @@ namespace _Fixtures.Sammlung
         }
 
         [TestCaseSource(nameof(Buffers))]
-        public void Enumerator_Reset(StaticCircularBufferConstructors<int> constructors)
+        public void Enumerator_Reset(CircularBufferConstructors<int> constructors)
         {
             var capCtor = constructors.Item1;
             var buffer = capCtor(5);

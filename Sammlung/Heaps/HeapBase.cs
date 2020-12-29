@@ -1,7 +1,7 @@
 using System;
-using Sammlung.Interfaces;
+using Sammlung.Utilities;
 
-namespace Sammlung.Bases
+namespace Sammlung.Heaps
 {
     public abstract class HeapBase<TKey, TValue> : IHeap<TKey, TValue>
     {
@@ -19,7 +19,7 @@ namespace Sammlung.Bases
         {
             return TryPeek(out var item)
                 ? item
-                : throw new InvalidOperationException("Cannot peek from heap. The heap may be empty.");
+                : throw ExceptionsHelper.NewEmptyCollectionException();
         }
 
         /// <inheritdoc />
@@ -30,7 +30,7 @@ namespace Sammlung.Bases
         {
             return TryPop(out var item)
                 ? item
-                : throw new InvalidOperationException("Cannot peek from heap. The heap may be empty.");
+                : throw ExceptionsHelper.NewEmptyCollectionException();
         }
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Sammlung.Bases
         {
             return TryReplace(key, value, out var oldValue)
                 ? oldValue :
-                throw new InvalidOperationException("Cannot replace root in heap. The heap may be empty.");
+                throw ExceptionsHelper.NewEmptyCollectionException();
         }
 
         /// <inheritdoc />
@@ -53,7 +53,7 @@ namespace Sammlung.Bases
         public void Update(TValue value, TKey key)
         {
             if (!TryUpdate(value, key))
-                throw new InvalidOperationException("Cannot update item in heap. It may not exist.");
+                throw ExceptionsHelper.NewHeapUpdateFailedException();
         }
 
         /// <inheritdoc />

@@ -1,6 +1,7 @@
-using System.Collections.Generic;
 
-namespace Sammlung.Interfaces
+using Sammlung.Compatibility;
+
+namespace Sammlung.Dictionaries
 {
     /// <summary>
     /// The <see cref="IBidiDictionary{TForward,TReverse}"/> type establishes a bidirectional mapping between two
@@ -8,7 +9,8 @@ namespace Sammlung.Interfaces
     /// </summary>
     /// <typeparam name="TForward"></typeparam>
     /// <typeparam name="TReverse"></typeparam>
-    public interface IBidiDictionary<TForward, TReverse>
+    public interface IBidiDictionary<TForward, TReverse> : 
+        System.Collections.Generic.IDictionary<TForward, TReverse>
     {
         /// <summary>
         /// Holds the forward map, which is used to retrieve the values in the forward direction.
@@ -19,27 +21,7 @@ namespace Sammlung.Interfaces
         /// Holds the reverse map, which is used to retrieve the values in the reverse direction.
         /// </summary>
         IReadOnlyDictionary<TReverse, TForward> ReverseMap { get; }
-        
-        /// <summary>
-        /// Maps the forward key to the reverse key and vice versa.
-        /// </summary>
-        /// <param name="key"></param>
-        /// <exception cref="Exceptions.DuplicateKeyException">when a duplicate forward or reverse key is added</exception>
-        TReverse this[TForward key] { set; }
 
-        /// <summary>
-        /// Returns the count of the map. This value is always equal to the size of the forward and reverse mapping.
-        /// </summary>
-        int Count { get; }
-        
-        /// <summary>
-        /// Adds the mapping between forward and reverse key.
-        /// </summary>
-        /// <param name="fwd">the forward key</param>
-        /// <param name="rev">the reverse key</param>
-        /// <exception cref="Exceptions.DuplicateKeyException">when a duplicate forward or reverse key is added</exception>
-        void Add(TForward fwd, TReverse rev);
-        
         /// <summary>
         /// Tries to add the mapping between forward and reverse key.
         /// </summary>
@@ -61,10 +43,5 @@ namespace Sammlung.Interfaces
         /// <param name="key">the reverse key</param>
         /// <returns>true if remove was successful else false</returns>
         bool ReverseRemove(TReverse key);
-
-        /// <summary>
-        /// Empties the collection.
-        /// </summary>
-        void Clear();
     }
 }

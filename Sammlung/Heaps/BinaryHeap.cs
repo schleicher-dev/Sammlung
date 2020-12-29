@@ -2,10 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Sammlung.Bases;
-using Sammlung.Interfaces;
 
-namespace Sammlung
+namespace Sammlung.Heaps
 {
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = Justifications.PublicApiJustification)]
     public sealed class BinaryHeap<TKey, TValue> : HeapBase<TKey, TValue>

@@ -5,7 +5,8 @@ using System.Linq;
 using _Fixtures.Sammlung.Extras;
 using NUnit.Framework;
 using Sammlung;
-using Sammlung.Concurrent;
+using Sammlung.Dictionaries;
+using Sammlung.Dictionaries.Concurrent;
 
 namespace _Fixtures.Sammlung
 {
