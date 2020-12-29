@@ -1,4 +1,4 @@
-namespace Sammlung.Interfaces
+namespace Sammlung.Heaps
 {
     /// <summary>
     /// This is the abstract interface of a heap data structure.

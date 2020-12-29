@@ -1,9 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Sammlung.Interfaces;
 
-namespace Sammlung.Bases
+namespace Sammlung.Dictionaries
 {
     /// <summary>
     /// The <see cref="MultiKeyDictionaryBase{TKey,TValue}"/> type delegates the given methods to an initially

@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using NUnit.Framework;
 using Sammlung;
+using Sammlung.Heaps;
 
 namespace _Fixtures.Sammlung
 {

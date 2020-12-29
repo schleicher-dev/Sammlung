@@ -2,11 +2,9 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using Sammlung.Bases;
-using Sammlung.Interfaces;
 using Sammlung.Utilities.Concurrent;
 
-namespace Sammlung.Concurrent
+namespace Sammlung.Dictionaries.Concurrent
 {
     /// <summary>
     /// The <see cref="ConcurrentMultiKeyDictionary{TKey,TValue}"/> is the thread-safe variant of the

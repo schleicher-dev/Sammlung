@@ -1,0 +1,29 @@
+<root>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="DuplicateKeyFound" xml:space="preserve">
+        <value>Der übegebene Schlüssel '{0}', welcher in '{1}' übergeben wurde, ist bereits vergeben. Schlüssel müssen eindeutig sein!</value>
+    </data>
+    <data name="RemoveOnEmptyCollection" xml:space="preserve">
+        <value>Die Methode '{0}' kann nicht auf leeren Sammlungen ausgeführt werden.</value>
+    </data>
+    <data name="CallToUnsupportedMethod" xml:space="preserve">
+        <value>Der Aufruf der Methode '{0}' wird nicht unterstützt.</value>
+    </data>
+    <data name="ValuesNotFittingIntoArray" xml:space="preserve">
+        <value>Es wurde eine Copy-Operation versucht, jedoch konnte der Ziel-Array nicht alle Elemente aufnehmen!</value>
+    </data>
+    <data name="HeapUpdateFailed" xml:space="preserve">
+        <value>Die '{0}'-Operation auf der Collection ist fehlgeschlagen. Das zu updatende Element existiert nicht.</value>
+    </data>
+</root>

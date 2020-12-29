@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Sammlung.Bases;
 
-namespace Sammlung
+namespace Sammlung.Dictionaries
 {
     /// <summary>
     /// The <see cref="MultiKeyDictionary{TKey,TValue}"/> type implements an <seealso cref="IDictionary{TKey,TValue}"/>

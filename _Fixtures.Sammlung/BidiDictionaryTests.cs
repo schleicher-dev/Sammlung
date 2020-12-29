@@ -1,11 +1,14 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using _Fixtures.Sammlung.Extras;
+using Microsoft.VisualBasic;
 using NUnit.Framework;
 using Sammlung;
-using Sammlung.Concurrent;
+using Sammlung.Dictionaries;
+using Sammlung.Dictionaries.Concurrent;
 using Sammlung.Exceptions;
 
 namespace _Fixtures.Sammlung
@@ -21,9 +24,9 @@ namespace _Fixtures.Sammlung
             new BidiDictConstructors(() => new BidiDictionary<int, int>(), 
                 d => new BidiDictionary<int, int>(d),
                 e => new BidiDictionary<int, int>(e)), 
-            new BidiDictConstructors(() => new ConcurrentBidiDictionary<int, int>(),
-                d => new ConcurrentBidiDictionary<int, int>(1, d),
-                e => new ConcurrentBidiDictionary<int, int>(1, e)),
+            new BidiDictConstructors(() => new BlockingBidiDictionary<int, int>(),
+                d => new BlockingBidiDictionary<int, int>(d),
+                e => new BlockingBidiDictionary<int, int>(e)),
         };
         
         [TestCaseSource(nameof(BidiDicts))]
@@ -32,6 +35,7 @@ namespace _Fixtures.Sammlung
             var (zf, _, _) = tuple;
             var pairs = Enumerable.Range(1, 100).Zip(Enumerable.Range(100, 100).Reverse()).ToArray();
             var bDict = zf();
+            Assert.IsFalse(bDict.IsReadOnly);
             foreach (var (a, b) in pairs)
                 bDict[a] = b;
 
@@ -39,9 +43,17 @@ namespace _Fixtures.Sammlung
 
             foreach (var (a, b) in pairs)
             {
+                Assert.AreEqual(b, bDict[a]);
                 Assert.AreEqual(a, bDict.ReverseMap[b]);
                 Assert.AreEqual(b, bDict.ForwardMap[a]);
+                Assert.IsTrue(bDict.Contains(KeyValuePair.Create(a, b)));
+                Assert.IsTrue(bDict.ContainsKey(a));
+                Assert.IsTrue(bDict.ForwardMap.ContainsKey(a));
+                Assert.IsTrue(bDict.ReverseMap.ContainsKey(b));
             }
+            
+            CollectionAssert.AreEquivalent(Enumerable.Range(1, 100), bDict.Keys);
+            CollectionAssert.AreEquivalent(Enumerable.Range(100, 100), bDict.Values);
         }
 
         [TestCaseSource(nameof(BidiDicts))]
@@ -58,7 +70,54 @@ namespace _Fixtures.Sammlung
             Assert.AreEqual(0, bDict.ForwardMap.Count);
             Assert.AreEqual(0, bDict.ReverseMap.Count);
         }
-        
+
+        [TestCaseSource(nameof(BidiDicts))]
+        public void DifferentMethodsCovering(BidiDictConstructors tuple)
+        {
+            var (zf, _, _) = tuple;
+            var bDict = zf();
+            bDict.Add(KeyValuePair.Create(1, 2));
+            bDict.Add(KeyValuePair.Create(2, 3));
+
+            var bdEnum = ((IEnumerable) bDict).GetEnumerator();
+            while (bdEnum.MoveNext())
+            {
+                var (f, r) = (KeyValuePair<int, int>) bdEnum.Current;
+                Assert.IsTrue(f == 1 && r == 2 || f == 2 && r == 3);
+            }
+
+            var fwdEnum = ((IEnumerable) bDict.ForwardMap).GetEnumerator();
+            while (fwdEnum.MoveNext())
+            {
+                var (f, r) = (KeyValuePair<int, int>) fwdEnum.Current;
+                Assert.IsTrue(f == 1 && r == 2 || f == 2 && r == 3);
+            }
+            
+            CollectionAssert.AreEquivalent(new [] {1, 2}, bDict.ForwardMap.Keys);
+            CollectionAssert.AreEquivalent(new [] {2, 3}, bDict.ForwardMap.Values);
+            CollectionAssert.AreEquivalent(new [] {2, 3}, bDict.ReverseMap.Keys);
+            CollectionAssert.AreEquivalent(new [] {1, 2}, bDict.ReverseMap.Values);
+            CollectionAssert.AreEquivalent(new[] {KeyValuePair.Create(1, 2), KeyValuePair.Create(2, 3)},
+                bDict.ForwardMap);
+            CollectionAssert.AreEquivalent(new[] {KeyValuePair.Create(2, 1), KeyValuePair.Create(3, 2)},
+                bDict.ReverseMap);
+            
+            Assert.IsTrue(bDict.ForwardMap.TryGetValue(1, out var fwdValue));
+            Assert.AreEqual(2, fwdValue);
+            Assert.IsTrue(bDict.ReverseMap.TryGetValue(2, out var revValue));
+            Assert.AreEqual(1, revValue);
+            
+            Assert.AreEqual(2, bDict.ForwardMap[1]);
+            Assert.AreEqual(1, bDict.ReverseMap[2]);
+            Assert.IsTrue(bDict.TryGetValue(1, out var value));
+            Assert.AreEqual(2, value);
+            Assert.IsFalse(bDict.TryGetValue(3, out _));
+            Assert.IsFalse(bDict.Remove(3));
+            Assert.IsTrue(bDict.Remove(2));
+            Assert.IsTrue(bDict.Remove(KeyValuePair.Create(1, 2)));
+            Assert.AreEqual(0, bDict.Count);
+        }
+
         [TestCaseSource(nameof(BidiDicts))]
         public void ConstructorTests(BidiDictConstructors tuple)
         {
@@ -78,6 +137,17 @@ namespace _Fixtures.Sammlung
             Assert.AreEqual(0, b2.Count);
             
             var _ = ef(d2.AsEnumerable());
+        }
+
+        [TestCaseSource(nameof(BidiDicts))]
+        public void CopyTo_SunnyPath(BidiDictConstructors tuple)
+        {
+            var (_, _, ef) = tuple;
+            var pairs = Enumerable.Range(1, 100).Zip(Enumerable.Range(100, 100).Reverse()).ToArray();
+            var bDict = ef(pairs.Select(t => KeyValuePair.Create<int, int>(t.First, t.Second)));
+            var array = new KeyValuePair<int, int>[100];
+            bDict.CopyTo(array, 0);
+            CollectionAssert.AreEquivalent(bDict, array);
         }
     }
 }

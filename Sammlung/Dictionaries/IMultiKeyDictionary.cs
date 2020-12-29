@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Sammlung.Interfaces
+namespace Sammlung.Dictionaries
 {
     /// <summary>
     /// The <see cref="IMultiKeyDictionary{TKey,TValue}"/> extends the ability of a
