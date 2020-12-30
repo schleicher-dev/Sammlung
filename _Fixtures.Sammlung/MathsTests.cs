@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using Sammlung.Utilities;
+using Sammlung.Utilities.Math;
 
 namespace _Fixtures.Sammlung
 {

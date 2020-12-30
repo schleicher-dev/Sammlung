@@ -1,7 +1,7 @@
 using System;
 using System.Threading;
 
-namespace Sammlung.Utilities
+namespace Sammlung.Utilities.Math
 {
     internal class IntOperationProvider : IOperationProvider<int>
     {

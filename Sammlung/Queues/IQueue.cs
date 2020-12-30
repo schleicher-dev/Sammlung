@@ -2,8 +2,13 @@ using System.Collections.Generic;
 
 namespace Sammlung.Queues
 {
-    public interface IQueue<T> : ICollection<T>
+    public interface IQueue<T>
     {
+        /// <summary>
+        /// Returns the number of elements in this collection.
+        /// </summary>
+        int Count { get; }
+        
         /// <summary>
         /// Pushes the passed element to the end of the collection.
         /// </summary>

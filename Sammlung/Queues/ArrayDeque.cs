@@ -48,8 +48,6 @@ namespace Sammlung.Queues
         private int IncrementPointer(int pointer) => pointer < Capacity - 1 ? pointer + 1 : 0;
         private int DecrementPointer(int pointer) => 0 < pointer ? pointer - 1 : Capacity - 1;
 
-        #region IDeque<T>
-
         private int Capacity => _array.Length;
 
         /// <inheritdoc />
@@ -136,58 +134,5 @@ namespace Sammlung.Queues
             element = _array[_leftPointer];
             return true;
         }
-
-        #endregion
-
-        #region ICollection<T>
-
-        /// <inheritdoc />
-        public bool IsReadOnly => false;
-
-        /// <inheritdoc />
-        public bool Contains(T item) => GetValues().Contains(item);
-
-        /// <inheritdoc />
-        public void CopyTo(T[] array, int arrayIndex)
-        {
-            if (array.Length < arrayIndex + Count)
-                throw ExceptionsHelper.ValuesNotFittingIntoArray(nameof(array));
-            using var values = GetEnumerator();
-            for (var i = arrayIndex; values.MoveNext(); ++i)
-                array[i] = values.Current;
-        }
-
-        /// <inheritdoc />
-        public void Add(T item) => throw ExceptionsHelper.NewCallToMethodNotSupportedException();
-        
-        /// <inheritdoc />
-        public bool Remove(T item) => throw ExceptionsHelper.NewCallToMethodNotSupportedException();
-
-        /// <inheritdoc />
-        public void Clear()
-        {
-            _leftPointer = 0;
-            _rightPointer = 0;
-            Count = 0;
-        }
-        
-        private IEnumerable<int> GetIndices()
-        {
-            if (Count == 0) return Enumerable.Empty<int>();
-            var ptrDiff = _rightPointer - _leftPointer;
-            if (0 < ptrDiff) return Enumerable.Range(_leftPointer, ptrDiff);
-            return Enumerable.Range(_leftPointer, Capacity - _leftPointer)
-                .Concat(Enumerable.Range(0, _rightPointer));
-        }
-
-        private IEnumerable<T> GetValues() => GetIndices().Select(i => _array[i]);
-
-        /// <inheritdoc />
-        public IEnumerator<T> GetEnumerator() => GetValues().GetEnumerator();
-
-        /// <inheritdoc />
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-        #endregion
     }
 }

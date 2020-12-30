@@ -26,19 +26,16 @@ namespace _Fixtures.Sammlung
             var capCtor = constructors.Item1;
 
             var buffer = capCtor(1);
-            Assert.IsFalse(buffer.IsReadOnly);
             buffer.PushLeft(1);
             buffer.PushLeft(2);
             buffer.PushLeft(3);
             buffer.PushLeft(4);
             buffer.PushLeft(5);
-            Assert.AreEqual(Enumerable.Range(1, 5).Reverse(), buffer);
-            Assert.IsTrue(buffer.Contains(1));
-            Assert.IsTrue(buffer.Contains(2));
-            Assert.IsTrue(buffer.Contains(3));
-            Assert.IsTrue(buffer.Contains(4));
-            Assert.IsTrue(buffer.Contains(5));
-            Assert.IsFalse(buffer.Contains(0));
+            Assert.AreEqual(1, buffer.PopRight());
+            Assert.AreEqual(2, buffer.PopRight());
+            Assert.AreEqual(3, buffer.PopRight());
+            Assert.AreEqual(4, buffer.PopRight());
+            Assert.AreEqual(5, buffer.PopRight());
         }
 
         [TestCaseSource(nameof(Buffers))]
@@ -52,7 +49,6 @@ namespace _Fixtures.Sammlung
                 buffer.PushRight(i);
                 Assert.AreEqual(i, buffer.PeekRight());
                 Assert.AreEqual(1, buffer.PeekLeft());
-                CollectionAssert.AreEqual(Enumerable.Range(1, i), buffer);
             }
         }
 
@@ -67,7 +63,6 @@ namespace _Fixtures.Sammlung
                 buffer.PushLeft(i);
                 Assert.AreEqual(i, buffer.PeekLeft());
                 Assert.AreEqual(1, buffer.PeekRight());
-                CollectionAssert.AreEqual(Enumerable.Range(1, i).Reverse(), buffer);
             }
         }
 
@@ -100,15 +95,14 @@ namespace _Fixtures.Sammlung
                     list.Add(buffer.PopRight());
             }
 
-            CollectionAssert.AreEqual(new[] {16, 15}, buffer);
-            
+            Assert.AreEqual(15, buffer.PopRight());
+            Assert.AreEqual(16, buffer.PopRight());
+
             var expected = new[]
             {
                 1, 6, 2, 10, 3, 4, 18, 17, 5, 7, 8, 9, 22, 21, 20, 19, 11, 12, 24, 23, 13, 25, 14
             };
             CollectionAssert.AreEqual(expected, list);
-            buffer.Clear();
-            CollectionAssert.IsEmpty(buffer);
         }
 
         [TestCaseSource(nameof(Buffers))]
@@ -120,29 +114,6 @@ namespace _Fixtures.Sammlung
             Assert.Throws<InvalidOperationException>(() => buffer.PopRight());
             Assert.IsFalse(buffer.TryPopLeft(out _));
             Assert.Throws<InvalidOperationException>(() => buffer.PopLeft());
-            CollectionAssert.IsEmpty(buffer);
-        }
-
-        [TestCaseSource(nameof(Buffers))]
-        public void CopyToWrongLocationInArray(DequeConstructors<int> constructors)
-        {
-            var capCtor = constructors.Item1;
-            var buffer = capCtor(1);
-            buffer.PushLeft(0);
-            var array = new int[buffer.Count];
-            Assert.Throws<ArgumentException>(() => buffer.CopyTo(array, 1));
-            buffer.CopyTo(array, 0);
-            CollectionAssert.AreEqual(buffer, array);
-        }
-
-
-        [TestCaseSource(nameof(Buffers))]
-        public void BufferDoesNotSupportAddAndRemove(DequeConstructors<int> constructors)
-        {
-            var capCtor = constructors.Item1;
-            var buffer = capCtor(1);
-            Assert.Throws<NotSupportedException>(() => buffer.Add(0));
-            Assert.Throws<NotSupportedException>(() => buffer.Remove(0));
         }
     }
 }
