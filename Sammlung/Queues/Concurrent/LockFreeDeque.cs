@@ -15,12 +15,10 @@ namespace Sammlung.Queues.Concurrent
     {
         private Anchor _anchor;
         private int _count;
-        private SpinWait _spinWait;
 
         public LockFreeDeque()
         {
             _anchor = new Anchor();
-            _spinWait = new SpinWait();
         }
 
         /// <inheritdoc />
@@ -38,10 +36,7 @@ namespace Sammlung.Queues.Concurrent
             anchor.State = state;
         }
 
-        private void BackOff()
-        {
-            _spinWait.SpinOnce();
-        }
+        private void BackOff() => Thread.Yield();
 
         private void Stabilize(Anchor anchor)
         {
@@ -53,8 +48,7 @@ namespace Sammlung.Queues.Concurrent
         {
             if (_anchor != anchor) return;
             var newNode = anchor.LeftMost;
-            var next = newNode?.Right;
-            if (next == null) return;
+            var next = newNode.Right;
             var nextPrev = next.Left;
             if (nextPrev != newNode)
             {
@@ -72,7 +66,6 @@ namespace Sammlung.Queues.Concurrent
             if (_anchor != anchor) return;
             var newNode = anchor.RightMost;
             var prev = newNode.Left;
-            if (prev == null) return;
             var prevNext = prev.Right;
             if (prevNext != newNode)
             {

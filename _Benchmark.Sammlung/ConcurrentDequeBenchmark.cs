@@ -1,12 +1,12 @@
-using System.Linq;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Jobs;
 using Sammlung.Queues;
 using Sammlung.Queues.Concurrent;
 
 namespace _Benchmark.Sammlung
 {
+    [ExcludeFromCodeCoverage]
     public class ConcurrentDequeBenchmark
     {
         private int[] _data;
