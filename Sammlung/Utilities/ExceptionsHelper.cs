@@ -41,18 +41,5 @@ namespace Sammlung.Utilities
             var msg = GetFormattedString(nameof(ErrorMessages.HeapUpdateFailed), methodName);
             return new InvalidOperationException(msg, innerException);
         }
-
-        public static NotSupportedException NewCallToMethodNotSupportedException(Exception innerException = null,
-            [CallerMemberName] string methodName = null)
-        {
-            var msg = GetFormattedString(nameof(ErrorMessages.CallToUnsupportedMethod), methodName);
-            return new NotSupportedException(msg, innerException);
-        }
-
-        public static ArgumentException ValuesNotFittingIntoArray(string argName, Exception innerException = null)
-        {
-            var msg = GetFormattedString(nameof(ErrorMessages.ValuesNotFittingIntoArray));
-            return new ArgumentException(argName, msg, innerException);
-        }
     }
 }

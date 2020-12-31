@@ -1,4 +1,4 @@
-namespace Sammlung.Utilities
+namespace Sammlung.Utilities.Math
 {
     internal interface IOperationProvider<T> where T : struct
     {

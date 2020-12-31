@@ -81,7 +81,6 @@ Ticked means available in the newest package.
     - [ ] Pointer Deque
         - [X] Non-Thread-Safe (Sammlung.Queues.LinkedDeque)
         - [ ] Thread-Safe, Lock-Free
-- [ ] Queues
 - [ ] Graphs
     - [ ] Undirected Graph
     - [ ] Directed Graph
@@ -110,6 +109,8 @@ Ticked means available in the newest package.
 
 - [Algorithms and Data Structures - Kurt Mehlhorn, Peter Sanders](https://www.springer.com/de/book/9783540779773) ::
   ISBN: 978-3-540-77977-3
+- [Lock-Free and Practical Doubly Linked List-Based Deques Using Single-Word Compare-and-Swap - Håkan Sundell, Philippas Tsigas](https://link.springer.com/chapter/10.1007/11516798_18) :: 
+  ISBN: 978-3-540-31584-1
   
 ## Documentation
 
