@@ -19,7 +19,7 @@ namespace _Fixtures.Sammlung
             new DequeConstructors<int>(c => new ArrayDeque<int>(c)),
             new DequeConstructors<int>(c => BlockingDeque.Wrap(new ArrayDeque<int>(c))),
             new DequeConstructors<int>(c => new LinkedDeque<int>()),
-            new DequeConstructors<int>(c => new LockFreeDeque<int>())
+            new DequeConstructors<int>(c => new LockFreeLinkedDeque<int>())
         };
 
         [TestCaseSource(nameof(Buffers))]

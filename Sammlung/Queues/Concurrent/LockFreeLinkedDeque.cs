@@ -3,7 +3,7 @@ using System.Threading;
 namespace Sammlung.Queues.Concurrent
 {
     /// <summary>
-    /// The <see cref="LockFreeDeque{T}"/> is a <seealso cref="IDeque{T}"/> type which does not use any locks to achieve
+    /// The <see cref="LockFreeLinkedDeque{T}"/> is a <seealso cref="IDeque{T}"/> type which does not use any locks to achieve
     /// concurrency.
     /// </summary>
     /// <remarks>
@@ -11,12 +11,12 @@ namespace Sammlung.Queues.Concurrent
     /// DOI: 10.1.1.93.7492
     /// </remarks>
     /// <typeparam name="T"></typeparam>
-    public class LockFreeDeque<T> : DequeBase<T>
+    public class LockFreeLinkedDeque<T> : DequeBase<T>
     {
         private Anchor _anchor;
         private int _count;
 
-        public LockFreeDeque()
+        public LockFreeLinkedDeque()
         {
             _anchor = new Anchor();
         }

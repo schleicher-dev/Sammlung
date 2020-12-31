@@ -31,7 +31,7 @@ namespace _Benchmark.Sammlung
         [Benchmark]
         public void PushAll_LockFreeDeque()
         {
-            var deque = new LockFreeDeque<int>();
+            var deque = new LockFreeLinkedDeque<int>();
             Parallel.For(0, N, i => deque.PushLeft(i));
         }
     }

@@ -66,21 +66,18 @@ Ticked means available in the newest package.
         - [ ] Non-Thread-Safe
         - [ ] Thread-Safe, Blocking
         - [ ] Thread-Safe, Lock-Free
-- [ ] Queues
-    - [ ] Continuous Queue
+- [X] Queues
+    - [X] **All-Types:** Thread-Safe, Blocking (Sammlung.Queues.Concurrent.BlockingDeque)
+    - [X] Continuous Queue
         - [X] Non-Thread-Safe (Sammlung.Queues.ArrayDeque)
-        - [X] Thread-Safe, Blocking (Sammlung.Queues.Concurrent.BlockingArrayDeque)
-        - [ ] Thread-Safe, Lock-Free (Maybe not possible)
-    - [ ] Continuous Deque
+    - [X] Continuous Deque
         - [X] Non-Thread-Safe (Sammlung.Queues.ArrayDeque)
-        - [X] Thread-Safe, Blocking (Sammlung.Queues.Concurrent.BlockingArrayDeque)
-        - [ ] **Maybe not possible:** Thread-Safe, Lock-Free
-    - [ ] Pointer Queue
+    - [X] Pointer Queue
         - [X] Non-Thread-Safe (Sammlung.Queues.LinkedDeque)
-        - [ ] Thread-Safe, Lock-Free
-    - [ ] Pointer Deque
+        - [X] Thread-Safe, Lock-Free (Sammlung.Queues.Concurrent.LockFreeLinkedDeque)
+    - [X] Pointer Deque
         - [X] Non-Thread-Safe (Sammlung.Queues.LinkedDeque)
-        - [ ] Thread-Safe, Lock-Free
+        - [X] Thread-Safe, Lock-Free (Sammlung.Queues.Concurrent.LockFreeLinkedDeque)
 - [ ] Graphs
     - [ ] Undirected Graph
     - [ ] Directed Graph
@@ -107,10 +104,8 @@ Ticked means available in the newest package.
 
 ## Literature
 
-- [Algorithms and Data Structures - Kurt Mehlhorn, Peter Sanders](https://www.springer.com/de/book/9783540779773) ::
-  ISBN: 978-3-540-77977-3
-- [Lock-Free and Practical Doubly Linked List-Based Deques Using Single-Word Compare-and-Swap - Håkan Sundell, Philippas Tsigas](https://link.springer.com/chapter/10.1007/11516798_18) :: 
-  ISBN: 978-3-540-31584-1
+- [Algorithms and Data Structures - Kurt Mehlhorn, Peter Sanders](https://doi.org/10.1007/978-3-540-77978-0)
+- [CAS-Based Lock-Free Algorithm for Shared Deques - Maged M. Michael](https://doi.org/10.1007/978-3-540-45209-6_92)
   
 ## Documentation
 
