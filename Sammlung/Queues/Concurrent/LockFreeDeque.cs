@@ -1,465 +1,278 @@
-using System;
-using System.Net.NetworkInformation;
 using System.Threading;
-using Sammlung.Utilities;
-using Sammlung.Utilities.Patterns;
 
 namespace Sammlung.Queues.Concurrent
 {
     /// <summary>
-    /// 
+    /// The <see cref="LockFreeDeque{T}"/> is a <seealso cref="IDeque{T}"/> type which does not use any locks to achieve
+    /// concurrency.
     /// </summary>
-    /// <remarks>Ideas taken from: http://www.non-blocking.com/download/sunt04_deque_tr.pdf</remarks>
+    /// <remarks>
+    /// Inspiration from: http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.93.7492&amp;rep=rep1&amp;type=pdf
+    /// DOI: 10.1.1.93.7492
+    /// </remarks>
     /// <typeparam name="T"></typeparam>
-    public class LockFreeDeque<T> : IDeque<T>
+    public class LockFreeDeque<T> : DequeBase<T>
     {
-        private readonly Node _head;
-        private readonly Node _tail;
-
-        /// <inheritdoc />
-        public int Count { get; }
+        private Anchor _anchor;
+        private int _count;
+        private SpinWait _spinWait;
 
         public LockFreeDeque()
         {
-            _head = CreateNode(default);
-            _tail = CreateNode(default);
-
-            _head.Link = new Link(null, _tail, false);
-            _tail.Link = new Link(_head, null, false);
-        }
-
-        private static Node CreateNode(T value) => new Node {Value = value};
-
-        private static Node CopyNode(Node node) => node;
-
-        private static void ReleaseNode(Node node) { }
-
-        private static void ReleaseReferences(Node node)
-        {
-            ReleaseNode(node.Link?.Prev);
-            ReleaseNode(node.Link?.Next);
-        }
-        
-        private static Node ReadPrev(Link link) => !link.DeleteMark ? link.Prev : null;
-        private static Node ReadNext(Link link) => !link.DeleteMark ? link.Next : null;
-        private static Node ReadPrevDel(Link link) => link.Prev;
-        private static Node ReadNextDel(Link link) => link.Next;
-        private static bool CompareAndSwap(ref Link subject, Link compare, Link exchange)
-        {
-            return Interlocked.CompareExchange(ref subject, exchange, compare) == compare;
-        }
-
-        private static void BackOff() => Thread.Yield();
-
-        private static void RemoveCrossReference(Node node)
-        {
-            while (true)
-            {
-                var link1 = node.Link;
-                { // Remove prev reference
-                    var prev = link1.Prev;
-                    if (prev.Link.DeleteMark)
-                    {
-                        var prev2 = ReadPrevDel(prev.Link);
-                        node.Link = new Link(prev2, link1.Next, true);
-                        ReleaseNode(prev);
-                        continue;
-                    }
-                }
-                { // Remove next reference
-                    var next = link1.Next;
-                    if (next.Link.DeleteMark)
-                    {
-                        var next2 = ReadNextDel(next.Link);
-                        node.Link = new Link(link1.Prev, next2, true);
-                        ReleaseNode(next);
-                        continue;
-                    }
-                }
-
-                break;
-            }
-        }
-
-        private static void DeleteNext(Node node)
-        {
-            var lastDeleteMark = true;
-            var prev = ReadPrevDel(node.Link);
-            var next = ReadNextDel(node.Link);
-            while (true)
-            {
-                if (ReferenceEquals(prev, next)) break;
-                if (next.Link.DeleteMark)
-                {
-                    var next2 = ReadNextDel(next.Link);
-                    ReleaseNode(next);
-                    next = next2;
-                    continue;
-                }
-
-                var prev2 = ReadNext(prev.Link);
-                if (ReferenceEquals(prev2, null))
-                {
-                    if (!lastDeleteMark)
-                    {
-                        DeleteNext(prev);
-                        lastDeleteMark = true;
-                    }
-
-                    prev2 = ReadPrevDel(prev.Link);
-                    ReleaseNode(prev);
-                    prev = prev2;
-                    continue;
-                }
-
-                var link1 = new Link(prev.Link.Prev, prev2, false);
-                if (!ReferenceEquals(prev2, node))
-                {
-                    lastDeleteMark = false;
-                    ReleaseNode(prev);
-                    prev = prev2;
-                    continue;
-                }
-                ReleaseNode(prev2);
-
-                var link2 = new Link(link1.Prev, node.Link.Next, false);
-                if (CompareAndSwap(ref prev.Link, link1, link2))
-                {
-                    CopyNode(link2.Next);
-                    ReleaseNode(node);
-                    break;
-                }
-
-                BackOff();
-            }
-            ReleaseNode(prev);
-            ReleaseNode(next);
-        }
-
-        private static Node HelpInsert(Node prev, Node node)
-        {
-            var lastDeleteMark = true;
-            while (true)
-            {
-                var prev2 = ReadNext(prev.Link);
-                if (ReferenceEquals(prev2, null))
-                {
-                    if (!lastDeleteMark)
-                    {
-                        DeleteNext(prev);
-                        lastDeleteMark = true;
-                    }
-
-                    prev2 = ReadPrevDel(prev.Link);
-                    ReleaseNode(prev);
-                    prev = prev2;
-                    continue;
-                }
-
-                var link1 = node.Link;
-                if (link1.DeleteMark)
-                {
-                    ReleaseNode(prev2);
-                    break;
-                }
-
-                if (!ReferenceEquals(prev2, node))
-                {
-                    lastDeleteMark = false;
-                    ReleaseNode(prev);
-                    prev = prev2;
-                    continue;
-                }
-                ReleaseNode(prev2);
-
-                var link2 = new Link(prev, link1.Next, false);
-                if (CompareAndSwap(ref node.Link, link1, link2))
-                {
-                    CopyNode(prev);
-                    ReleaseNode(link1.Prev);
-                    if (prev.Link.DeleteMark) continue;
-                    break;
-                }
-                
-                BackOff();
-            }
-
-            return prev;
-        }
-
-        private static void PushCommon(Node node, Node next)
-        {
-            while (true)
-            {
-                var link1 = next.Link;
-                var link2 = new Link(node, link1.Next, false);
-                if (link1.DeleteMark || node.Link.DeleteMark || !ReferenceEquals(node.Link.Next, next))
-                    break;
-                if (CompareAndSwap(ref next.Link, link1, link2))
-                {
-                    CopyNode(node);
-                    ReleaseNode(link1.Prev);
-                    if (node.Link.DeleteMark)
-                    {
-                        var prev2 = CopyNode(node);
-                        prev2 = HelpInsert(prev2, next);
-                        ReleaseNode(prev2);
-                    }
-                    break;
-                }
-                
-                BackOff();
-            }
-            ReleaseNode(next);
-            ReleaseNode(node);
+            _anchor = new Anchor();
+            _spinWait = new SpinWait();
         }
 
         /// <inheritdoc />
-        public void PushLeft(T element)
+        public override int Count => _count;
+
+        private static Node CreateNode(T value) => new Node(value);
+
+        private static bool CompareAndSwap<TPtr>(ref TPtr field, TPtr exchange, TPtr compare) where TPtr : class =>
+            Interlocked.CompareExchange(ref field, exchange, compare) == compare;
+
+        private static void UpdateAnchor(Anchor anchor, Node leftMost, Node rightMost, State state)
+        {
+            anchor.LeftMost = leftMost;
+            anchor.RightMost = rightMost;
+            anchor.State = state;
+        }
+
+        private void BackOff()
+        {
+            _spinWait.SpinOnce();
+        }
+
+        private void Stabilize(Anchor anchor)
+        {
+            if (anchor.State == State.LeftPush) StabilizeLeft(anchor);
+            else StabilizeRight(anchor);
+        }
+
+        private void StabilizeLeft(Anchor anchor)
+        {
+            if (_anchor != anchor) return;
+            var newNode = anchor.LeftMost;
+            var next = newNode?.Right;
+            if (next == null) return;
+            var nextPrev = next.Left;
+            if (nextPrev != newNode)
+            {
+                if (_anchor != anchor) return;
+                if (!CompareAndSwap(ref next.Left, newNode, nextPrev)) return;
+            }
+
+            var swapAnchor = new Anchor
+                {LeftMost = anchor.LeftMost, RightMost = anchor.RightMost, State = State.Stable};
+            CompareAndSwap(ref _anchor, swapAnchor, anchor);
+        }
+
+        private void StabilizeRight(Anchor anchor)
+        {
+            if (_anchor != anchor) return;
+            var newNode = anchor.RightMost;
+            var prev = newNode.Left;
+            if (prev == null) return;
+            var prevNext = prev.Right;
+            if (prevNext != newNode)
+            {
+                if (_anchor != anchor) return;
+                if (!CompareAndSwap(ref prev.Right, newNode, prevNext)) return;
+            }
+
+            var swapAnchor = new Anchor
+                {LeftMost = anchor.LeftMost, RightMost = anchor.RightMost, State = State.Stable};
+            CompareAndSwap(ref _anchor, swapAnchor, anchor);
+        }
+
+        /// <inheritdoc />
+        public override void PushLeft(T element)
         {
             var node = CreateNode(element);
-            var prev = CopyNode(_head);
-            var next = ReadNext(prev.Link);
+            var swapAnchor = new Anchor();
             while (true)
             {
-                var link1 = prev.Link;
-                if (!ReferenceEquals(link1.Next, next))
+                var anchor = _anchor;
+                if (anchor.LeftMost == null)
                 {
-                    ReleaseNode(next);
-                    next = ReadNext(prev.Link);
-                    continue;
+                    UpdateAnchor(swapAnchor, node, node, State.Stable);
+                    if (CompareAndSwap(ref _anchor, swapAnchor, anchor)) break;
                 }
-
-                node.Link = new Link(prev, link1.Next, false);
-                var link2 = new Link(link1.Prev, node, false);
-                if (CompareAndSwap(ref prev.Link, link1, link2))
+                else if (anchor.State == State.Stable)
                 {
-                    CopyNode(node);
+                    node.Right = anchor.LeftMost;
+                    UpdateAnchor(swapAnchor, node, anchor.RightMost, State.LeftPush);
+                    if (!CompareAndSwap(ref _anchor, swapAnchor, anchor)) continue;
+
+                    StabilizeLeft(swapAnchor);
                     break;
                 }
+                else
+                {
+                    Stabilize(anchor);
+                }
                 
                 BackOff();
             }
             
-            PushCommon(node, next);
+            Interlocked.Increment(ref _count);
         }
 
         /// <inheritdoc />
-        public T PopRight() =>
-            TryPopRight(out var element) ? element : throw ExceptionsHelper.NewEmptyCollectionException();
-
-        /// <inheritdoc />
-        public bool TryPopRight(out T element)
+        public override bool TryPopRight(out T element)
         {
             element = default;
-            
-            var next = CopyNode(_tail);
+            var swapAnchor = new Anchor();
+            Anchor anchor;
             while (true)
             {
-                var node = ReadPrev(next.Link);
-                var link1 = node.Link;
-                if (!ReferenceEquals(link1.Next, next) || link1.DeleteMark)
+                anchor = _anchor;
+                if (anchor.RightMost == null) return false;
+                if (anchor.LeftMost == anchor.RightMost)
                 {
-                    HelpInsert(node, next);
-                    ReleaseNode(node);
-                    continue;
+                    UpdateAnchor(swapAnchor, null, null, State.Stable);
+                    if (CompareAndSwap(ref _anchor, swapAnchor, anchor)) break;
+                }
+                else if (anchor.State == State.Stable)
+                {
+                    UpdateAnchor(swapAnchor, anchor.LeftMost, anchor.RightMost.Left, State.Stable);
+                    if (CompareAndSwap(ref _anchor, swapAnchor, anchor)) break;
+                }
+                else
+                {
+                    Stabilize(anchor);
                 }
 
-                if (ReferenceEquals(node, _head))
-                {
-                    ReleaseNode(next);
-                    ReleaseNode(node);
-                    return false;
-                }
-
-                var prev = CopyNode(link1.Prev);
-                var link2 = new Link(link1.Prev, link1.Next, true);
-                if (CompareAndSwap(ref node.Link, link1, link2))
-                {
-                    DeleteNext(node);
-                    prev = HelpInsert(prev, next);
-                    ReleaseNode(prev);
-                    ReleaseNode(next);
-
-                    element = node.Value;
-                    RemoveCrossReference(node);
-                    ReleaseNode(node);
-                    return true;
-                }
-                
-                ReleaseNode(prev);
-                ReleaseNode(node);
                 BackOff();
             }
+
+            Interlocked.Decrement(ref _count);
+            element = anchor.RightMost.Value;
+            return true;
         }
 
         /// <inheritdoc />
-        public T PeekRight()
+        public override bool TryPeekRight(out T element)
         {
-            throw new System.NotImplementedException();
+            var anchor = _anchor;
+            if (anchor.RightMost == null)
+            {
+                element = default;
+                return false;
+            }
+
+            element = anchor.RightMost.Value;
+            return true;
         }
 
         /// <inheritdoc />
-        public bool TryPeekRight(out T element)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        /// <inheritdoc />
-        public void PushRight(T element)
+        public override void PushRight(T element)
         {
             var node = CreateNode(element);
-            var next = CopyNode(_tail);
-            var prev = ReadPrev(next.Link);
+            var swapAnchor = new Anchor();
             while (true)
             {
-                var link1 = prev.Link;
-                if (!ReferenceEquals(link1.Next, next) || prev.Link.DeleteMark)
+                var anchor = _anchor;
+                if (anchor.RightMost == null)
                 {
-                    prev = HelpInsert(prev, next);
-                    continue;
+                    UpdateAnchor(swapAnchor, node, node, State.Stable);
+                    if (CompareAndSwap(ref _anchor, swapAnchor, anchor)) break;
                 }
-
-                node.Link = new Link(prev, link1.Next, false);
-                var link2 = new Link(link1.Prev, node, false);
-                if (CompareAndSwap(ref prev.Link, link1, link2))
+                else if (anchor.State == State.Stable)
                 {
-                    CopyNode(node);
+                    node.Left = anchor.RightMost;
+                    UpdateAnchor(swapAnchor, anchor.LeftMost, node, State.RightPush);
+                    if (!CompareAndSwap(ref _anchor, swapAnchor, anchor)) continue;
+
+                    StabilizeRight(swapAnchor);
                     break;
                 }
+                else
+                {
+                    Stabilize(anchor);
+                }
                 
                 BackOff();
             }
-            
-            PushCommon(node, next);
+
+            Interlocked.Increment(ref _count);
         }
 
         /// <inheritdoc />
-        public T PopLeft() =>
-            TryPopLeft(out var element) ? element : throw ExceptionsHelper.NewEmptyCollectionException();
-
-        /// <inheritdoc />
-        public bool TryPopLeft(out T element)
+        public override bool TryPopLeft(out T element)
         {
             element = default;
-            
-            var prev = CopyNode(_head);
+            var swapAnchor = new Anchor();
+            Anchor anchor;
             while (true)
             {
-                var node = ReadNext(prev.Link);
-                if (ReferenceEquals(node, _tail))
+                anchor = _anchor;
+                if (anchor.LeftMost == null) return false;
+                if (anchor.LeftMost == anchor.RightMost)
                 {
-                    ReleaseNode(node);
-                    ReleaseNode(prev);
-                    return false;
+                    UpdateAnchor(swapAnchor, null, null, State.Stable);
+                    if (CompareAndSwap(ref _anchor, swapAnchor, anchor)) break;
                 }
-
-                var link1 = node.Link;
-                if (link1.DeleteMark)
+                else if (anchor.State == State.Stable)
                 {
-                    DeleteNext(node);
-                    ReleaseNode(node);
-                    continue;
+                    UpdateAnchor(swapAnchor, anchor.LeftMost.Right, anchor.RightMost, State.Stable);
+                    if (CompareAndSwap(ref _anchor, swapAnchor, anchor)) break;
                 }
-
-                var next = CopyNode(link1.Next);
-                var link2 = new Link(link1.Prev, link1.Next, true);
-                if (CompareAndSwap(ref node.Link, link1, link2))
+                else
                 {
-                    DeleteNext(node);
-                    prev = HelpInsert(prev, next);
-                    ReleaseNode(prev);
-                    ReleaseNode(next);
-                    
-                    element = node.Value;
-                    RemoveCrossReference(node);
-                    ReleaseNode(node);
-                    return true;
+                    Stabilize(anchor);
                 }
                 
-                ReleaseNode(node);
-                ReleaseNode(next);
                 BackOff();
             }
+
+            Interlocked.Decrement(ref _count);
+            element = anchor.LeftMost.Value;
+            return true;
         }
 
         /// <inheritdoc />
-        public T PeekLeft()
+        public override bool TryPeekLeft(out T element)
         {
-            throw new System.NotImplementedException();
+            var anchor = _anchor;
+            if (anchor.LeftMost == null)
+            {
+                element = default;
+                return false;
+            }
+
+            element = anchor.LeftMost.Value;
+            return true;
         }
 
-        /// <inheritdoc />
-        public bool TryPeekLeft(out T element)
+        #region InnerClases
+
+        private enum State
         {
-            throw new System.NotImplementedException();
+            Stable,
+            RightPush,
+            LeftPush
         }
 
-        #region Internal Classes
-
-        private class Link
+        private sealed class Node
         {
-            public Node Prev;
-            public Node Next;
-            public bool DeleteMark;
+            public Node Left;
+            public Node Right;
+            public readonly T Value;
 
-            public Link() : this(null, null, false) { }
-
-            public Link(Node prev, Node next, bool deleteMark)
+            public Node(T value)
             {
-                Prev = prev;
-                Next = next;
-                DeleteMark = deleteMark;
-            }
-
-            /// <inheritdoc />
-            public override bool Equals(object? obj) => Equals(obj as Link);
-
-            protected bool Equals(Link other)
-            {
-                return ReferenceEquals(this, other) || !ReferenceEquals(other, null) &&
-                       Equals(Prev, other.Prev) && Equals(Next, other.Next) && DeleteMark == other.DeleteMark;
-            }
-
-            /// <inheritdoc />
-            public override int GetHashCode()
-            {
-                return HashCode.Combine(Prev, Next, DeleteMark);
-            }
-
-            public static bool operator ==(Link left, Link right)
-            {
-                return Equals(left, right);
-            }
-
-            public static bool operator !=(Link left, Link right)
-            {
-                return !Equals(left, right);
+                Value = value;
+                Left = null;
+                Right = null;
             }
         }
 
-        private class Node
+        private sealed class Anchor
         {
-            public T Value;
-            public Link Link;
-        }
-
-        
-        private class NodeObjectPool : ObjectPoolBase<Node>
-        {
-            /// <inheritdoc />
-            public NodeObjectPool(int maxPoolSize = DefaultMaxPoolSize) : base(maxPoolSize) { }
-        
-            /// <inheritdoc />
-            protected override Node CreateInstance() => new Node();
-        
-            /// <inheritdoc />
-            protected override Node ResetInstance(Node instance)
-            {
-                instance.Value = default;
-                instance.Link = default;
-                return instance;
-            }
+            public Node LeftMost;
+            public Node RightMost;
+            public State State;
         }
 
         #endregion

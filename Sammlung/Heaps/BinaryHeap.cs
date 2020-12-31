@@ -2,15 +2,23 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Threading;
+using Sammlung.Utilities.Container;
+using Sammlung.Utilities.Patterns;
 
 namespace Sammlung.Heaps
 {
-    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = Justifications.PublicApiJustification)]
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", 
+        Justification = Justifications.PublicApiJustification)]
     public sealed class BinaryHeap<TKey, TValue> : HeapBase<TKey, TValue>
     {
+        private static readonly Lazy<BoxObjectPool<TKey, TValue>> BoxObjectPoolLoader =
+            new Lazy<BoxObjectPool<TKey, TValue>>(LazyThreadSafetyMode.PublicationOnly);
+        private static BoxObjectPool<TKey, TValue> BoxObjectPool => BoxObjectPoolLoader.Value;
+        
         private readonly IComparer<TKey> _keyComparer;
         private readonly IEqualityComparer<TValue> _valueComparer;
-        private readonly List<KeyValuePair<TKey, TValue>> _binaryHeap;
+        private readonly List<Box<TKey, TValue>> _binaryHeap;
         
         public BinaryHeap() : this(0, Comparer<TKey>.Default, EqualityComparer<TValue>.Default) { }
 
@@ -25,7 +33,7 @@ namespace Sammlung.Heaps
         {
             _keyComparer = keyComparer ?? throw new ArgumentNullException(nameof(keyComparer));
             _valueComparer = valueComparer ?? throw new ArgumentNullException(nameof(valueComparer));
-            _binaryHeap = containers.ToList();
+            _binaryHeap = containers.Select(kv => BoxObjectPool.Get(kv.Key, kv.Value)).ToList();
             
             // Sort by key. This creates heap order implicitly.
             _binaryHeap.Sort((kv1, kv2) => _keyComparer.Compare(kv1.Key, kv2.Key));
@@ -35,7 +43,7 @@ namespace Sammlung.Heaps
         {
             _keyComparer = keyComparer ?? throw new ArgumentNullException(nameof(keyComparer));
             _valueComparer = valueComparer ?? throw new ArgumentNullException(nameof(valueComparer));
-            _binaryHeap = new List<KeyValuePair<TKey, TValue>>(capacity);
+            _binaryHeap = new List<Box<TKey, TValue>>(capacity);
         }
 
         public override int Count => _binaryHeap.Count;
@@ -62,6 +70,9 @@ namespace Sammlung.Heaps
             // Assign item and remove it from mapping.
             value = root.Value;
             
+            // Give back reference
+            BoxObjectPool.Return(root);
+            
             // If there aren't any elements left, no sifting is needed.
             if (1 < Count) SiftDown(0);
             
@@ -70,7 +81,7 @@ namespace Sammlung.Heaps
 
         public override void Push(TKey key, TValue value)
         {
-            var container = KeyValuePair.Create(key, value); 
+            var container = BoxObjectPool.Get(key, value); 
             _binaryHeap.Add(container);
             
             SiftUp(_binaryHeap.Count - 1);
@@ -86,7 +97,8 @@ namespace Sammlung.Heaps
             oldValue = container.Value;
 
             // Set the new value.
-            _binaryHeap[0] = KeyValuePair.Create(key, value);
+            container.Key = key;
+            container.Value = value;
             SiftDown(0);
             
             return true;
@@ -97,13 +109,13 @@ namespace Sammlung.Heaps
             if (!TryFindContainer(value, out var index, out var container))
                 return false;
 
-            _binaryHeap[index] = KeyValuePair.Create(key, container.Value);
+            container.Key = key;
             index = SiftUp(index);
             SiftDown(index);
             return true;
         }
 
-        private bool TryFindContainer(TValue value, out int index, out KeyValuePair<TKey, TValue> container)
+        private bool TryFindContainer(TValue value, out int index, out Box<TKey, TValue> container)
         {
             for (var i = 0; i < _binaryHeap.Count; ++i)
             {
@@ -152,7 +164,7 @@ namespace Sammlung.Heaps
 
         private void SiftDown(int nodeIndex)
         {
-            var (key, _) = _binaryHeap[nodeIndex];
+            var key = _binaryHeap[nodeIndex].Key;
             while (true)
             {
                 // To keep the heap invariant we have to compare the keys of both child nodes of this node.
@@ -174,8 +186,8 @@ namespace Sammlung.Heaps
                 }
                 
                 // Compare both nodes.
-                var (leftKey, _) = _binaryHeap[leftIndex];
-                var (rightKey, _) = _binaryHeap[rightIndex];
+                var leftKey = _binaryHeap[leftIndex].Key;
+                var rightKey = _binaryHeap[rightIndex].Key;
                 if (_keyComparer.Compare(key, leftKey) < 0 && _keyComparer.Compare(key, rightKey) < 0)
                     return;
                 var swapIndex = _keyComparer.Compare(leftKey, rightKey) < 0 ? leftIndex : rightIndex;

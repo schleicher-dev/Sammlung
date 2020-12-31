@@ -7,17 +7,17 @@ using Sammlung.Utilities.Concurrent;
 
 namespace Sammlung.Queues.Concurrent
 {
-    public static class BlockingArrayDeque
+    public static class BlockingDeque
     {
-        public static IDeque<T> Wrap<T>(IDeque<T> inner) => new BlockingArrayDeque<T>(inner);
+        public static IDeque<T> Wrap<T>(IDeque<T> inner) => new BlockingDeque<T>(inner);
     }
     
-    internal class BlockingArrayDeque<T> : IDeque<T>
+    internal class BlockingDeque<T> : IDeque<T>
     {
         private readonly IDeque<T> _inner;
         private readonly EnhancedReaderWriterLock _rwLock;
 
-        public BlockingArrayDeque(IDeque<T> inner)
+        public BlockingDeque(IDeque<T> inner)
         {
             _rwLock = new EnhancedReaderWriterLock(LockRecursionPolicy.SupportsRecursion);
             _inner = inner;

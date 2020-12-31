@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Threading;
 using _Fixtures.Sammlung.Extras;
 using NUnit.Framework;
 using Sammlung.Queues;
@@ -16,8 +17,9 @@ namespace _Fixtures.Sammlung
         public static readonly DequeConstructors<int>[] Buffers =
         {
             new DequeConstructors<int>(c => new ArrayDeque<int>(c)),
-            new DequeConstructors<int>(c => BlockingArrayDeque.Wrap(new ArrayDeque<int>(c))),
-            new DequeConstructors<int>(c => new LinkedDeque<int>())
+            new DequeConstructors<int>(c => BlockingDeque.Wrap(new ArrayDeque<int>(c))),
+            new DequeConstructors<int>(c => new LinkedDeque<int>()),
+            new DequeConstructors<int>(c => new LockFreeDeque<int>())
         };
 
         [TestCaseSource(nameof(Buffers))]
@@ -27,15 +29,25 @@ namespace _Fixtures.Sammlung
 
             var buffer = capCtor(1);
             buffer.PushLeft(1);
+            Assert.AreEqual(1, buffer.Count);
             buffer.PushLeft(2);
+            Assert.AreEqual(2, buffer.Count);
             buffer.PushLeft(3);
+            Assert.AreEqual(3, buffer.Count);
             buffer.PushLeft(4);
+            Assert.AreEqual(4, buffer.Count);
             buffer.PushLeft(5);
+            Assert.AreEqual(5, buffer.Count);
             Assert.AreEqual(1, buffer.PopRight());
+            Assert.AreEqual(4, buffer.Count);
             Assert.AreEqual(2, buffer.PopRight());
+            Assert.AreEqual(3, buffer.Count);
             Assert.AreEqual(3, buffer.PopRight());
+            Assert.AreEqual(2, buffer.Count);
             Assert.AreEqual(4, buffer.PopRight());
+            Assert.AreEqual(1, buffer.Count);
             Assert.AreEqual(5, buffer.PopRight());
+            Assert.AreEqual(0, buffer.Count);
         }
 
         [TestCaseSource(nameof(Buffers))]

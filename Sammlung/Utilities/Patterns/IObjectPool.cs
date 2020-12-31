@@ -4,6 +4,6 @@ namespace Sammlung.Utilities.Patterns
     {
         T Get();
         void Return(T instance);
-        void Reset(T instance);
+        T Reset(T instance);
     }
 }

@@ -7,9 +7,9 @@ namespace Sammlung.Utilities.Patterns
 {
     internal abstract class ObjectPoolBase<T> : IObjectPool<T> where T : class
     {
-        protected const int DefaultMaxPoolSize = 256;
+        private const int DefaultMaxPoolSize = 256;
         private readonly int _maxPoolSize;
-        private readonly ConcurrentBag<T> _pool;
+        private readonly ConcurrentBag<WeakReference<T>> _pool;
 
         protected ObjectPoolBase(int maxPoolSize = DefaultMaxPoolSize)
         {
@@ -18,7 +18,7 @@ namespace Sammlung.Utilities.Patterns
                 : throw new ArgumentOutOfRangeException(nameof(maxPoolSize), maxPoolSize,
                     $"{maxPoolSize} must be strictly positive");
 
-            _pool = new ConcurrentBag<T>();
+            _pool = new ConcurrentBag<WeakReference<T>>();
         }
 
         protected abstract T CreateInstance();
@@ -28,20 +28,24 @@ namespace Sammlung.Utilities.Patterns
         /// <inheritdoc />
         public T Get()
         {
-            var count = _pool.Count;
-            for (var i = 0; count == 0 && i < System.Math.Min(16, _maxPoolSize / 2); i++)
-                _pool.Add(CreateInstance());
-            return _pool.TryTake(out var item) ? item : CreateInstance();
+            while (_pool.TryTake(out var reference))
+            {
+                if (!reference.TryGetTarget(out var instance)) continue;
+                return instance;
+            }
+            
+            return CreateInstance();
         }
 
         /// <inheritdoc />
         public void Return(T instance)
         {
             if (_maxPoolSize <= _pool.Count) return;
-            _pool.Add(ResetInstance(instance));
+            var resetInstance = Reset(instance);
+            _pool.Add(new WeakReference<T>(resetInstance));
         }
 
         /// <inheritdoc />
-        public void Reset(T instance) => ResetInstance(instance);
+        public T Reset(T instance) => ResetInstance(instance);
     }
 }

@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using NUnit.Framework;
 using Sammlung.Utilities.Concurrent;
@@ -5,6 +6,7 @@ using Sammlung.Utilities.Concurrent;
 namespace _Fixtures.Sammlung
 {
     [TestFixture]
+    [ExcludeFromCodeCoverage]
     public class EnhancedReaderWriterLockTests
     {
         [Test]
