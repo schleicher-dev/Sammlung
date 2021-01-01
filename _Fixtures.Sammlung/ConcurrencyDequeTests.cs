@@ -25,26 +25,29 @@ namespace _Fixtures.Sammlung
         [TestCaseSource(nameof(Buffers))]
         public void ConcurrentlyPush(DequeConstructors<int> constructors)
         {
+            const int numItems = 5_000;
             var capCtor = constructors.Item1;
             var buffer = capCtor(1);
-            Parallel.For(0, 1_000, new ParallelOptions {MaxDegreeOfParallelism = 4}, i => buffer.PushLeft(i));
-            Parallel.For(1_000, 2_000, new ParallelOptions {MaxDegreeOfParallelism = 4}, i => buffer.PushRight(i));
-            Assert.AreEqual(2_000, buffer.Count);
+            Parallel.For(0, numItems / 2, i => buffer.PushLeft(i));
+            Parallel.For(numItems / 2, numItems, i => buffer.PushRight(i));
+            Assert.AreEqual(numItems, buffer.Count);
 
             var list = new List<int>(buffer.Count);
             while (0 < buffer.Count) list.Add(buffer.PopRight());
-            CollectionAssert.AreEquivalent(Enumerable.Range(0, 2_000), list);
+            CollectionAssert.AreEquivalent(Enumerable.Range(0, numItems), list);
         }
 
         [TestCaseSource(nameof(Buffers))]
+        [Repeat(5)]
         public void ConcurrentlyPushPopWhateverOrder(DequeConstructors<int> constructors)
         {
+            const int numItems = 100_000;
             var capCtor = constructors.Item1;
             var buffer = capCtor(1);
 
             var random = new Random(0);
             var bag = new ConcurrentBag<int>();
-            for (var i = 0; i < 50_000; i++)
+            for (var i = 0; i < numItems; i++)
                 bag.Add(random.Next(0, 6));
 
             var numElements = 0;

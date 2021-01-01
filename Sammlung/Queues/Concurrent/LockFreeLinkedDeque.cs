@@ -1,4 +1,5 @@
 using System.Threading;
+using Sammlung.Queues.Concurrent.LockFreePrimitives;
 
 namespace Sammlung.Queues.Concurrent
 {
@@ -13,23 +14,23 @@ namespace Sammlung.Queues.Concurrent
     /// <typeparam name="T"></typeparam>
     public class LockFreeLinkedDeque<T> : DequeBase<T>
     {
-        private Anchor _anchor;
+        private Anchor<T> _anchor;
         private int _count;
 
         public LockFreeLinkedDeque()
         {
-            _anchor = new Anchor();
+            _anchor = Anchor<T>.Create();
         }
 
         /// <inheritdoc />
         public override int Count => _count;
 
-        private static Node CreateNode(T value) => new Node(value);
+        private static Node<T> CreateNode(T value) => new Node<T>(value);
 
         private static bool CompareAndSwap<TPtr>(ref TPtr field, TPtr exchange, TPtr compare) where TPtr : class =>
             Interlocked.CompareExchange(ref field, exchange, compare) == compare;
 
-        private static void UpdateAnchor(Anchor anchor, Node leftMost, Node rightMost, State state)
+        private static void UpdateAnchor(Anchor<T> anchor, Node<T> leftMost, Node<T> rightMost, State state)
         {
             anchor.LeftMost = leftMost;
             anchor.RightMost = rightMost;
@@ -38,13 +39,13 @@ namespace Sammlung.Queues.Concurrent
 
         private void BackOff() => Thread.Yield();
 
-        private void Stabilize(Anchor anchor)
+        private void Stabilize(Anchor<T> anchor)
         {
             if (anchor.State == State.LeftPush) StabilizeLeft(anchor);
             else StabilizeRight(anchor);
         }
 
-        private void StabilizeLeft(Anchor anchor)
+        private void StabilizeLeft(Anchor<T> anchor)
         {
             if (_anchor != anchor) return;
             var newNode = anchor.LeftMost;
@@ -56,12 +57,11 @@ namespace Sammlung.Queues.Concurrent
                 if (!CompareAndSwap(ref next.Left, newNode, nextPrev)) return;
             }
 
-            var swapAnchor = new Anchor
-                {LeftMost = anchor.LeftMost, RightMost = anchor.RightMost, State = State.Stable};
+            var swapAnchor = Anchor<T>.Create(anchor.LeftMost, anchor.RightMost, State.Stable);
             CompareAndSwap(ref _anchor, swapAnchor, anchor);
         }
 
-        private void StabilizeRight(Anchor anchor)
+        private void StabilizeRight(Anchor<T> anchor)
         {
             if (_anchor != anchor) return;
             var newNode = anchor.RightMost;
@@ -73,8 +73,7 @@ namespace Sammlung.Queues.Concurrent
                 if (!CompareAndSwap(ref prev.Right, newNode, prevNext)) return;
             }
 
-            var swapAnchor = new Anchor
-                {LeftMost = anchor.LeftMost, RightMost = anchor.RightMost, State = State.Stable};
+            var swapAnchor = Anchor<T>.Create(anchor.LeftMost, anchor.RightMost, State.Stable);
             CompareAndSwap(ref _anchor, swapAnchor, anchor);
         }
 
@@ -82,7 +81,7 @@ namespace Sammlung.Queues.Concurrent
         public override void PushLeft(T element)
         {
             var node = CreateNode(element);
-            var swapAnchor = new Anchor();
+            var swapAnchor = Anchor<T>.Create();
             while (true)
             {
                 var anchor = _anchor;
@@ -115,8 +114,8 @@ namespace Sammlung.Queues.Concurrent
         public override bool TryPopRight(out T element)
         {
             element = default;
-            var swapAnchor = new Anchor();
-            Anchor anchor;
+            var swapAnchor = Anchor<T>.Create();
+            Anchor<T> anchor;
             while (true)
             {
                 anchor = _anchor;
@@ -162,7 +161,7 @@ namespace Sammlung.Queues.Concurrent
         public override void PushRight(T element)
         {
             var node = CreateNode(element);
-            var swapAnchor = new Anchor();
+            var swapAnchor = Anchor<T>.Create();
             while (true)
             {
                 var anchor = _anchor;
@@ -195,8 +194,8 @@ namespace Sammlung.Queues.Concurrent
         public override bool TryPopLeft(out T element)
         {
             element = default;
-            var swapAnchor = new Anchor();
-            Anchor anchor;
+            var swapAnchor = Anchor<T>.Create();
+            Anchor<T> anchor;
             while (true)
             {
                 anchor = _anchor;
@@ -237,37 +236,5 @@ namespace Sammlung.Queues.Concurrent
             element = anchor.LeftMost.Value;
             return true;
         }
-
-        #region InnerClases
-
-        private enum State
-        {
-            Stable,
-            RightPush,
-            LeftPush
-        }
-
-        private sealed class Node
-        {
-            public Node Left;
-            public Node Right;
-            public readonly T Value;
-
-            public Node(T value)
-            {
-                Value = value;
-                Left = null;
-                Right = null;
-            }
-        }
-
-        private sealed class Anchor
-        {
-            public Node LeftMost;
-            public Node RightMost;
-            public State State;
-        }
-
-        #endregion
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Concurrent;
 using Sammlung.Queues;
 using Sammlung.Queues.Concurrent;
+using Sammlung.Resources;
 
 namespace Sammlung.Utilities.Patterns
 {
@@ -9,16 +10,16 @@ namespace Sammlung.Utilities.Patterns
     {
         private const int DefaultMaxPoolSize = 256;
         private readonly int _maxPoolSize;
-        private readonly ConcurrentBag<WeakReference<T>> _pool;
+        private readonly ConcurrentBag<T> _pool;
 
         protected ObjectPoolBase(int maxPoolSize = DefaultMaxPoolSize)
         {
             _maxPoolSize = 0 < maxPoolSize
                 ? maxPoolSize
                 : throw new ArgumentOutOfRangeException(nameof(maxPoolSize), maxPoolSize,
-                    $"{maxPoolSize} must be strictly positive");
+                    string.Format(ErrorMessages.ValueMustBeStrictlyPositive, maxPoolSize));
 
-            _pool = new ConcurrentBag<WeakReference<T>>();
+            _pool = new ConcurrentBag<T>();
         }
 
         protected abstract T CreateInstance();
@@ -28,13 +29,7 @@ namespace Sammlung.Utilities.Patterns
         /// <inheritdoc />
         public T Get()
         {
-            while (_pool.TryTake(out var reference))
-            {
-                if (!reference.TryGetTarget(out var instance)) continue;
-                return instance;
-            }
-            
-            return CreateInstance();
+            return _pool.TryTake(out var reference) ? reference: CreateInstance();
         }
 
         /// <inheritdoc />
@@ -42,7 +37,7 @@ namespace Sammlung.Utilities.Patterns
         {
             if (_maxPoolSize <= _pool.Count) return;
             var resetInstance = Reset(instance);
-            _pool.Add(new WeakReference<T>(resetInstance));
+            _pool.Add(resetInstance);
         }
 
         /// <inheritdoc />

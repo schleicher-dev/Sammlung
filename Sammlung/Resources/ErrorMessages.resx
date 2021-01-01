@@ -33,4 +33,7 @@
     <data name="HeapUpdateFailed" xml:space="preserve">
         <value>'{0}' operation on the collection failed. The item to update does not exist.</value>
     </data>
+    <data name="ValueMustBeStrictlyPositive" xml:space="preserve">
+        <value>{0} must be strictly positive</value>
+    </data>
 </root>

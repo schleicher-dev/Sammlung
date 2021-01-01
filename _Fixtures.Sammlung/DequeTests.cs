@@ -23,6 +23,7 @@ namespace _Fixtures.Sammlung
         };
 
         [TestCaseSource(nameof(Buffers))]
+        [Repeat(5)]
         public void Fill_And_Grow(DequeConstructors<int> constructors)
         {
             var capCtor = constructors.Item1;
@@ -51,6 +52,7 @@ namespace _Fixtures.Sammlung
         }
 
         [TestCaseSource(nameof(Buffers))]
+        [Repeat(5)]
         public void Enqueue_SunnyPath(DequeConstructors<int> constructors)
         {
             var capCtor = constructors.Item1;
@@ -65,6 +67,7 @@ namespace _Fixtures.Sammlung
         }
 
         [TestCaseSource(nameof(Buffers))]
+        [Repeat(5)]
         public void InverseEnqueue_SunnyPath(DequeConstructors<int> constructors)
         {
             var capCtor = constructors.Item1;
@@ -79,6 +82,7 @@ namespace _Fixtures.Sammlung
         }
 
         [TestCaseSource(nameof(Buffers))]
+        [Repeat(5)]
         public void SequencesOfPopsAndPushes(DequeConstructors<int> constructors)
         {
             var sequences = new[]
@@ -118,6 +122,7 @@ namespace _Fixtures.Sammlung
         }
 
         [TestCaseSource(nameof(Buffers))]
+        [Repeat(5)]
         public void EmptyBufferTests(DequeConstructors<int> constructors)
         {
             var capCtor = constructors.Item1;

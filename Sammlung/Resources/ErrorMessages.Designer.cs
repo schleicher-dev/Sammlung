@@ -74,5 +74,11 @@ namespace Sammlung.Resources {
                 return ResourceManager.GetString("HeapUpdateFailed", resourceCulture);
             }
         }
+        
+        internal static string ValueMustBeStrictlyPositive {
+            get {
+                return ResourceManager.GetString("ValueMustBeStrictlyPositive", resourceCulture);
+            }
+        }
     }
 }
