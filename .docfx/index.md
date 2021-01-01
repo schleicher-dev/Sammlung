@@ -25,7 +25,9 @@ We aim to deliver:
 For every collection class there should be a benchmark, testing the performance of the particular container. When
 possible we deliver theoretical bounds for the particular operations of a collection.
 
-## Contributing
+We also use extensive tests to ensure the quality of the library.
+
+## Contribution
 
 We encourage everyone to contribute to this project. Open-source lives from participation!
 If you're not a programmer, you can help translating documentations. If you're a graphic artist you may help us with
@@ -68,16 +70,14 @@ Ticked means available in the newest package.
         - [ ] Thread-Safe, Lock-Free
 - [X] Queues
     - [X] **All-Types:** Thread-Safe, Blocking (Sammlung.Queues.Concurrent.BlockingDeque)
-    - [X] Continuous Queue
+    - [X] Continuous Queue / Deque
         - [X] Non-Thread-Safe (Sammlung.Queues.ArrayDeque)
-    - [X] Continuous Deque
-        - [X] Non-Thread-Safe (Sammlung.Queues.ArrayDeque)
-    - [X] Pointer Queue
+    - [X] Pointer Queue / Deque
         - [X] Non-Thread-Safe (Sammlung.Queues.LinkedDeque)
         - [X] Thread-Safe, Lock-Free (Sammlung.Queues.Concurrent.LockFreeLinkedDeque)
-    - [X] Pointer Deque
-        - [X] Non-Thread-Safe (Sammlung.Queues.LinkedDeque)
-        - [X] Thread-Safe, Lock-Free (Sammlung.Queues.Concurrent.LockFreeLinkedDeque)
+    - [ ] File-System Based Queue / Deque
+        - [ ] Non-Thread-Safe
+        - [ ] Thread-Safe, with transactions
 - [ ] Graphs
     - [ ] Undirected Graph
     - [ ] Directed Graph
