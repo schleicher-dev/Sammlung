@@ -9,6 +9,27 @@ using Sammlung.Heaps;
 namespace _Fixtures.Sammlung
 {
     [ExcludeFromCodeCoverage]
+    internal class HeapValue<T> : IComparable<HeapValue<T>> where T : IComparable<T>
+    {
+        public static HeapValue<T> Create(int key, T value) => new HeapValue<T> {Key = key, Value = value};
+
+        private HeapValue() {}
+        
+        public int Key { get; set; }
+        public T Value { get; set; }
+
+        /// <inheritdoc />
+        public int CompareTo(HeapValue<T> other)
+        {
+            if (ReferenceEquals(this, other)) return 0;
+            if (ReferenceEquals(null, other)) return 1;
+            var keyComparison = Key.CompareTo(other.Key);
+            if (keyComparison != 0) return keyComparison;
+            return Value.CompareTo(other.Value);
+        }
+    }
+    
+    [ExcludeFromCodeCoverage]
     public class HeapTests
     {
         [SetUp]
@@ -26,15 +47,15 @@ namespace _Fixtures.Sammlung
         [Test]
         public void PushAndPop_SunnyPath()
         {
-            var heap = new BinaryHeap<int, string>();
+            var heap = new BinaryHeap<HeapValue<string>>();
             var items = Enumerable.Range(1, 10_000).Zip(GetNames()).ToList();
             foreach (var (key, value) in items.AsEnumerable().Reverse())
             {
-                heap.Push(key, value);
+                heap.Push(HeapValue<string>.Create(key, value));
             }
 
             var resultList = new List<string>();
-            while(heap.Any()) resultList.Add(heap.Pop());
+            while(!heap.IsEmpty) resultList.Add(heap.Pop().Value);
             CollectionAssert.AreEqual(items.Select(kv => kv.Second), resultList);
         }
         
@@ -42,21 +63,19 @@ namespace _Fixtures.Sammlung
         public void PushAndPop_Randomized_SunnyPath()
         {
             var random = new Random(0);
-            var comparer = Comparer<int>.Default;
-            var valueComparer = EqualityComparer<int>.Default;
-            var heap = new BinaryHeap<int, int>(comparer, valueComparer);
+            var heap = new BinaryHeap<HeapValue<int>>();
 
             for (var i = 0; i < 10_000; ++i)
             {
                 var k = random.Next(int.MinValue, int.MaxValue);
-                heap.Push(k, k);
+                heap.Push(HeapValue<int>.Create(k, k));
             }
 
-            var last = heap.Replace(int.MaxValue, int.MaxValue);
-            while (heap.Any())
+            var last = heap.Pop();
+            while (!heap.IsEmpty)
             {
                 var current = heap.Pop();
-                Assert.LessOrEqual(comparer.Compare(last, current), 0);
+                Assert.LessOrEqual(last.Value.CompareTo(current.Value), 0);
                 last = current;
             }
         }
@@ -64,43 +83,49 @@ namespace _Fixtures.Sammlung
         [Test]
         public void CheckAllCases_Of_InvalidOperationException()
         {
-            var heap = new BinaryHeap<int, string>();
-            Assert.IsTrue(heap.IsEmpty());
+            var heap = new BinaryHeap<HeapValue<string>>();
+            Assert.IsTrue(heap.IsEmpty);
             Assert.IsFalse(heap.TryPop(out _));
             Assert.Throws<InvalidOperationException>(() => heap.Pop());
             Assert.IsFalse(heap.TryPeek(out _));
             Assert.Throws<InvalidOperationException>(() => heap.Peek());
-            Assert.IsFalse(heap.TryReplace(1, "A", out _));
-            Assert.Throws<InvalidOperationException>(() => heap.Replace(1, "A"));
-            Assert.IsFalse(heap.TryUpdate("A", 2));
-            Assert.Throws<InvalidOperationException>(() => heap.Update("A", 2));
+            Assert.IsFalse(heap.TryUpdate(HeapValue<string>.Create(0, "A"), HeapValue<string>.Create(1, "B")));
+            Assert.Throws<InvalidOperationException>(() => heap.Update(HeapValue<string>.Create(0, "A"), HeapValue<string>.Create(1, "B")));
+            Assert.IsFalse(heap.TryReplace(HeapValue<string>.Create(0, "A"), out _));
+            Assert.Throws<InvalidOperationException>(() => heap.Replace(HeapValue<string>.Create(0, "A")));
         }
 
         [Test]
-        public void Update_SunnyPath()
+        public void UpdateReplace_SunnyPath()
         {
-            var heap = new BinaryHeap<int, string>();
-            heap.Push(100, "A");
-            heap.Push(50, "B");
-            heap.Push(150, "C");
-            heap.Push(25, "D");
-            heap.Push(200, "E");
-            heap.Push(12, "F");
+
+            var fValue = HeapValue<string>.Create(12, "F");
+            var fPrimeValue = HeapValue<string>.Create(500, "F");
+
+            var dValue = HeapValue<string>.Create(25, "D");
+            var dPrimeValue = HeapValue<string>.Create(400, "D");
+                
+            var heap = new BinaryHeap<HeapValue<string>>();
+            heap.Push(HeapValue<string>.Create(100, "A"));
+            heap.Push(HeapValue<string>.Create(50, "B"));
+            heap.Push(HeapValue<string>.Create(150, "C"));
+            heap.Push(dValue);
+            heap.Push(HeapValue<string>.Create(200, "E"));
+
+            heap.Push(fValue);
+            heap.Update(dValue, dPrimeValue);
+
+            heap.Replace(fPrimeValue);
             
-            Assert.AreEqual("F", heap.Peek());
-            heap.Update("F", 500);
-            Assert.AreEqual("D", heap.Peek());
-            heap.Update("F", 12);
-            Assert.AreEqual("F", heap.Peek());
-            heap.Update("F", 500);
+            Assert.AreEqual("B", heap.Peek().Value);
 
             var list = new List<string>();
-            while (heap.Any())
+            while (!heap.IsEmpty)
             {
-                list.Add(heap.Pop());
+                list.Add(heap.Pop().Value);
             }
             
-            CollectionAssert.AreEqual(new [] {"D", "B", "A", "C", "E", "F"}, list);
+            CollectionAssert.AreEqual(new [] {"B", "A", "C", "E", "D", "F"}, list);
         }
 
         [Test]
@@ -108,29 +133,23 @@ namespace _Fixtures.Sammlung
         {
             var random = new Random(0);
 
-            var list = new List<KeyValuePair<int, int>>();
+            var list = new List<HeapValue<int>>();
             for (var i = 0; i < 10_000; ++i)
             {
                 var k = random.Next(int.MinValue, int.MaxValue);
-                list.Add(KeyValuePair.Create(k, k));
+                list.Add(HeapValue<int>.Create(k, k));
             }
 
             var comparerA = Comparer<int>.Default;
-            var heapA = new BinaryHeap<int, int>(list);
+            var heapA = new BinaryHeap<HeapValue<int>>(list);
             
-            var comparerB = Comparer<int>.Create((a, b) => Comparer<int>.Default.Compare(b, a));
-            var valueComparerB = EqualityComparer<int>.Default;
-            var heapB = new BinaryHeap<int, int>(list, comparerB, valueComparerB);
-
             var listA = new List<int>();
             var listB = new List<int>();
-            while (heapA.Any() && heapB.Any())
+            while (!heapA.IsEmpty)
             {
-                listA.Add(heapA.Pop());
-                listB.Add(heapB.Pop());
+                listA.Add(heapA.Pop().Value);
             }
             CollectionAssert.IsOrdered(listA, comparerA);
-            CollectionAssert.IsOrdered(listB, comparerB);
         }
     }
 }

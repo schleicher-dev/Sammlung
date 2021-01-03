@@ -16,10 +16,10 @@ namespace _Fixtures.Sammlung
     {
         public static readonly DequeConstructors<int>[] Buffers =
         {
-            new DequeConstructors<int>(c => new ArrayDeque<int>(c)),
-            new DequeConstructors<int>(c => BlockingDeque.Wrap(new ArrayDeque<int>(c))),
-            new DequeConstructors<int>(c => new LinkedDeque<int>()),
-            new DequeConstructors<int>(c => new LockFreeLinkedDeque<int>())
+            new DequeConstructors<int>("ArrayDeque", c => new ArrayDeque<int>(c)),
+            new DequeConstructors<int>("BlockingDeque", c => BlockingDeque.Wrap(new ArrayDeque<int>(c))),
+            new DequeConstructors<int>("LinkedDeque", c => new LinkedDeque<int>()),
+            new DequeConstructors<int>("LockFreeLinkedDeque", c => new LockFreeLinkedDeque<int>())
         };
 
         [TestCaseSource(nameof(Buffers))]

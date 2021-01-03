@@ -3,140 +3,131 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
-using Sammlung.Utilities.Container;
 using Sammlung.Utilities.Patterns;
 
 namespace Sammlung.Heaps
 {
-    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", 
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global",
         Justification = Justifications.PublicApiJustification)]
-    public sealed class BinaryHeap<TKey, TValue> : HeapBase<TKey, TValue>
+    public sealed class BinaryHeap<T> : HeapBase<T> where T : class
     {
-        private static readonly Lazy<BoxObjectPool<TKey, TValue>> BoxObjectPoolLoader =
-            new Lazy<BoxObjectPool<TKey, TValue>>(LazyThreadSafetyMode.PublicationOnly);
-        private static BoxObjectPool<TKey, TValue> BoxObjectPool => BoxObjectPoolLoader.Value;
-        
-        private readonly IComparer<TKey> _keyComparer;
-        private readonly IEqualityComparer<TValue> _valueComparer;
-        private readonly List<Box<TKey, TValue>> _binaryHeap;
-        
-        public BinaryHeap() : this(0, Comparer<TKey>.Default, EqualityComparer<TValue>.Default) { }
+        private static readonly Lazy<HeapNodeObjectPool> HeapNodePoolLoader =
+            new Lazy<HeapNodeObjectPool>(() => new HeapNodeObjectPool(), LazyThreadSafetyMode.PublicationOnly);
 
-        public BinaryHeap(IComparer<TKey> keyComparer, IEqualityComparer<TValue> valueComparer) : 
-            this(0, keyComparer, valueComparer) { }
+        private static HeapNodeObjectPool HeapNodePool => HeapNodePoolLoader.Value;
         
-        public BinaryHeap(IEnumerable<KeyValuePair<TKey, TValue>> containers) : 
-            this(containers, Comparer<TKey>.Default, EqualityComparer<TValue>.Default) { }
+        private readonly List<HeapNode> _binaryHeap;
+        private readonly IComparer<T> _comparer;
+        private Dictionary<T, HeapNode> _lookup;
 
-        public BinaryHeap(IEnumerable<KeyValuePair<TKey, TValue>> containers, IComparer<TKey> keyComparer,
-            IEqualityComparer<TValue> valueComparer)
+        private static List<HeapNode> HeapOrderedListFromEnumerable(IComparer<T> comparer, IEnumerable<T> enumerable) =>
+            enumerable.OrderBy(i => i, comparer).Select((item, i) => HeapNodePool.Get(i, item)).ToList();
+
+        public BinaryHeap() : this(Comparer<T>.Default) { }
+        
+        public BinaryHeap(IEnumerable<T> containers) : this(Comparer<T>.Default, containers) { }
+
+        public BinaryHeap(IComparer<T> comparer, IEnumerable<T> containers) : 
+            this(comparer, HeapOrderedListFromEnumerable(comparer, containers)) { }
+
+        public BinaryHeap(IComparer<T> comparer, int capacity = 0) : this(comparer, new List<T>(capacity)) { }
+
+        private BinaryHeap(IComparer<T> comparer, List<HeapNode> binaryHeap)
         {
-            _keyComparer = keyComparer ?? throw new ArgumentNullException(nameof(keyComparer));
-            _valueComparer = valueComparer ?? throw new ArgumentNullException(nameof(valueComparer));
-            _binaryHeap = containers.Select(kv => BoxObjectPool.Get(kv.Key, kv.Value)).ToList();
-            
-            // Sort by key. This creates heap order implicitly.
-            _binaryHeap.Sort((kv1, kv2) => _keyComparer.Compare(kv1.Key, kv2.Key));
+            _comparer = comparer ?? throw new ArgumentNullException(nameof(comparer));
+            _binaryHeap = binaryHeap ?? throw new ArgumentNullException(nameof(binaryHeap));
+            _lookup = new Dictionary<T, HeapNode>();
         }
 
-        public BinaryHeap(int capacity, IComparer<TKey> keyComparer, IEqualityComparer<TValue> valueComparer)
-        {
-            _keyComparer = keyComparer ?? throw new ArgumentNullException(nameof(keyComparer));
-            _valueComparer = valueComparer ?? throw new ArgumentNullException(nameof(valueComparer));
-            _binaryHeap = new List<Box<TKey, TValue>>(capacity);
-        }
-
+        /// <inheritdoc />
         public override int Count => _binaryHeap.Count;
-        
-        public override bool TryPeek(out TValue value)
+
+        /// <inheritdoc />
+        public override bool IsEmpty => !_binaryHeap.Any();
+
+        /// <inheritdoc />
+        public override bool TryPeek(out T value)
         {
             value = default;
             if (!_binaryHeap.Any()) return false;
 
-            value = _binaryHeap[0].Value;
+            value = _binaryHeap[0].Item;
             return true;
         }
-
-        public override bool TryPop(out TValue value)
+        
+        /// <inheritdoc />
+        public override bool TryPop(out T value)
         {
             value = default;
-            if (Count == 0) return false;
-            
+            if (IsEmpty) return false;
+
             // Swap then remove.
             var root = _binaryHeap[0];
             Swap(0, Count - 1);
             _binaryHeap.RemoveAt(Count - 1);
 
             // Assign item and remove it from mapping.
-            value = root.Value;
-            
-            // Give back reference
-            BoxObjectPool.Return(root);
+            value = root.Item;
+            _lookup.Remove(root.Item);
+            HeapNodePool.Return(root);
             
             // If there aren't any elements left, no sifting is needed.
             if (1 < Count) SiftDown(0);
-            
+
             return true;
         }
-
-        public override void Push(TKey key, TValue value)
+        
+        /// <inheritdoc />
+        public override void Push(T value)
         {
-            var container = BoxObjectPool.Get(key, value); 
-            _binaryHeap.Add(container);
-            
-            SiftUp(_binaryHeap.Count - 1);
+            var node = HeapNodePool.Get(Count, value);
+            _binaryHeap.Add(node);
+            _lookup.Add(value, node);
+            SiftUp(Count - 1);
         }
 
-        public override bool TryReplace(TKey key, TValue value, out TValue oldValue)
+        /// <inheritdoc />
+        public override bool TryReplace(T newValue, out T oldValue)
         {
             oldValue = default;
-            if (Count == 0) return false;
-            
-            // Get the container and the old value.
-            var container = _binaryHeap[0];
-            oldValue = container.Value;
+            if (IsEmpty) return false;
 
-            // Set the new value.
-            container.Key = key;
-            container.Value = value;
-            SiftDown(0);
+            var node = _binaryHeap[0];
+            oldValue = node.Item;
+            _lookup.Remove(node.Item);
+            _lookup.Add(newValue, node);
+            node.Item = newValue;
+            SiftDown(node.Index);
             
             return true;
         }
 
-        public override bool TryUpdate(TValue value, TKey key)
+        /// <inheritdoc />
+        public override bool TryUpdate(T oldValue, T newValue)
         {
-            if (!TryFindContainer(value, out var index, out var container))
-                return false;
+            if (!_lookup.TryGetValue(oldValue, out var node)) return false;
 
-            container.Key = key;
-            index = SiftUp(index);
+            _lookup.Remove(oldValue);
+            _lookup.Add(newValue, node);
+            node.Item = newValue;
+            
+            var index = SiftUp(node.Index);
             SiftDown(index);
             return true;
         }
 
-        private bool TryFindContainer(TValue value, out int index, out Box<TKey, TValue> container)
-        {
-            for (var i = 0; i < _binaryHeap.Count; ++i)
-            {
-                var candidate = _binaryHeap[i];
-                if (!_valueComparer.Equals(candidate.Value, value)) continue;
-
-                index = i;
-                container = candidate;
-                return true;
-            }
-
-            index = -1;
-            container = default;
-            return false;
-        }
+        private bool SmallerThan(T lhs, T rhs) => _comparer.Compare(lhs, rhs) < 0;
 
         private void Swap(int fstIndex, int sndIndex)
         {
-            var swap = _binaryHeap[fstIndex];
-            _binaryHeap[fstIndex] = _binaryHeap[sndIndex];
-            _binaryHeap[sndIndex] = swap;
+            var fstNode = _binaryHeap[fstIndex];
+            var sndNode = _binaryHeap[sndIndex];
+
+            sndNode.Index = fstIndex;
+            _binaryHeap[fstIndex] = sndNode;
+
+            fstNode.Index = sndIndex;
+            _binaryHeap[sndIndex] = fstNode;
         }
 
         #region SiftUp
@@ -149,13 +140,12 @@ namespace Sammlung.Heaps
                 var parentIndex = (nodeIndex - 1) / 2;
                 var parent = _binaryHeap[parentIndex];
 
-                if (_keyComparer.Compare(parent.Key, node.Key) <= 0)
-                    return nodeIndex;
+                if (!SmallerThan(node.Item, parent.Item)) return nodeIndex;
                 Swap(nodeIndex, parentIndex);
                 nodeIndex = parentIndex;
             }
 
-            return nodeIndex;
+            return 0;
         }
 
         #endregion
@@ -164,7 +154,7 @@ namespace Sammlung.Heaps
 
         private void SiftDown(int nodeIndex)
         {
-            var key = _binaryHeap[nodeIndex].Key;
+            var node = _binaryHeap[nodeIndex];
             while (true)
             {
                 // To keep the heap invariant we have to compare the keys of both child nodes of this node.
@@ -178,19 +168,20 @@ namespace Sammlung.Heaps
                 if (Count <= rightIndex)
                 {
                     var leftNode = _binaryHeap[leftIndex];
-                    if (_keyComparer.Compare(key, leftNode.Key) < 0)
+                    if (SmallerThan(node.Item, leftNode.Item))
                         return;
                     Swap(nodeIndex, leftIndex);
                     nodeIndex = leftIndex;
                     continue;
                 }
-                
+
                 // Compare both nodes.
-                var leftKey = _binaryHeap[leftIndex].Key;
-                var rightKey = _binaryHeap[rightIndex].Key;
-                if (_keyComparer.Compare(key, leftKey) < 0 && _keyComparer.Compare(key, rightKey) < 0)
+                var leftValue = _binaryHeap[leftIndex];
+                var rightValue = _binaryHeap[rightIndex];
+                if (SmallerThan(node.Item, leftValue.Item) && SmallerThan(node.Item, rightValue.Item))
                     return;
-                var swapIndex = _keyComparer.Compare(leftKey, rightKey) < 0 ? leftIndex : rightIndex;
+                
+                var swapIndex = SmallerThan(leftValue.Item, rightValue.Item) ? leftIndex : rightIndex;
                 Swap(nodeIndex, swapIndex);
                 nodeIndex = swapIndex;
             }
@@ -198,5 +189,36 @@ namespace Sammlung.Heaps
 
         #endregion
 
+        #region HeapNode
+
+        private class HeapNode
+        {
+            public T Item { get; set; }
+            public int Index { get; set; }
+        }
+
+        private class HeapNodeObjectPool : ObjectPoolBase<HeapNode>
+        {
+            /// <inheritdoc />
+            protected override HeapNode CreateInstance() => new HeapNode();
+
+            /// <inheritdoc />
+            protected override HeapNode ResetInstance(HeapNode instance)
+            {
+                instance.Index = default;
+                instance.Item = default;
+                return instance;
+            }
+
+            public HeapNode Get(int index, T item)
+            {
+                var instance = Get();
+                instance.Index = index;
+                instance.Item = item;
+                return instance;
+            }
+        }
+
+        #endregion
     }
 }

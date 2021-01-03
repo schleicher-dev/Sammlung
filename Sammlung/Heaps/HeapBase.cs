@@ -1,62 +1,28 @@
-using System;
 using Sammlung.Utilities;
 
 namespace Sammlung.Heaps
 {
-    public abstract class HeapBase<TKey, TValue> : IHeap<TKey, TValue>
+    public abstract class HeapBase<T> : IHeap<T>
     {
         /// <inheritdoc />
         public abstract int Count { get; }
-
-        /// <inheritdoc />
-        public bool IsEmpty() => Count == 0;
-
-        /// <inheritdoc />
-        public bool Any() => Count != 0;
-
-        /// <inheritdoc />
-        public TValue Peek()
-        {
-            return TryPeek(out var item)
-                ? item
-                : throw ExceptionsHelper.NewEmptyCollectionException();
-        }
-
-        /// <inheritdoc />
-        public abstract bool TryPeek(out TValue value);
-
-        /// <inheritdoc />
-        public TValue Pop()
-        {
-            return TryPop(out var item)
-                ? item
-                : throw ExceptionsHelper.NewEmptyCollectionException();
-        }
-
-        /// <inheritdoc />
-        public abstract bool TryPop(out TValue value);
-
-        /// <inheritdoc />
-        public abstract void Push(TKey key, TValue value);
         
         /// <inheritdoc />
-        public TValue Replace(TKey key, TValue value)
-        {
-            return TryReplace(key, value, out var oldValue)
-                ? oldValue :
-                throw ExceptionsHelper.NewEmptyCollectionException();
-        }
+        public abstract bool IsEmpty { get; }
 
         /// <inheritdoc />
-        public abstract bool TryReplace(TKey key, TValue value, out TValue oldValue);
-
-        public void Update(TValue value, TKey key)
-        {
-            if (!TryUpdate(value, key))
-                throw ExceptionsHelper.NewHeapUpdateFailedException();
-        }
+        public abstract bool TryPeek(out T value);
 
         /// <inheritdoc />
-        public abstract bool TryUpdate(TValue value, TKey key);
+        public abstract bool TryPop(out T value);
+
+        /// <inheritdoc />
+        public abstract void Push(T value);
+
+        /// <inheritdoc />
+        public abstract bool TryReplace(T newValue, out T oldValue);
+
+        /// <inheritdoc />
+        public abstract bool TryUpdate(T oldValue, T newValue);
     }
 }
