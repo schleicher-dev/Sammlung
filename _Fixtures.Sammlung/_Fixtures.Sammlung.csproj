@@ -17,8 +17,4 @@
       <ProjectReference Include="..\Sammlung\Sammlung.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Compile Remove="StaticCircularBufferTests.cs" />
-    </ItemGroup>
-
 </Project>
