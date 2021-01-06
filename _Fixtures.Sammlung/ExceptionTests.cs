@@ -37,6 +37,8 @@ namespace _Fixtures.Sammlung
         }
 
         [Test]
+        [SetCulture("en-us")]
+        [SetUICulture("en-us")]
         public void ErrorMessage_DoesMatchDefaultMessage()
         {
             var defaultMessage = ErrorMessages.ResourceManager

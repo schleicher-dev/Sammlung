@@ -12,7 +12,8 @@ namespace Sammlung.Utilities
         private static string GetString(string name)
         {
             var originalMsg = ErrorMessages.ResourceManager.GetString(name, CultureInfo.InvariantCulture);
-            if (Equals(CultureInfo.CurrentUICulture, CultureInfo.InvariantCulture)) return originalMsg;
+            if (Equals(CultureInfo.CurrentUICulture, CultureInfo.InvariantCulture) ||
+                Equals(CultureInfo.CurrentUICulture.TwoLetterISOLanguageName, "en")) return originalMsg;
 
             var translatedMsg = ErrorMessages.ResourceManager.GetString(name);
             return $"{translatedMsg} ({originalMsg})";
