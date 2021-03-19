@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace Sammlung.Heaps
 {
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global",
         Justification = Justifications.PublicApiJustification)]
-    public sealed class BinaryHeap<T> : HeapBase<T> where T : class
+    public sealed class BinaryHeap<T> : IHeap<T> where T : class
     {
         private static readonly Lazy<HeapNodeObjectPool> HeapNodePoolLoader =
             new Lazy<HeapNodeObjectPool>(() => new HeapNodeObjectPool(), LazyThreadSafetyMode.PublicationOnly);
@@ -18,7 +19,7 @@ namespace Sammlung.Heaps
         
         private readonly List<HeapNode> _binaryHeap;
         private readonly IComparer<T> _comparer;
-        private Dictionary<T, HeapNode> _lookup;
+        private readonly Dictionary<T, HeapNode> _lookup;
 
         private static List<HeapNode> HeapOrderedListFromEnumerable(IComparer<T> comparer, IEnumerable<T> enumerable) =>
             enumerable.OrderBy(i => i, comparer).Select((item, i) => HeapNodePool.Get(i, item)).ToList();
@@ -40,13 +41,13 @@ namespace Sammlung.Heaps
         }
 
         /// <inheritdoc />
-        public override int Count => _binaryHeap.Count;
+        public int Count => _binaryHeap.Count;
 
         /// <inheritdoc />
-        public override bool IsEmpty => !_binaryHeap.Any();
+        public bool IsEmpty => !_binaryHeap.Any();
 
         /// <inheritdoc />
-        public override bool TryPeek(out T value)
+        public bool TryPeek(out T value)
         {
             value = default;
             if (!_binaryHeap.Any()) return false;
@@ -56,7 +57,7 @@ namespace Sammlung.Heaps
         }
         
         /// <inheritdoc />
-        public override bool TryPop(out T value)
+        public bool TryPop(out T value)
         {
             value = default;
             if (IsEmpty) return false;
@@ -78,7 +79,7 @@ namespace Sammlung.Heaps
         }
         
         /// <inheritdoc />
-        public override void Push(T value)
+        public void Push(T value)
         {
             var node = HeapNodePool.Get(Count, value);
             _binaryHeap.Add(node);
@@ -87,7 +88,7 @@ namespace Sammlung.Heaps
         }
 
         /// <inheritdoc />
-        public override bool TryReplace(T newValue, out T oldValue)
+        public bool TryReplace(T newValue, out T oldValue)
         {
             oldValue = default;
             if (IsEmpty) return false;
@@ -103,7 +104,7 @@ namespace Sammlung.Heaps
         }
 
         /// <inheritdoc />
-        public override bool TryUpdate(T oldValue, T newValue)
+        public bool TryUpdate(T oldValue, T newValue)
         {
             if (!_lookup.TryGetValue(oldValue, out var node)) return false;
 
@@ -220,5 +221,13 @@ namespace Sammlung.Heaps
         }
 
         #endregion
+
+        /// <inheritdoc />
+        IEnumerator<T> IEnumerable<T>.GetEnumerator() => 
+            _binaryHeap.Select(n => n.Item).GetEnumerator();
+
+        /// <inheritdoc />
+        IEnumerator IEnumerable.GetEnumerator() => 
+            ((IEnumerable<T>) this).GetEnumerator();
     }
 }

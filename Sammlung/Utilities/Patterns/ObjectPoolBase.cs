@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Concurrent;
-using Sammlung.Queues;
-using Sammlung.Queues.Concurrent;
 using Sammlung.Resources;
 
 namespace Sammlung.Utilities.Patterns

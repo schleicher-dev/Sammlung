@@ -1,4 +1,4 @@
-using System;
+using System.Collections.Generic;
 
 namespace Sammlung.Heaps
 {
@@ -6,7 +6,7 @@ namespace Sammlung.Heaps
     /// This is the abstract interface of a heap data structure.
     /// </summary>
     /// <typeparam name="T">the value type</typeparam>
-    public interface IHeap<T>
+    public interface IHeap<T> : IEnumerable<T>
     {
         /// <summary>
         /// Returns the contained elements in the heap.

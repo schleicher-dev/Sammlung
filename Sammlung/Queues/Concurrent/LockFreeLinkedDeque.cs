@@ -1,3 +1,6 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Threading;
 using Sammlung.Queues.Concurrent.LockFreePrimitives;
 
@@ -12,7 +15,7 @@ namespace Sammlung.Queues.Concurrent
     /// DOI: 10.1.1.93.7492
     /// </remarks>
     /// <typeparam name="T"></typeparam>
-    public class LockFreeLinkedDeque<T> : DequeBase<T>
+    public class LockFreeLinkedDeque<T> : IDeque<T>
     {
         private Anchor<T> _anchor;
         private int _count;
@@ -23,7 +26,7 @@ namespace Sammlung.Queues.Concurrent
         }
 
         /// <inheritdoc />
-        public override int Count => _count;
+        public int Count => _count;
 
         private static Node<T> CreateNode(T value) => new Node<T>(value);
 
@@ -37,7 +40,7 @@ namespace Sammlung.Queues.Concurrent
             anchor.State = state;
         }
 
-        private void BackOff() => Thread.Yield();
+        private static void BackOff() => Thread.Yield();
 
         private void Stabilize(Anchor<T> anchor)
         {
@@ -78,7 +81,7 @@ namespace Sammlung.Queues.Concurrent
         }
 
         /// <inheritdoc />
-        public override void PushLeft(T element)
+        public void PushLeft(T element)
         {
             var node = CreateNode(element);
             var swapAnchor = Anchor<T>.Create();
@@ -111,7 +114,7 @@ namespace Sammlung.Queues.Concurrent
         }
 
         /// <inheritdoc />
-        public override bool TryPopRight(out T element)
+        public bool TryPopRight(out T element)
         {
             element = default;
             var swapAnchor = Anchor<T>.Create();
@@ -144,7 +147,7 @@ namespace Sammlung.Queues.Concurrent
         }
 
         /// <inheritdoc />
-        public override bool TryPeekRight(out T element)
+        public bool TryPeekRight(out T element)
         {
             var anchor = _anchor;
             if (anchor.RightMost == null)
@@ -158,7 +161,7 @@ namespace Sammlung.Queues.Concurrent
         }
 
         /// <inheritdoc />
-        public override void PushRight(T element)
+        public void PushRight(T element)
         {
             var node = CreateNode(element);
             var swapAnchor = Anchor<T>.Create();
@@ -191,7 +194,7 @@ namespace Sammlung.Queues.Concurrent
         }
 
         /// <inheritdoc />
-        public override bool TryPopLeft(out T element)
+        public bool TryPopLeft(out T element)
         {
             element = default;
             var swapAnchor = Anchor<T>.Create();
@@ -224,7 +227,7 @@ namespace Sammlung.Queues.Concurrent
         }
 
         /// <inheritdoc />
-        public override bool TryPeekLeft(out T element)
+        public bool TryPeekLeft(out T element)
         {
             var anchor = _anchor;
             if (anchor.LeftMost == null)
@@ -236,5 +239,12 @@ namespace Sammlung.Queues.Concurrent
             element = anchor.LeftMost.Value;
             return true;
         }
+
+        /// <inheritdoc />
+        IEnumerator<T> IEnumerable<T>.GetEnumerator() => 
+            throw new NotSupportedException("Enumeration on a lock-free linked deque is not supported.");
+
+        /// <inheritdoc />
+        IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<T>) this).GetEnumerator();
     }
 }

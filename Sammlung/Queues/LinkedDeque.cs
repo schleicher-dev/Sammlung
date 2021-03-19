@@ -1,65 +1,69 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Sammlung.Utilities;
 
 namespace Sammlung.Queues
 {
-    public sealed class LinkedDeque<T> : DequeBase<T>
+    public sealed class LinkedDeque<T> : IDeque<T>
     {
         private readonly LinkedList<T> _internal;
-        
+
         public LinkedDeque()
         {
             _internal = new LinkedList<T>();
         }
 
         /// <inheritdoc />
-        public override int Count => _internal.Count;
+        public int Count => _internal.Count;
 
         /// <inheritdoc />
-        public override void PushLeft(T element) => _internal.AddFirst(element);
+        public void PushLeft(T element) => _internal.AddFirst(element);
 
         /// <inheritdoc />
-        public override bool TryPopRight(out T element)
+        public bool TryPopRight(out T element)
         {
             if (!TryPeekRight(out element))
                 return false;
-            
+
             _internal.RemoveLast();
             return true;
         }
-        
+
         /// <inheritdoc />
-        public override bool TryPeekRight(out T element)
+        public bool TryPeekRight(out T element)
         {
             element = default;
             if (_internal.Last == null) return false;
-            
+
             element = _internal.Last.Value;
             return true;
         }
 
         /// <inheritdoc />
-        public override void PushRight(T element) => _internal.AddLast(element);
-        
+        public void PushRight(T element) => _internal.AddLast(element);
+
         /// <inheritdoc />
-        public override bool TryPopLeft(out T element)
+        public bool TryPopLeft(out T element)
         {
             if (!TryPeekLeft(out element))
                 return false;
             _internal.RemoveFirst();
             return true;
         }
-        
+
         /// <inheritdoc />
-        public override bool TryPeekLeft(out T element)
+        public bool TryPeekLeft(out T element)
         {
             element = default;
             if (_internal.First == null) return false;
-            
+
             element = _internal.First.Value;
             return true;
         }
+
+        /// <inheritdoc />
+        IEnumerator<T> IEnumerable<T>.GetEnumerator() => _internal.GetEnumerator();
+
+        /// <inheritdoc />
+        IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<T>) this).GetEnumerator();
     }
 }

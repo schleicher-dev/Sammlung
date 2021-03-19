@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using Sammlung.Utilities;
 using Sammlung.Utilities.Concurrent;
@@ -96,5 +95,11 @@ namespace Sammlung.Queues.Concurrent
             using var _ = _rwLock.UseReadLock();
             return _inner.TryPeekLeft(out element);
         }
+
+        /// <inheritdoc />
+        IEnumerator<T> IEnumerable<T>.GetEnumerator() => _inner.GetEnumerator();
+
+        /// <inheritdoc />
+        IEnumerator IEnumerable.GetEnumerator() => _inner.GetEnumerator();
     }
 }

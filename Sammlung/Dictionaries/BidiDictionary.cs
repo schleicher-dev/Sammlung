@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Sammlung.Compatibility;
-using Sammlung.Exceptions;
 using Sammlung.Utilities;
 
 namespace Sammlung.Dictionaries

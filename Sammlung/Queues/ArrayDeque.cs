@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Threading;
-using Sammlung.Utilities;
 
 namespace Sammlung.Queues
 {
@@ -13,7 +11,7 @@ namespace Sammlung.Queues
     /// and implements the <seealso cref="IDeque{T}"/> interface.
     /// </summary>
     /// <typeparam name="T">the contained type</typeparam>
-    public sealed class ArrayDeque<T> : DequeBase<T>
+    public sealed class ArrayDeque<T> : IDeque<T>
     {
         private T[] _array;
         private int _leftPointer;
@@ -55,10 +53,10 @@ namespace Sammlung.Queues
         /// <inheritdoc />
         [SuppressMessage("ReSharper", "ConvertToAutoPropertyWhenPossible", 
             Justification = "Cannot make this a auto-property. This is essentially a code analysis bug.")]
-        public override int Count => _count;
+        public int Count => _count;
 
         /// <inheritdoc />
-        public override void PushLeft(T element)
+        public void PushLeft(T element)
         {
             GrowIfNeeded();
             
@@ -66,9 +64,9 @@ namespace Sammlung.Queues
             _array[_leftPointer] = element;
             _count += 1;
         }
-
+        
         /// <inheritdoc />
-        public override bool TryPopRight(out T element)
+        public bool TryPopRight(out T element)
         {
             if (!TryPeekRight(out element))
                 return false;
@@ -79,9 +77,9 @@ namespace Sammlung.Queues
             
             return true;
         }
-        
+
         /// <inheritdoc />
-        public override bool TryPeekRight(out T element)
+        public bool TryPeekRight(out T element)
         {
             element = default;
             if (Count == 0) return false;
@@ -91,7 +89,7 @@ namespace Sammlung.Queues
         }
 
         /// <inheritdoc />
-        public override void PushRight(T element)
+        public void PushRight(T element)
         {
             GrowIfNeeded();
             
@@ -101,7 +99,7 @@ namespace Sammlung.Queues
         }
         
         /// <inheritdoc />
-        public override bool TryPopLeft(out T element)
+        public bool TryPopLeft(out T element)
         {
             if (!TryPeekLeft(out element))
                 return false;
@@ -112,9 +110,9 @@ namespace Sammlung.Queues
             
             return true;
         }
-        
+
         /// <inheritdoc />
-        public override bool TryPeekLeft(out T element)
+        public bool TryPeekLeft(out T element)
         {
             element = default;
             if (Count == 0) return false;
@@ -122,5 +120,11 @@ namespace Sammlung.Queues
             element = _array[_leftPointer];
             return true;
         }
+
+        /// <inheritdoc />
+        IEnumerator<T> IEnumerable<T>.GetEnumerator() => _array.Cast<T>().GetEnumerator();
+
+        /// <inheritdoc />
+        IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<T>) this).GetEnumerator();
     }
 }

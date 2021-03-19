@@ -26,6 +26,7 @@ This package contains a library for C# containing a plethora of collection types
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
+      <PackageReference Include="JetBrains.Annotations" Version="2021.1.0-eap01" />
     </ItemGroup>
     
     <ItemGroup>
