@@ -1,5 +1,3 @@
-using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Reflection;
 using _Fixtures.Sammlung.Extras;
@@ -33,7 +31,7 @@ namespace _Fixtures.Sammlung
             var defaultMessage = ErrorMessages.ResourceManager
                 .GetString(nameof(ErrorMessages.DuplicateKeyFound), CultureInfo.InvariantCulture);
             defaultMessage = string.Format(defaultMessage, "key", nameof(ErrorMessage_DoesNotMatchDefaultMessage_WhenNotInvariantCulture));
-            Assert.AreNotEqual(defaultMessage, ExceptionsHelper.NewDuplicateKeyException("key").Message);
+            Assert.AreNotEqual(defaultMessage, ExceptionsHelper.NewDuplicateKeyException("key", nameof(ErrorMessage_DoesNotMatchDefaultMessage_WhenNotInvariantCulture)).Message);
         }
 
         [Test]
@@ -44,7 +42,7 @@ namespace _Fixtures.Sammlung
             var defaultMessage = ErrorMessages.ResourceManager
                 .GetString(nameof(ErrorMessages.DuplicateKeyFound), CultureInfo.InvariantCulture);
             defaultMessage = string.Format(defaultMessage, "key", nameof(ErrorMessage_DoesMatchDefaultMessage));
-            Assert.AreEqual(defaultMessage, ExceptionsHelper.NewDuplicateKeyException("key").Message);
+            Assert.AreEqual(defaultMessage, ExceptionsHelper.NewDuplicateKeyException("key", nameof(ErrorMessage_DoesMatchDefaultMessage)).Message);
         }
     }
 }

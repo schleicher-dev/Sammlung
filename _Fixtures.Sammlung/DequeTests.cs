@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Threading;
 using _Fixtures.Sammlung.Extras;
 using NUnit.Framework;
 using Sammlung.Queues;

@@ -1,6 +1,4 @@
 
-using Sammlung.Compatibility;
-
 namespace Sammlung.Dictionaries
 {
     /// <summary>
@@ -15,12 +13,12 @@ namespace Sammlung.Dictionaries
         /// <summary>
         /// Holds the forward map, which is used to retrieve the values in the forward direction.
         /// </summary>
-        IReadOnlyDictionary<TForward, TReverse> ForwardMap { get; }
+        Compatibility.IReadOnlyDictionary<TForward, TReverse> ForwardMap { get; }
         
         /// <summary>
         /// Holds the reverse map, which is used to retrieve the values in the reverse direction.
         /// </summary>
-        IReadOnlyDictionary<TReverse, TForward> ReverseMap { get; }
+        Compatibility.IReadOnlyDictionary<TReverse, TForward> ReverseMap { get; }
 
         /// <summary>
         /// Tries to add the mapping between forward and reverse key.

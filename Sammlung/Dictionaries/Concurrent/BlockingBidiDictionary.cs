@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
+using JetBrains.Annotations;
 using Sammlung.Utilities;
 using Sammlung.Utilities.Concurrent;
 
@@ -14,7 +14,7 @@ namespace Sammlung.Dictionaries.Concurrent
     /// </summary>
     /// <typeparam name="TForward">the forward type</typeparam>
     /// <typeparam name="TReverse">the reverse type</typeparam>
-    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = Justifications.PublicApiJustification)]
+    [PublicAPI]
     public class BlockingBidiDictionary<TForward, TReverse> : IBidiDictionary<TForward, TReverse>
     {
         private readonly EnhancedReaderWriterLock _rwLock;
@@ -47,8 +47,7 @@ namespace Sammlung.Dictionaries.Concurrent
             IEqualityComparer<TReverse> revComparer)
             : this(other.Count, fwdComparer, revComparer)
         {
-            foreach (var (key, value) in other)
-                Add(key, value);
+            foreach (var item in other) Add(item.Key, item.Value);
         }
 
         /// <summary>
@@ -181,7 +180,7 @@ namespace Sammlung.Dictionaries.Concurrent
         /// <inheritdoc />
         public void Add(TForward key, TReverse value)
         {
-            if (!TryAdd(key, value)) throw ExceptionsHelper.NewDuplicateKeyException(key);
+            if (!TryAdd(key, value)) throw ExceptionsHelper.NewDuplicateKeyException(key, nameof(Add));
         }
 
 

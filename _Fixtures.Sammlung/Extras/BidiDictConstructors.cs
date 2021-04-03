@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using Sammlung;
 using Sammlung.Dictionaries;
 
 namespace _Fixtures.Sammlung.Extras

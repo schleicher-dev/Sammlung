@@ -1,6 +1,8 @@
 using System;
-using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Threading;
 using Sammlung.Resources;
+using Sammlung.Utilities.Concurrent;
 
 namespace Sammlung.Utilities.Patterns
 {
@@ -8,7 +10,8 @@ namespace Sammlung.Utilities.Patterns
     {
         private const int DefaultMaxPoolSize = 256;
         private readonly int _maxPoolSize;
-        private readonly ConcurrentBag<T> _pool;
+        private readonly Stack<T> _pool;
+        private readonly EnhancedReaderWriterLock _rwLock;
 
         protected ObjectPoolBase(int maxPoolSize = DefaultMaxPoolSize)
         {
@@ -17,7 +20,8 @@ namespace Sammlung.Utilities.Patterns
                 : throw new ArgumentOutOfRangeException(nameof(maxPoolSize), maxPoolSize,
                     string.Format(ErrorMessages.ValueMustBeStrictlyPositive, maxPoolSize));
 
-            _pool = new ConcurrentBag<T>();
+            _rwLock = new EnhancedReaderWriterLock(LockRecursionPolicy.NoRecursion);
+            _pool = new Stack<T>();
         }
 
         protected abstract T CreateInstance();
@@ -27,15 +31,18 @@ namespace Sammlung.Utilities.Patterns
         /// <inheritdoc />
         public T Get()
         {
-            return _pool.TryTake(out var reference) ? reference: CreateInstance();
+            using var _ = _rwLock.UseWriteLock();
+            return _pool.Count != 0 ? _pool.Pop(): CreateInstance();
         }
 
         /// <inheritdoc />
         public void Return(T instance)
         {
+            using var upgradableLockHandle = _rwLock.UseUpgradableReadLock();
             if (_maxPoolSize <= _pool.Count) return;
+            upgradableLockHandle.Upgrade();
             var resetInstance = Reset(instance);
-            _pool.Add(resetInstance);
+            _pool.Push(resetInstance);
         }
 
         /// <inheritdoc />

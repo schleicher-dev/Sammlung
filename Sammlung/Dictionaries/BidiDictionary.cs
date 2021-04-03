@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using JetBrains.Annotations;
 using Sammlung.Compatibility;
 using Sammlung.Utilities;
 
@@ -12,13 +12,13 @@ namespace Sammlung.Dictionaries
     /// <seealso cref="IBidiDictionary{TForward,TReverse}"/> interface. The type is explicitly not multi-threading
     /// compatible.
     /// </summary>
-    /// <typeparam name="TForward">the forward type</typeparam>
-    /// <typeparam name="TReverse">the reverse type</typeparam>
-    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = Justifications.PublicApiJustification)]
-    public class BidiDictionary<TForward, TReverse> : IBidiDictionary<TForward, TReverse>
+    /// <typeparam name="TFwd">the forward type</typeparam>
+    /// <typeparam name="TRev">the reverse type</typeparam>
+    [PublicAPI]
+    public class BidiDictionary<TFwd, TRev> : IBidiDictionary<TFwd, TRev>
     {
-        private readonly IDictionary<TForward, TReverse> _forwardMap;
-        private readonly IDictionary<TReverse, TForward> _reverseMap;
+        private readonly IDictionary<TFwd, TRev> _forwardMap;
+        private readonly IDictionary<TRev, TFwd> _reverseMap;
 
         /// <summary>
         /// Constructs a new <see cref="BidiDictionary{TForward,TReverse}"/> with the default capacity=1.
@@ -30,8 +30,8 @@ namespace Sammlung.Dictionaries
         /// </summary>
         /// <param name="other">the dictionary</param>
         /// <exception cref="Exceptions.DuplicateKeyException">when mapping contains duplicate keys</exception>
-        public BidiDictionary(IDictionary<TForward, TReverse> other)
-            : this(other, EqualityComparer<TForward>.Default, EqualityComparer<TReverse>.Default) { }
+        public BidiDictionary(IDictionary<TFwd, TRev> other)
+            : this(other, EqualityComparer<TFwd>.Default, EqualityComparer<TRev>.Default) { }
 
         /// <summary>
         /// Constructs a new <see cref="BidiDictionary{TForward,TReverse}"/> using the passed dictionary and comparers.
@@ -40,16 +40,16 @@ namespace Sammlung.Dictionaries
         /// <param name="fwdComparer">the comparer of the forward key</param>
         /// <param name="revComparer">the comparer of the reverse key</param>
         /// <exception cref="Exceptions.DuplicateKeyException">when mapping contains duplicate keys</exception>
-        public BidiDictionary(IDictionary<TForward, TReverse> other, IEqualityComparer<TForward> fwdComparer,
-            IEqualityComparer<TReverse> revComparer) : this(other.AsEnumerable(), fwdComparer, revComparer) { }
+        public BidiDictionary(IDictionary<TFwd, TRev> other, IEqualityComparer<TFwd> fwdComparer,
+            IEqualityComparer<TRev> revComparer) : this(other.AsEnumerable(), fwdComparer, revComparer) { }
 
         /// <summary>
         /// Constructs a new <see cref="BidiDictionary{TForward,TReverse}"/> using the passed enumerable. 
         /// </summary>
         /// <param name="other">the enumerable</param>
         /// <exception cref="Exceptions.DuplicateKeyException">when mapping contains duplicate keys</exception>
-        public BidiDictionary(IEnumerable<KeyValuePair<TForward, TReverse>> other)
-            : this(other, EqualityComparer<TForward>.Default, EqualityComparer<TReverse>.Default) { }
+        public BidiDictionary(IEnumerable<KeyValuePair<TFwd, TRev>> other)
+            : this(other, EqualityComparer<TFwd>.Default, EqualityComparer<TRev>.Default) { }
 
         /// <summary>
         /// Constructs a new <see cref="BidiDictionary{TForward,TReverse}"/> using the passed enumerable and the
@@ -59,18 +59,17 @@ namespace Sammlung.Dictionaries
         /// <param name="fwdComparer">the comparer of the forward key</param>
         /// <param name="revComparer">the comparer of the reverse key</param>
         /// <exception cref="Exceptions.DuplicateKeyException">when mapping contains duplicate keys</exception>
-        public BidiDictionary(IEnumerable<KeyValuePair<TForward, TReverse>> other,
-            IEqualityComparer<TForward> fwdComparer, IEqualityComparer<TReverse> revComparer)
+        public BidiDictionary(IEnumerable<KeyValuePair<TFwd, TRev>> other,
+            IEqualityComparer<TFwd> fwdComparer, IEqualityComparer<TRev> revComparer)
             : this(other.ToList(), fwdComparer, revComparer)
         {
         }
 
-        private BidiDictionary(ICollection<KeyValuePair<TForward, TReverse>> other,
-            IEqualityComparer<TForward> fwdComparer, IEqualityComparer<TReverse> revComparer)
+        private BidiDictionary(ICollection<KeyValuePair<TFwd, TRev>> other,
+            IEqualityComparer<TFwd> fwdComparer, IEqualityComparer<TRev> revComparer)
             : this(other.Count, fwdComparer, revComparer)
         {
-            foreach (var (key, value) in other)
-                this.Add(key, value);
+            foreach (var item in other) Add(item.Key, item.Value);
         }
         
         /// <summary>
@@ -78,7 +77,7 @@ namespace Sammlung.Dictionaries
         /// </summary>
         /// <param name="capacity">the capacity</param>
         public BidiDictionary(int capacity)
-            : this(capacity, EqualityComparer<TForward>.Default, EqualityComparer<TReverse>.Default) { }
+            : this(capacity, EqualityComparer<TFwd>.Default, EqualityComparer<TRev>.Default) { }
 
         /// <summary>
         /// Constructs a new <see cref="BidiDictionary{TForward,TReverse}"/> with the passed capacity and the comparers.
@@ -86,13 +85,11 @@ namespace Sammlung.Dictionaries
         /// <param name="capacity">the capacity</param>
         /// <param name="fwdComparer">the comparer of the forward key</param>
         /// <param name="revComparer">the comparer of the reverse key</param>
-        public BidiDictionary(int capacity, IEqualityComparer<TForward> fwdComparer,
-            IEqualityComparer<TReverse> revComparer)
+        public BidiDictionary(int capacity, IEqualityComparer<TFwd> fwdComparer,
+            IEqualityComparer<TRev> revComparer)
         {
-            _forwardMap = new Dictionary<TForward, TReverse>(capacity, fwdComparer);
-            _reverseMap = new Dictionary<TReverse, TForward>(capacity, revComparer);
-            ForwardMap = ReadOnlyDictionary.Wrap(_forwardMap);
-            ReverseMap = ReadOnlyDictionary.Wrap(_reverseMap);
+            _forwardMap = new Dictionary<TFwd, TRev>(capacity, fwdComparer);
+            _reverseMap = new Dictionary<TRev, TFwd>(capacity, revComparer);
         }
 
         /// <inheritdoc cref="ICollection{T}.Count"/>
@@ -102,40 +99,40 @@ namespace Sammlung.Dictionaries
         public bool IsReadOnly => _forwardMap.IsReadOnly;
 
         /// <inheritdoc />
-        public ICollection<TForward> Keys => _forwardMap.Keys;
+        public ICollection<TFwd> Keys => _forwardMap.Keys;
 
         /// <inheritdoc />
-        public ICollection<TReverse> Values => _forwardMap.Values;
+        public ICollection<TRev> Values => _forwardMap.Values;
 
         /// <inheritdoc />
-        public Compatibility.IReadOnlyDictionary<TForward, TReverse> ForwardMap { get; }
+        public Compatibility.IReadOnlyDictionary<TFwd, TRev> ForwardMap => ReadOnlyDictionary.Wrap(_forwardMap);
 
         /// <inheritdoc />
-        public Compatibility.IReadOnlyDictionary<TReverse, TForward> ReverseMap { get; }
+        public Compatibility.IReadOnlyDictionary<TRev, TFwd> ReverseMap => ReadOnlyDictionary.Wrap(_reverseMap);
 
         /// <inheritdoc />
-        public bool ContainsKey(TForward key) => _forwardMap.ContainsKey(key);
+        public bool ContainsKey(TFwd key) => _forwardMap.ContainsKey(key);
 
         /// <inheritdoc />
-        public bool Contains(KeyValuePair<TForward, TReverse> item) => _forwardMap.Contains(item);
+        public bool Contains(KeyValuePair<TFwd, TRev> item) => _forwardMap.Contains(item);
 
         /// <inheritdoc />
-        public bool Remove(TForward key) => _forwardMap.Remove(key);
+        public bool Remove(TFwd key) => _forwardMap.Remove(key);
 
         /// <inheritdoc />
-        public bool Remove(KeyValuePair<TForward, TReverse> item) => _forwardMap.Remove(item);
+        public bool Remove(KeyValuePair<TFwd, TRev> item) => _forwardMap.Remove(item);
 
         /// <inheritdoc />
-        public TReverse this[TForward key]
+        public TRev this[TFwd key]
         {
             get => _forwardMap[key];
             set => Add(key, value);
         }
         /// <inheritdoc />
-        public bool TryGetValue(TForward key, out TReverse value) => _forwardMap.TryGetValue(key, out value);
+        public bool TryGetValue(TFwd key, out TRev value) => _forwardMap.TryGetValue(key, out value);
         
         /// <inheritdoc />
-        public bool TryAdd(TForward fwd, TReverse rev)
+        public bool TryAdd(TFwd fwd, TRev rev)
         {
             if (_forwardMap.ContainsKey(fwd) || _reverseMap.ContainsKey(rev))
                 return false;
@@ -145,25 +142,25 @@ namespace Sammlung.Dictionaries
         }
 
         /// <inheritdoc />
-        public void Add(TForward fwd, TReverse rev)
+        public void Add(TFwd fwd, TRev rev)
         {
             if (!TryAdd(fwd, rev))
-                throw ExceptionsHelper.NewDuplicateKeyException(fwd);
+                throw ExceptionsHelper.NewDuplicateKeyException(fwd, nameof(Add));
         }
         
         /// <inheritdoc />
-        public void Add(KeyValuePair<TForward, TReverse> item) => Add(item.Key, item.Value);
+        public void Add(KeyValuePair<TFwd, TRev> item) => Add(item.Key, item.Value);
 
         /// <inheritdoc />
-        public bool ForwardRemove(TForward key) =>
-            _forwardMap.Remove(key, out var value) && _reverseMap.Remove(value);
+        public bool ForwardRemove(TFwd key) => 
+            _forwardMap.TryGetValue(key, out var value) && _forwardMap.Remove(key) && _reverseMap.Remove(value);
 
         /// <inheritdoc />
-        public bool ReverseRemove(TReverse key) =>
-            _reverseMap.Remove(key, out var value) && _forwardMap.Remove(value);
+        public bool ReverseRemove(TRev key) =>
+            _reverseMap.TryGetValue(key, out var value) && _reverseMap.Remove(key) && _forwardMap.Remove(value);
 
         /// <inheritdoc />
-        public void CopyTo(KeyValuePair<TForward, TReverse>[] array, int arrayIndex) =>
+        public void CopyTo(KeyValuePair<TFwd, TRev>[] array, int arrayIndex) =>
             _forwardMap.CopyTo(array, arrayIndex);
         
         /// <inheritdoc />
@@ -173,7 +170,7 @@ namespace Sammlung.Dictionaries
             _reverseMap.Clear();
         }
 
-        public IEnumerator<KeyValuePair<TForward, TReverse>> GetEnumerator()
+        public IEnumerator<KeyValuePair<TFwd, TRev>> GetEnumerator()
         {
             return _forwardMap.GetEnumerator();
         }

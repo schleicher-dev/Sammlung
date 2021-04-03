@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using JetBrains.Annotations;
 
 namespace Sammlung.Heaps
 {
@@ -6,6 +7,7 @@ namespace Sammlung.Heaps
     /// This is the abstract interface of a heap data structure.
     /// </summary>
     /// <typeparam name="T">the value type</typeparam>
+    [PublicAPI]
     public interface IHeap<T> : IEnumerable<T>
     {
         /// <summary>

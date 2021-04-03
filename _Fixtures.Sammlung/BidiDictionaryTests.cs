@@ -1,12 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using _Fixtures.Sammlung.Extras;
-using Microsoft.VisualBasic;
 using NUnit.Framework;
-using Sammlung;
 using Sammlung.Dictionaries;
 using Sammlung.Dictionaries.Concurrent;
 using Sammlung.Exceptions;
@@ -33,7 +30,7 @@ namespace _Fixtures.Sammlung
         public void InsertPairsFindPairs(BidiDictConstructors tuple)
         {
             var (zf, _, _) = tuple;
-            var pairs = Enumerable.Range(1, 100).Zip(Enumerable.Range(100, 100).Reverse()).ToArray();
+            var pairs = Enumerable.Range(1, 100).Zip(Enumerable.Range(100, 100).Reverse(), Tuple.Create).ToArray();
             var bDict = zf();
             Assert.IsFalse(bDict.IsReadOnly);
             foreach (var (a, b) in pairs)
@@ -46,7 +43,7 @@ namespace _Fixtures.Sammlung
                 Assert.AreEqual(b, bDict[a]);
                 Assert.AreEqual(a, bDict.ReverseMap[b]);
                 Assert.AreEqual(b, bDict.ForwardMap[a]);
-                Assert.IsTrue(bDict.Contains(KeyValuePair.Create(a, b)));
+                Assert.IsTrue(bDict.Contains(new KeyValuePair<int, int>(a, b)));
                 Assert.IsTrue(bDict.ContainsKey(a));
                 Assert.IsTrue(bDict.ForwardMap.ContainsKey(a));
                 Assert.IsTrue(bDict.ReverseMap.ContainsKey(b));
@@ -60,7 +57,7 @@ namespace _Fixtures.Sammlung
         public void ClearClearsAllMaps(BidiDictConstructors tuple)
         {
             var (zf, _, _) = tuple;
-            var pairs = Enumerable.Range(1, 100).Zip(Enumerable.Range(100, 100).Reverse()).ToArray();
+            var pairs = Enumerable.Range(1, 100).Zip(Enumerable.Range(100, 100).Reverse(), Tuple.Create).ToArray();
             var bDict = zf();
             foreach (var (a, b) in pairs)
                 bDict[a] = b;
@@ -76,30 +73,34 @@ namespace _Fixtures.Sammlung
         {
             var (zf, _, _) = tuple;
             var bDict = zf();
-            bDict.Add(KeyValuePair.Create(1, 2));
-            bDict.Add(KeyValuePair.Create(2, 3));
+            bDict.Add(new KeyValuePair<int, int>(1, 2));
+            bDict.Add(new KeyValuePair<int, int>(2, 3));
 
             var bdEnum = ((IEnumerable) bDict).GetEnumerator();
             while (bdEnum.MoveNext())
             {
-                var (f, r) = (KeyValuePair<int, int>) bdEnum.Current;
-                Assert.IsTrue(f == 1 && r == 2 || f == 2 && r == 3);
+                var kvPair = (KeyValuePair<int, int>) bdEnum.Current;
+                var fwd = kvPair.Key;
+                var rev = kvPair.Value;
+                Assert.IsTrue(fwd == 1 && rev == 2 || fwd == 2 && rev == 3);
             }
 
             var fwdEnum = ((IEnumerable) bDict.ForwardMap).GetEnumerator();
             while (fwdEnum.MoveNext())
             {
-                var (f, r) = (KeyValuePair<int, int>) fwdEnum.Current;
-                Assert.IsTrue(f == 1 && r == 2 || f == 2 && r == 3);
+                var kvPair = (KeyValuePair<int, int>) fwdEnum.Current;
+                var fwd = kvPair.Key;
+                var rev = kvPair.Value;
+                Assert.IsTrue(fwd == 1 && rev == 2 || fwd == 2 && rev == 3);
             }
             
             CollectionAssert.AreEquivalent(new [] {1, 2}, bDict.ForwardMap.Keys);
             CollectionAssert.AreEquivalent(new [] {2, 3}, bDict.ForwardMap.Values);
             CollectionAssert.AreEquivalent(new [] {2, 3}, bDict.ReverseMap.Keys);
             CollectionAssert.AreEquivalent(new [] {1, 2}, bDict.ReverseMap.Values);
-            CollectionAssert.AreEquivalent(new[] {KeyValuePair.Create(1, 2), KeyValuePair.Create(2, 3)},
+            CollectionAssert.AreEquivalent(new[] {new KeyValuePair<int, int>(1, 2), new KeyValuePair<int, int>(2, 3)},
                 bDict.ForwardMap);
-            CollectionAssert.AreEquivalent(new[] {KeyValuePair.Create(2, 1), KeyValuePair.Create(3, 2)},
+            CollectionAssert.AreEquivalent(new[] {new KeyValuePair<int, int>(2, 1), new KeyValuePair<int, int>(3, 2)},
                 bDict.ReverseMap);
             
             Assert.IsTrue(bDict.ForwardMap.TryGetValue(1, out var fwdValue));
@@ -114,7 +115,7 @@ namespace _Fixtures.Sammlung
             Assert.IsFalse(bDict.TryGetValue(3, out _));
             Assert.IsFalse(bDict.Remove(3));
             Assert.IsTrue(bDict.Remove(2));
-            Assert.IsTrue(bDict.Remove(KeyValuePair.Create(1, 2)));
+            Assert.IsTrue(bDict.Remove(new KeyValuePair<int, int>(1, 2)));
             Assert.AreEqual(0, bDict.Count);
         }
 
@@ -143,8 +144,8 @@ namespace _Fixtures.Sammlung
         public void CopyTo_SunnyPath(BidiDictConstructors tuple)
         {
             var (_, _, ef) = tuple;
-            var pairs = Enumerable.Range(1, 100).Zip(Enumerable.Range(100, 100).Reverse()).ToArray();
-            var bDict = ef(pairs.Select(t => KeyValuePair.Create<int, int>(t.First, t.Second)));
+            var pairs = Enumerable.Range(1, 100).Zip(Enumerable.Range(100, 100).Reverse(), Tuple.Create).ToArray();
+            var bDict = ef(pairs.Select(t => new KeyValuePair<int, int>(t.Item1, t.Item2)));
             var array = new KeyValuePair<int, int>[100];
             bDict.CopyTo(array, 0);
             CollectionAssert.AreEquivalent(bDict, array);

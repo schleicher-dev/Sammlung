@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using NUnit.Framework;
-using Sammlung;
 using Sammlung.Heaps;
 
 namespace _Fixtures.Sammlung
@@ -48,7 +46,7 @@ namespace _Fixtures.Sammlung
         public void PushAndPop_SunnyPath()
         {
             var heap = new BinaryHeap<HeapValue<string>>();
-            var items = Enumerable.Range(1, 10_000).Zip(GetNames()).ToList();
+            var items = Enumerable.Range(1, 10_000).Zip(GetNames(), Tuple.Create).ToList();
             foreach (var (key, value) in items.AsEnumerable().Reverse())
             {
                 heap.Push(HeapValue<string>.Create(key, value));
@@ -56,7 +54,7 @@ namespace _Fixtures.Sammlung
 
             var resultList = new List<string>();
             while(!heap.IsEmpty) resultList.Add(heap.Pop().Value);
-            CollectionAssert.AreEqual(items.Select(kv => kv.Second), resultList);
+            CollectionAssert.AreEqual(items.Select(kv => kv.Item2), resultList);
         }
         
         [Test]

@@ -1,21 +1,16 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Threading;
+using JetBrains.Annotations;
 using Sammlung.Utilities.Patterns;
 
 namespace Sammlung.Heaps
 {
-    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global",
-        Justification = Justifications.PublicApiJustification)]
+    [PublicAPI]
     public sealed class BinaryHeap<T> : IHeap<T> where T : class
     {
-        private static readonly Lazy<HeapNodeObjectPool> HeapNodePoolLoader =
-            new Lazy<HeapNodeObjectPool>(() => new HeapNodeObjectPool(), LazyThreadSafetyMode.PublicationOnly);
-
-        private static HeapNodeObjectPool HeapNodePool => HeapNodePoolLoader.Value;
+        private static readonly HeapNodeObjectPool HeapNodePool = new HeapNodeObjectPool();
         
         private readonly List<HeapNode> _binaryHeap;
         private readonly IComparer<T> _comparer;

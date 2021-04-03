@@ -1,6 +1,5 @@
 using System;
 using System.Globalization;
-using System.Runtime.CompilerServices;
 using Sammlung.Exceptions;
 using Sammlung.Resources;
 
@@ -21,22 +20,19 @@ namespace Sammlung.Utilities
         private static string GetFormattedString(string name, params object[] args) =>
             string.Format(GetString(name), args);
 
-        public static DuplicateKeyException NewDuplicateKeyException(object key, Exception innerException = null,
-            [CallerMemberName] string methodName = null)
+        public static DuplicateKeyException NewDuplicateKeyException(object key, string methodName, Exception innerException = null)
         {
             var msg = GetFormattedString(nameof(ErrorMessages.DuplicateKeyFound), key, methodName);
             return new DuplicateKeyException(msg, innerException);
         }
 
-        public static InvalidOperationException NewEmptyCollectionException(Exception innerException = null,
-            [CallerMemberName] string methodName = null)
+        public static InvalidOperationException NewEmptyCollectionException(string methodName, Exception innerException = null)
         {
             var msg = GetFormattedString(nameof(ErrorMessages.RemoveOnEmptyCollection), methodName);
             return new InvalidOperationException(msg, innerException);
         }
         
-        public static InvalidOperationException NewHeapUpdateFailedException(Exception innerException = null,
-            [CallerMemberName] string methodName = null)
+        public static InvalidOperationException NewHeapUpdateFailedException(string methodName, Exception innerException = null)
         {
             var msg = GetFormattedString(nameof(ErrorMessages.HeapUpdateFailed), methodName);
             return new InvalidOperationException(msg, innerException);

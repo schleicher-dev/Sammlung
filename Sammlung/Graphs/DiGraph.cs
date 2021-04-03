@@ -2,49 +2,76 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
-using Sammlung.Compatibility;
 
 namespace Sammlung.Graphs
 {
-
-    /// <summary>
-    /// The <see cref="DiGraph{T}"/> represents an directed graph.
-    /// </summary>
     [PublicAPI]
-    public class DiGraph<T> where T : IEquatable<T>
+    public class DiGraph<TVertex, TWeight> : IDiGraph<TVertex, TWeight>
+        where TWeight : IComparable<TWeight>
     {
-        private readonly IDictionary<T, Node<T>> _nodeMapping;
-
-        public DiGraph()
+        public DiGraph(TWeight defaultEdgeWeight)
         {
-            _nodeMapping = new Dictionary<T, Node<T>>();
+            DefaultEdgeWeight = defaultEdgeWeight;
+            _vertices = new HashSet<TVertex>();
+            _incomingEdges = new Dictionary<TVertex, HashSet<IEdge<TVertex, TWeight>>>();
+            _outgoingEdges = new Dictionary<TVertex, HashSet<IEdge<TVertex, TWeight>>>();
         }
 
-        public Compatibility.IReadOnlyCollection<Node<T>> Nodes =>
-            new ReadOnlyCollectionAdapter<Node<T>>(_nodeMapping.Values);
-
-        public Compatibility.IReadOnlyCollection<Edge<T>> Edges =>
-            new ReadOnlyCollectionAdapter<Edge<T>>(_nodeMapping.Values.SelectMany(n => n.OutgoingEdges).ToList());
-
-        public Node<T> AddNode(T value) => 
-            _nodeMapping.TryGetValue(value, out var node) ? node : _nodeMapping[value] = new Node<T>(value);
-
-        public IEnumerable<Node<T>> AddNodes(IEnumerable<T> values) => values.Select(AddNode).ToList();
-        
-        public bool TryGetNode(T value, out Node<T> node) => _nodeMapping.TryGetValue(value, out node);
-
-        public Edge<T> AddEdge(T sourceValue, T targetValue) => AddEdge((sourceValue, targetValue));
-        
-        public Edge<T> AddEdge((T SourceValue, T TargetValue) edge)
+        public DiGraph(IDiGraph<TVertex, TWeight> graph) : this(graph.DefaultEdgeWeight)
         {
-            var (sourceValue, targetValue) = edge;
-            var sourceNode = AddNode(sourceValue);
-            var targetNode = AddNode(targetValue); 
-            sourceNode.AddTargetNode(targetNode);
-            return new Edge<T>(sourceNode, targetNode);
+            _vertices = new HashSet<TVertex>(graph.Vertices);
+            foreach (var edge in graph.Edges) AddEdge(edge.SourceVertex, edge.TargetVertex, edge.Weight);
         }
 
-        public IEnumerable<Edge<T>> AddEdges(IEnumerable<(T SourceValue, T TargetValue)> edges) =>
-            edges.Select(AddEdge).ToList();
+        private readonly HashSet<TVertex> _vertices;
+        private readonly IDictionary<TVertex, HashSet<IEdge<TVertex, TWeight>>> _incomingEdges;
+        private readonly IDictionary<TVertex, HashSet<IEdge<TVertex, TWeight>>> _outgoingEdges;
+
+        /// <inheritdoc />
+        public TWeight DefaultEdgeWeight { get; }
+
+        /// <inheritdoc />
+        public IEnumerable<TVertex> Vertices => _vertices;
+
+        /// <inheritdoc />
+        public IEnumerable<IEdge<TVertex, TWeight>> Edges => _outgoingEdges.SelectMany(e => e.Value);
+
+        /// <inheritdoc />
+        public void AddVertex(TVertex vertex) => _vertices.Add(vertex);
+
+        /// <inheritdoc />
+        public bool HasVertex(TVertex vertex) => _vertices.Contains(vertex);
+
+        /// <inheritdoc />
+        public IEnumerable<IEdge<TVertex, TWeight>> GetIncomingEdges(TVertex vertex) =>
+            _incomingEdges.TryGetValue(vertex, out var inEdges) ? inEdges : Enumerable.Empty<IEdge<TVertex, TWeight>>();
+
+        /// <inheritdoc />
+        public IEnumerable<IEdge<TVertex, TWeight>> GetOutgoingEdges(TVertex vertex) =>
+            _outgoingEdges.TryGetValue(vertex, out var outEdges)
+                ? outEdges
+                : Enumerable.Empty<IEdge<TVertex, TWeight>>();
+
+        /// <inheritdoc />
+        public IEdge<TVertex, TWeight> AddEdge(TVertex source, TVertex target) =>
+            AddEdge(source, target, DefaultEdgeWeight);
+
+        /// <inheritdoc />
+        public IEdge<TVertex, TWeight> AddEdge(TVertex source, TVertex target, TWeight weight)
+        {
+            IEdge<TVertex, TWeight> edge = new Edge<TVertex, TWeight>(source, target, weight);
+
+            _vertices.Add(source);
+            if (!_outgoingEdges.TryGetValue(source, out var outEdges))
+                _outgoingEdges[source] = outEdges = new HashSet<IEdge<TVertex, TWeight>>();
+            outEdges.Add(edge);
+
+            _vertices.Add(target);
+            if (!_outgoingEdges.TryGetValue(target, out var inEdges))
+                _incomingEdges[target] = inEdges = new HashSet<IEdge<TVertex, TWeight>>();
+            inEdges.Add(edge);
+
+            return edge;
+        }
     }
 }

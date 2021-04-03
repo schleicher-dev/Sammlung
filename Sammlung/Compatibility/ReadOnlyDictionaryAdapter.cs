@@ -3,6 +3,12 @@ using System.Collections.Generic;
 
 namespace Sammlung.Compatibility
 {
+    /// <summary>
+    /// The <see cref="ReadOnlyDictionaryAdapter{TKey,TValue}"/> adapts a given <seealso cref="IDictionary{TKey,TValue}"/>
+    /// to the <seealso cref="IReadOnlyDictionary{TKey,TValue}"/> type.
+    /// </summary>
+    /// <typeparam name="TKey">the key type</typeparam>
+    /// <typeparam name="TValue">the value type</typeparam>
     internal class ReadOnlyDictionaryAdapter<TKey, TValue> : IReadOnlyDictionary<TKey, TValue>
     {
         private readonly IDictionary<TKey, TValue> _impl;

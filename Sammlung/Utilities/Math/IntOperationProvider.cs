@@ -1,18 +1,10 @@
-using System;
-using System.Threading;
+using JetBrains.Annotations;
 
 namespace Sammlung.Utilities.Math
 {
+    [PublicAPI]
     internal class IntOperationProvider : IOperationProvider<int>
     {
-        private static readonly Lazy<IOperationProvider<int>> Loader =
-            new Lazy<IOperationProvider<int>>(() => new IntOperationProvider(),
-                LazyThreadSafetyMode.PublicationOnly);
-
-        public static IOperationProvider<int> Instance => Loader.Value;
-        
-        private IntOperationProvider() {}
-        
         public short NumBits => 31;
 
         public int Add(int lhs, long rhs) => (int) (lhs + rhs);

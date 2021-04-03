@@ -1,6 +1,4 @@
 using System;
-using System.Diagnostics.CodeAnalysis;
-using Sammlung;
 using Sammlung.Queues;
 
 namespace _Fixtures.Sammlung.Extras

@@ -1,7 +1,9 @@
+using JetBrains.Annotations;
 using Sammlung.Utilities;
 
 namespace Sammlung.Heaps
 {
+    [PublicAPI]
     public static class HeapExtensions
     {
         /// <summary>
@@ -14,7 +16,7 @@ namespace Sammlung.Heaps
         {
             return heap.TryPop(out var item)
                 ? item
-                : throw ExceptionsHelper.NewEmptyCollectionException();
+                : throw ExceptionsHelper.NewEmptyCollectionException(nameof(Pop));
         }
 
         /// <summary>
@@ -27,7 +29,7 @@ namespace Sammlung.Heaps
         {
             return heap.TryPeek(out var item)
                 ? item
-                : throw ExceptionsHelper.NewEmptyCollectionException();
+                : throw ExceptionsHelper.NewEmptyCollectionException(nameof(Peek));
         }
 
         /// <summary>
@@ -42,7 +44,7 @@ namespace Sammlung.Heaps
         {
             return heap.TryReplace(newValue, out var oldValue)
                 ? oldValue
-                : throw ExceptionsHelper.NewEmptyCollectionException();
+                : throw ExceptionsHelper.NewEmptyCollectionException(nameof(Replace));
         }
 
         /// <summary>
@@ -56,7 +58,7 @@ namespace Sammlung.Heaps
         public static void Update<T>(this IHeap<T> heap, T oldValue, T newValue)
         {
             if (!heap.TryUpdate(oldValue, newValue))
-                throw ExceptionsHelper.NewHeapUpdateFailedException();
+                throw ExceptionsHelper.NewHeapUpdateFailedException(nameof(Update));
         }
     }
 }

@@ -10,6 +10,6 @@ namespace Sammlung.Utilities.Math
             return provider.Add(value, 1);
         }
 
-        public static int NextPowerOf2(int v) => GenericNextPowerOf2(v, IntOperationProvider.Instance);
+        public static int NextPowerOf2(int v) => GenericNextPowerOf2(v, new IntOperationProvider());
     }
 }

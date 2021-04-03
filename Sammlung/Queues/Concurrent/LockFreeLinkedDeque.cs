@@ -40,7 +40,7 @@ namespace Sammlung.Queues.Concurrent
             anchor.State = state;
         }
 
-        private static void BackOff() => Thread.Yield();
+        private static void BackOff() => Thread.SpinWait(100);
 
         private void Stabilize(Anchor<T> anchor)
         {
