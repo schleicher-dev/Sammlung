@@ -36,6 +36,63 @@ namespace _Fixtures.Sammlung
         }
 
         [Test]
+        public void GraphKnowsTheIncomingAndOutgoingEdges()
+        {
+            var graph = new DiGraph<int, int>(1);
+            graph.AddEdge(1, 1);
+            graph.AddEdge(2, 2);
+            graph.AddEdge(3, 3);
+            graph.AddEdge(1, 2);
+            graph.AddEdge(2, 1);
+            graph.AddEdge(2, 3);
+            graph.AddEdge(3, 2);
+            graph.AddEdge(3, 1);
+            graph.AddEdge(1, 3);
+
+            CollectionAssert.AreEquivalent(new List<IEdge<int, int>>
+            {
+                new Edge<int, int>(1, 1, 1),
+                new Edge<int, int>(2, 1, 1),
+                new Edge<int, int>(3, 1, 1),
+            }, graph.GetIncomingEdges(1));
+
+            CollectionAssert.AreEquivalent(new List<IEdge<int, int>>
+            {
+                new Edge<int, int>(1, 1, 1),
+                new Edge<int, int>(1, 2, 1),
+                new Edge<int, int>(1, 3, 1),
+            }, graph.GetOutgoingEdges(1));
+
+            CollectionAssert.AreEquivalent(new List<IEdge<int, int>>
+            {
+                new Edge<int, int>(1, 2, 1),
+                new Edge<int, int>(2, 2, 1),
+                new Edge<int, int>(3, 2, 1),
+            }, graph.GetIncomingEdges(2));
+
+            CollectionAssert.AreEquivalent(new List<IEdge<int, int>>
+            {
+                new Edge<int, int>(2, 1, 1),
+                new Edge<int, int>(2, 2, 1),
+                new Edge<int, int>(2, 3, 1),
+            }, graph.GetOutgoingEdges(2));
+            
+            CollectionAssert.AreEquivalent(new List<IEdge<int, int>>
+            {
+                new Edge<int, int>(1, 3, 1),
+                new Edge<int, int>(2, 3, 1),
+                new Edge<int, int>(3, 3, 1),
+            }, graph.GetIncomingEdges(3));
+
+            CollectionAssert.AreEquivalent(new List<IEdge<int, int>>
+            {
+                new Edge<int, int>(3, 1, 1),
+                new Edge<int, int>(3, 2, 1),
+                new Edge<int, int>(3, 3, 1),
+            }, graph.GetOutgoingEdges(3));
+        }
+
+        [Test]
         public void HasVertex()
         {
             var graph = new DiGraph<int, int>(1);

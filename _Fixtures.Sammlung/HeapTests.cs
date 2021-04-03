@@ -149,5 +149,23 @@ namespace _Fixtures.Sammlung
             }
             CollectionAssert.IsOrdered(listA, comparerA);
         }
+
+        [Test]
+        public void EnumerateHeap()
+        {
+            var heap = new BinaryHeap<HeapValue<int>>();
+            heap.Push(HeapValue<int>.Create(200, 1));
+            heap.Push(HeapValue<int>.Create(300, 2));
+            heap.Push(HeapValue<int>.Create(400, 3));
+            heap.Push(HeapValue<int>.Create(100, 4));
+            
+            CollectionAssert.AreEquivalent(new[] {1, 2, 3, 4}, heap.Select(v => v.Value).ToArray());
+            CollectionAssert.AreEquivalent(new[] {100, 200, 300, 400}, heap.Select(v => v.Key).ToArray());
+
+            var result = new List<int>();
+            var enumerator = ((System.Collections.IEnumerable) heap).GetEnumerator();
+            while (enumerator.MoveNext()) result.Add(((HeapValue<int>) enumerator.Current)?.Value ?? 0);
+            CollectionAssert.AreEquivalent(new[] {1, 2, 3, 4}, result);
+        }
     }
 }

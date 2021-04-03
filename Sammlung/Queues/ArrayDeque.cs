@@ -122,7 +122,15 @@ namespace Sammlung.Queues
         }
 
         /// <inheritdoc />
-        IEnumerator<T> IEnumerable<T>.GetEnumerator() => _array.Cast<T>().GetEnumerator();
+        IEnumerator<T> IEnumerable<T>.GetEnumerator()
+        {
+            for (var i = _leftPointer; _rightPointer <= _leftPointer && i < _array.Length; ++i)
+                yield return _array[i];
+            for (var i = 0; _rightPointer <= _leftPointer && i < _rightPointer; ++i)
+                yield return _array[i];
+            for (var i = _leftPointer; i < _rightPointer; ++i)
+                yield return _array[i];
+        }
 
         /// <inheritdoc />
         IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<T>) this).GetEnumerator();

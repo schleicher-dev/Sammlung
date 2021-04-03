@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using _Fixtures.Sammlung.Extras;
@@ -18,6 +19,12 @@ namespace _Fixtures.Sammlung
             new DequeConstructors<int>("BlockingDeque", c => BlockingDeque.Wrap(new ArrayDeque<int>(c))),
             new DequeConstructors<int>("LinkedDeque", c => new LinkedDeque<int>()),
             new DequeConstructors<int>("LockFreeLinkedDeque", c => new LockFreeLinkedDeque<int>())
+        };
+        public static readonly DequeConstructors<int>[] NormalBuffers =
+        {
+            new DequeConstructors<int>("ArrayDeque", c => new ArrayDeque<int>(c)),
+            new DequeConstructors<int>("BlockingDeque", c => BlockingDeque.Wrap(new ArrayDeque<int>(c))),
+            new DequeConstructors<int>("LinkedDeque", c => new LinkedDeque<int>())
         };
 
         [TestCaseSource(nameof(Buffers))]
@@ -129,6 +136,57 @@ namespace _Fixtures.Sammlung
             Assert.Throws<InvalidOperationException>(() => buffer.PopRight());
             Assert.IsFalse(buffer.TryPopLeft(out _));
             Assert.Throws<InvalidOperationException>(() => buffer.PopLeft());
+        }
+
+        [TestCaseSource(nameof(NormalBuffers))]
+        [Repeat(5)]
+        public void Deque_Enumeration(DequeConstructors<int> constructors)
+        {
+            var capCtor = constructors.Item1;
+            var deque = capCtor.Invoke(6);
+
+            for (var i = 0; i < 6; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    deque.PushLeft(i);
+                    continue;
+                }
+                
+                deque.PushRight(i);
+            }
+            
+            CollectionAssert.AreEqual(new[] {4, 2, 0, 1, 3, 5}, deque.ToArray());
+        }
+
+        [TestCaseSource(nameof(NormalBuffers))]
+        [Repeat(5)]
+        public void Deque_ContiguousEnumeration(DequeConstructors<int> constructors)
+        {
+            var capCtor = constructors.Item1;
+            var deque = capCtor.Invoke(6);
+
+            for (var i = 0; i < 5; i++) deque.PushRight(i);
+            deque.PopLeft();
+
+            CollectionAssert.AreEqual(new[] {1, 2, 3, 4}, deque.ToArray());
+
+            var result = new List<int>();
+            var enumerator = ((System.Collections.IEnumerable) deque).GetEnumerator();
+            while (enumerator.MoveNext()) result.Add((int) enumerator.Current);
+            CollectionAssert.AreEqual(new[] {1, 2, 3, 4}, result);
+        }
+
+        [Test]
+        public void LockFreeDeque_DoesNotSupportEnumeration()
+        {
+            var lfDeque = new LockFreeLinkedDeque<int>();
+            lfDeque.PushRight(1);
+            lfDeque.PushRight(2);
+            lfDeque.PushRight(3);
+
+            Assert.Throws<NotSupportedException>(() => _ = lfDeque.ToArray());
+            Assert.Throws<NotSupportedException>(() => ((IEnumerable) lfDeque).GetEnumerator());
         }
     }
 }

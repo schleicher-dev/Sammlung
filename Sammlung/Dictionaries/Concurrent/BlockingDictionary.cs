@@ -6,6 +6,12 @@ using Sammlung.Utilities.Concurrent;
 
 namespace Sammlung.Dictionaries.Concurrent
 {
+    /// <summary>
+    /// The <see cref="BlockingDictionary{TKey,TValue}"/> is a primitive variant to the concurrent dictionary
+    /// available since .NET Framework 4.0.
+    /// </summary>
+    /// <typeparam name="TKey">the key type</typeparam>
+    /// <typeparam name="TValue">the value type</typeparam>
     [PublicAPI]
     public class BlockingDictionary<TKey, TValue> : IDictionary<TKey, TValue>
     {
@@ -22,16 +28,26 @@ namespace Sammlung.Dictionaries.Concurrent
         public BlockingDictionary(IEqualityComparer<TKey> keyComparer) : 
             this(new Dictionary<TKey, TValue>(keyComparer)) { }
         
+        /// <summary>
+        /// Creates a new 
+        /// </summary>
+        /// <param name="dictionary"></param>
+        /// <param name="keyComparer"></param>
         public BlockingDictionary(IDictionary<TKey, TValue> dictionary, IEqualityComparer<TKey> keyComparer) : 
             this(new Dictionary<TKey, TValue>(dictionary, keyComparer)) { }
         
+        /// <summary>
+        /// Creates a new <see cref="BlockingDictionary{TKey,TValue}"/> using the passed dicitionary.
+        /// </summary>
+        /// <param name="dictionary">the dictionary to use</param>
         public BlockingDictionary(IDictionary<TKey, TValue> dictionary)
         {
-            _innerDict = dictionary;
+            _innerDict = new Dictionary<TKey, TValue>(dictionary);
             _rwLock = new EnhancedReaderWriterLock(LockRecursionPolicy.NoRecursion);
         }
 
-        IEnumerator<KeyValuePair<TKey, TValue>> IEnumerable<KeyValuePair<TKey, TValue>>.GetEnumerator()
+        /// <inheritdoc />
+        public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
         {
             using var _ = _rwLock.UseWriteLock();
 
@@ -39,6 +55,7 @@ namespace Sammlung.Dictionaries.Concurrent
             return snapshot.GetEnumerator();
         }
 
+        /// <inheritdoc />
         IEnumerator IEnumerable.GetEnumerator()
         {
             using var _ = _rwLock.UseWriteLock();
@@ -47,37 +64,43 @@ namespace Sammlung.Dictionaries.Concurrent
             return snapshot.GetEnumerator();
         }
 
-        void ICollection<KeyValuePair<TKey, TValue>>.Add(KeyValuePair<TKey, TValue> item)
+        /// <inheritdoc />
+        public void Add(KeyValuePair<TKey, TValue> item)
         {
             using var _ = _rwLock.UseWriteLock();
             _innerDict.Add(item);
         }
 
-        void ICollection<KeyValuePair<TKey, TValue>>.Clear()
+        /// <inheritdoc />
+        public void Clear()
         {
             using var _ = _rwLock.UseWriteLock();
             _innerDict.Clear();
         }
 
-        bool ICollection<KeyValuePair<TKey, TValue>>.Contains(KeyValuePair<TKey, TValue> item)
+        /// <inheritdoc />
+        public bool Contains(KeyValuePair<TKey, TValue> item)
         {
             using var _ = _rwLock.UseReadLock();
             return _innerDict.Contains(item);
         }
 
-        void ICollection<KeyValuePair<TKey, TValue>>.CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
+        /// <inheritdoc />
+        public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
         {
             using var _ = _rwLock.UseWriteLock();
             _innerDict.CopyTo(array, arrayIndex);
         }
 
-        bool ICollection<KeyValuePair<TKey, TValue>>.Remove(KeyValuePair<TKey, TValue> item)
+        /// <inheritdoc />
+        public bool Remove(KeyValuePair<TKey, TValue> item)
         {
             using var _ = _rwLock.UseWriteLock();
             return _innerDict.Remove(item);
         }
 
-        int ICollection<KeyValuePair<TKey, TValue>>.Count
+        /// <inheritdoc />
+        public int Count
         {
             get
             {
@@ -86,7 +109,8 @@ namespace Sammlung.Dictionaries.Concurrent
             }
         }
 
-        bool ICollection<KeyValuePair<TKey, TValue>>.IsReadOnly
+        /// <inheritdoc />
+        public bool IsReadOnly
         {
             get
             {
@@ -95,31 +119,36 @@ namespace Sammlung.Dictionaries.Concurrent
             }
         }
 
-        bool IDictionary<TKey, TValue>.ContainsKey(TKey key)
+        /// <inheritdoc />
+        public bool ContainsKey(TKey key)
         {
             using var _ = _rwLock.UseReadLock();
             return _innerDict.ContainsKey(key);
         }
 
-        void IDictionary<TKey, TValue>.Add(TKey key, TValue value)
+        /// <inheritdoc />
+        public void Add(TKey key, TValue value)
         {
             using var _ = _rwLock.UseWriteLock();
             _innerDict.Add(key, value);
         }
 
-        bool IDictionary<TKey, TValue>.Remove(TKey key)
+        /// <inheritdoc />
+        public bool Remove(TKey key)
         {
             using var _ = _rwLock.UseWriteLock();
             return _innerDict.Remove(key);
         }
 
-        bool IDictionary<TKey, TValue>.TryGetValue(TKey key, out TValue value)
+        /// <inheritdoc />
+        public bool TryGetValue(TKey key, out TValue value)
         {
             using var _ = _rwLock.UseReadLock();
             return _innerDict.TryGetValue(key, out value);
         }
 
-        TValue IDictionary<TKey, TValue>.this[TKey key]
+        /// <inheritdoc />
+        public TValue this[TKey key]
         {
             get
             {
@@ -133,7 +162,8 @@ namespace Sammlung.Dictionaries.Concurrent
             }
         }
 
-        ICollection<TKey> IDictionary<TKey, TValue>.Keys
+        /// <inheritdoc />
+        public ICollection<TKey> Keys
         {
             get
             {
@@ -143,7 +173,8 @@ namespace Sammlung.Dictionaries.Concurrent
             }
         }
 
-        ICollection<TValue> IDictionary<TKey, TValue>.Values
+        /// <inheritdoc />
+        public ICollection<TValue> Values
         {
             get
             {

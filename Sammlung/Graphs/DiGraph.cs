@@ -67,7 +67,7 @@ namespace Sammlung.Graphs
             outEdges.Add(edge);
 
             _vertices.Add(target);
-            if (!_outgoingEdges.TryGetValue(target, out var inEdges))
+            if (!_incomingEdges.TryGetValue(target, out var inEdges))
                 _incomingEdges[target] = inEdges = new HashSet<IEdge<TVertex, TWeight>>();
             inEdges.Add(edge);
 

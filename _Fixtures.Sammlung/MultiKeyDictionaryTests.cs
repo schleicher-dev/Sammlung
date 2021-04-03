@@ -23,6 +23,24 @@ namespace _Fixtures.Sammlung
                 d => new BlockingMultiKeyDictionary<int, string>(d),
                 c => new BlockingMultiKeyDictionary<int, string>(c)),
         };
+
+        [Test]
+        public void AllConstructor()
+        {
+            Assert.DoesNotThrow(() => _ = new MultiKeyDictionary<string, string>());
+            Assert.DoesNotThrow(() => _ = new MultiKeyDictionary<string, string>(EqualityComparer<string>.Default));
+            Assert.DoesNotThrow(() => _ = new MultiKeyDictionary<string, string>(new Dictionary<string, string>()));
+            Assert.DoesNotThrow(() => _ = new MultiKeyDictionary<string, string>(new Dictionary<string, string>(), EqualityComparer<string>.Default));
+            Assert.DoesNotThrow(() => _ = new MultiKeyDictionary<string, string>(new List<KeyValuePair<string, string>>()));
+            Assert.DoesNotThrow(() => _ = new MultiKeyDictionary<string, string>(50));
+            Assert.DoesNotThrow(() => _ = new MultiKeyDictionary<string, string>(50, EqualityComparer<string>.Default));
+            Assert.DoesNotThrow(() => _ = new MultiKeyDictionary<string, string>(new List<KeyValuePair<string, string>>(), EqualityComparer<string>.Default));
+            
+            Assert.DoesNotThrow(() => _ = new BlockingMultiKeyDictionary<string, string>());
+            Assert.DoesNotThrow(() => _ = new BlockingMultiKeyDictionary<string, string>(5));
+            Assert.DoesNotThrow(() => _ = new BlockingMultiKeyDictionary<string, string>(5, EqualityComparer<string>.Default));
+            Assert.DoesNotThrow(() => _ = new BlockingMultiKeyDictionary<string, string>(new Dictionary<string, string>(), EqualityComparer<string>.Default));
+        }
         
         [TestCaseSource(nameof(CtorTuples))]
         public void AddMultipleKeysAndRetrieveThem(MultiKeyDictConstructors<int, string> multiKeyDictConstructors)
