@@ -41,6 +41,7 @@ This package contains a library for C# containing a plethora of collection types
         <AutoGen>True</AutoGen>
         <DependentUpon>ErrorMessages.resx</DependentUpon>
       </Compile>
+      <Compile Remove="Exceptions\VertexNotFoundException.cs" />
     </ItemGroup>
     
     <ItemGroup>

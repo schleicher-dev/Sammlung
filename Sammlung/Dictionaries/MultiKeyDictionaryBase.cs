@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 
 namespace Sammlung.Dictionaries
 {
@@ -10,10 +11,15 @@ namespace Sammlung.Dictionaries
     /// </summary>
     /// <typeparam name="TKey">the key type</typeparam>
     /// <typeparam name="TValue">the value type</typeparam>
+    [PublicAPI]
     public abstract class MultiKeyDictionaryBase<TKey, TValue> : IMultiKeyDictionary<TKey, TValue> where TValue : class
     {
         private readonly IDictionary<TKey, TValue> _innerDict;
         
+        /// <summary>
+        /// Creates a new <see cref="MultiKeyDictionary{TKey,TValue}"/> using an inner dictionary.
+        /// </summary>
+        /// <param name="innerDict">the inner dictionary</param>
         protected MultiKeyDictionaryBase(IDictionary<TKey, TValue> innerDict)
         {
             _innerDict = innerDict ?? throw new ArgumentNullException(nameof(innerDict));

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using JetBrains.Annotations;
 
 namespace Sammlung.Dictionaries
 {
@@ -8,6 +9,7 @@ namespace Sammlung.Dictionaries
     /// </summary>
     /// <typeparam name="TKey"></typeparam>
     /// <typeparam name="TValue"></typeparam>
+    [PublicAPI]
     public interface IMultiKeyDictionary<TKey, TValue> : IDictionary<TKey, TValue> where TValue : class
     {
         /// <summary>

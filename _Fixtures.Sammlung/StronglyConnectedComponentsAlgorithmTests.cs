@@ -17,13 +17,12 @@ namespace _Fixtures.Sammlung
             graph.AddEdge(1, 2);
             graph.AddEdge(2, 3);
             graph.AddEdge(3, 1);
-            
-            var verifier = new TarjanStronglyConnectedComponentsAlgorithm<int, int>(graph);
-            var components = verifier.Result.ToList();
+
+            var graphAlgorithms = new DefaultDiGraphAlgorithms();
+            var components = graphAlgorithms.GetStronglyConnectedComponents(graph).ToList();
             Assert.AreEqual(1, components.Count);
-            Assert.IsTrue(components.All(g => g.IsStronglyConnected()));
-            
-            Assert.IsFalse(graph.IsAcyclic());
+            Assert.IsTrue(components.All(g => graphAlgorithms.IsStronglyConnected(g)));
+            Assert.IsFalse(graphAlgorithms.IsAcyclic(graph));
         }
         
         [Test]
@@ -37,10 +36,10 @@ namespace _Fixtures.Sammlung
             graph.AddEdge(4, 5);
             graph.AddEdge(5, 4);
             
-            var verifier = new TarjanStronglyConnectedComponentsAlgorithm<int, int>(graph);
-            var components = verifier.Result.ToList();
+            var graphAlgorithms = new DefaultDiGraphAlgorithms();
+            var components = graphAlgorithms.GetStronglyConnectedComponents(graph).ToList();
             Assert.AreEqual(2, components.Count);
-            Assert.IsTrue(components.All(g => g.IsStronglyConnected()));
+            Assert.IsTrue(components.All(g => graphAlgorithms.IsStronglyConnected(g)));
         }
 
         [Test]
@@ -54,11 +53,11 @@ namespace _Fixtures.Sammlung
             graph.AddEdge(5, 6);
             graph.AddEdge(6, 7);
             
-            var verifier = new TarjanStronglyConnectedComponentsAlgorithm<int, int>(graph);
-            var components = verifier.Result.ToList();
+            var graphAlgorithms = new DefaultDiGraphAlgorithms();
+            var components = graphAlgorithms.GetStronglyConnectedComponents(graph).ToList();
             Assert.AreEqual(7, components.Count);
-            Assert.IsTrue(components.All(g => g.IsStronglyConnected()));
-            Assert.IsTrue(graph.IsAcyclic());
+            Assert.IsTrue(components.All(g => graphAlgorithms.IsStronglyConnected(g)));
+            Assert.IsTrue(graphAlgorithms.IsAcyclic(graph));
         }
     }
 }

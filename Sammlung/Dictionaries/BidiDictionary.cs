@@ -170,11 +170,13 @@ namespace Sammlung.Dictionaries
             _reverseMap.Clear();
         }
 
+        /// <inheritdoc />
         public IEnumerator<KeyValuePair<TFwd, TRev>> GetEnumerator()
         {
             return _forwardMap.GetEnumerator();
         }
 
+        /// <inheritdoc />
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
     

@@ -18,21 +18,39 @@ namespace Sammlung.Dictionaries.Concurrent
         private readonly IDictionary<TKey, TValue> _innerDict;
         private readonly EnhancedReaderWriterLock _rwLock;
 
+        /// <summary>
+        /// Creates a new <see cref="BlockingDictionary{TKey,TValue}"/>.
+        /// </summary>
         public BlockingDictionary() : this(new Dictionary<TKey, TValue>()) { }
         
+        /// <summary>
+        /// Creates a new <see cref="BlockingDictionary{TKey,TValue}"/> using an initial capacity.
+        /// </summary>
+        /// <param name="capacity">the initial capacity</param>
         public BlockingDictionary(int capacity) : this(new Dictionary<TKey, TValue>(capacity)) { }
         
+        /// <summary>
+        /// Creates a new <see cref="BlockingDictionary{TKey,TValue}"/> using an initial capacity and equality comparer
+        /// for the key comparison. 
+        /// </summary>
+        /// <param name="capacity">the initial capacity</param>
+        /// <param name="keyComparer">the key comparer</param>
         public BlockingDictionary(int capacity, IEqualityComparer<TKey> keyComparer) : 
             this(new Dictionary<TKey, TValue>(capacity, keyComparer)) { }
 
+        /// <summary>
+        /// Creates a new <see cref="BlockingDictionary{TKey,TValue}"/> using an equality comparer for the
+        /// key comparison.
+        /// </summary>
+        /// <param name="keyComparer">the key comparer</param>
         public BlockingDictionary(IEqualityComparer<TKey> keyComparer) : 
             this(new Dictionary<TKey, TValue>(keyComparer)) { }
         
         /// <summary>
-        /// Creates a new 
+        /// Creates a new <see cref="BlockingDictionary{TKey,TValue}"/> using another dictionary and a key comparer.
         /// </summary>
-        /// <param name="dictionary"></param>
-        /// <param name="keyComparer"></param>
+        /// <param name="dictionary">the dictionary</param>
+        /// <param name="keyComparer">the key comparer</param>
         public BlockingDictionary(IDictionary<TKey, TValue> dictionary, IEqualityComparer<TKey> keyComparer) : 
             this(new Dictionary<TKey, TValue>(dictionary, keyComparer)) { }
         

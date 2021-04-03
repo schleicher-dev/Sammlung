@@ -45,17 +45,17 @@ topic.
 
 Ticked means available in the newest package.
 
-- [ ] Dictionaries
-    - [ ] Bidirectional Dictionary
+- [X] Dictionaries
+    - [X] Bidirectional Dictionary
         - [X] Non-Thread-Safe (Sammlung.Dictionaries.BidiDictionary)
         - [X] Thread-Safe, Blocking (Sammlung.Dictionaries.Concurrent.BlockingBidiDictionary)
         - [ ] Thread-Safe, Lock-Free
-    - [ ] Multi-Key Dictionary
+    - [X] Multi-Key Dictionary
         - [X] Non-Thread-Safe (Sammlung.Dictionaries.MultiKeyDictionary)
         - [X] Thread-Safe, Blocking (Sammlung.Dictionaries.Concurrent.BlockingMultiKeyDictionary)
         - [ ] Thread-Safe, Lock-Free
-- [ ] Heaps
-    - [ ] Binary Heap
+- [X] Heaps
+    - [X] Binary Heap
         - [X] Non-Thread-Safe (Sammlung.Heaps.BinaryHeap)
         - [ ] Thread-Safe, Blocking
         - [ ] Thread-Safe, Lock-Free

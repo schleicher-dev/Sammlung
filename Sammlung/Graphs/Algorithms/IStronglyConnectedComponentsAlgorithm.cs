@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Sammlung.Graphs.Algorithms
 {
-    internal interface IStronglyConnectedComponentsAlgorithm<TVertex, TWeight>
+    public interface IStronglyConnectedComponentsAlgorithm<TVertex, TWeight>
         where TWeight : IComparable<TWeight>
     {
         bool IsEvaluated { get; }
