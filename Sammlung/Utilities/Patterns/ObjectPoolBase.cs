@@ -6,7 +6,7 @@ using Sammlung.Utilities.Concurrent;
 
 namespace Sammlung.Utilities.Patterns
 {
-    internal abstract class ObjectPoolBase<T> : IObjectPool<T> where T : class
+    internal abstract class ObjectPoolBase<T> where T : class
     {
         private const int DefaultMaxPoolSize = 256;
         private readonly int _maxPoolSize;

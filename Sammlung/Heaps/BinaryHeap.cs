@@ -7,6 +7,10 @@ using Sammlung.Utilities.Patterns;
 
 namespace Sammlung.Heaps
 {
+    /// <summary>
+    /// The <see cref="BinaryHeap{T}"/> class implements a <seealso cref="IHeap{T}"/> data structure.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     [PublicAPI]
     public sealed class BinaryHeap<T> : IHeap<T> where T : class
     {
@@ -19,13 +23,30 @@ namespace Sammlung.Heaps
         private static List<HeapNode> HeapOrderedListFromEnumerable(IComparer<T> comparer, IEnumerable<T> enumerable) =>
             enumerable.OrderBy(i => i, comparer).Select((item, i) => HeapNodePool.Get(i, item)).ToList();
 
+        /// <summary>
+        /// Creates an empty <see cref="BinaryHeap{T}"/>.
+        /// </summary>
         public BinaryHeap() : this(Comparer<T>.Default) { }
         
-        public BinaryHeap(IEnumerable<T> containers) : this(Comparer<T>.Default, containers) { }
+        /// <summary>
+        /// Creates a new <see cref="BinaryHeap{T}"/> from a list of elements.
+        /// </summary>
+        /// <param name="elements">the elements</param>
+        public BinaryHeap(IEnumerable<T> elements) : this(Comparer<T>.Default, elements) { }
 
-        public BinaryHeap(IComparer<T> comparer, IEnumerable<T> containers) : 
-            this(comparer, HeapOrderedListFromEnumerable(comparer, containers)) { }
+        /// <summary>
+        /// Creates a new <see cref="BinaryHeap{T}"/> using a comparer and a list of elements.
+        /// </summary>
+        /// <param name="comparer">the comparer</param>
+        /// <param name="elements">the elements</param>
+        public BinaryHeap(IComparer<T> comparer, IEnumerable<T> elements) : 
+            this(comparer, HeapOrderedListFromEnumerable(comparer, elements)) { }
 
+        /// <summary>
+        /// Creates a new <see cref="BinaryHeap{T}"/> using a comparer and a capacity value.
+        /// </summary>
+        /// <param name="comparer">the comparer</param>
+        /// <param name="capacity">the capacisy</param>
         public BinaryHeap(IComparer<T> comparer, int capacity = 0) : this(comparer, new List<T>(capacity)) { }
 
         private BinaryHeap(IComparer<T> comparer, List<HeapNode> binaryHeap)

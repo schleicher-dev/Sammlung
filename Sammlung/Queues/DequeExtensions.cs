@@ -3,6 +3,9 @@ using Sammlung.Utilities;
 
 namespace Sammlung.Queues
 {
+    /// <summary>
+    /// The <see cref="DequeExtensions"/> extend any <see cref="IDeque{T}"/> implementation with additional methods.
+    /// </summary>
     [PublicAPI]
     public static class DequeExtensions
     {

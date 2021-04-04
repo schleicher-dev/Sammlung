@@ -14,12 +14,15 @@ namespace Sammlung.Queues.Concurrent
     /// Inspiration from: http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.93.7492&amp;rep=rep1&amp;type=pdf
     /// DOI: 10.1.1.93.7492
     /// </remarks>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">the type</typeparam>
     public class LockFreeLinkedDeque<T> : IDeque<T>
     {
         private Anchor<T> _anchor;
         private int _count;
 
+        /// <summary>
+        /// Creates a new <see cref="LockFreeLinkedDeque{T}"/>.
+        /// </summary>
         public LockFreeLinkedDeque()
         {
             _anchor = Anchor<T>.Create();

@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 
 namespace Sammlung.Queues
 {
+    [PublicAPI]
     public sealed class LinkedDeque<T> : IDeque<T>
     {
         private readonly LinkedList<T> _internal;

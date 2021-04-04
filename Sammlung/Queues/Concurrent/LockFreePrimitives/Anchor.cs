@@ -1,5 +1,9 @@
 namespace Sammlung.Queues.Concurrent.LockFreePrimitives
 {
+    /// <summary>
+    /// The <see cref="Anchor{T}"/> is a special data structure needed for the implementation of a lock-free deque.
+    /// </summary>
+    /// <typeparam name="T">the element type</typeparam>
     internal sealed class Anchor<T>
     {
         public static Anchor<T> Create() => new Anchor<T> { ReferenceCount = 0 };

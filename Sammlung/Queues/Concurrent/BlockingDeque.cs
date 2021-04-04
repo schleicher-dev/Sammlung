@@ -1,20 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using JetBrains.Annotations;
 using Sammlung.Utilities.Concurrent;
 
 namespace Sammlung.Queues.Concurrent
 {
+    /// <summary>
+    /// The <see cref="BlockingDeque"/> is a static class which can decorate a <see cref="IDeque{T}"/>.
+    /// </summary>
+    [PublicAPI]
     public static class BlockingDeque
     {
         public static IDeque<T> Wrap<T>(IDeque<T> inner) => new BlockingDeque<T>(inner);
     }
     
-    internal class BlockingDeque<T> : IDeque<T>
+    /// <summary>
+    /// The <see cref="BlockingDeque{T}"/> is a decorator for any <see cref="IDeque{T}"/> type which is thread-safe.
+    /// </summary>
+    /// <typeparam name="T">the type</typeparam>
+    [PublicAPI]
+    public class BlockingDeque<T> : IDeque<T>
     {
         private readonly IDeque<T> _inner;
         private readonly EnhancedReaderWriterLock _rwLock;
 
+        /// <summary>
+        /// Creates a new <see cref="BlockingDeque{T}"/> using an inner <seealso cref="IDeque{T}"/>.
+        /// </summary>
+        /// <param name="inner">the inner deque</param>
         public BlockingDeque(IDeque<T> inner)
         {
             _rwLock = new EnhancedReaderWriterLock(LockRecursionPolicy.SupportsRecursion);

@@ -2,6 +2,10 @@ using System.Collections.Generic;
 
 namespace Sammlung.Queues
 {
+    /// <summary>
+    /// The <see cref="IQueue{T}"/> represents a single-ended queue.
+    /// </summary>
+    /// <typeparam name="T">the element type</typeparam>
     public interface IQueue<T> : IEnumerable<T>
     {
         /// <summary>

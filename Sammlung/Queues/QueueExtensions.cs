@@ -1,7 +1,12 @@
+using JetBrains.Annotations;
 using Sammlung.Utilities;
 
 namespace Sammlung.Queues
 {
+    /// <summary>
+    /// The <see cref="QueueExtensions"/> extends any <seealso cref="IQueue{T}"/> with additional methods.
+    /// </summary>
+    [PublicAPI]
     public static class QueueExtensions
     {
         /// <summary>

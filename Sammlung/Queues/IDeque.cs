@@ -1,8 +1,12 @@
+using JetBrains.Annotations;
+
 namespace Sammlung.Queues
 {
     /// <summary>
-    /// The <see cref="IDeque{T}"/> type denotes a double ended queue.
+    /// The <see cref="IDeque{T}"/> represents a double-ended queue.
     /// </summary>
+    /// <typeparam name="T">the element type</typeparam>
+    [PublicAPI]
     public interface IDeque<T> : IQueue<T>
     {
         /// <summary>

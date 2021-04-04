@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using JetBrains.Annotations;
 
 namespace Sammlung.Queues
 {
@@ -11,6 +12,7 @@ namespace Sammlung.Queues
     /// and implements the <seealso cref="IDeque{T}"/> interface.
     /// </summary>
     /// <typeparam name="T">the contained type</typeparam>
+    [PublicAPI]
     public sealed class ArrayDeque<T> : IDeque<T>
     {
         private T[] _array;
@@ -18,6 +20,10 @@ namespace Sammlung.Queues
         private int _rightPointer;
         private int _count;
 
+        /// <summary>
+        /// Creates a new <see cref="ArrayDeque{T}"/> using an initial capacity.
+        /// </summary>
+        /// <param name="capacity">the capacity.</param>
         public ArrayDeque(int capacity)
         {
             _array = new T[capacity];
