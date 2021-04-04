@@ -5,73 +5,90 @@ using JetBrains.Annotations;
 
 namespace Sammlung.Graphs
 {
+    /// <summary>
+    /// The <see cref="DiGraph{TVertex,TWeight}"/> class is an implementation of a directed weighted graph.
+    /// </summary>
+    /// <typeparam name="T">the vertex type</typeparam>
+    /// <typeparam name="TWeight">the edge weight type</typeparam>
     [PublicAPI]
-    public class DiGraph<TVertex, TWeight> : IDiGraph<TVertex, TWeight>
+    public class DiGraph<T, TWeight> : IDiGraph<T, TWeight>
         where TWeight : IComparable<TWeight>
     {
+        /// <summary>
+        /// Creates a new <see cref="DiGraph{T,TWeight}"/> using the default edge weight.
+        /// </summary>
+        /// <param name="defaultEdgeWeight">the default edge weight</param>
         public DiGraph(TWeight defaultEdgeWeight)
         {
             DefaultEdgeWeight = defaultEdgeWeight;
-            _vertices = new HashSet<TVertex>();
-            _incomingEdges = new Dictionary<TVertex, HashSet<IEdge<TVertex, TWeight>>>();
-            _outgoingEdges = new Dictionary<TVertex, HashSet<IEdge<TVertex, TWeight>>>();
+            _vertices = new HashSet<T>();
+            _incomingEdges = new Dictionary<T, HashSet<IEdge<T, TWeight>>>();
+            _outgoingEdges = new Dictionary<T, HashSet<IEdge<T, TWeight>>>();
         }
 
-        public DiGraph(IDiGraph<TVertex, TWeight> graph) : this(graph.DefaultEdgeWeight)
+        /// <summary>
+        /// Creates a new <see cref="DiGraph{T,TWeight}"/> using an existing graph.
+        /// </summary>
+        /// <param name="graph">the existing graph</param>
+        public DiGraph(IDiGraph<T, TWeight> graph) : this(graph.DefaultEdgeWeight)
         {
-            _vertices = new HashSet<TVertex>(graph.Vertices);
+            _vertices = new HashSet<T>(graph.Vertices);
             foreach (var edge in graph.Edges) AddEdge(edge.SourceVertex, edge.TargetVertex, edge.Weight);
         }
 
-        private readonly HashSet<TVertex> _vertices;
-        private readonly IDictionary<TVertex, HashSet<IEdge<TVertex, TWeight>>> _incomingEdges;
-        private readonly IDictionary<TVertex, HashSet<IEdge<TVertex, TWeight>>> _outgoingEdges;
+        private readonly HashSet<T> _vertices;
+        private readonly IDictionary<T, HashSet<IEdge<T, TWeight>>> _incomingEdges;
+        private readonly IDictionary<T, HashSet<IEdge<T, TWeight>>> _outgoingEdges;
 
         /// <inheritdoc />
         public TWeight DefaultEdgeWeight { get; }
 
         /// <inheritdoc />
-        public IEnumerable<TVertex> Vertices => _vertices;
+        public IEnumerable<T> Vertices => _vertices;
 
         /// <inheritdoc />
-        public IEnumerable<IEdge<TVertex, TWeight>> Edges => _outgoingEdges.SelectMany(e => e.Value);
+        public IEnumerable<IEdge<T, TWeight>> Edges => _outgoingEdges.SelectMany(e => e.Value);
 
         /// <inheritdoc />
-        public void AddVertex(TVertex vertex) => _vertices.Add(vertex);
+        public void AddVertex(T vertex) => _vertices.Add(vertex);
 
         /// <inheritdoc />
-        public bool HasVertex(TVertex vertex) => _vertices.Contains(vertex);
+        public bool HasVertex(T vertex) => _vertices.Contains(vertex);
 
         /// <inheritdoc />
-        public IEnumerable<IEdge<TVertex, TWeight>> GetIncomingEdges(TVertex vertex) =>
-            _incomingEdges.TryGetValue(vertex, out var inEdges) ? inEdges : Enumerable.Empty<IEdge<TVertex, TWeight>>();
+        public IEnumerable<IEdge<T, TWeight>> GetIncomingEdges(T vertex) =>
+            _incomingEdges.TryGetValue(vertex, out var inEdges) ? inEdges : Enumerable.Empty<IEdge<T, TWeight>>();
 
         /// <inheritdoc />
-        public IEnumerable<IEdge<TVertex, TWeight>> GetOutgoingEdges(TVertex vertex) =>
+        public IEnumerable<IEdge<T, TWeight>> GetOutgoingEdges(T vertex) =>
             _outgoingEdges.TryGetValue(vertex, out var outEdges)
                 ? outEdges
-                : Enumerable.Empty<IEdge<TVertex, TWeight>>();
+                : Enumerable.Empty<IEdge<T, TWeight>>();
 
         /// <inheritdoc />
-        public IEdge<TVertex, TWeight> AddEdge(TVertex source, TVertex target) =>
+        public IEdge<T, TWeight> AddEdge(T source, T target) =>
             AddEdge(source, target, DefaultEdgeWeight);
 
         /// <inheritdoc />
-        public IEdge<TVertex, TWeight> AddEdge(TVertex source, TVertex target, TWeight weight)
+        public IEdge<T, TWeight> AddEdge(T source, T target, TWeight weight)
         {
-            IEdge<TVertex, TWeight> edge = new Edge<TVertex, TWeight>(source, target, weight);
+            IEdge<T, TWeight> edge = new Edge<T, TWeight>(source, target, weight);
 
             _vertices.Add(source);
             if (!_outgoingEdges.TryGetValue(source, out var outEdges))
-                _outgoingEdges[source] = outEdges = new HashSet<IEdge<TVertex, TWeight>>();
+                _outgoingEdges[source] = outEdges = new HashSet<IEdge<T, TWeight>>();
             outEdges.Add(edge);
 
             _vertices.Add(target);
             if (!_incomingEdges.TryGetValue(target, out var inEdges))
-                _incomingEdges[target] = inEdges = new HashSet<IEdge<TVertex, TWeight>>();
+                _incomingEdges[target] = inEdges = new HashSet<IEdge<T, TWeight>>();
             inEdges.Add(edge);
 
             return edge;
         }
+
+        /// <inheritdoc />
+        public bool HasEdge(T source, T target) => 
+            GetOutgoingEdges(source).Any(e => EqualityComparer<T>.Default.Equals(target, e.TargetVertex));
     }
 }

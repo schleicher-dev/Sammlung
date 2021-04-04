@@ -3,42 +3,63 @@ using System.Collections.Generic;
 
 namespace Sammlung.Graphs
 {
-    public class Edge<TVertex, TWeight> : IEdge<TVertex, TWeight>, IEquatable<Edge<TVertex, TWeight>>
+    /// <summary>
+    /// The <see cref="Edge{TVertex,TWeight}"/> type implements the <seealso cref="IEdge{TVertex,TWeight}"/> interface
+    /// which represents a directed edge.
+    /// </summary>
+    /// <typeparam name="T">the vertex type</typeparam>
+    /// <typeparam name="TWeight">the edge weight</typeparam>
+    public class Edge<T, TWeight> : IEdge<T, TWeight>, IEquatable<Edge<T, TWeight>>
     {
-        public Edge(TVertex sourceVertex, TVertex targetVertex, TWeight weight)
+        /// <summary>
+        /// Creates a new <see cref="Edge{TVertex,TWeight}"/> using two vertices and a weight.
+        /// </summary>
+        /// <param name="sourceVertex">the source vertex</param>
+        /// <param name="targetVertex">the target vertex</param>
+        /// <param name="weight"></param>
+        public Edge(T sourceVertex, T targetVertex, TWeight weight)
         {
             SourceVertex = sourceVertex;
             TargetVertex = targetVertex;
             Weight = weight;
         }
         
-        public TVertex SourceVertex { get; }
-        public TVertex TargetVertex { get; }
+        /// <inheritdoc />
+        public T SourceVertex { get; }
+        
+        /// <inheritdoc />
+        public T TargetVertex { get; }
+        
+        /// <inheritdoc />
         public TWeight Weight { get; }
 
+        /// <inheritdoc />
         public override string ToString()
         {
             return string.Format("{0}.{1}[Source={2}, Target={3}, Weight={4}]",
                 GetType().Namespace, GetType().Name, SourceVertex?.ToString(), TargetVertex?.ToString(), Weight?.ToString());
         }
 
-        public bool Equals(Edge<TVertex, TWeight> other)
+        /// <inheritdoc />
+        public bool Equals(Edge<T, TWeight> other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return EqualityComparer<TVertex>.Default.Equals(SourceVertex, other.SourceVertex) && 
-                   EqualityComparer<TVertex>.Default.Equals(TargetVertex, other.TargetVertex) && 
+            return EqualityComparer<T>.Default.Equals(SourceVertex, other.SourceVertex) && 
+                   EqualityComparer<T>.Default.Equals(TargetVertex, other.TargetVertex) && 
                    EqualityComparer<TWeight>.Default.Equals(Weight, other.Weight);
         }
 
+        /// <inheritdoc />
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
-            return Equals((Edge<TVertex, TWeight>) obj);
+            return Equals((Edge<T, TWeight>) obj);
         }
 
+        /// <inheritdoc />
         public override int GetHashCode()
         {
             return HashCode.Combine(SourceVertex, TargetVertex, Weight);

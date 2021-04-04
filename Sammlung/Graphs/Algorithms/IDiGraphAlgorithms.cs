@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using JetBrains.Annotations;
-using Sammlung.Graphs.Algorithms.SCC;
 
 namespace Sammlung.Graphs.Algorithms
 {
@@ -62,34 +60,5 @@ namespace Sammlung.Graphs.Algorithms
         /// A graph is acyclic iff there is no cyclical component in it.
         /// </remarks>
         bool IsAcyclic<T, TWeight>(IDiGraph<T, TWeight> graph) where TWeight : IComparable<TWeight>;
-    }
-
-    [PublicAPI]
-    public class DefaultDiGraphAlgorithms : IDiGraphAlgorithms
-    {
-        /// <inheritdoc />
-        public IEnumerable<IDiGraph<T, TWeight>> GetStronglyConnectedComponents<T, TWeight>(IDiGraph<T, TWeight> graph) 
-            where TWeight : IComparable<TWeight>
-        {
-            IStronglyConnectedComponentsAlgorithm<T, TWeight> algorithm = 
-                new TarjanStronglyConnectedComponentsAlgorithm<T, TWeight>(graph);
-            return algorithm.Result;
-        }
-        
-        /// <inheritdoc />
-        public bool IsStronglyConnected<T, TWeight>(IDiGraph<T, TWeight> graph) where TWeight : IComparable<TWeight> => 
-            GetStronglyConnectedComponents(graph).Count() == 1;
-
-        private static bool IsCyclicSubGraph<T, TWeight>(IDiGraph<T, TWeight> graph) where TWeight : IComparable<TWeight>
-            => 1 < graph.Vertices.Count() || graph.Vertices.Count() == 1 && graph.Edges.Any();
-
-        /// <inheritdoc />
-        public IEnumerable<IDiGraph<T, TWeight>> GetCyclicalComponents<T, TWeight>(IDiGraph<T, TWeight> graph) 
-            where TWeight : IComparable<TWeight> =>
-            GetStronglyConnectedComponents(graph).Where(IsCyclicSubGraph);
-
-        /// <inheritdoc />
-        public bool IsAcyclic<T, TWeight>(IDiGraph<T, TWeight> graph) where TWeight : IComparable<TWeight> => 
-            !GetCyclicalComponents(graph).Any();
     }
 }

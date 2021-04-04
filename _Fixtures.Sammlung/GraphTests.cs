@@ -90,6 +90,9 @@ namespace _Fixtures.Sammlung
                 new Edge<int, int>(3, 2, 1),
                 new Edge<int, int>(3, 3, 1),
             }, graph.GetOutgoingEdges(3));
+            
+            Assert.IsTrue(graph.HasEdge(3, 1));
+            Assert.IsFalse(graph.HasEdge(4, 2));
         }
 
         [Test]
