@@ -28,14 +28,12 @@ namespace Sammlung.Utilities.Patterns
 
         protected abstract T ResetInstance(T instance);
 
-        /// <inheritdoc />
-        public T Get()
+        protected T Get()
         {
             using var _ = _rwLock.UseWriteLock();
             return _pool.Count != 0 ? _pool.Pop(): CreateInstance();
         }
 
-        /// <inheritdoc />
         public void Return(T instance)
         {
             using var upgradableLockHandle = _rwLock.UseUpgradableReadLock();
@@ -45,7 +43,6 @@ namespace Sammlung.Utilities.Patterns
             _pool.Push(resetInstance);
         }
 
-        /// <inheritdoc />
-        public T Reset(T instance) => ResetInstance(instance);
+        private T Reset(T instance) => ResetInstance(instance);
     }
 }
