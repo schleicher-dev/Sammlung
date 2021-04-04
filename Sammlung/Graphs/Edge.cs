@@ -55,14 +55,21 @@ namespace Sammlung.Graphs
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
+            if (obj.GetType() != GetType()) return false;
             return Equals((Edge<T, TWeight>) obj);
         }
 
         /// <inheritdoc />
         public override int GetHashCode()
         {
-            return HashCode.Combine(SourceVertex, TargetVertex, Weight);
+            var hashCode = 0;
+            unchecked
+            {
+                hashCode ^= SourceVertex.GetHashCode() * 31;
+                hashCode ^= TargetVertex.GetHashCode() * 31;
+                hashCode ^= Weight.GetHashCode() * 31;
+            }
+            return hashCode;
         }
     }
 }
