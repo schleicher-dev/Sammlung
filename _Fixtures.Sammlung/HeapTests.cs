@@ -7,27 +7,6 @@ using Sammlung.Heaps;
 namespace _Fixtures.Sammlung
 {
     [ExcludeFromCodeCoverage]
-    internal class HeapValue<T> : IComparable<HeapValue<T>> where T : IComparable<T>
-    {
-        public static HeapValue<T> Create(int key, T value) => new HeapValue<T> {Key = key, Value = value};
-
-        private HeapValue() {}
-        
-        public int Key { get; set; }
-        public T Value { get; set; }
-
-        /// <inheritdoc />
-        public int CompareTo(HeapValue<T> other)
-        {
-            if (ReferenceEquals(this, other)) return 0;
-            if (ReferenceEquals(null, other)) return 1;
-            var keyComparison = Key.CompareTo(other.Key);
-            if (keyComparison != 0) return keyComparison;
-            return Value.CompareTo(other.Value);
-        }
-    }
-    
-    [ExcludeFromCodeCoverage]
     public class HeapTests
     {
         [SetUp]
@@ -45,11 +24,11 @@ namespace _Fixtures.Sammlung
         [Test]
         public void PushAndPop_SunnyPath()
         {
-            var heap = new BinaryHeap<HeapValue<string>>();
+            var heap = new BinaryHeap<string, int>();
             var items = Enumerable.Range(1, 10_000).Zip(GetNames(), Tuple.Create).ToList();
-            foreach (var (key, value) in items.AsEnumerable().Reverse())
+            foreach (var (priority, value) in items.AsEnumerable().Reverse())
             {
-                heap.Push(HeapValue<string>.Create(key, value));
+                heap.Push(value, priority);
             }
 
             var resultList = new List<string>();
@@ -61,12 +40,12 @@ namespace _Fixtures.Sammlung
         public void PushAndPop_Randomized_SunnyPath()
         {
             var random = new Random(0);
-            var heap = new BinaryHeap<HeapValue<int>>();
+            var heap = new BinaryHeap<int, int>();
 
             for (var i = 0; i < 10_000; ++i)
             {
                 var k = random.Next(int.MinValue, int.MaxValue);
-                heap.Push(HeapValue<int>.Create(k, k));
+                heap.Push(k, k);
             }
 
             var last = heap.Pop();
@@ -81,39 +60,32 @@ namespace _Fixtures.Sammlung
         [Test]
         public void CheckAllCases_Of_InvalidOperationException()
         {
-            var heap = new BinaryHeap<HeapValue<string>>();
+            var heap = new BinaryHeap<string, int>();
             Assert.IsTrue(heap.IsEmpty);
             Assert.IsFalse(heap.TryPop(out _));
             Assert.Throws<InvalidOperationException>(() => heap.Pop());
             Assert.IsFalse(heap.TryPeek(out _));
             Assert.Throws<InvalidOperationException>(() => heap.Peek());
-            Assert.IsFalse(heap.TryUpdate(HeapValue<string>.Create(0, "A"), HeapValue<string>.Create(1, "B")));
-            Assert.Throws<InvalidOperationException>(() => heap.Update(HeapValue<string>.Create(0, "A"), HeapValue<string>.Create(1, "B")));
-            Assert.IsFalse(heap.TryReplace(HeapValue<string>.Create(0, "A"), out _));
-            Assert.Throws<InvalidOperationException>(() => heap.Replace(HeapValue<string>.Create(0, "A")));
+            Assert.IsFalse(heap.TryUpdate("A", 0));
+            Assert.Throws<InvalidOperationException>(() => heap.Update("A", 0));
+            Assert.IsFalse(heap.TryReplace("A", 0, out _));
+            Assert.Throws<InvalidOperationException>(() => heap.Replace("A", 0));
         }
 
         [Test]
         public void UpdateReplace_SunnyPath()
         {
+            var heap = new BinaryHeap<string, int>();
+            heap.Push("A", 100);
+            heap.Push("B", 50);
+            heap.Push("C", 150);
+            heap.Push("D", 25);
+            heap.Push("E", 200);
 
-            var fValue = HeapValue<string>.Create(12, "F");
-            var fPrimeValue = HeapValue<string>.Create(500, "F");
+            heap.Push("F", 12);
+            heap.Update("D", 400);
 
-            var dValue = HeapValue<string>.Create(25, "D");
-            var dPrimeValue = HeapValue<string>.Create(400, "D");
-                
-            var heap = new BinaryHeap<HeapValue<string>>();
-            heap.Push(HeapValue<string>.Create(100, "A"));
-            heap.Push(HeapValue<string>.Create(50, "B"));
-            heap.Push(HeapValue<string>.Create(150, "C"));
-            heap.Push(dValue);
-            heap.Push(HeapValue<string>.Create(200, "E"));
-
-            heap.Push(fValue);
-            heap.Update(dValue, dPrimeValue);
-
-            heap.Replace(fPrimeValue);
+            heap.Replace("F", 500);
             
             Assert.AreEqual("B", heap.Peek().Value);
 
@@ -131,18 +103,17 @@ namespace _Fixtures.Sammlung
         {
             var random = new Random(0);
 
-            var list = new List<HeapValue<int>>();
+            var list = new List<KeyValuePair<int, int>>();
             for (var i = 0; i < 10_000; ++i)
             {
                 var k = random.Next(int.MinValue, int.MaxValue);
-                list.Add(HeapValue<int>.Create(k, k));
+                list.Add(new KeyValuePair<int, int>(k, k));
             }
 
             var comparerA = Comparer<int>.Default;
-            var heapA = new BinaryHeap<HeapValue<int>>(list);
+            var heapA = new BinaryHeap<int, int>(list);
             
             var listA = new List<int>();
-            var listB = new List<int>();
             while (!heapA.IsEmpty)
             {
                 listA.Add(heapA.Pop().Value);
@@ -153,18 +124,19 @@ namespace _Fixtures.Sammlung
         [Test]
         public void EnumerateHeap()
         {
-            var heap = new BinaryHeap<HeapValue<int>>();
-            heap.Push(HeapValue<int>.Create(200, 1));
-            heap.Push(HeapValue<int>.Create(300, 2));
-            heap.Push(HeapValue<int>.Create(400, 3));
-            heap.Push(HeapValue<int>.Create(100, 4));
+            var heap = new BinaryHeap<int, int>();
+            heap.Push(1, 200);
+            heap.Push(2, 300);
+            heap.Push(3, 400);
+            heap.Push(4, 100);
             
             CollectionAssert.AreEquivalent(new[] {1, 2, 3, 4}, heap.Select(v => v.Value).ToArray());
-            CollectionAssert.AreEquivalent(new[] {100, 200, 300, 400}, heap.Select(v => v.Key).ToArray());
+            CollectionAssert.AreEquivalent(new[] {100, 200, 300, 400}, heap.Select(v => v.Priority).ToArray());
 
             var result = new List<int>();
             var enumerator = ((System.Collections.IEnumerable) heap).GetEnumerator();
-            while (enumerator.MoveNext()) result.Add(((HeapValue<int>) enumerator.Current)?.Value ?? 0);
+            // ReSharper disable once PossibleNullReferenceException
+            while (enumerator.MoveNext()) result.Add(((HeapPair<int, int>) enumerator.Current).Value);
             CollectionAssert.AreEquivalent(new[] {1, 2, 3, 4}, result);
         }
     }

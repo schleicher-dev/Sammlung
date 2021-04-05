@@ -11,13 +11,13 @@ namespace Sammlung.Graphs.Algorithms
     public static class DefaultAlgorithmFactory
     {
         /// <summary>
-        /// Creates the default <see cref="IStrongConnectednessAlgorithm{TVertex,TWeight}"/>.
+        /// Creates the default <see cref="ISccAlgorithm{T,TWeight}"/>.
         /// </summary>
         /// <typeparam name="T">the vertex type</typeparam>
         /// <typeparam name="TWeight">the edge weight</typeparam>
         /// <returns>the algorithm implementation instance</returns>
-        public static IStrongConnectednessAlgorithm<T, TWeight> CreateStrongConnectednessAlgorithm<T, TWeight>()
+        public static ISccAlgorithm<T, TWeight> CreateStrongConnectednessAlgorithm<T, TWeight>()
             where TWeight : IComparable<TWeight>
-            => new TarjanStrongConnectednessAlgorithm<T, TWeight>();
+            => new TarjanSccAlgorithm<T, TWeight>();
     }
 }

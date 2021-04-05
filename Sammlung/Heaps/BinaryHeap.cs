@@ -8,48 +8,62 @@ using Sammlung.Utilities.Patterns;
 namespace Sammlung.Heaps
 {
     /// <summary>
-    /// The <see cref="BinaryHeap{T}"/> class implements a <seealso cref="IHeap{T}"/> data structure.
+    /// The <see cref="BinaryHeap{T,TPriority}"/> class implements a <seealso cref="IHeap{T}"/> data structure.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">the element type</typeparam>
+    /// <typeparam name="TPriority">the priority type</typeparam>
     [PublicAPI]
-    public sealed class BinaryHeap<T> : IHeap<T> where T : class
+    public sealed class BinaryHeap<T, TPriority> : IHeap<T, TPriority>
+        where TPriority : IComparable<TPriority>
     {
         private static readonly HeapNodeObjectPool HeapNodePool = new HeapNodeObjectPool();
-        
+
         private readonly List<HeapNode> _binaryHeap;
-        private readonly IComparer<T> _comparer;
+        private readonly IComparer<TPriority> _comparer;
         private readonly Dictionary<T, HeapNode> _lookup;
 
-        private static List<HeapNode> HeapOrderedListFromEnumerable(IComparer<T> comparer, IEnumerable<T> enumerable) =>
-            enumerable.OrderBy(i => i, comparer).Select((item, i) => HeapNodePool.Get(i, item)).ToList();
+        private static List<HeapNode> HeapOrderedListFromEnumerable(IComparer<TPriority> comparer,
+            IEnumerable<KeyValuePair<T, TPriority>> enumerable) =>
+            enumerable.OrderBy(i => i.Value, comparer)
+                .Select((item, i) => HeapNodePool.Get(i, item.Key, item.Value)).ToList();
 
         /// <summary>
-        /// Creates an empty <see cref="BinaryHeap{T}"/>.
+        /// Creates an empty <see cref="BinaryHeap{T,TPriority}"/>.
         /// </summary>
-        public BinaryHeap() : this(Comparer<T>.Default) { }
-        
+        public BinaryHeap() : this(Comparer<TPriority>.Default)
+        {
+        }
+
         /// <summary>
-        /// Creates a new <see cref="BinaryHeap{T}"/> from a list of elements.
+        /// Creates a new <see cref="BinaryHeap{T,TPriority}"/> from a list of elements.
         /// </summary>
         /// <param name="elements">the elements</param>
-        public BinaryHeap(IEnumerable<T> elements) : this(Comparer<T>.Default, elements) { }
+        public BinaryHeap(IEnumerable<KeyValuePair<T, TPriority>> elements) :
+            this(Comparer<TPriority>.Default, elements)
+        {
+        }
 
         /// <summary>
-        /// Creates a new <see cref="BinaryHeap{T}"/> using a comparer and a list of elements.
+        /// Creates a new <see cref="BinaryHeap{T,TPriority}"/> using a comparer and a list of elements.
         /// </summary>
         /// <param name="comparer">the comparer</param>
         /// <param name="elements">the elements</param>
-        public BinaryHeap(IComparer<T> comparer, IEnumerable<T> elements) : 
-            this(comparer, HeapOrderedListFromEnumerable(comparer, elements)) { }
+        public BinaryHeap(IComparer<TPriority> comparer, IEnumerable<KeyValuePair<T, TPriority>> elements) :
+            this(comparer, HeapOrderedListFromEnumerable(comparer, elements))
+        {
+        }
 
         /// <summary>
-        /// Creates a new <see cref="BinaryHeap{T}"/> using a comparer and a capacity value.
+        /// Creates a new <see cref="BinaryHeap{T,TPriority}"/> using a comparer and a capacity value.
         /// </summary>
         /// <param name="comparer">the comparer</param>
-        /// <param name="capacity">the capacisy</param>
-        public BinaryHeap(IComparer<T> comparer, int capacity = 0) : this(comparer, new List<T>(capacity)) { }
+        /// <param name="capacity">the capacity</param>
+        public BinaryHeap(IComparer<TPriority> comparer, int capacity = 0) : this(comparer,
+            new List<HeapNode>(capacity))
+        {
+        }
 
-        private BinaryHeap(IComparer<T> comparer, List<HeapNode> binaryHeap)
+        private BinaryHeap(IComparer<TPriority> comparer, List<HeapNode> binaryHeap)
         {
             _comparer = comparer ?? throw new ArgumentNullException(nameof(comparer));
             _binaryHeap = binaryHeap ?? throw new ArgumentNullException(nameof(binaryHeap));
@@ -63,17 +77,18 @@ namespace Sammlung.Heaps
         public bool IsEmpty => !_binaryHeap.Any();
 
         /// <inheritdoc />
-        public bool TryPeek(out T value)
+        public bool TryPeek(out HeapPair<T, TPriority> value)
         {
             value = default;
             if (!_binaryHeap.Any()) return false;
 
-            value = _binaryHeap[0].Item;
+            var element = _binaryHeap[0];
+            value = HeapPair.Create(element.Value, element.Priority);
             return true;
         }
-        
+
         /// <inheritdoc />
-        public bool TryPop(out T value)
+        public bool TryPop(out HeapPair<T, TPriority> value)
         {
             value = default;
             if (IsEmpty) return false;
@@ -84,56 +99,54 @@ namespace Sammlung.Heaps
             _binaryHeap.RemoveAt(Count - 1);
 
             // Assign item and remove it from mapping.
-            value = root.Item;
-            _lookup.Remove(root.Item);
+            value = HeapPair.Create(root.Value, root.Priority);
+            _lookup.Remove(root.Value);
             HeapNodePool.Return(root);
-            
+
             // If there aren't any elements left, no sifting is needed.
             if (1 < Count) SiftDown(0);
 
             return true;
         }
-        
+
         /// <inheritdoc />
-        public void Push(T value)
+        public void Push(T value, TPriority priority)
         {
-            var node = HeapNodePool.Get(Count, value);
+            var node = HeapNodePool.Get(Count, value, priority);
             _binaryHeap.Add(node);
             _lookup.Add(value, node);
             SiftUp(Count - 1);
         }
 
         /// <inheritdoc />
-        public bool TryReplace(T newValue, out T oldValue)
+        public bool TryReplace(T newValue, TPriority priority, out HeapPair<T, TPriority> oldValue)
         {
             oldValue = default;
             if (IsEmpty) return false;
 
             var node = _binaryHeap[0];
-            oldValue = node.Item;
-            _lookup.Remove(node.Item);
+            oldValue = HeapPair.Create(node.Value, node.Priority);
+            _lookup.Remove(node.Value);
             _lookup.Add(newValue, node);
-            node.Item = newValue;
+            node.Value = newValue;
+            node.Priority = priority;
             SiftDown(node.Index);
-            
+
             return true;
         }
 
         /// <inheritdoc />
-        public bool TryUpdate(T oldValue, T newValue)
+        public bool TryUpdate(T oldValue, TPriority priority)
         {
             if (!_lookup.TryGetValue(oldValue, out var node)) return false;
 
-            _lookup.Remove(oldValue);
-            _lookup.Add(newValue, node);
-            node.Item = newValue;
-            
+            node.Priority = priority;
             var index = SiftUp(node.Index);
             SiftDown(index);
             return true;
         }
 
-        private bool SmallerThan(T lhs, T rhs) => _comparer.Compare(lhs, rhs) < 0;
+        private bool SmallerThan(TPriority lhs, TPriority rhs) => _comparer.Compare(lhs, rhs) < 0;
 
         private void Swap(int fstIndex, int sndIndex)
         {
@@ -157,7 +170,7 @@ namespace Sammlung.Heaps
                 var parentIndex = (nodeIndex - 1) / 2;
                 var parent = _binaryHeap[parentIndex];
 
-                if (!SmallerThan(node.Item, parent.Item)) return nodeIndex;
+                if (!SmallerThan(node.Priority, parent.Priority)) return nodeIndex;
                 Swap(nodeIndex, parentIndex);
                 nodeIndex = parentIndex;
             }
@@ -185,7 +198,7 @@ namespace Sammlung.Heaps
                 if (Count <= rightIndex)
                 {
                     var leftNode = _binaryHeap[leftIndex];
-                    if (SmallerThan(node.Item, leftNode.Item))
+                    if (SmallerThan(node.Priority, leftNode.Priority))
                         return;
                     Swap(nodeIndex, leftIndex);
                     nodeIndex = leftIndex;
@@ -195,10 +208,10 @@ namespace Sammlung.Heaps
                 // Compare both nodes.
                 var leftValue = _binaryHeap[leftIndex];
                 var rightValue = _binaryHeap[rightIndex];
-                if (SmallerThan(node.Item, leftValue.Item) && SmallerThan(node.Item, rightValue.Item))
+                if (SmallerThan(node.Priority, leftValue.Priority) && SmallerThan(node.Priority, rightValue.Priority))
                     return;
-                
-                var swapIndex = SmallerThan(leftValue.Item, rightValue.Item) ? leftIndex : rightIndex;
+
+                var swapIndex = SmallerThan(leftValue.Priority, rightValue.Priority) ? leftIndex : rightIndex;
                 Swap(nodeIndex, swapIndex);
                 nodeIndex = swapIndex;
             }
@@ -210,7 +223,8 @@ namespace Sammlung.Heaps
 
         private class HeapNode
         {
-            public T Item { get; set; }
+            public T Value { get; set; }
+            public TPriority Priority { get; set; }
             public int Index { get; set; }
         }
 
@@ -223,15 +237,17 @@ namespace Sammlung.Heaps
             protected override HeapNode ResetInstance(HeapNode instance)
             {
                 instance.Index = default;
-                instance.Item = default;
+                instance.Value = default;
+                instance.Priority = default;
                 return instance;
             }
 
-            public HeapNode Get(int index, T item)
+            public HeapNode Get(int index, T item, TPriority priority)
             {
                 var instance = Get();
                 instance.Index = index;
-                instance.Item = item;
+                instance.Priority = priority;
+                instance.Value = item;
                 return instance;
             }
         }
@@ -239,11 +255,11 @@ namespace Sammlung.Heaps
         #endregion
 
         /// <inheritdoc />
-        IEnumerator<T> IEnumerable<T>.GetEnumerator() => 
-            _binaryHeap.Select(n => n.Item).GetEnumerator();
+        IEnumerator<HeapPair<T, TPriority>> IEnumerable<HeapPair<T, TPriority>>.GetEnumerator() =>
+            _binaryHeap.Select(n => HeapPair.Create(n.Value, n.Priority)).GetEnumerator();
 
         /// <inheritdoc />
-        IEnumerator IEnumerable.GetEnumerator() => 
-            ((IEnumerable<T>) this).GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() =>
+            ((IEnumerable<HeapPair<T, TPriority>>) this).GetEnumerator();
     }
 }

@@ -81,13 +81,11 @@ Ticked means available in the newest package.
     - [ ] File-System Based Queue / Deque
         - [ ] Non-Thread-Safe
         - [ ] Thread-Safe, with transactions
-- [ ] Graphs
+- [X] Graphs
     - [ ] Undirected Graph
-    - [ ] Directed Graph
+    - [X] Directed Graph
     - [ ] Multi Graph
-    - [ ] Algorithms on Graphs (poss. Separate NuGet package)
-        - [ ] Breadth-first search (BFS)
-        - [ ] Depth-first search (DFS)
+    - [X] Algorithms on Graphs (poss. Separate NuGet package)
         - [ ] Dijkstra-Algorithm
         - [ ] Kruskal-Algorithm
         - [ ] Minimum Spanning tree (MST)
