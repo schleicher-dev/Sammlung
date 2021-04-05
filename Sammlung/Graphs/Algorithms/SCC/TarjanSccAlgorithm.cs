@@ -6,13 +6,13 @@ using Sammlung.Exceptions;
 namespace Sammlung.Graphs.Algorithms.SCC
 {
     /// <summary>
-    /// The <see cref="TarjanStrongConnectednessAlgorithm{T,TWeight}"/> is an implementation of an algorithm which
+    /// The <see cref="TarjanSccAlgorithm{T,TWeight}"/> is an implementation of an algorithm which
     /// determines the strongly connected components of a graph.
     /// </summary>
     /// <typeparam name="T">the vertex type</typeparam>
     /// <typeparam name="TWeight">the weight type</typeparam>
-    internal class TarjanStrongConnectednessAlgorithm<T, TWeight> 
-        : IStrongConnectednessAlgorithm<T, TWeight>
+    internal class TarjanSccAlgorithm<T, TWeight> 
+        : ISccAlgorithm<T, TWeight>
         where TWeight : IComparable<TWeight>
     {
         /// <inheritdoc />
