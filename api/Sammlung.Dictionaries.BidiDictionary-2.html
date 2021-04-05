@@ -1,0 +1,1338 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class BidiDictionary&lt;TFwd, TRev&gt;
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class BidiDictionary&lt;TFwd, TRev&gt;
+   ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Sammlung.Dictionaries.BidiDictionary`2">
+  
+  
+  <h1 id="Sammlung_Dictionaries_BidiDictionary_2" data-uid="Sammlung.Dictionaries.BidiDictionary`2" class="text-break">Class BidiDictionary&lt;TFwd, TRev&gt;
+  </h1>
+  <div class="markdown level0 summary"><p>This <a class="xref" href="Sammlung.Dictionaries.BidiDictionary-2.html">BidiDictionary&lt;TFwd, TRev&gt;</a> implements the
+<a class="xref" href="Sammlung.Dictionaries.IBidiDictionary-2.html">IBidiDictionary&lt;TFwd, TRev&gt;</a> interface. The type is explicitly not multi-threading
+compatible.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">BidiDictionary&lt;TFwd, TRev&gt;</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Sammlung.Dictionaries.IBidiDictionary-2.html">IBidiDictionary</a>&lt;TFwd, TRev&gt;</div>
+    <div><span class="xref">System.Collections.Generic.IDictionary</span>&lt;TFwd, TRev&gt;</div>
+    <div><span class="xref">System.Collections.Generic.ICollection</span>&lt;<span class="xref">System.Collections.Generic.KeyValuePair</span>&lt;TFwd, TRev&gt;&gt;</div>
+    <div><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<span class="xref">System.Collections.Generic.KeyValuePair</span>&lt;TFwd, TRev&gt;&gt;</div>
+    <div><span class="xref">System.Collections.IEnumerable</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetHashCode()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetType()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.MemberwiseClone()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ToString()</span>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Sammlung.Dictionaries.html">Sammlung.Dictionaries</a></h6>
+  <h6><strong>Assembly</strong>: Sammlung.dll</h6>
+  <h5 id="Sammlung_Dictionaries_BidiDictionary_2_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class BidiDictionary&lt;TFwd, TRev&gt; : IBidiDictionary&lt;TFwd, TRev&gt;, IDictionary&lt;TFwd, TRev&gt;, ICollection&lt;KeyValuePair&lt;TFwd, TRev&gt;&gt;, IEnumerable&lt;KeyValuePair&lt;TFwd, TRev&gt;&gt;, IEnumerable</code></pre>
+  </div>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TFwd</span></td>
+        <td><p>the forward type</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TRev</span></td>
+        <td><p>the reverse type</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="constructors">Constructors
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/schleicher-dev/Sammlung/new/master/apiSpec/new?filename=Sammlung_Dictionaries_BidiDictionary_2__ctor.md&amp;value=---%0Auid%3A%20Sammlung.Dictionaries.BidiDictionary%602.%23ctor%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/schleicher-dev/Sammlung/blob/master/Sammlung/Dictionaries/BidiDictionary.cs/#L26">View Source</a>
+  </span>
+  <a id="Sammlung_Dictionaries_BidiDictionary_2__ctor_" data-uid="Sammlung.Dictionaries.BidiDictionary`2.#ctor*"></a>
+  <h4 id="Sammlung_Dictionaries_BidiDictionary_2__ctor" data-uid="Sammlung.Dictionaries.BidiDictionary`2.#ctor">BidiDictionary()</h4>
+  <div class="markdown level1 summary"><p>Constructs a new <a class="xref" href="Sammlung.Dictionaries.BidiDictionary-2.html">BidiDictionary&lt;TFwd, TRev&gt;</a> with the default capacity=1.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public BidiDictionary()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/schleicher-dev/Sammlung/new/master/apiSpec/new?filename=Sammlung_Dictionaries_BidiDictionary_2__ctor_System_Collections_Generic_IDictionary__0__1__.md&amp;value=---%0Auid%3A%20Sammlung.Dictionaries.BidiDictionary%602.%23ctor(System.Collections.Generic.IDictionary%7B%600%2C%601%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/schleicher-dev/Sammlung/blob/master/Sammlung/Dictionaries/BidiDictionary.cs/#L33">View Source</a>
+  </span>
+  <a id="Sammlung_Dictionaries_BidiDictionary_2__ctor_" data-uid="Sammlung.Dictionaries.BidiDictionary`2.#ctor*"></a>
+  <h4 id="Sammlung_Dictionaries_BidiDictionary_2__ctor_System_Collections_Generic_IDictionary__0__1__" data-uid="Sammlung.Dictionaries.BidiDictionary`2.#ctor(System.Collections.Generic.IDictionary{`0,`1})">BidiDictionary(IDictionary&lt;TFwd, TRev&gt;)</h4>
+  <div class="markdown level1 summary"><p>Constructs a new <a class="xref" href="Sammlung.Dictionaries.BidiDictionary-2.html">BidiDictionary&lt;TFwd, TRev&gt;</a> using the passed dictionary.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public BidiDictionary(IDictionary&lt;TFwd, TRev&gt; other)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IDictionary</span>&lt;TFwd, TRev&gt;</td>
+        <td><span class="parametername">other</span></td>
+        <td><p>the dictionary</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sammlung.Exceptions.DuplicateKeyException.html">DuplicateKeyException</a></td>
+        <td><p>when mapping contains duplicate keys</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/schleicher-dev/Sammlung/new/master/apiSpec/new?filename=Sammlung_Dictionaries_BidiDictionary_2__ctor_System_Collections_Generic_IDictionary__0__1__System_Collections_Generic_IEqualityComparer__0__System_Collections_Generic_IEqualityComparer__1__.md&amp;value=---%0Auid%3A%20Sammlung.Dictionaries.BidiDictionary%602.%23ctor(System.Collections.Generic.IDictionary%7B%600%2C%601%7D%2CSystem.Collections.Generic.IEqualityComparer%7B%600%7D%2CSystem.Collections.Generic.IEqualityComparer%7B%601%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/schleicher-dev/Sammlung/blob/master/Sammlung/Dictionaries/BidiDictionary.cs/#L43">View Source</a>
+  </span>
+  <a id="Sammlung_Dictionaries_BidiDictionary_2__ctor_" data-uid="Sammlung.Dictionaries.BidiDictionary`2.#ctor*"></a>
+  <h4 id="Sammlung_Dictionaries_BidiDictionary_2__ctor_System_Collections_Generic_IDictionary__0__1__System_Collections_Generic_IEqualityComparer__0__System_Collections_Generic_IEqualityComparer__1__" data-uid="Sammlung.Dictionaries.BidiDictionary`2.#ctor(System.Collections.Generic.IDictionary{`0,`1},System.Collections.Generic.IEqualityComparer{`0},System.Collections.Generic.IEqualityComparer{`1})">BidiDictionary(IDictionary&lt;TFwd, TRev&gt;, IEqualityComparer&lt;TFwd&gt;, IEqualityComparer&lt;TRev&gt;)</h4>
+  <div class="markdown level1 summary"><p>Constructs a new <a class="xref" href="Sammlung.Dictionaries.BidiDictionary-2.html">BidiDictionary&lt;TFwd, TRev&gt;</a> using the passed dictionary and comparers.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public BidiDictionary(IDictionary&lt;TFwd, TRev&gt; other, IEqualityComparer&lt;TFwd&gt; fwdComparer, IEqualityComparer&lt;TRev&gt; revComparer)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IDictionary</span>&lt;TFwd, TRev&gt;</td>
+        <td><span class="parametername">other</span></td>
+        <td><p>the dictionary</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEqualityComparer</span>&lt;TFwd&gt;</td>
+        <td><span class="parametername">fwdComparer</span></td>
+        <td><p>the comparer of the forward key</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEqualityComparer</span>&lt;TRev&gt;</td>
+        <td><span class="parametername">revComparer</span></td>
+        <td><p>the comparer of the reverse key</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sammlung.Exceptions.DuplicateKeyException.html">DuplicateKeyException</a></td>
+        <td><p>when mapping contains duplicate keys</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/schleicher-dev/Sammlung/new/master/apiSpec/new?filename=Sammlung_Dictionaries_BidiDictionary_2__ctor_System_Collections_Generic_IEnumerable_System_Collections_Generic_KeyValuePair__0__1___.md&amp;value=---%0Auid%3A%20Sammlung.Dictionaries.BidiDictionary%602.%23ctor(System.Collections.Generic.IEnumerable%7BSystem.Collections.Generic.KeyValuePair%7B%600%2C%601%7D%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/schleicher-dev/Sammlung/blob/master/Sammlung/Dictionaries/BidiDictionary.cs/#L51">View Source</a>
+  </span>
+  <a id="Sammlung_Dictionaries_BidiDictionary_2__ctor_" data-uid="Sammlung.Dictionaries.BidiDictionary`2.#ctor*"></a>
+  <h4 id="Sammlung_Dictionaries_BidiDictionary_2__ctor_System_Collections_Generic_IEnumerable_System_Collections_Generic_KeyValuePair__0__1___" data-uid="Sammlung.Dictionaries.BidiDictionary`2.#ctor(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{`0,`1}})">BidiDictionary(IEnumerable&lt;KeyValuePair&lt;TFwd, TRev&gt;&gt;)</h4>
+  <div class="markdown level1 summary"><p>Constructs a new <a class="xref" href="Sammlung.Dictionaries.BidiDictionary-2.html">BidiDictionary&lt;TFwd, TRev&gt;</a> using the passed enumerable.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public BidiDictionary(IEnumerable&lt;KeyValuePair&lt;TFwd, TRev&gt;&gt; other)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<span class="xref">System.Collections.Generic.KeyValuePair</span>&lt;TFwd, TRev&gt;&gt;</td>
+        <td><span class="parametername">other</span></td>
+        <td><p>the enumerable</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sammlung.Exceptions.DuplicateKeyException.html">DuplicateKeyException</a></td>
+        <td><p>when mapping contains duplicate keys</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/schleicher-dev/Sammlung/new/master/apiSpec/new?filename=Sammlung_Dictionaries_BidiDictionary_2__ctor_System_Collections_Generic_IEnumerable_System_Collections_Generic_KeyValuePair__0__1___System_Collections_Generic_IEqualityComparer__0__System_Collections_Generic_IEqualityComparer__1__.md&amp;value=---%0Auid%3A%20Sammlung.Dictionaries.BidiDictionary%602.%23ctor(System.Collections.Generic.IEnumerable%7BSystem.Collections.Generic.KeyValuePair%7B%600%2C%601%7D%7D%2CSystem.Collections.Generic.IEqualityComparer%7B%600%7D%2CSystem.Collections.Generic.IEqualityComparer%7B%601%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/schleicher-dev/Sammlung/blob/master/Sammlung/Dictionaries/BidiDictionary.cs/#L62">View Source</a>
+  </span>
+  <a id="Sammlung_Dictionaries_BidiDictionary_2__ctor_" data-uid="Sammlung.Dictionaries.BidiDictionary`2.#ctor*"></a>
+  <h4 id="Sammlung_Dictionaries_BidiDictionary_2__ctor_System_Collections_Generic_IEnumerable_System_Collections_Generic_KeyValuePair__0__1___System_Collections_Generic_IEqualityComparer__0__System_Collections_Generic_IEqualityComparer__1__" data-uid="Sammlung.Dictionaries.BidiDictionary`2.#ctor(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{`0,`1}},System.Collections.Generic.IEqualityComparer{`0},System.Collections.Generic.IEqualityComparer{`1})">BidiDictionary(IEnumerable&lt;KeyValuePair&lt;TFwd, TRev&gt;&gt;, IEqualityComparer&lt;TFwd&gt;, IEqualityComparer&lt;TRev&gt;)</h4>
+  <div class="markdown level1 summary"><p>Constructs a new <a class="xref" href="Sammlung.Dictionaries.BidiDictionary-2.html">BidiDictionary&lt;TFwd, TRev&gt;</a> using the passed enumerable and the
+comparers.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public BidiDictionary(IEnumerable&lt;KeyValuePair&lt;TFwd, TRev&gt;&gt; other, IEqualityComparer&lt;TFwd&gt; fwdComparer, IEqualityComparer&lt;TRev&gt; revComparer)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<span class="xref">System.Collections.Generic.KeyValuePair</span>&lt;TFwd, TRev&gt;&gt;</td>
+        <td><span class="parametername">other</span></td>
+        <td><p>the enumerable</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEqualityComparer</span>&lt;TFwd&gt;</td>
+        <td><span class="parametername">fwdComparer</span></td>
+        <td><p>the comparer of the forward key</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEqualityComparer</span>&lt;TRev&gt;</td>
+        <td><span class="parametername">revComparer</span></td>
+        <td><p>the comparer of the reverse key</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sammlung.Exceptions.DuplicateKeyException.html">DuplicateKeyException</a></td>
+        <td><p>when mapping contains duplicate keys</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/schleicher-dev/Sammlung/new/master/apiSpec/new?filename=Sammlung_Dictionaries_BidiDictionary_2__ctor_System_Int32_.md&amp;value=---%0Auid%3A%20Sammlung.Dictionaries.BidiDictionary%602.%23ctor(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/schleicher-dev/Sammlung/blob/master/Sammlung/Dictionaries/BidiDictionary.cs/#L79">View Source</a>
+  </span>
+  <a id="Sammlung_Dictionaries_BidiDictionary_2__ctor_" data-uid="Sammlung.Dictionaries.BidiDictionary`2.#ctor*"></a>
+  <h4 id="Sammlung_Dictionaries_BidiDictionary_2__ctor_System_Int32_" data-uid="Sammlung.Dictionaries.BidiDictionary`2.#ctor(System.Int32)">BidiDictionary(Int32)</h4>
+  <div class="markdown level1 summary"><p>Constructs a new <a class="xref" href="Sammlung.Dictionaries.BidiDictionary-2.html">BidiDictionary&lt;TFwd, TRev&gt;</a> with the passed capacity.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public BidiDictionary(int capacity)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">capacity</span></td>
+        <td><p>the capacity</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/schleicher-dev/Sammlung/new/master/apiSpec/new?filename=Sammlung_Dictionaries_BidiDictionary_2__ctor_System_Int32_System_Collections_Generic_IEqualityComparer__0__System_Collections_Generic_IEqualityComparer__1__.md&amp;value=---%0Auid%3A%20Sammlung.Dictionaries.BidiDictionary%602.%23ctor(System.Int32%2CSystem.Collections.Generic.IEqualityComparer%7B%600%7D%2CSystem.Collections.Generic.IEqualityComparer%7B%601%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/schleicher-dev/Sammlung/blob/master/Sammlung/Dictionaries/BidiDictionary.cs/#L88">View Source</a>
+  </span>
+  <a id="Sammlung_Dictionaries_BidiDictionary_2__ctor_" data-uid="Sammlung.Dictionaries.BidiDictionary`2.#ctor*"></a>
+  <h4 id="Sammlung_Dictionaries_BidiDictionary_2__ctor_System_Int32_System_Collections_Generic_IEqualityComparer__0__System_Collections_Generic_IEqualityComparer__1__" data-uid="Sammlung.Dictionaries.BidiDictionary`2.#ctor(System.Int32,System.Collections.Generic.IEqualityComparer{`0},System.Collections.Generic.IEqualityComparer{`1})">BidiDictionary(Int32, IEqualityComparer&lt;TFwd&gt;, IEqualityComparer&lt;TRev&gt;)</h4>
+  <div class="markdown level1 summary"><p>Constructs a new <a class="xref" href="Sammlung.Dictionaries.BidiDictionary-2.html">BidiDictionary&lt;TFwd, TRev&gt;</a> with the passed capacity and the comparers.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public BidiDictionary(int capacity, IEqualityComparer&lt;TFwd&gt; fwdComparer, IEqualityComparer&lt;TRev&gt; revComparer)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">capacity</span></td>
+        <td><p>the capacity</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEqualityComparer</span>&lt;TFwd&gt;</td>
+        <td><span class="parametername">fwdComparer</span></td>
+        <td><p>the comparer of the forward key</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEqualityComparer</span>&lt;TRev&gt;</td>
+        <td><span class="parametername">revComparer</span></td>
+        <td><p>the comparer of the reverse key</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/schleicher-dev/Sammlung/new/master/apiSpec/new?filename=Sammlung_Dictionaries_BidiDictionary_2_Count.md&amp;value=---%0Auid%3A%20Sammlung.Dictionaries.BidiDictionary%602.Count%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/schleicher-dev/Sammlung/blob/master/Sammlung/Dictionaries/BidiDictionary.cs/#L96">View Source</a>
+  </span>
+  <a id="Sammlung_Dictionaries_BidiDictionary_2_Count_" data-uid="Sammlung.Dictionaries.BidiDictionary`2.Count*"></a>
+  <h4 id="Sammlung_Dictionaries_BidiDictionary_2_Count" data-uid="Sammlung.Dictionaries.BidiDictionary`2.Count">Count</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Count { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/schleicher-dev/Sammlung/new/master/apiSpec/new?filename=Sammlung_Dictionaries_BidiDictionary_2_ForwardMap.md&amp;value=---%0Auid%3A%20Sammlung.Dictionaries.BidiDictionary%602.ForwardMap%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/schleicher-dev/Sammlung/blob/master/Sammlung/Dictionaries/BidiDictionary.cs/#L108">View Source</a>
+  </span>
+  <a id="Sammlung_Dictionaries_BidiDictionary_2_ForwardMap_" data-uid="Sammlung.Dictionaries.BidiDictionary`2.ForwardMap*"></a>
+  <h4 id="Sammlung_Dictionaries_BidiDictionary_2_ForwardMap" data-uid="Sammlung.Dictionaries.BidiDictionary`2.ForwardMap">ForwardMap</h4>
+  <div class="markdown level1 summary"><p>Holds the forward map, which is used to retrieve the values in the forward direction.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IReadOnlyDictionary&lt;TFwd, TRev&gt; ForwardMap { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sammlung.Compatibility.IReadOnlyDictionary-2.html">IReadOnlyDictionary</a>&lt;TFwd, TRev&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/schleicher-dev/Sammlung/new/master/apiSpec/new?filename=Sammlung_Dictionaries_BidiDictionary_2_IsReadOnly.md&amp;value=---%0Auid%3A%20Sammlung.Dictionaries.BidiDictionary%602.IsReadOnly%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/schleicher-dev/Sammlung/blob/master/Sammlung/Dictionaries/BidiDictionary.cs/#L99">View Source</a>
+  </span>
+  <a id="Sammlung_Dictionaries_BidiDictionary_2_IsReadOnly_" data-uid="Sammlung.Dictionaries.BidiDictionary`2.IsReadOnly*"></a>
+  <h4 id="Sammlung_Dictionaries_BidiDictionary_2_IsReadOnly" data-uid="Sammlung.Dictionaries.BidiDictionary`2.IsReadOnly">IsReadOnly</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsReadOnly { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/schleicher-dev/Sammlung/new/master/apiSpec/new?filename=Sammlung_Dictionaries_BidiDictionary_2_Item__0_.md&amp;value=---%0Auid%3A%20Sammlung.Dictionaries.BidiDictionary%602.Item(%600)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/schleicher-dev/Sammlung/blob/master/Sammlung/Dictionaries/BidiDictionary.cs/#L126">View Source</a>
+  </span>
+  <a id="Sammlung_Dictionaries_BidiDictionary_2_Item_" data-uid="Sammlung.Dictionaries.BidiDictionary`2.Item*"></a>
+  <h4 id="Sammlung_Dictionaries_BidiDictionary_2_Item__0_" data-uid="Sammlung.Dictionaries.BidiDictionary`2.Item(`0)">Item[TFwd]</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TRev this[TFwd key] { get; set; }</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TFwd</span></td>
+        <td><span class="parametername">key</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TRev</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/schleicher-dev/Sammlung/new/master/apiSpec/new?filename=Sammlung_Dictionaries_BidiDictionary_2_Keys.md&amp;value=---%0Auid%3A%20Sammlung.Dictionaries.BidiDictionary%602.Keys%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/schleicher-dev/Sammlung/blob/master/Sammlung/Dictionaries/BidiDictionary.cs/#L102">View Source</a>
+  </span>
+  <a id="Sammlung_Dictionaries_BidiDictionary_2_Keys_" data-uid="Sammlung.Dictionaries.BidiDictionary`2.Keys*"></a>
+  <h4 id="Sammlung_Dictionaries_BidiDictionary_2_Keys" data-uid="Sammlung.Dictionaries.BidiDictionary`2.Keys">Keys</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ICollection&lt;TFwd&gt; Keys { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.ICollection</span>&lt;TFwd&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/schleicher-dev/Sammlung/new/master/apiSpec/new?filename=Sammlung_Dictionaries_BidiDictionary_2_ReverseMap.md&amp;value=---%0Auid%3A%20Sammlung.Dictionaries.BidiDictionary%602.ReverseMap%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/schleicher-dev/Sammlung/blob/master/Sammlung/Dictionaries/BidiDictionary.cs/#L111">View Source</a>
+  </span>
+  <a id="Sammlung_Dictionaries_BidiDictionary_2_ReverseMap_" data-uid="Sammlung.Dictionaries.BidiDictionary`2.ReverseMap*"></a>
+  <h4 id="Sammlung_Dictionaries_BidiDictionary_2_ReverseMap" data-uid="Sammlung.Dictionaries.BidiDictionary`2.ReverseMap">ReverseMap</h4>
+  <div class="markdown level1 summary"><p>Holds the reverse map, which is used to retrieve the values in the reverse direction.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IReadOnlyDictionary&lt;TRev, TFwd&gt; ReverseMap { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sammlung.Compatibility.IReadOnlyDictionary-2.html">IReadOnlyDictionary</a>&lt;TRev, TFwd&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/schleicher-dev/Sammlung/new/master/apiSpec/new?filename=Sammlung_Dictionaries_BidiDictionary_2_Values.md&amp;value=---%0Auid%3A%20Sammlung.Dictionaries.BidiDictionary%602.Values%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/schleicher-dev/Sammlung/blob/master/Sammlung/Dictionaries/BidiDictionary.cs/#L105">View Source</a>
+  </span>
+  <a id="Sammlung_Dictionaries_BidiDictionary_2_Values_" data-uid="Sammlung.Dictionaries.BidiDictionary`2.Values*"></a>
+  <h4 id="Sammlung_Dictionaries_BidiDictionary_2_Values" data-uid="Sammlung.Dictionaries.BidiDictionary`2.Values">Values</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ICollection&lt;TRev&gt; Values { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.ICollection</span>&lt;TRev&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/schleicher-dev/Sammlung/new/master/apiSpec/new?filename=Sammlung_Dictionaries_BidiDictionary_2_Add__0__1_.md&amp;value=---%0Auid%3A%20Sammlung.Dictionaries.BidiDictionary%602.Add(%600%2C%601)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/schleicher-dev/Sammlung/blob/master/Sammlung/Dictionaries/BidiDictionary.cs/#L145">View Source</a>
+  </span>
+  <a id="Sammlung_Dictionaries_BidiDictionary_2_Add_" data-uid="Sammlung.Dictionaries.BidiDictionary`2.Add*"></a>
+  <h4 id="Sammlung_Dictionaries_BidiDictionary_2_Add__0__1_" data-uid="Sammlung.Dictionaries.BidiDictionary`2.Add(`0,`1)">Add(TFwd, TRev)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Add(TFwd fwd, TRev rev)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TFwd</span></td>
+        <td><span class="parametername">fwd</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">TRev</span></td>
+        <td><span class="parametername">rev</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/schleicher-dev/Sammlung/new/master/apiSpec/new?filename=Sammlung_Dictionaries_BidiDictionary_2_Add_System_Collections_Generic_KeyValuePair__0__1__.md&amp;value=---%0Auid%3A%20Sammlung.Dictionaries.BidiDictionary%602.Add(System.Collections.Generic.KeyValuePair%7B%600%2C%601%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/schleicher-dev/Sammlung/blob/master/Sammlung/Dictionaries/BidiDictionary.cs/#L152">View Source</a>
+  </span>
+  <a id="Sammlung_Dictionaries_BidiDictionary_2_Add_" data-uid="Sammlung.Dictionaries.BidiDictionary`2.Add*"></a>
+  <h4 id="Sammlung_Dictionaries_BidiDictionary_2_Add_System_Collections_Generic_KeyValuePair__0__1__" data-uid="Sammlung.Dictionaries.BidiDictionary`2.Add(System.Collections.Generic.KeyValuePair{`0,`1})">Add(KeyValuePair&lt;TFwd, TRev&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Add(KeyValuePair&lt;TFwd, TRev&gt; item)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.KeyValuePair</span>&lt;TFwd, TRev&gt;</td>
+        <td><span class="parametername">item</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/schleicher-dev/Sammlung/new/master/apiSpec/new?filename=Sammlung_Dictionaries_BidiDictionary_2_Clear.md&amp;value=---%0Auid%3A%20Sammlung.Dictionaries.BidiDictionary%602.Clear%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/schleicher-dev/Sammlung/blob/master/Sammlung/Dictionaries/BidiDictionary.cs/#L167">View Source</a>
+  </span>
+  <a id="Sammlung_Dictionaries_BidiDictionary_2_Clear_" data-uid="Sammlung.Dictionaries.BidiDictionary`2.Clear*"></a>
+  <h4 id="Sammlung_Dictionaries_BidiDictionary_2_Clear" data-uid="Sammlung.Dictionaries.BidiDictionary`2.Clear">Clear()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Clear()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/schleicher-dev/Sammlung/new/master/apiSpec/new?filename=Sammlung_Dictionaries_BidiDictionary_2_Contains_System_Collections_Generic_KeyValuePair__0__1__.md&amp;value=---%0Auid%3A%20Sammlung.Dictionaries.BidiDictionary%602.Contains(System.Collections.Generic.KeyValuePair%7B%600%2C%601%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/schleicher-dev/Sammlung/blob/master/Sammlung/Dictionaries/BidiDictionary.cs/#L117">View Source</a>
+  </span>
+  <a id="Sammlung_Dictionaries_BidiDictionary_2_Contains_" data-uid="Sammlung.Dictionaries.BidiDictionary`2.Contains*"></a>
+  <h4 id="Sammlung_Dictionaries_BidiDictionary_2_Contains_System_Collections_Generic_KeyValuePair__0__1__" data-uid="Sammlung.Dictionaries.BidiDictionary`2.Contains(System.Collections.Generic.KeyValuePair{`0,`1})">Contains(KeyValuePair&lt;TFwd, TRev&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Contains(KeyValuePair&lt;TFwd, TRev&gt; item)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.KeyValuePair</span>&lt;TFwd, TRev&gt;</td>
+        <td><span class="parametername">item</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/schleicher-dev/Sammlung/new/master/apiSpec/new?filename=Sammlung_Dictionaries_BidiDictionary_2_ContainsKey__0_.md&amp;value=---%0Auid%3A%20Sammlung.Dictionaries.BidiDictionary%602.ContainsKey(%600)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/schleicher-dev/Sammlung/blob/master/Sammlung/Dictionaries/BidiDictionary.cs/#L114">View Source</a>
+  </span>
+  <a id="Sammlung_Dictionaries_BidiDictionary_2_ContainsKey_" data-uid="Sammlung.Dictionaries.BidiDictionary`2.ContainsKey*"></a>
+  <h4 id="Sammlung_Dictionaries_BidiDictionary_2_ContainsKey__0_" data-uid="Sammlung.Dictionaries.BidiDictionary`2.ContainsKey(`0)">ContainsKey(TFwd)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool ContainsKey(TFwd key)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TFwd</span></td>
+        <td><span class="parametername">key</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/schleicher-dev/Sammlung/new/master/apiSpec/new?filename=Sammlung_Dictionaries_BidiDictionary_2_CopyTo_System_Collections_Generic_KeyValuePair__0__1____System_Int32_.md&amp;value=---%0Auid%3A%20Sammlung.Dictionaries.BidiDictionary%602.CopyTo(System.Collections.Generic.KeyValuePair%7B%600%2C%601%7D%5B%5D%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/schleicher-dev/Sammlung/blob/master/Sammlung/Dictionaries/BidiDictionary.cs/#L163">View Source</a>
+  </span>
+  <a id="Sammlung_Dictionaries_BidiDictionary_2_CopyTo_" data-uid="Sammlung.Dictionaries.BidiDictionary`2.CopyTo*"></a>
+  <h4 id="Sammlung_Dictionaries_BidiDictionary_2_CopyTo_System_Collections_Generic_KeyValuePair__0__1____System_Int32_" data-uid="Sammlung.Dictionaries.BidiDictionary`2.CopyTo(System.Collections.Generic.KeyValuePair{`0,`1}[],System.Int32)">CopyTo(KeyValuePair&lt;TFwd, TRev&gt;[], Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CopyTo(KeyValuePair&lt;TFwd, TRev&gt;[] array, int arrayIndex)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.KeyValuePair</span>&lt;TFwd, TRev&gt;[]</td>
+        <td><span class="parametername">array</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">arrayIndex</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/schleicher-dev/Sammlung/new/master/apiSpec/new?filename=Sammlung_Dictionaries_BidiDictionary_2_ForwardRemove__0_.md&amp;value=---%0Auid%3A%20Sammlung.Dictionaries.BidiDictionary%602.ForwardRemove(%600)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/schleicher-dev/Sammlung/blob/master/Sammlung/Dictionaries/BidiDictionary.cs/#L155">View Source</a>
+  </span>
+  <a id="Sammlung_Dictionaries_BidiDictionary_2_ForwardRemove_" data-uid="Sammlung.Dictionaries.BidiDictionary`2.ForwardRemove*"></a>
+  <h4 id="Sammlung_Dictionaries_BidiDictionary_2_ForwardRemove__0_" data-uid="Sammlung.Dictionaries.BidiDictionary`2.ForwardRemove(`0)">ForwardRemove(TFwd)</h4>
+  <div class="markdown level1 summary"><p>Removes a particular mapping between values using the forward key.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool ForwardRemove(TFwd key)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TFwd</span></td>
+        <td><span class="parametername">key</span></td>
+        <td><p>the forward key</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>true if remove was successful else false</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/schleicher-dev/Sammlung/new/master/apiSpec/new?filename=Sammlung_Dictionaries_BidiDictionary_2_GetEnumerator.md&amp;value=---%0Auid%3A%20Sammlung.Dictionaries.BidiDictionary%602.GetEnumerator%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/schleicher-dev/Sammlung/blob/master/Sammlung/Dictionaries/BidiDictionary.cs/#L174">View Source</a>
+  </span>
+  <a id="Sammlung_Dictionaries_BidiDictionary_2_GetEnumerator_" data-uid="Sammlung.Dictionaries.BidiDictionary`2.GetEnumerator*"></a>
+  <h4 id="Sammlung_Dictionaries_BidiDictionary_2_GetEnumerator" data-uid="Sammlung.Dictionaries.BidiDictionary`2.GetEnumerator">GetEnumerator()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerator&lt;KeyValuePair&lt;TFwd, TRev&gt;&gt; GetEnumerator()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerator</span>&lt;<span class="xref">System.Collections.Generic.KeyValuePair</span>&lt;TFwd, TRev&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/schleicher-dev/Sammlung/new/master/apiSpec/new?filename=Sammlung_Dictionaries_BidiDictionary_2_Remove__0_.md&amp;value=---%0Auid%3A%20Sammlung.Dictionaries.BidiDictionary%602.Remove(%600)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/schleicher-dev/Sammlung/blob/master/Sammlung/Dictionaries/BidiDictionary.cs/#L120">View Source</a>
+  </span>
+  <a id="Sammlung_Dictionaries_BidiDictionary_2_Remove_" data-uid="Sammlung.Dictionaries.BidiDictionary`2.Remove*"></a>
+  <h4 id="Sammlung_Dictionaries_BidiDictionary_2_Remove__0_" data-uid="Sammlung.Dictionaries.BidiDictionary`2.Remove(`0)">Remove(TFwd)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Remove(TFwd key)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TFwd</span></td>
+        <td><span class="parametername">key</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/schleicher-dev/Sammlung/new/master/apiSpec/new?filename=Sammlung_Dictionaries_BidiDictionary_2_Remove_System_Collections_Generic_KeyValuePair__0__1__.md&amp;value=---%0Auid%3A%20Sammlung.Dictionaries.BidiDictionary%602.Remove(System.Collections.Generic.KeyValuePair%7B%600%2C%601%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/schleicher-dev/Sammlung/blob/master/Sammlung/Dictionaries/BidiDictionary.cs/#L123">View Source</a>
+  </span>
+  <a id="Sammlung_Dictionaries_BidiDictionary_2_Remove_" data-uid="Sammlung.Dictionaries.BidiDictionary`2.Remove*"></a>
+  <h4 id="Sammlung_Dictionaries_BidiDictionary_2_Remove_System_Collections_Generic_KeyValuePair__0__1__" data-uid="Sammlung.Dictionaries.BidiDictionary`2.Remove(System.Collections.Generic.KeyValuePair{`0,`1})">Remove(KeyValuePair&lt;TFwd, TRev&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Remove(KeyValuePair&lt;TFwd, TRev&gt; item)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.KeyValuePair</span>&lt;TFwd, TRev&gt;</td>
+        <td><span class="parametername">item</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/schleicher-dev/Sammlung/new/master/apiSpec/new?filename=Sammlung_Dictionaries_BidiDictionary_2_ReverseRemove__1_.md&amp;value=---%0Auid%3A%20Sammlung.Dictionaries.BidiDictionary%602.ReverseRemove(%601)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/schleicher-dev/Sammlung/blob/master/Sammlung/Dictionaries/BidiDictionary.cs/#L159">View Source</a>
+  </span>
+  <a id="Sammlung_Dictionaries_BidiDictionary_2_ReverseRemove_" data-uid="Sammlung.Dictionaries.BidiDictionary`2.ReverseRemove*"></a>
+  <h4 id="Sammlung_Dictionaries_BidiDictionary_2_ReverseRemove__1_" data-uid="Sammlung.Dictionaries.BidiDictionary`2.ReverseRemove(`1)">ReverseRemove(TRev)</h4>
+  <div class="markdown level1 summary"><p>Removes a particular mapping between values using the reverse key.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool ReverseRemove(TRev key)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TRev</span></td>
+        <td><span class="parametername">key</span></td>
+        <td><p>the reverse key</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>true if remove was successful else false</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/schleicher-dev/Sammlung/new/master/apiSpec/new?filename=Sammlung_Dictionaries_BidiDictionary_2_TryAdd__0__1_.md&amp;value=---%0Auid%3A%20Sammlung.Dictionaries.BidiDictionary%602.TryAdd(%600%2C%601)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/schleicher-dev/Sammlung/blob/master/Sammlung/Dictionaries/BidiDictionary.cs/#L135">View Source</a>
+  </span>
+  <a id="Sammlung_Dictionaries_BidiDictionary_2_TryAdd_" data-uid="Sammlung.Dictionaries.BidiDictionary`2.TryAdd*"></a>
+  <h4 id="Sammlung_Dictionaries_BidiDictionary_2_TryAdd__0__1_" data-uid="Sammlung.Dictionaries.BidiDictionary`2.TryAdd(`0,`1)">TryAdd(TFwd, TRev)</h4>
+  <div class="markdown level1 summary"><p>Tries to add the mapping between forward and reverse key.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryAdd(TFwd fwd, TRev rev)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TFwd</span></td>
+        <td><span class="parametername">fwd</span></td>
+        <td><p>the forward key</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TRev</span></td>
+        <td><span class="parametername">rev</span></td>
+        <td><p>the reverse key</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>true if no duplicate key found else false</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/schleicher-dev/Sammlung/new/master/apiSpec/new?filename=Sammlung_Dictionaries_BidiDictionary_2_TryGetValue__0__1__.md&amp;value=---%0Auid%3A%20Sammlung.Dictionaries.BidiDictionary%602.TryGetValue(%600%2C%601%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/schleicher-dev/Sammlung/blob/master/Sammlung/Dictionaries/BidiDictionary.cs/#L132">View Source</a>
+  </span>
+  <a id="Sammlung_Dictionaries_BidiDictionary_2_TryGetValue_" data-uid="Sammlung.Dictionaries.BidiDictionary`2.TryGetValue*"></a>
+  <h4 id="Sammlung_Dictionaries_BidiDictionary_2_TryGetValue__0__1__" data-uid="Sammlung.Dictionaries.BidiDictionary`2.TryGetValue(`0,`1@)">TryGetValue(TFwd, out TRev)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryGetValue(TFwd key, out TRev value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TFwd</span></td>
+        <td><span class="parametername">key</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">TRev</span></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="eii">Explicit Interface Implementations
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/schleicher-dev/Sammlung/new/master/apiSpec/new?filename=Sammlung_Dictionaries_BidiDictionary_2_System_Collections_IEnumerable_GetEnumerator.md&amp;value=---%0Auid%3A%20Sammlung.Dictionaries.BidiDictionary%602.System%23Collections%23IEnumerable%23GetEnumerator%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/schleicher-dev/Sammlung/blob/master/Sammlung/Dictionaries/BidiDictionary.cs/#L180">View Source</a>
+  </span>
+  <a id="Sammlung_Dictionaries_BidiDictionary_2_System_Collections_IEnumerable_GetEnumerator_" data-uid="Sammlung.Dictionaries.BidiDictionary`2.System#Collections#IEnumerable#GetEnumerator*"></a>
+  <h4 id="Sammlung_Dictionaries_BidiDictionary_2_System_Collections_IEnumerable_GetEnumerator" data-uid="Sammlung.Dictionaries.BidiDictionary`2.System#Collections#IEnumerable#GetEnumerator">IEnumerable.GetEnumerator()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IEnumerator IEnumerable.GetEnumerator()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.IEnumerator</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Sammlung.Dictionaries.IBidiDictionary-2.html">IBidiDictionary&lt;TFwd, TRev&gt;</a>
+  </div>
+  <div>
+      <span class="xref">System.Collections.Generic.IDictionary&lt;TKey, TValue&gt;</span>
+  </div>
+  <div>
+      <span class="xref">System.Collections.Generic.ICollection&lt;T&gt;</span>
+  </div>
+  <div>
+      <span class="xref">System.Collections.Generic.IEnumerable&lt;T&gt;</span>
+  </div>
+  <div>
+      <span class="xref">System.Collections.IEnumerable</span>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/schleicher-dev/Sammlung/new/master/apiSpec/new?filename=Sammlung_Dictionaries_BidiDictionary_2.md&amp;value=---%0Auid%3A%20Sammlung.Dictionaries.BidiDictionary%602%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/schleicher-dev/Sammlung/blob/master/Sammlung/Dictionaries/BidiDictionary.cs/#L17" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

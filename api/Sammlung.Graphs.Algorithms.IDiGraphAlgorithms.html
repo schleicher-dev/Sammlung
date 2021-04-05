@@ -1,0 +1,429 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Interface IDiGraphAlgorithms
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Interface IDiGraphAlgorithms
+   ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Sammlung.Graphs.Algorithms.IDiGraphAlgorithms">
+  
+  
+  <h1 id="Sammlung_Graphs_Algorithms_IDiGraphAlgorithms" data-uid="Sammlung.Graphs.Algorithms.IDiGraphAlgorithms" class="text-break">Interface IDiGraphAlgorithms
+  </h1>
+  <div class="markdown level0 summary"><p>The <a class="xref" href="Sammlung.Graphs.Algorithms.IDiGraphAlgorithms.html">IDiGraphAlgorithms</a> interface exposes several computation algorithms for graphs.
+This interfaces follows the strategy design pattern.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Sammlung.Graphs.Algorithms.html">Sammlung.Graphs.Algorithms</a></h6>
+  <h6><strong>Assembly</strong>: Sammlung.dll</h6>
+  <h5 id="Sammlung_Graphs_Algorithms_IDiGraphAlgorithms_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface IDiGraphAlgorithms</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/schleicher-dev/Sammlung/new/master/apiSpec/new?filename=Sammlung_Graphs_Algorithms_IDiGraphAlgorithms_GetCyclicalComponents__2_Sammlung_Graphs_IDiGraph___0___1__.md&amp;value=---%0Auid%3A%20Sammlung.Graphs.Algorithms.IDiGraphAlgorithms.GetCyclicalComponents%60%602(Sammlung.Graphs.IDiGraph%7B%60%600%2C%60%601%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/schleicher-dev/Sammlung/blob/master/Sammlung/Graphs/Algorithms/IDiGraphAlgorithms.cs/#L49">View Source</a>
+  </span>
+  <a id="Sammlung_Graphs_Algorithms_IDiGraphAlgorithms_GetCyclicalComponents_" data-uid="Sammlung.Graphs.Algorithms.IDiGraphAlgorithms.GetCyclicalComponents*"></a>
+  <h4 id="Sammlung_Graphs_Algorithms_IDiGraphAlgorithms_GetCyclicalComponents__2_Sammlung_Graphs_IDiGraph___0___1__" data-uid="Sammlung.Graphs.Algorithms.IDiGraphAlgorithms.GetCyclicalComponents``2(Sammlung.Graphs.IDiGraph{``0,``1})">GetCyclicalComponents&lt;T, TWeight&gt;(IDiGraph&lt;T, TWeight&gt;)</h4>
+  <div class="markdown level1 summary"><p>Returns all cyclical components of the passed graph.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IEnumerable&lt;IDiGraph&lt;T, TWeight&gt;&gt; GetCyclicalComponents&lt;T, TWeight&gt;(IDiGraph&lt;T, TWeight&gt; graph)
+    where TWeight : IComparable&lt;TWeight&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sammlung.Graphs.IDiGraph-2.html">IDiGraph</a>&lt;T, TWeight&gt;</td>
+        <td><span class="parametername">graph</span></td>
+        <td><p>the graph</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="Sammlung.Graphs.IDiGraph-2.html">IDiGraph</a>&lt;T, TWeight&gt;&gt;</td>
+        <td><p>every strongly connected component with more than one vertex or self-referencing vertices</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>the vertex type</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TWeight</span></td>
+        <td><p>the edge weight type</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Sammlung_Graphs_Algorithms_IDiGraphAlgorithms_GetCyclicalComponents__2_Sammlung_Graphs_IDiGraph___0___1___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>A graph is cyclical iff there is a series of edges such that the start and the end vertex are the same.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/schleicher-dev/Sammlung/new/master/apiSpec/new?filename=Sammlung_Graphs_Algorithms_IDiGraphAlgorithms_GetStronglyConnectedComponents__2_Sammlung_Graphs_IDiGraph___0___1__.md&amp;value=---%0Auid%3A%20Sammlung.Graphs.Algorithms.IDiGraphAlgorithms.GetStronglyConnectedComponents%60%602(Sammlung.Graphs.IDiGraph%7B%60%600%2C%60%601%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/schleicher-dev/Sammlung/blob/master/Sammlung/Graphs/Algorithms/IDiGraphAlgorithms.cs/#L22">View Source</a>
+  </span>
+  <a id="Sammlung_Graphs_Algorithms_IDiGraphAlgorithms_GetStronglyConnectedComponents_" data-uid="Sammlung.Graphs.Algorithms.IDiGraphAlgorithms.GetStronglyConnectedComponents*"></a>
+  <h4 id="Sammlung_Graphs_Algorithms_IDiGraphAlgorithms_GetStronglyConnectedComponents__2_Sammlung_Graphs_IDiGraph___0___1__" data-uid="Sammlung.Graphs.Algorithms.IDiGraphAlgorithms.GetStronglyConnectedComponents``2(Sammlung.Graphs.IDiGraph{``0,``1})">GetStronglyConnectedComponents&lt;T, TWeight&gt;(IDiGraph&lt;T, TWeight&gt;)</h4>
+  <div class="markdown level1 summary"><p>The <a class="xref" href="Sammlung.Graphs.Algorithms.IDiGraphAlgorithms.html#Sammlung_Graphs_Algorithms_IDiGraphAlgorithms_GetStronglyConnectedComponents__2_Sammlung_Graphs_IDiGraph___0___1__">GetStronglyConnectedComponents&lt;T, TWeight&gt;(IDiGraph&lt;T, TWeight&gt;)</a> method calculates the strongly connected
+components of a graph using one of the well-known strongly connected components algorithms.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IEnumerable&lt;IDiGraph&lt;T, TWeight&gt;&gt; GetStronglyConnectedComponents&lt;T, TWeight&gt;(IDiGraph&lt;T, TWeight&gt; graph)
+    where TWeight : IComparable&lt;TWeight&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sammlung.Graphs.IDiGraph-2.html">IDiGraph</a>&lt;T, TWeight&gt;</td>
+        <td><span class="parametername">graph</span></td>
+        <td><p>the graph</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="Sammlung.Graphs.IDiGraph-2.html">IDiGraph</a>&lt;T, TWeight&gt;&gt;</td>
+        <td><p>an array of strongly connected sub-graphs</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>the vertex type</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TWeight</span></td>
+        <td><p>the weight type</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/schleicher-dev/Sammlung/new/master/apiSpec/new?filename=Sammlung_Graphs_Algorithms_IDiGraphAlgorithms_IsAcyclic__2_Sammlung_Graphs_IDiGraph___0___1__.md&amp;value=---%0Auid%3A%20Sammlung.Graphs.Algorithms.IDiGraphAlgorithms.IsAcyclic%60%602(Sammlung.Graphs.IDiGraph%7B%60%600%2C%60%601%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/schleicher-dev/Sammlung/blob/master/Sammlung/Graphs/Algorithms/IDiGraphAlgorithms.cs/#L62">View Source</a>
+  </span>
+  <a id="Sammlung_Graphs_Algorithms_IDiGraphAlgorithms_IsAcyclic_" data-uid="Sammlung.Graphs.Algorithms.IDiGraphAlgorithms.IsAcyclic*"></a>
+  <h4 id="Sammlung_Graphs_Algorithms_IDiGraphAlgorithms_IsAcyclic__2_Sammlung_Graphs_IDiGraph___0___1__" data-uid="Sammlung.Graphs.Algorithms.IDiGraphAlgorithms.IsAcyclic``2(Sammlung.Graphs.IDiGraph{``0,``1})">IsAcyclic&lt;T, TWeight&gt;(IDiGraph&lt;T, TWeight&gt;)</h4>
+  <div class="markdown level1 summary"><p>Checks if the passed graph is acyclic.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool IsAcyclic&lt;T, TWeight&gt;(IDiGraph&lt;T, TWeight&gt; graph)
+    where TWeight : IComparable&lt;TWeight&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sammlung.Graphs.IDiGraph-2.html">IDiGraph</a>&lt;T, TWeight&gt;</td>
+        <td><span class="parametername">graph</span></td>
+        <td><p>the graph</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>true if there is no cycle else false</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>the vertex type</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TWeight</span></td>
+        <td><p>the edge weight type</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Sammlung_Graphs_Algorithms_IDiGraphAlgorithms_IsAcyclic__2_Sammlung_Graphs_IDiGraph___0___1___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>A graph is acyclic iff there is no cyclical component in it.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/schleicher-dev/Sammlung/new/master/apiSpec/new?filename=Sammlung_Graphs_Algorithms_IDiGraphAlgorithms_IsStronglyConnected__2_Sammlung_Graphs_IDiGraph___0___1__.md&amp;value=---%0Auid%3A%20Sammlung.Graphs.Algorithms.IDiGraphAlgorithms.IsStronglyConnected%60%602(Sammlung.Graphs.IDiGraph%7B%60%600%2C%60%601%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/schleicher-dev/Sammlung/blob/master/Sammlung/Graphs/Algorithms/IDiGraphAlgorithms.cs/#L36">View Source</a>
+  </span>
+  <a id="Sammlung_Graphs_Algorithms_IDiGraphAlgorithms_IsStronglyConnected_" data-uid="Sammlung.Graphs.Algorithms.IDiGraphAlgorithms.IsStronglyConnected*"></a>
+  <h4 id="Sammlung_Graphs_Algorithms_IDiGraphAlgorithms_IsStronglyConnected__2_Sammlung_Graphs_IDiGraph___0___1__" data-uid="Sammlung.Graphs.Algorithms.IDiGraphAlgorithms.IsStronglyConnected``2(Sammlung.Graphs.IDiGraph{``0,``1})">IsStronglyConnected&lt;T, TWeight&gt;(IDiGraph&lt;T, TWeight&gt;)</h4>
+  <div class="markdown level1 summary"><p>Indicates if the passed graph is strongly connected.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool IsStronglyConnected&lt;T, TWeight&gt;(IDiGraph&lt;T, TWeight&gt; graph)
+    where TWeight : IComparable&lt;TWeight&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Sammlung.Graphs.IDiGraph-2.html">IDiGraph</a>&lt;T, TWeight&gt;</td>
+        <td><span class="parametername">graph</span></td>
+        <td><p>the graph</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>true if strongly connected else false</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>the vertex type</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TWeight</span></td>
+        <td><p>the edge weight type</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Sammlung_Graphs_Algorithms_IDiGraphAlgorithms_IsStronglyConnected__2_Sammlung_Graphs_IDiGraph___0___1___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Think before you compute this twice. The graph is strongly connected iff it consists of one strongly
+connected component. This is, what is basically returned here, while destroying the result.</p>
+</div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/schleicher-dev/Sammlung/new/master/apiSpec/new?filename=Sammlung_Graphs_Algorithms_IDiGraphAlgorithms.md&amp;value=---%0Auid%3A%20Sammlung.Graphs.Algorithms.IDiGraphAlgorithms%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/schleicher-dev/Sammlung/blob/master/Sammlung/Graphs/Algorithms/IDiGraphAlgorithms.cs/#L11" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>
