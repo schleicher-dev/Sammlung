@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
+using Sammlung.Utilities;
 
 namespace Sammlung.Graphs
 {
@@ -18,7 +19,7 @@ namespace Sammlung.Graphs
         /// Creates a new <see cref="DiGraph{T,TWeight}"/> using the default edge weight.
         /// </summary>
         /// <param name="defaultEdgeWeight">the default edge weight</param>
-        public DiGraph(TWeight defaultEdgeWeight)
+        public DiGraph([NotNull] TWeight defaultEdgeWeight)
         {
             DefaultEdgeWeight = defaultEdgeWeight;
             _vertices = new HashSet<T>();
@@ -30,7 +31,7 @@ namespace Sammlung.Graphs
         /// Creates a new <see cref="DiGraph{T,TWeight}"/> using an existing graph.
         /// </summary>
         /// <param name="graph">the existing graph</param>
-        public DiGraph(IDiGraph<T, TWeight> graph) : this(graph.DefaultEdgeWeight)
+        public DiGraph([NotNull] IDiGraph<T, TWeight> graph) : this(graph.DefaultEdgeWeight)
         {
             _vertices = new HashSet<T>(graph.Vertices);
             foreach (var edge in graph.Edges) AddEdge(edge.SourceVertex, edge.TargetVertex, edge.Weight);

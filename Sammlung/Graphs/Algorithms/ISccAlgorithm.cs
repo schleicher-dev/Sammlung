@@ -19,6 +19,6 @@ namespace Sammlung.Graphs.Algorithms
         /// Calculates the strongly connected components of a graph.
         /// </summary>
         /// <returns>the strongly connected components</returns>
-        IEnumerable<IDiGraph<T, TWeight>> CalculateComponents(IDiGraph<T, TWeight> graph);
+        IEnumerable<IDiGraph<T, TWeight>> CalculateComponents([NotNull] IDiGraph<T, TWeight> graph);
     }
 }

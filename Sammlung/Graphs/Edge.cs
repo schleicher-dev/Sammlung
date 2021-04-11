@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 
 namespace Sammlung.Graphs
 {
@@ -17,7 +18,7 @@ namespace Sammlung.Graphs
         /// <param name="sourceVertex">the source vertex</param>
         /// <param name="targetVertex">the target vertex</param>
         /// <param name="weight"></param>
-        public Edge(T sourceVertex, T targetVertex, TWeight weight)
+        public Edge([NotNull] T sourceVertex, [NotNull] T targetVertex, [NotNull] TWeight weight)
         {
             SourceVertex = sourceVertex;
             TargetVertex = targetVertex;

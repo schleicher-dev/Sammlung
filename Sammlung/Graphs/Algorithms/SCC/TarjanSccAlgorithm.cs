@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using Sammlung.Exceptions;
 
 namespace Sammlung.Graphs.Algorithms.SCC
@@ -29,7 +30,7 @@ namespace Sammlung.Graphs.Algorithms.SCC
             private readonly Stack<T> _stack;
             private readonly Dictionary<T, Metadata> _metadataLookup;
 
-            public Algorithm(IDiGraph<T, TWeight> graph)
+            public Algorithm([NotNull] IDiGraph<T, TWeight> graph)
             {
                 _graph = graph;
                 _metadataLookup = graph.Vertices.ToDictionary(n => n, n => new Metadata(-1, -1, false));

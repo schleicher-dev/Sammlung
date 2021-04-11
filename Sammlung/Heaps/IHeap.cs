@@ -42,7 +42,7 @@ namespace Sammlung.Heaps
         /// </summary>
         /// <param name="priority">the priority value</param>
         /// <param name="value">the value to add</param>
-        void Push(T value, TPriority priority);
+        void Push([NotNull] T value, [NotNull] TPriority priority);
 
         /// <summary>
         /// Replaces the top-most value with the new value.
@@ -51,7 +51,7 @@ namespace Sammlung.Heaps
         /// <param name="priority">the priority value</param>
         /// <param name="oldValue">the old value</param>
         /// <returns>true if replace was successful else false</returns>
-        bool TryReplace(T newValue, TPriority priority, out HeapPair<T, TPriority> oldValue);
+        bool TryReplace([NotNull] T newValue, [NotNull] TPriority priority, out HeapPair<T, TPriority> oldValue);
 
         /// <summary>
         /// Updates the priority of the old value with the new priority value.
@@ -59,6 +59,6 @@ namespace Sammlung.Heaps
         /// <param name="oldValue">the old value</param>
         /// <param name="priority">the priority value</param>
         /// <returns>true if update was successful else false</returns>
-        bool TryUpdate(T oldValue, TPriority priority);
+        bool TryUpdate([NotNull] T oldValue, [NotNull] TPriority priority);
     }
 }

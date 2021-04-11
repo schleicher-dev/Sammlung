@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using JetBrains.Annotations;
 
 namespace Sammlung.Queues
 {
@@ -17,7 +18,7 @@ namespace Sammlung.Queues
         /// Pushes the passed element to the end of the collection.
         /// </summary>
         /// <param name="element">the element</param>
-        void PushLeft(T element);
+        void PushLeft([NotNull] T element);
         
         /// <summary>
         /// Pops an element from the front of the collection.

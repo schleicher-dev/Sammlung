@@ -38,7 +38,7 @@ namespace Sammlung.Heaps
         /// Creates a new <see cref="BinaryHeap{T,TPriority}"/> from a list of elements.
         /// </summary>
         /// <param name="elements">the elements</param>
-        public BinaryHeap(IEnumerable<KeyValuePair<T, TPriority>> elements) :
+        public BinaryHeap([NotNull] IEnumerable<KeyValuePair<T, TPriority>> elements) :
             this(Comparer<TPriority>.Default, elements)
         {
         }
@@ -48,7 +48,7 @@ namespace Sammlung.Heaps
         /// </summary>
         /// <param name="comparer">the comparer</param>
         /// <param name="elements">the elements</param>
-        public BinaryHeap(IComparer<TPriority> comparer, IEnumerable<KeyValuePair<T, TPriority>> elements) :
+        public BinaryHeap([NotNull] IComparer<TPriority> comparer, [NotNull] IEnumerable<KeyValuePair<T, TPriority>> elements) :
             this(comparer, HeapOrderedListFromEnumerable(comparer, elements))
         {
         }
@@ -58,12 +58,12 @@ namespace Sammlung.Heaps
         /// </summary>
         /// <param name="comparer">the comparer</param>
         /// <param name="capacity">the capacity</param>
-        public BinaryHeap(IComparer<TPriority> comparer, int capacity = 0) : this(comparer,
+        public BinaryHeap([NotNull] IComparer<TPriority> comparer, int capacity = 0) : this(comparer,
             new List<HeapNode>(capacity))
         {
         }
 
-        private BinaryHeap(IComparer<TPriority> comparer, List<HeapNode> binaryHeap)
+        private BinaryHeap([NotNull] IComparer<TPriority> comparer, [NotNull] List<HeapNode> binaryHeap)
         {
             _comparer = comparer ?? throw new ArgumentNullException(nameof(comparer));
             _binaryHeap = binaryHeap ?? throw new ArgumentNullException(nameof(binaryHeap));

@@ -4,11 +4,18 @@ using JetBrains.Annotations;
 
 namespace Sammlung.Queues
 {
+    /// <summary>
+    /// The <see cref="LinkedDeque{T}"/> type is an implementation of a double-ended queue.
+    /// </summary>
+    /// <typeparam name="T">the type</typeparam>
     [PublicAPI]
     public sealed class LinkedDeque<T> : IDeque<T>
     {
         private readonly LinkedList<T> _internal;
 
+        /// <summary>
+        /// Creates a new instance of the <see cref="LinkedDeque{T}"/>.
+        /// </summary>
         public LinkedDeque()
         {
             _internal = new LinkedList<T>();

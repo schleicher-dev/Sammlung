@@ -1,5 +1,6 @@
 using System;
 using System.Threading;
+using JetBrains.Annotations;
 
 namespace Sammlung.Utilities.Concurrent
 {
@@ -46,13 +47,13 @@ namespace Sammlung.Utilities.Concurrent
         
         private sealed class InternalHandle : IUpgradableLockHandle
         {
-            public static IDisposable CreateReadHandle(ReaderWriterLockSlim rwLock)
+            public static IDisposable CreateReadHandle([NotNull] ReaderWriterLockSlim rwLock)
                 => new InternalHandle(rwLock.EnterReadLock, rwLock.ExitReadLock);
             
-            public static IDisposable CreateWriteHandle(ReaderWriterLockSlim rwLock)
+            public static IDisposable CreateWriteHandle([NotNull] ReaderWriterLockSlim rwLock)
                 => new InternalHandle(rwLock.EnterWriteLock, rwLock.ExitWriteLock);
 
-            public static IUpgradableLockHandle CreateUpgradableWriteHandle(ReaderWriterLockSlim rwLock)
+            public static IUpgradableLockHandle CreateUpgradableWriteHandle([NotNull] ReaderWriterLockSlim rwLock)
                 => new InternalHandle(rwLock.EnterUpgradeableReadLock, rwLock.ExitUpgradeableReadLock, () => CreateWriteHandle(rwLock));
 
             private readonly Action _exitAction;

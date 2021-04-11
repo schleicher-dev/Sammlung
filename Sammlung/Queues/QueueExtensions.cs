@@ -14,7 +14,7 @@ namespace Sammlung.Queues
         /// </summary>
         /// <returns>true if pop could be done</returns>
         /// <exception cref="System.InvalidOperationException">when popping from empty collection</exception>
-        public static T PopRight<T>(this IQueue<T> queue) =>
+        public static T PopRight<T>([NotNull] this IQueue<T> queue) =>
             queue.TryPopRight(out var element) ? element : throw ExceptionsHelper.NewEmptyCollectionException(nameof(PopRight));
         
         /// <summary>
@@ -22,7 +22,7 @@ namespace Sammlung.Queues
         /// </summary>
         /// <returns>true if peek could be done</returns>
         /// <exception cref="System.InvalidOperationException">when peeking from empty collection</exception>
-        public static T PeekRight<T>(this IQueue<T> queue) =>
+        public static T PeekRight<T>([NotNull] this IQueue<T> queue) =>
             queue.TryPeekRight(out var element) ? element : throw ExceptionsHelper.NewEmptyCollectionException(nameof(PeekRight));
     }
 }

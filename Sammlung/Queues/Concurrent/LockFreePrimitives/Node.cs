@@ -1,3 +1,5 @@
+using JetBrains.Annotations;
+
 namespace Sammlung.Queues.Concurrent.LockFreePrimitives
 {
     /// <summary>
@@ -25,7 +27,7 @@ namespace Sammlung.Queues.Concurrent.LockFreePrimitives
         /// Creates a new <see cref="Node{T}"/> using a value of the node.
         /// </summary>
         /// <param name="value">the value</param>
-        public Node(T value)
+        public Node([NotNull] T value)
         {
             Value = value;
             Left = null;

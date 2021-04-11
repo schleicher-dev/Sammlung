@@ -54,7 +54,7 @@ Ticked means available in the newest package.
         - [X] Non-Thread-Safe (Sammlung.Dictionaries.MultiKeyDictionary)
         - [X] Thread-Safe, Blocking (Sammlung.Dictionaries.Concurrent.BlockingMultiKeyDictionary)
         - [ ] Thread-Safe, Lock-Free
-- [X] Heaps
+- [X] Heaps / Priority-Queues
     - [X] Binary Heap
         - [X] Non-Thread-Safe (Sammlung.Heaps.BinaryHeap)
         - [ ] Thread-Safe, Blocking
@@ -71,6 +71,7 @@ Ticked means available in the newest package.
         - [ ] Non-Thread-Safe
         - [ ] Thread-Safe, Blocking
         - [ ] Thread-Safe, Lock-Free
+- [ ] Priority-Stacks
 - [X] Queues
     - [X] **All-Types:** Thread-Safe, Blocking (Sammlung.Queues.Concurrent.BlockingDeque)
     - [X] Continuous Queue / Deque

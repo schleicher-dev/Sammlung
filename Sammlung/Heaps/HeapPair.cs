@@ -18,7 +18,7 @@ namespace Sammlung.Heaps
         /// <typeparam name="TValue">the value type</typeparam>
         /// <typeparam name="TPriority">the priority type</typeparam>
         /// <returns></returns>
-        public static HeapPair<TValue, TPriority> Create<TValue, TPriority>(TValue value, TPriority priority)
+        public static HeapPair<TValue, TPriority> Create<TValue, TPriority>([NotNull] TValue value, [NotNull] TPriority priority)
             where TPriority : IComparable<TPriority> => new HeapPair<TValue, TPriority>(value, priority);
     }
     
@@ -35,7 +35,7 @@ namespace Sammlung.Heaps
         /// </summary>
         /// <param name="value">the value</param>
         /// <param name="priority">the priority</param>
-        public HeapPair(TValue value, TPriority priority)
+        public HeapPair([NotNull] TValue value, [NotNull] TPriority priority)
         {
             Value = value;
             Priority = priority;

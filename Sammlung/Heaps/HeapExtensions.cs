@@ -16,7 +16,7 @@ namespace Sammlung.Heaps
         /// <typeparam name="T">the value type</typeparam>
         /// <typeparam name="TPriority">the priority value</typeparam>
         /// <exception cref="System.InvalidOperationException">when heap is empty</exception>
-        public static HeapPair<T, TPriority> Pop<T, TPriority>(this IHeap<T, TPriority> heap)
+        public static HeapPair<T, TPriority> Pop<T, TPriority>([NotNull] this IHeap<T, TPriority> heap)
             where TPriority : IComparable<TPriority> =>
             heap.TryPop(out var item)
                 ? item
@@ -30,7 +30,7 @@ namespace Sammlung.Heaps
         /// <typeparam name="TPriority">the priority value</typeparam>
         /// <returns>the root element</returns>
         /// <exception cref="System.InvalidOperationException">when heap is empty</exception>
-        public static HeapPair<T, TPriority> Peek<T, TPriority>(this IHeap<T, TPriority> heap)
+        public static HeapPair<T, TPriority> Peek<T, TPriority>([NotNull] this IHeap<T, TPriority> heap)
             where TPriority : IComparable<TPriority> =>
             heap.TryPeek(out var item)
                 ? item
@@ -47,7 +47,7 @@ namespace Sammlung.Heaps
         /// <returns>the popped root element</returns>
         /// <exception cref="System.InvalidOperationException">when collection is empty</exception>
         public static HeapPair<T, TPriority> 
-            Replace<T, TPriority>(this IHeap<T, TPriority> heap, T newValue, TPriority priority)
+            Replace<T, TPriority>([NotNull] this IHeap<T, TPriority> heap, [NotNull] T newValue, [NotNull] TPriority priority)
             where TPriority : IComparable<TPriority>
         {
             return heap.TryReplace(newValue, priority, out var oldValue)
@@ -64,7 +64,7 @@ namespace Sammlung.Heaps
         /// <typeparam name="T">the value type</typeparam>
         /// <typeparam name="TPriority">the priority value</typeparam>
         /// <exception cref="System.InvalidOperationException">when collection is empty</exception>
-        public static void Update<T, TPriority>(this IHeap<T, TPriority> heap, T oldValue, TPriority priority)
+        public static void Update<T, TPriority>([NotNull] this IHeap<T, TPriority> heap, [NotNull] T oldValue, [NotNull] TPriority priority)
             where TPriority : IComparable<TPriority>
         {
             if (!heap.TryUpdate(oldValue, priority))

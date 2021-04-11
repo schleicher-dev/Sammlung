@@ -13,7 +13,7 @@ namespace Sammlung.Queues
         /// Pushes the passed element to the front of the collection.
         /// </summary>
         /// <param name="element">the element</param>
-        void PushRight(T element);
+        void PushRight([NotNull] T element);
         
         /// <summary>
         /// Pops an element from the back of the collection.

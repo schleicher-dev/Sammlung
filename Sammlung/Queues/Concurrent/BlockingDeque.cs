@@ -29,7 +29,7 @@ namespace Sammlung.Queues.Concurrent
         /// Creates a new <see cref="BlockingDeque{T}"/> using an inner <seealso cref="IDeque{T}"/>.
         /// </summary>
         /// <param name="inner">the inner deque</param>
-        public BlockingDeque(IDeque<T> inner)
+        public BlockingDeque([NotNull] IDeque<T> inner)
         {
             _rwLock = new EnhancedReaderWriterLock(LockRecursionPolicy.SupportsRecursion);
             _inner = inner;

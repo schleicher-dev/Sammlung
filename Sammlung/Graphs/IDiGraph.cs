@@ -32,28 +32,28 @@ namespace Sammlung.Graphs
         /// Adds a vertex to the graph.
         /// </summary>
         /// <param name="vertex">the vertex</param>
-        public void AddVertex(T vertex);
+        public void AddVertex([NotNull] T vertex);
         
         /// <summary>
         /// Checks if the vertex is part of the graph.
         /// </summary>
         /// <param name="vertex">the vertex</param>
         /// <returns>true if vertex is part of the graph else false</returns>
-        public bool HasVertex(T vertex);
+        public bool HasVertex([NotNull] T vertex);
         
         /// <summary>
         /// Gets the incoming edges to the passed vertex.
         /// </summary>
         /// <param name="vertex">the vertex</param>
         /// <returns>the incoming edges</returns>
-        public IEnumerable<IEdge<T, TWeight>> GetIncomingEdges(T vertex);
+        public IEnumerable<IEdge<T, TWeight>> GetIncomingEdges([NotNull] T vertex);
         
         /// <summary>
         /// Gets the outgoing edges from the passed vertex.
         /// </summary>
         /// <param name="vertex">the vertex</param>
         /// <returns>the outgoing edges</returns>
-        public IEnumerable<IEdge<T, TWeight>> GetOutgoingEdges(T vertex);
+        public IEnumerable<IEdge<T, TWeight>> GetOutgoingEdges([NotNull] T vertex);
         
         /// <summary>
         /// Adds an edge with the default weight to the <see cref="IDiGraph{T,TWeight}"/>.
@@ -61,8 +61,7 @@ namespace Sammlung.Graphs
         /// <param name="source">the source vertex</param>
         /// <param name="target">the target vertex</param>
         /// <returns>the created edge</returns>
-        public IEdge<T, TWeight> AddEdge(T source, T target);
-
+        public IEdge<T, TWeight> AddEdge([NotNull] T source, [NotNull] T target);
 
         /// <summary>
         /// Adds an edge with the passed weight to the <see cref="IDiGraph{T,TWeight}"/>.
@@ -71,7 +70,7 @@ namespace Sammlung.Graphs
         /// <param name="target">the target vertex</param>
         /// <param name="weight">the weight</param>
         /// <returns>the created edge</returns>
-        public IEdge<T, TWeight> AddEdge(T source, T target, TWeight weight);
+        public IEdge<T, TWeight> AddEdge([NotNull] T source, [NotNull] T target, [NotNull] TWeight weight);
 
         /// <summary>
         /// Returns if the edge with the given source and target vertex - ignoring the weight - is known to the graph.
@@ -79,6 +78,6 @@ namespace Sammlung.Graphs
         /// <param name="source">the source vertex</param>
         /// <param name="target">the target vertex</param>
         /// <returns>true if edge was found else false</returns>
-        public bool HasEdge(T source, T target);
+        public bool HasEdge([NotNull] T source, [NotNull] T target);
     }
 }
