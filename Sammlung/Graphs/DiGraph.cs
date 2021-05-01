@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using JetBrains.Annotations;
 using Sammlung.Utilities;
 
 namespace Sammlung.Graphs
@@ -11,7 +11,7 @@ namespace Sammlung.Graphs
     /// </summary>
     /// <typeparam name="T">the vertex type</typeparam>
     /// <typeparam name="TWeight">the edge weight type</typeparam>
-    [PublicAPI]
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "PublicAPI")]
     public class DiGraph<T, TWeight> : IDiGraph<T, TWeight>
         where TWeight : IComparable<TWeight>
     {
@@ -19,7 +19,7 @@ namespace Sammlung.Graphs
         /// Creates a new <see cref="DiGraph{T,TWeight}"/> using the default edge weight.
         /// </summary>
         /// <param name="defaultEdgeWeight">the default edge weight</param>
-        public DiGraph([NotNull] TWeight defaultEdgeWeight)
+        public DiGraph(TWeight defaultEdgeWeight)
         {
             DefaultEdgeWeight = defaultEdgeWeight;
             _vertices = new HashSet<T>();
@@ -31,8 +31,9 @@ namespace Sammlung.Graphs
         /// Creates a new <see cref="DiGraph{T,TWeight}"/> using an existing graph.
         /// </summary>
         /// <param name="graph">the existing graph</param>
-        public DiGraph([NotNull] IDiGraph<T, TWeight> graph) : this(graph.DefaultEdgeWeight)
+        public DiGraph(IDiGraph<T, TWeight> graph) : this(graph.DefaultEdgeWeight)
         {
+            graph = graph.RequireNotNull(nameof(graph));
             _vertices = new HashSet<T>(graph.Vertices);
             foreach (var edge in graph.Edges) AddEdge(edge.SourceVertex, edge.TargetVertex, edge.Weight);
         }

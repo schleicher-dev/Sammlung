@@ -9,6 +9,8 @@ namespace Sammlung.Utilities
     {
         private static string GetString(string name)
         {
+            name = name.RequireNotNull(nameof(name));
+            
             var originalMsg = ErrorMessages.ResourceManager.GetString(name, CultureInfo.InvariantCulture);
             if (Equals(CultureInfo.CurrentUICulture, CultureInfo.InvariantCulture) ||
                 Equals(CultureInfo.CurrentUICulture.TwoLetterISOLanguageName, "en")) return originalMsg;

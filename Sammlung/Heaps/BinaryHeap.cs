@@ -1,18 +1,19 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using JetBrains.Annotations;
+using Sammlung.Utilities;
 using Sammlung.Utilities.Patterns;
 
 namespace Sammlung.Heaps
 {
     /// <summary>
-    /// The <see cref="BinaryHeap{T,TPriority}"/> class implements a <seealso cref="IHeap{T}"/> data structure.
+    /// The <see cref="BinaryHeap{T,TPriority}"/> class implements a <seealso cref="IHeap{T,TPriority}"/> data structure.
     /// </summary>
     /// <typeparam name="T">the element type</typeparam>
     /// <typeparam name="TPriority">the priority type</typeparam>
-    [PublicAPI]
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "PublicAPI")]
     public sealed class BinaryHeap<T, TPriority> : IHeap<T, TPriority>
         where TPriority : IComparable<TPriority>
     {
@@ -23,9 +24,14 @@ namespace Sammlung.Heaps
         private readonly Dictionary<T, HeapNode> _lookup;
 
         private static List<HeapNode> HeapOrderedListFromEnumerable(IComparer<TPriority> comparer,
-            IEnumerable<KeyValuePair<T, TPriority>> enumerable) =>
-            enumerable.OrderBy(i => i.Value, comparer)
+            IEnumerable<KeyValuePair<T, TPriority>> enumerable)
+        {
+            comparer = comparer.RequireNotNull(nameof(comparer));
+            enumerable = enumerable.RequireNotNull(nameof(enumerable));
+            
+            return enumerable.OrderBy(i => i.Value, comparer)
                 .Select((item, i) => HeapNodePool.Get(i, item.Key, item.Value)).ToList();
+        }
 
         /// <summary>
         /// Creates an empty <see cref="BinaryHeap{T,TPriority}"/>.
@@ -38,8 +44,8 @@ namespace Sammlung.Heaps
         /// Creates a new <see cref="BinaryHeap{T,TPriority}"/> from a list of elements.
         /// </summary>
         /// <param name="elements">the elements</param>
-        public BinaryHeap([NotNull] IEnumerable<KeyValuePair<T, TPriority>> elements) :
-            this(Comparer<TPriority>.Default, elements)
+        public BinaryHeap(IEnumerable<KeyValuePair<T, TPriority>> elements) :
+            this(Comparer<TPriority>.Default, elements.RequireNotNull(nameof(elements)))
         {
         }
 
@@ -48,8 +54,8 @@ namespace Sammlung.Heaps
         /// </summary>
         /// <param name="comparer">the comparer</param>
         /// <param name="elements">the elements</param>
-        public BinaryHeap([NotNull] IComparer<TPriority> comparer, [NotNull] IEnumerable<KeyValuePair<T, TPriority>> elements) :
-            this(comparer, HeapOrderedListFromEnumerable(comparer, elements))
+        public BinaryHeap(IComparer<TPriority> comparer, IEnumerable<KeyValuePair<T, TPriority>> elements) :
+            this(comparer.RequireNotNull(nameof(comparer)), HeapOrderedListFromEnumerable(comparer, elements))
         {
         }
 
@@ -58,15 +64,15 @@ namespace Sammlung.Heaps
         /// </summary>
         /// <param name="comparer">the comparer</param>
         /// <param name="capacity">the capacity</param>
-        public BinaryHeap([NotNull] IComparer<TPriority> comparer, int capacity = 0) : this(comparer,
+        public BinaryHeap(IComparer<TPriority> comparer, int capacity = 0) : this(comparer,
             new List<HeapNode>(capacity))
         {
         }
 
-        private BinaryHeap([NotNull] IComparer<TPriority> comparer, [NotNull] List<HeapNode> binaryHeap)
+        private BinaryHeap(IComparer<TPriority> comparer, List<HeapNode> binaryHeap)
         {
-            _comparer = comparer ?? throw new ArgumentNullException(nameof(comparer));
-            _binaryHeap = binaryHeap ?? throw new ArgumentNullException(nameof(binaryHeap));
+            _comparer = comparer.RequireNotNull(nameof(comparer));
+            _binaryHeap = binaryHeap.RequireNotNull(nameof(binaryHeap));
             _lookup = new Dictionary<T, HeapNode>();
         }
 

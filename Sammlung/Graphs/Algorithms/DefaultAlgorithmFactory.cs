@@ -1,5 +1,5 @@
 using System;
-using JetBrains.Annotations;
+using System.Diagnostics.CodeAnalysis;
 using Sammlung.Graphs.Algorithms.SCC;
 
 namespace Sammlung.Graphs.Algorithms
@@ -7,7 +7,7 @@ namespace Sammlung.Graphs.Algorithms
     /// <summary>
     /// The <see cref="DefaultAlgorithmFactory"/> class exposes factory methods for the graph algorithms.
     /// </summary>
-    [PublicAPI]
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "PublicAPI")]
     public static class DefaultAlgorithmFactory
     {
         /// <summary>

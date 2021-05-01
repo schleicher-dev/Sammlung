@@ -1,4 +1,4 @@
-using JetBrains.Annotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Sammlung.Queues
 {
@@ -6,14 +6,14 @@ namespace Sammlung.Queues
     /// The <see cref="IDeque{T}"/> represents a double-ended queue.
     /// </summary>
     /// <typeparam name="T">the element type</typeparam>
-    [PublicAPI]
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "PublicAPI")]
     public interface IDeque<T> : IQueue<T>
     {
         /// <summary>
         /// Pushes the passed element to the front of the collection.
         /// </summary>
         /// <param name="element">the element</param>
-        void PushRight([NotNull] T element);
+        void PushRight(T element);
         
         /// <summary>
         /// Pops an element from the back of the collection.

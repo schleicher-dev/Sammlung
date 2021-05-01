@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using JetBrains.Annotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Sammlung.Dictionaries
 {
@@ -9,7 +9,7 @@ namespace Sammlung.Dictionaries
     /// </summary>
     /// <typeparam name="TKey"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    [PublicAPI]
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "PublicAPI")]
     public interface IMultiKeyDictionary<TKey, TValue> : IDictionary<TKey, TValue> where TValue : class
     {
         /// <summary>

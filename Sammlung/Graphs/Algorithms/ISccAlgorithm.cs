@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using JetBrains.Annotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Sammlung.Graphs.Algorithms
 {
@@ -11,7 +11,7 @@ namespace Sammlung.Graphs.Algorithms
     /// <typeparam name="T">the vertex type</typeparam>
     /// <typeparam name="TWeight">the edge weight type</typeparam>
     /// <remarks>SCC stands for strongly connected components</remarks>
-    [PublicAPI]
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "PublicAPI")]
     public interface ISccAlgorithm<T, TWeight>
         where TWeight : IComparable<TWeight>
     {
@@ -19,6 +19,6 @@ namespace Sammlung.Graphs.Algorithms
         /// Calculates the strongly connected components of a graph.
         /// </summary>
         /// <returns>the strongly connected components</returns>
-        IEnumerable<IDiGraph<T, TWeight>> CalculateComponents([NotNull] IDiGraph<T, TWeight> graph);
+        IEnumerable<IDiGraph<T, TWeight>> CalculateComponents(IDiGraph<T, TWeight> graph);
     }
 }

@@ -1,6 +1,6 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
-using JetBrains.Annotations;
 
 namespace Sammlung.Exceptions
 {
@@ -8,7 +8,7 @@ namespace Sammlung.Exceptions
     /// The <see cref="DuplicateKeyException"/> indicates that a duplicate key was found in a mapping where it is not
     /// allowed.
     /// </summary>
-    [PublicAPI]
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "PublicAPI")]
     [Serializable]
     public class DuplicateKeyException : Exception
     {

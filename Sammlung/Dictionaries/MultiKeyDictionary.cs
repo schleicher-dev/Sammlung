@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using JetBrains.Annotations;
+using Sammlung.Utilities;
 
 namespace Sammlung.Dictionaries
 {
@@ -10,7 +11,7 @@ namespace Sammlung.Dictionaries
     /// </summary>
     /// <typeparam name="TKey">the key type</typeparam>
     /// <typeparam name="TValue">the value type</typeparam>
-    [PublicAPI]
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "PublicAPI")]
     public class MultiKeyDictionary<TKey, TValue> : MultiKeyDictionaryBase<TKey, TValue> where TValue : class
     {
         /// <summary>
@@ -23,14 +24,14 @@ namespace Sammlung.Dictionaries
         /// Constructs a new <see cref="MultiKeyDictionary{TKey,TValue}"/> using the passed key comparer.
         /// </summary>
         /// <param name="comparer">the comparer for the key</param>
-        public MultiKeyDictionary(IEqualityComparer<TKey> comparer) : this(1, comparer) { }
+        public MultiKeyDictionary(IEqualityComparer<TKey> comparer) : this(1, comparer.RequireNotNull(nameof(comparer))) { }
 
         /// <summary>
         /// Constructs a new <see cref="MultiKeyDictionary{TKey,TValue}"/> using the passed dictionary.
         /// </summary>
         /// <param name="values">the values dictionary</param>
         public MultiKeyDictionary(IDictionary<TKey, TValue> values) :
-            this(values, EqualityComparer<TKey>.Default) { }
+            this(values.RequireNotNull(nameof(values)), EqualityComparer<TKey>.Default) { }
 
         /// <summary>
         /// Constructs a new <see cref="MultiKeyDictionary{TKey,TValue}"/> using the passed values and comparer.
@@ -38,14 +39,14 @@ namespace Sammlung.Dictionaries
         /// <param name="values">the values dictionary</param>
         /// <param name="comparer">the comparer</param>
         public MultiKeyDictionary(IDictionary<TKey, TValue> values, IEqualityComparer<TKey> comparer)
-            : this(values.AsEnumerable(), comparer) { }
+            : this(values.RequireNotNull(nameof(values)).AsEnumerable(), comparer.RequireNotNull(nameof(comparer))) { }
         
         /// <summary>
         /// Constructs a new <see cref="MultiKeyDictionary{TKey,TValue}"/> using the passed values.
         /// </summary>
         /// <param name="values">the values enumerable</param>
         public MultiKeyDictionary(IEnumerable<KeyValuePair<TKey, TValue>> values) 
-            : this(values, EqualityComparer<TKey>.Default) {}
+            : this(values.RequireNotNull(nameof(values)), EqualityComparer<TKey>.Default) {}
 
         /// <summary>
         /// Constructs a new <see cref="MultiKeyDictionary{TKey,TValue}"/> using the passed values and comparer.
@@ -53,10 +54,10 @@ namespace Sammlung.Dictionaries
         /// <param name="values">the values enumerable</param>
         /// <param name="comparer">the comparer</param>
         public MultiKeyDictionary(IEnumerable<KeyValuePair<TKey, TValue>> values, IEqualityComparer<TKey> comparer)
-            : this(values.ToList(), comparer) { }
+            : this(values.RequireNotNull(nameof(values)).ToList(), comparer.RequireNotNull(nameof(comparer))) { }
 
         private MultiKeyDictionary(ICollection<KeyValuePair<TKey, TValue>> values, IEqualityComparer<TKey> comparer)
-            : this(values.Count, comparer)
+            : this(values.RequireNotNull(nameof(values)).Count, comparer.RequireNotNull(nameof(comparer)))
         {
             foreach (var value in values)
                 Add(value);
@@ -74,6 +75,6 @@ namespace Sammlung.Dictionaries
         /// <param name="capacity"></param>
         /// <param name="comparer"></param>
         public MultiKeyDictionary(int capacity, IEqualityComparer<TKey> comparer)
-            : base(new Dictionary<TKey, TValue>(capacity, comparer)) {}
+            : base(new Dictionary<TKey, TValue>(capacity, comparer.RequireNotNull(nameof(comparer)))) {}
     }
 }

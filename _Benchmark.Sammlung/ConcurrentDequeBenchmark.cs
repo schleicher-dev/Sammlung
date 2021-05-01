@@ -7,10 +7,9 @@ using Sammlung.Queues.Concurrent;
 namespace _Benchmark.Sammlung
 {
     [ExcludeFromCodeCoverage]
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "PublicAPI")]
     public class ConcurrentDequeBenchmark
     {
-        private int[] _data;
-        
         [Params(500, 1_000)]
         public int N;
 

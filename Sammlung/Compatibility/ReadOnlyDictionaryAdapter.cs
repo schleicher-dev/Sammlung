@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Sammlung.Utilities;
 
 namespace Sammlung.Compatibility
 {
@@ -19,7 +20,7 @@ namespace Sammlung.Compatibility
         /// <param name="impl">the implementation</param>
         public ReadOnlyDictionaryAdapter(IDictionary<TKey, TValue> impl)
         {
-            _impl = impl;
+            _impl = impl.RequireNotNull(nameof(impl));
         }
 
         /// <inheritdoc />

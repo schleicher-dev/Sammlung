@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
-using JetBrains.Annotations;
+using Sammlung.Utilities;
 using Sammlung.Utilities.Concurrent;
 
 namespace Sammlung.Queues.Concurrent
@@ -9,7 +10,7 @@ namespace Sammlung.Queues.Concurrent
     /// <summary>
     /// The <see cref="BlockingDeque"/> is a static class which can decorate a <see cref="IDeque{T}"/>.
     /// </summary>
-    [PublicAPI]
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "PublicAPI")]
     public static class BlockingDeque
     {
         public static IDeque<T> Wrap<T>(IDeque<T> inner) => new BlockingDeque<T>(inner);
@@ -19,7 +20,7 @@ namespace Sammlung.Queues.Concurrent
     /// The <see cref="BlockingDeque{T}"/> is a decorator for any <see cref="IDeque{T}"/> type which is thread-safe.
     /// </summary>
     /// <typeparam name="T">the type</typeparam>
-    [PublicAPI]
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "PublicAPI")]
     public class BlockingDeque<T> : IDeque<T>
     {
         private readonly IDeque<T> _inner;
@@ -29,10 +30,10 @@ namespace Sammlung.Queues.Concurrent
         /// Creates a new <see cref="BlockingDeque{T}"/> using an inner <seealso cref="IDeque{T}"/>.
         /// </summary>
         /// <param name="inner">the inner deque</param>
-        public BlockingDeque([NotNull] IDeque<T> inner)
+        public BlockingDeque(IDeque<T> inner)
         {
             _rwLock = new EnhancedReaderWriterLock(LockRecursionPolicy.SupportsRecursion);
-            _inner = inner;
+            _inner = inner.RequireNotNull(nameof(inner));
         }
         
         /// <inheritdoc />

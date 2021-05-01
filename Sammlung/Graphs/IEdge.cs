@@ -1,4 +1,4 @@
-using JetBrains.Annotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Sammlung.Graphs
 {
@@ -7,7 +7,7 @@ namespace Sammlung.Graphs
     /// </summary>
     /// <typeparam name="T">the vertex type</typeparam>
     /// <typeparam name="TWeight">the edge weight type</typeparam>
-    [PublicAPI]
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "PublicAPI")]
     public interface IEdge<out T, out TWeight>
     {
         /// <summary>

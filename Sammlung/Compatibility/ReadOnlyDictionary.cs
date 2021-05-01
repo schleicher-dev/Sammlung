@@ -1,12 +1,12 @@
 using System.Collections.Generic;
-using JetBrains.Annotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Sammlung.Compatibility
 {
     /// <summary>
     /// The <see cref="ReadOnlyDictionary"/> class exposes methods to wrap a given dictionary.
     /// </summary>
-    [PublicAPI]
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "PublicAPI")]
     public class ReadOnlyDictionary
     {
         /// <summary>

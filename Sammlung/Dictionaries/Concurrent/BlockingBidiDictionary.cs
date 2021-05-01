@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
-using JetBrains.Annotations;
 using Sammlung.Utilities;
 using Sammlung.Utilities.Concurrent;
 
@@ -14,7 +14,7 @@ namespace Sammlung.Dictionaries.Concurrent
     /// </summary>
     /// <typeparam name="TForward">the forward type</typeparam>
     /// <typeparam name="TReverse">the reverse type</typeparam>
-    [PublicAPI]
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "PublicAPI")]
     public class BlockingBidiDictionary<TForward, TReverse> : IBidiDictionary<TForward, TReverse>
     {
         private readonly EnhancedReaderWriterLock _rwLock;
@@ -32,7 +32,7 @@ namespace Sammlung.Dictionaries.Concurrent
         /// <param name="other">the dictionary</param>
         /// <exception cref="Exceptions.DuplicateKeyException">when mapping contains duplicate keys</exception>
         public BlockingBidiDictionary(IDictionary<TForward, TReverse> other)
-            : this(other, EqualityComparer<TForward>.Default, EqualityComparer<TReverse>.Default) { }
+            : this(other.RequireNotNull(nameof(other)), EqualityComparer<TForward>.Default, EqualityComparer<TReverse>.Default) { }
 
         /// <summary>
         /// Constructs a new <see cref="BlockingBidiDictionary{TForward,TReverse}"/> using the passed concurrency
@@ -45,9 +45,10 @@ namespace Sammlung.Dictionaries.Concurrent
         public BlockingBidiDictionary(IDictionary<TForward, TReverse> other,
             IEqualityComparer<TForward> fwdComparer,
             IEqualityComparer<TReverse> revComparer)
-            : this(other.Count, fwdComparer, revComparer)
+            : this(other.RequireNotNull(nameof(other)).Count, fwdComparer, revComparer)
         {
-            foreach (var item in other) Add(item.Key, item.Value);
+            foreach (var item in other)
+                Add(item.Key, item.Value);
         }
 
         /// <summary>
@@ -57,7 +58,7 @@ namespace Sammlung.Dictionaries.Concurrent
         /// <param name="other">the enumerable</param>
         /// <exception cref="Exceptions.DuplicateKeyException">when mapping contains duplicate keys</exception>
         public BlockingBidiDictionary(IEnumerable<KeyValuePair<TForward, TReverse>> other)
-            : this(other, EqualityComparer<TForward>.Default, EqualityComparer<TReverse>.Default) { }
+            : this(other.RequireNotNull(nameof(other)), EqualityComparer<TForward>.Default, EqualityComparer<TReverse>.Default) { }
 
         /// <summary>
         /// Constructs a new <see cref="BidiDictionary{TForward,TReverse}"/> using the passed concurrency level and
@@ -69,7 +70,10 @@ namespace Sammlung.Dictionaries.Concurrent
         /// <exception cref="Exceptions.DuplicateKeyException">when mapping contains duplicate keys</exception>
         public BlockingBidiDictionary(IEnumerable<KeyValuePair<TForward, TReverse>> other,
             IEqualityComparer<TForward> fwdComparer, IEqualityComparer<TReverse> revComparer)
-            : this(other.ToDictionary(kv => kv.Key, kv => kv.Value), fwdComparer, revComparer) { }
+            : this(other.RequireNotNull(nameof(other)).ToDictionary(kv => kv.Key, kv => kv.Value),
+                fwdComparer.RequireNotNull(nameof(fwdComparer)), revComparer.RequireNotNull(nameof(revComparer)))
+        {
+        }
 
         /// <summary>
         /// Constructs a new <see cref="BidiDictionary{TForward,TReverse}"/> using the passed concurrency level and
@@ -90,6 +94,9 @@ namespace Sammlung.Dictionaries.Concurrent
         public BlockingBidiDictionary(int capacity, IEqualityComparer<TForward> fwdComparer,
             IEqualityComparer<TReverse> revComparer)
         {
+            fwdComparer.RequireNotNull(nameof(fwdComparer));
+            revComparer.RequireNotNull(nameof(revComparer));
+            
             _rwLock = new EnhancedReaderWriterLock(LockRecursionPolicy.NoRecursion);
             _internal = new BidiDictionary<TForward, TReverse>(capacity, fwdComparer, revComparer);
         }

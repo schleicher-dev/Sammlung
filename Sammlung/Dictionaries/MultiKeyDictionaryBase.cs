@@ -1,7 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using JetBrains.Annotations;
+using System.Diagnostics.CodeAnalysis;
+using Sammlung.Utilities;
 
 namespace Sammlung.Dictionaries
 {
@@ -11,7 +12,7 @@ namespace Sammlung.Dictionaries
     /// </summary>
     /// <typeparam name="TKey">the key type</typeparam>
     /// <typeparam name="TValue">the value type</typeparam>
-    [PublicAPI]
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "PublicAPI")]
     public abstract class MultiKeyDictionaryBase<TKey, TValue> : IMultiKeyDictionary<TKey, TValue> where TValue : class
     {
         private readonly IDictionary<TKey, TValue> _innerDict;
@@ -22,7 +23,7 @@ namespace Sammlung.Dictionaries
         /// <param name="innerDict">the inner dictionary</param>
         protected MultiKeyDictionaryBase(IDictionary<TKey, TValue> innerDict)
         {
-            _innerDict = innerDict ?? throw new ArgumentNullException(nameof(innerDict));
+            _innerDict = innerDict.RequireNotNull(nameof(innerDict));
         }
         
         /// <inheritdoc />

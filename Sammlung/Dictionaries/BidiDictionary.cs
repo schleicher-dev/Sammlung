@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using JetBrains.Annotations;
 using Sammlung.Compatibility;
 using Sammlung.Utilities;
 
@@ -14,7 +14,7 @@ namespace Sammlung.Dictionaries
     /// </summary>
     /// <typeparam name="TFwd">the forward type</typeparam>
     /// <typeparam name="TRev">the reverse type</typeparam>
-    [PublicAPI]
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "PublicAPI")]
     public class BidiDictionary<TFwd, TRev> : IBidiDictionary<TFwd, TRev>
     {
         private readonly IDictionary<TFwd, TRev> _forwardMap;
@@ -31,7 +31,7 @@ namespace Sammlung.Dictionaries
         /// <param name="other">the dictionary</param>
         /// <exception cref="Exceptions.DuplicateKeyException">when mapping contains duplicate keys</exception>
         public BidiDictionary(IDictionary<TFwd, TRev> other)
-            : this(other, EqualityComparer<TFwd>.Default, EqualityComparer<TRev>.Default) { }
+            : this(other.RequireNotNull(nameof(other)), EqualityComparer<TFwd>.Default, EqualityComparer<TRev>.Default) { }
 
         /// <summary>
         /// Constructs a new <see cref="BidiDictionary{TForward,TReverse}"/> using the passed dictionary and comparers.
@@ -41,7 +41,7 @@ namespace Sammlung.Dictionaries
         /// <param name="revComparer">the comparer of the reverse key</param>
         /// <exception cref="Exceptions.DuplicateKeyException">when mapping contains duplicate keys</exception>
         public BidiDictionary(IDictionary<TFwd, TRev> other, IEqualityComparer<TFwd> fwdComparer,
-            IEqualityComparer<TRev> revComparer) : this(other.AsEnumerable(), fwdComparer, revComparer) { }
+            IEqualityComparer<TRev> revComparer) : this(other.RequireNotNull(nameof(other)).AsEnumerable(), fwdComparer.RequireNotNull(nameof(fwdComparer)), revComparer.RequireNotNull(nameof(revComparer))) { }
 
         /// <summary>
         /// Constructs a new <see cref="BidiDictionary{TForward,TReverse}"/> using the passed enumerable. 
@@ -49,7 +49,7 @@ namespace Sammlung.Dictionaries
         /// <param name="other">the enumerable</param>
         /// <exception cref="Exceptions.DuplicateKeyException">when mapping contains duplicate keys</exception>
         public BidiDictionary(IEnumerable<KeyValuePair<TFwd, TRev>> other)
-            : this(other, EqualityComparer<TFwd>.Default, EqualityComparer<TRev>.Default) { }
+            : this(other.RequireNotNull(nameof(other)), EqualityComparer<TFwd>.Default, EqualityComparer<TRev>.Default) { }
 
         /// <summary>
         /// Constructs a new <see cref="BidiDictionary{TForward,TReverse}"/> using the passed enumerable and the
@@ -61,13 +61,13 @@ namespace Sammlung.Dictionaries
         /// <exception cref="Exceptions.DuplicateKeyException">when mapping contains duplicate keys</exception>
         public BidiDictionary(IEnumerable<KeyValuePair<TFwd, TRev>> other,
             IEqualityComparer<TFwd> fwdComparer, IEqualityComparer<TRev> revComparer)
-            : this(other.ToList(), fwdComparer, revComparer)
+            : this(other.RequireNotNull(nameof(other)).ToList(), fwdComparer.RequireNotNull(nameof(fwdComparer)), revComparer.RequireNotNull(nameof(revComparer)))
         {
         }
 
         private BidiDictionary(ICollection<KeyValuePair<TFwd, TRev>> other,
             IEqualityComparer<TFwd> fwdComparer, IEqualityComparer<TRev> revComparer)
-            : this(other.Count, fwdComparer, revComparer)
+            : this(other.RequireNotNull(nameof(other)).Count, fwdComparer.RequireNotNull(nameof(fwdComparer)), revComparer.RequireNotNull(nameof(revComparer)))
         {
             foreach (var item in other) Add(item.Key, item.Value);
         }
@@ -88,8 +88,8 @@ namespace Sammlung.Dictionaries
         public BidiDictionary(int capacity, IEqualityComparer<TFwd> fwdComparer,
             IEqualityComparer<TRev> revComparer)
         {
-            _forwardMap = new Dictionary<TFwd, TRev>(capacity, fwdComparer);
-            _reverseMap = new Dictionary<TRev, TFwd>(capacity, revComparer);
+            _forwardMap = new Dictionary<TFwd, TRev>(capacity, fwdComparer.RequireNotNull(nameof(fwdComparer)));
+            _reverseMap = new Dictionary<TRev, TFwd>(capacity, revComparer.RequireNotNull(nameof(revComparer)));
         }
 
         /// <inheritdoc cref="ICollection{T}.Count"/>

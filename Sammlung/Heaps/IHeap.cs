@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using JetBrains.Annotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Sammlung.Heaps
 {
@@ -9,7 +9,7 @@ namespace Sammlung.Heaps
     /// </summary>
     /// <typeparam name="T">the value type</typeparam>
     /// <typeparam name="TPriority">the priority type</typeparam>
-    [PublicAPI]
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "PublicAPI")]
     public interface IHeap<T, TPriority> : IEnumerable<HeapPair<T, TPriority>> 
         where TPriority : IComparable<TPriority>
     {
@@ -42,7 +42,7 @@ namespace Sammlung.Heaps
         /// </summary>
         /// <param name="priority">the priority value</param>
         /// <param name="value">the value to add</param>
-        void Push([NotNull] T value, [NotNull] TPriority priority);
+        void Push(T value, TPriority priority);
 
         /// <summary>
         /// Replaces the top-most value with the new value.
@@ -51,7 +51,7 @@ namespace Sammlung.Heaps
         /// <param name="priority">the priority value</param>
         /// <param name="oldValue">the old value</param>
         /// <returns>true if replace was successful else false</returns>
-        bool TryReplace([NotNull] T newValue, [NotNull] TPriority priority, out HeapPair<T, TPriority> oldValue);
+        bool TryReplace(T newValue, TPriority priority, out HeapPair<T, TPriority> oldValue);
 
         /// <summary>
         /// Updates the priority of the old value with the new priority value.
@@ -59,6 +59,6 @@ namespace Sammlung.Heaps
         /// <param name="oldValue">the old value</param>
         /// <param name="priority">the priority value</param>
         /// <returns>true if update was successful else false</returns>
-        bool TryUpdate([NotNull] T oldValue, [NotNull] TPriority priority);
+        bool TryUpdate(T oldValue, TPriority priority);
     }
 }

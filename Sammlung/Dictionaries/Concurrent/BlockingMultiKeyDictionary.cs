@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
-using JetBrains.Annotations;
+using Sammlung.Utilities;
 using Sammlung.Utilities.Concurrent;
 
 namespace Sammlung.Dictionaries.Concurrent
@@ -11,7 +12,7 @@ namespace Sammlung.Dictionaries.Concurrent
     /// </summary>
     /// <typeparam name="TKey">the key type</typeparam>
     /// <typeparam name="TValue">the value type</typeparam>
-    [PublicAPI]
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "PublicAPI")]
     public class BlockingMultiKeyDictionary<TKey, TValue> : MultiKeyDictionaryBase<TKey, TValue> where TValue : class
     {
         private readonly EnhancedReaderWriterLock _rwLock;
@@ -27,7 +28,7 @@ namespace Sammlung.Dictionaries.Concurrent
         /// <param name="dictionary">the dictionary</param>
         /// <param name="comparer">the key comparer</param>
         public BlockingMultiKeyDictionary(IDictionary<TKey, TValue> dictionary, IEqualityComparer<TKey> comparer)
-            : this(new BlockingDictionary<TKey, TValue>(dictionary, comparer)) { }
+            : this(new BlockingDictionary<TKey, TValue>(dictionary.RequireNotNull(nameof(dictionary)), comparer.RequireNotNull(nameof(comparer)))) { }
 
         /// <summary>
         /// Constructs a new <see cref="BlockingMultiKeyDictionary{TKey,TValue}"/> using the passed capacity.
@@ -42,7 +43,7 @@ namespace Sammlung.Dictionaries.Concurrent
         /// <param name="capacity">the capacity</param>
         /// <param name="comparer">the comparer.</param>
         public BlockingMultiKeyDictionary(int capacity, IEqualityComparer<TKey> comparer)
-            : this(new BlockingDictionary<TKey, TValue>(capacity, comparer))
+            : this(new BlockingDictionary<TKey, TValue>(capacity, comparer.RequireNotNull(nameof(comparer))))
         {
         }
 

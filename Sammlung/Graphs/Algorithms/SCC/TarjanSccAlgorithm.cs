@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using JetBrains.Annotations;
-using Sammlung.Exceptions;
+using Sammlung.Utilities;
 
 namespace Sammlung.Graphs.Algorithms.SCC
 {
@@ -19,7 +18,7 @@ namespace Sammlung.Graphs.Algorithms.SCC
         /// <inheritdoc />
         public IEnumerable<IDiGraph<T, TWeight>> CalculateComponents(IDiGraph<T, TWeight> graph)
         {
-            var algorithm = new Algorithm(graph);
+            var algorithm = new Algorithm(graph.RequireNotNull(nameof(graph)));
             return algorithm.CalculateComponents();
         }
         
@@ -30,7 +29,7 @@ namespace Sammlung.Graphs.Algorithms.SCC
             private readonly Stack<T> _stack;
             private readonly Dictionary<T, Metadata> _metadataLookup;
 
-            public Algorithm([NotNull] IDiGraph<T, TWeight> graph)
+            public Algorithm(IDiGraph<T, TWeight> graph)
             {
                 _graph = graph;
                 _metadataLookup = graph.Vertices.ToDictionary(n => n, n => new Metadata(-1, -1, false));

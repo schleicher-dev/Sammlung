@@ -1,5 +1,5 @@
 using System;
-using JetBrains.Annotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Sammlung.Heaps
 {
@@ -7,7 +7,7 @@ namespace Sammlung.Heaps
     /// The <see cref="HeapPair"/> eases the painful task of creating a new <seealso cref="HeapPair{TValue,TPriority}"/>
     /// by making it possible to skip the generic arguments.
     /// </summary>
-    [PublicAPI]
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "PublicAPI")]
     public static class HeapPair
     {
         /// <summary>
@@ -18,7 +18,7 @@ namespace Sammlung.Heaps
         /// <typeparam name="TValue">the value type</typeparam>
         /// <typeparam name="TPriority">the priority type</typeparam>
         /// <returns></returns>
-        public static HeapPair<TValue, TPriority> Create<TValue, TPriority>([NotNull] TValue value, [NotNull] TPriority priority)
+        public static HeapPair<TValue, TPriority> Create<TValue, TPriority>(TValue value, TPriority priority)
             where TPriority : IComparable<TPriority> => new HeapPair<TValue, TPriority>(value, priority);
     }
     
@@ -27,7 +27,7 @@ namespace Sammlung.Heaps
     /// </summary>
     /// <typeparam name="TValue">the value type</typeparam>
     /// <typeparam name="TPriority">the priority type</typeparam>
-    [PublicAPI]
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "PublicAPI")]
     public class HeapPair<TValue, TPriority> where TPriority : IComparable<TPriority>
     {
         /// <summary>
@@ -35,7 +35,7 @@ namespace Sammlung.Heaps
         /// </summary>
         /// <param name="value">the value</param>
         /// <param name="priority">the priority</param>
-        public HeapPair([NotNull] TValue value, [NotNull] TPriority priority)
+        public HeapPair(TValue value, TPriority priority)
         {
             Value = value;
             Priority = priority;

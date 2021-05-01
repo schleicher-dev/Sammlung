@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
-using JetBrains.Annotations;
+using Sammlung.Utilities;
 using Sammlung.Utilities.Concurrent;
 
 namespace Sammlung.Dictionaries.Concurrent
@@ -12,7 +13,7 @@ namespace Sammlung.Dictionaries.Concurrent
     /// </summary>
     /// <typeparam name="TKey">the key type</typeparam>
     /// <typeparam name="TValue">the value type</typeparam>
-    [PublicAPI]
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "PublicAPI")]
     public class BlockingDictionary<TKey, TValue> : IDictionary<TKey, TValue>
     {
         private readonly IDictionary<TKey, TValue> _innerDict;
@@ -36,7 +37,7 @@ namespace Sammlung.Dictionaries.Concurrent
         /// <param name="capacity">the initial capacity</param>
         /// <param name="keyComparer">the key comparer</param>
         public BlockingDictionary(int capacity, IEqualityComparer<TKey> keyComparer) : 
-            this(new Dictionary<TKey, TValue>(capacity, keyComparer)) { }
+            this(new Dictionary<TKey, TValue>(capacity, keyComparer.RequireNotNull(nameof(keyComparer)))) { }
 
         /// <summary>
         /// Creates a new <see cref="BlockingDictionary{TKey,TValue}"/> using an equality comparer for the
@@ -44,7 +45,7 @@ namespace Sammlung.Dictionaries.Concurrent
         /// </summary>
         /// <param name="keyComparer">the key comparer</param>
         public BlockingDictionary(IEqualityComparer<TKey> keyComparer) : 
-            this(new Dictionary<TKey, TValue>(keyComparer)) { }
+            this(new Dictionary<TKey, TValue>(keyComparer.RequireNotNull(nameof(keyComparer)))) { }
         
         /// <summary>
         /// Creates a new <see cref="BlockingDictionary{TKey,TValue}"/> using another dictionary and a key comparer.
@@ -52,7 +53,7 @@ namespace Sammlung.Dictionaries.Concurrent
         /// <param name="dictionary">the dictionary</param>
         /// <param name="keyComparer">the key comparer</param>
         public BlockingDictionary(IDictionary<TKey, TValue> dictionary, IEqualityComparer<TKey> keyComparer) : 
-            this(new Dictionary<TKey, TValue>(dictionary, keyComparer)) { }
+            this(new Dictionary<TKey, TValue>(dictionary.RequireNotNull(nameof(dictionary)), keyComparer.RequireNotNull(nameof(keyComparer)))) { }
         
         /// <summary>
         /// Creates a new <see cref="BlockingDictionary{TKey,TValue}"/> using the passed dicitionary.
@@ -60,7 +61,7 @@ namespace Sammlung.Dictionaries.Concurrent
         /// <param name="dictionary">the dictionary to use</param>
         public BlockingDictionary(IDictionary<TKey, TValue> dictionary)
         {
-            _innerDict = new Dictionary<TKey, TValue>(dictionary);
+            _innerDict = new Dictionary<TKey, TValue>(dictionary.RequireNotNull(nameof(dictionary)));
             _rwLock = new EnhancedReaderWriterLock(LockRecursionPolicy.NoRecursion);
         }
 

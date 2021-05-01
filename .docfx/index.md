@@ -3,16 +3,15 @@
 Sammlung (/'zamlʊŋ/) is german for *collection* and is pronounced *some-loong*.
 
 Is is a library for C# containing a plethora of collection types which are not provided out of the box by the .NET
-standard libraries. The NuGet package will be provided for both **.NET Framework** and **.NET Core**. Due to the lack of a
-Windows development environment - only .NET Core is delivered.
+standard libraries. The NuGet package is provided for both **.NET Framework 3.5** and newer and **.NET Core** .NET standard 2.1 and newer.
 
 ## Rationale
 
 Why is there another collection library? I am a software engineer in my everyday job and I like to use data structures which
-behave after well-defined rules. One of this rules is a guaranteed computational complexity bound and another is a well-implemented, 
+obey the rules of proper software engineering. One of this rules is a guaranteed computational complexity bound and another is a well-implemented, 
 well-tested and performant realization of the data structure. Though creating a new library for collections I am not interested
 in inventing the wheel over and over again. If anything I am interested in merging good collections together and create new ones
-which are more performant in other occasions.
+which are more performant in other field of application.
 
 ## Vision
 

@@ -1,5 +1,3 @@
-using JetBrains.Annotations;
-
 namespace Sammlung.Utilities.Math
 {
     /// <summary>

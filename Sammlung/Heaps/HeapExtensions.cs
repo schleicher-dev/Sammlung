@@ -1,11 +1,10 @@
 using System;
-using System.Collections.Generic;
-using JetBrains.Annotations;
+using System.Diagnostics.CodeAnalysis;
 using Sammlung.Utilities;
 
 namespace Sammlung.Heaps
 {
-    [PublicAPI]
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "PublicAPI")]
     public static class HeapExtensions
     {
         /// <summary>
@@ -16,9 +15,9 @@ namespace Sammlung.Heaps
         /// <typeparam name="T">the value type</typeparam>
         /// <typeparam name="TPriority">the priority value</typeparam>
         /// <exception cref="System.InvalidOperationException">when heap is empty</exception>
-        public static HeapPair<T, TPriority> Pop<T, TPriority>([NotNull] this IHeap<T, TPriority> heap)
+        public static HeapPair<T, TPriority> Pop<T, TPriority>(this IHeap<T, TPriority> heap)
             where TPriority : IComparable<TPriority> =>
-            heap.TryPop(out var item)
+            heap.RequireNotNull(nameof(heap)).TryPop(out var item)
                 ? item
                 : throw ExceptionsHelper.NewEmptyCollectionException(nameof(Pop));
 
@@ -30,9 +29,9 @@ namespace Sammlung.Heaps
         /// <typeparam name="TPriority">the priority value</typeparam>
         /// <returns>the root element</returns>
         /// <exception cref="System.InvalidOperationException">when heap is empty</exception>
-        public static HeapPair<T, TPriority> Peek<T, TPriority>([NotNull] this IHeap<T, TPriority> heap)
+        public static HeapPair<T, TPriority> Peek<T, TPriority>(this IHeap<T, TPriority> heap)
             where TPriority : IComparable<TPriority> =>
-            heap.TryPeek(out var item)
+            heap.RequireNotNull(nameof(heap)).TryPeek(out var item)
                 ? item
                 : throw ExceptionsHelper.NewEmptyCollectionException(nameof(Peek));
 
@@ -47,13 +46,11 @@ namespace Sammlung.Heaps
         /// <returns>the popped root element</returns>
         /// <exception cref="System.InvalidOperationException">when collection is empty</exception>
         public static HeapPair<T, TPriority> 
-            Replace<T, TPriority>([NotNull] this IHeap<T, TPriority> heap, [NotNull] T newValue, [NotNull] TPriority priority)
-            where TPriority : IComparable<TPriority>
-        {
-            return heap.TryReplace(newValue, priority, out var oldValue)
+            Replace<T, TPriority>(this IHeap<T, TPriority> heap, T newValue, TPriority priority)
+            where TPriority : IComparable<TPriority> =>
+            heap.RequireNotNull(nameof(heap)).TryReplace(newValue, priority, out var oldValue)
                 ? oldValue
                 : throw ExceptionsHelper.NewEmptyCollectionException(nameof(Replace));
-        }
 
         /// <summary>
         /// Updates the container with the new value.
@@ -64,10 +61,10 @@ namespace Sammlung.Heaps
         /// <typeparam name="T">the value type</typeparam>
         /// <typeparam name="TPriority">the priority value</typeparam>
         /// <exception cref="System.InvalidOperationException">when collection is empty</exception>
-        public static void Update<T, TPriority>([NotNull] this IHeap<T, TPriority> heap, [NotNull] T oldValue, [NotNull] TPriority priority)
+        public static void Update<T, TPriority>(this IHeap<T, TPriority> heap, T oldValue, TPriority priority)
             where TPriority : IComparable<TPriority>
         {
-            if (!heap.TryUpdate(oldValue, priority))
+            if (!heap.RequireNotNull(nameof(heap)).TryUpdate(oldValue, priority))
                 throw ExceptionsHelper.NewHeapUpdateFailedException(nameof(Update));
         }
     }

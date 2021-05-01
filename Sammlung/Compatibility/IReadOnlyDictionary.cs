@@ -1,15 +1,15 @@
 using System.Collections.Generic;
-using JetBrains.Annotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Sammlung.Compatibility
 {
     /// <summary>
-    /// The <see cref="System.Collections.Generic.IReadOnlyDictionary{TKey,TValue}"/> is a polyfill class to
+    /// The <see cref="IReadOnlyDictionary{TKey,TValue}"/> is a polyfill class to
     /// prevent write access to an ordinary dictionary.
     /// </summary>
     /// <typeparam name="TKey">the key type</typeparam>
     /// <typeparam name="TValue">the value type</typeparam>
-    [PublicAPI]
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "PublicAPI")]
     public interface IReadOnlyDictionary<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValue>>
     {
         /// <summary>

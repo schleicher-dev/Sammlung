@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using JetBrains.Annotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Sammlung.Queues
 {
@@ -8,7 +8,7 @@ namespace Sammlung.Queues
     /// The <see cref="LinkedDeque{T}"/> type is an implementation of a double-ended queue.
     /// </summary>
     /// <typeparam name="T">the type</typeparam>
-    [PublicAPI]
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "PublicAPI")]
     public sealed class LinkedDeque<T> : IDeque<T>
     {
         private readonly LinkedList<T> _internal;

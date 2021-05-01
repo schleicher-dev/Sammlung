@@ -1,5 +1,3 @@
-using JetBrains.Annotations;
-
 namespace Sammlung.Queues.Concurrent.LockFreePrimitives
 {
     /// <summary>
@@ -9,7 +7,7 @@ namespace Sammlung.Queues.Concurrent.LockFreePrimitives
     internal sealed class Anchor<T>
     {
         public static Anchor<T> Create() => new Anchor<T> { ReferenceCount = 0 };
-        public static Anchor<T> Create([NotNull] Node<T> left, [NotNull] Node<T> right, State state) => 
+        public static Anchor<T> Create(Node<T> left, Node<T> right, State state) => 
             new Anchor<T>{ LeftMost = left, RightMost = right, State = state, ReferenceCount = 0};
 
         public int ReferenceCount;

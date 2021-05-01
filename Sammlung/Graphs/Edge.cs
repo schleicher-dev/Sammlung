@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using JetBrains.Annotations;
+using Sammlung.Utilities;
 
 namespace Sammlung.Graphs
 {
@@ -18,7 +18,7 @@ namespace Sammlung.Graphs
         /// <param name="sourceVertex">the source vertex</param>
         /// <param name="targetVertex">the target vertex</param>
         /// <param name="weight"></param>
-        public Edge([NotNull] T sourceVertex, [NotNull] T targetVertex, [NotNull] TWeight weight)
+        public Edge(T sourceVertex, T targetVertex, TWeight weight)
         {
             SourceVertex = sourceVertex;
             TargetVertex = targetVertex;
@@ -35,11 +35,8 @@ namespace Sammlung.Graphs
         public TWeight Weight { get; }
 
         /// <inheritdoc />
-        public override string ToString()
-        {
-            return string.Format("{0}.{1}[Source={2}, Target={3}, Weight={4}]",
-                GetType().Namespace, GetType().Name, SourceVertex?.ToString(), TargetVertex?.ToString(), Weight?.ToString());
-        }
+        public override string ToString() => 
+            $"{GetType().Namespace}.{GetType().Name}[Source={SourceVertex?.ToString()}, Target={TargetVertex?.ToString()}, Weight={Weight?.ToString()}]";
 
         /// <inheritdoc />
         public bool Equals(Edge<T, TWeight> other)
@@ -56,8 +53,7 @@ namespace Sammlung.Graphs
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != GetType()) return false;
-            return Equals((Edge<T, TWeight>) obj);
+            return obj.GetType() == GetType() && Equals((Edge<T, TWeight>) obj);
         }
 
         /// <inheritdoc />

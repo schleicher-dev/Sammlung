@@ -11,9 +11,7 @@
         <UseFullSemVerForNuGet>false</UseFullSemVerForNuGet>
         <SignAssembly>true</SignAssembly>
         <AssemblyOriginatorKeyFile>../Sammlung.snk</AssemblyOriginatorKeyFile>
-        <Description>Sammlung (/'zamlʊŋ/) is german for collection and is pronounced some-loong.
-
-This package contains a library for C# containing a plethora of collection types which are not provided by the .NET standard libraries.</Description>
+        <Description>This package contains a library for C# containing a plethora of collection types which are not provided by the .NET standard libraries. Sammlung (/'zamlʊŋ/) is german for collection and is pronounced some-loong. </Description>
         <Copyright>Ralf Schleicher © 2020</Copyright>
         <PackageProjectUrl>https://github.com/schleicher-dev/Sammlung</PackageProjectUrl>
         <RepositoryUrl>https://github.com/schleicher-dev/Sammlung</RepositoryUrl>
@@ -26,7 +24,6 @@ This package contains a library for C# containing a plethora of collection types
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
-      <PackageReference Include="JetBrains.Annotations" Version="2021.1.0-eap01" />
     </ItemGroup>
     
     <ItemGroup>
