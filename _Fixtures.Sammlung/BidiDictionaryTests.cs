@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using _Fixtures.Sammlung.Extras;
 using NUnit.Framework;
@@ -16,17 +17,17 @@ namespace _Fixtures.Sammlung
         [SetUp]
         public void Setup() { }
         
-        public static readonly BidiDictConstructors[] BidiDicts =
+        public static readonly BidiDictConstructors[] BidiDictionaries =
         {
             new BidiDictConstructors(() => new BidiDictionary<int, int>(), 
                 d => new BidiDictionary<int, int>(d),
                 e => new BidiDictionary<int, int>(e)), 
             new BidiDictConstructors(() => new BlockingBidiDictionary<int, int>(),
                 d => new BlockingBidiDictionary<int, int>(d),
-                e => new BlockingBidiDictionary<int, int>(e)),
+                e => new BlockingBidiDictionary<int, int>(e))
         };
         
-        [TestCaseSource(nameof(BidiDicts))]
+        [TestCaseSource(nameof(BidiDictionaries))]
         public void InsertPairsFindPairs(BidiDictConstructors tuple)
         {
             var (zf, _, _) = tuple;
@@ -53,7 +54,7 @@ namespace _Fixtures.Sammlung
             CollectionAssert.AreEquivalent(Enumerable.Range(100, 100), bDict.Values);
         }
 
-        [TestCaseSource(nameof(BidiDicts))]
+        [TestCaseSource(nameof(BidiDictionaries))]
         public void ClearClearsAllMaps(BidiDictConstructors tuple)
         {
             var (zf, _, _) = tuple;
@@ -68,7 +69,9 @@ namespace _Fixtures.Sammlung
             Assert.AreEqual(0, bDict.ReverseMap.Count);
         }
 
-        [TestCaseSource(nameof(BidiDicts))]
+        [TestCaseSource(nameof(BidiDictionaries))]
+        [SuppressMessage("ReSharper", "UseDeconstruction", Justification = "Not de-constructable")]
+        [SuppressMessage("ReSharper", "PossibleNullReferenceException", Justification = "Is not null")]
         public void DifferentMethodsCovering(BidiDictConstructors tuple)
         {
             var (zf, _, _) = tuple;
@@ -119,7 +122,7 @@ namespace _Fixtures.Sammlung
             Assert.AreEqual(0, bDict.Count);
         }
 
-        [TestCaseSource(nameof(BidiDicts))]
+        [TestCaseSource(nameof(BidiDictionaries))]
         public void ConstructorTests(BidiDictConstructors tuple)
         {
             var (_, df, ef) = tuple;
@@ -140,7 +143,7 @@ namespace _Fixtures.Sammlung
             var _ = ef(d2.AsEnumerable());
         }
 
-        [TestCaseSource(nameof(BidiDicts))]
+        [TestCaseSource(nameof(BidiDictionaries))]
         public void CopyTo_SunnyPath(BidiDictConstructors tuple)
         {
             var (_, _, ef) = tuple;

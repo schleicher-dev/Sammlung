@@ -50,7 +50,7 @@ namespace Sammlung.Dictionaries.Concurrent
         /// <summary>
         /// Creates a new <see cref="BlockingMultiKeyDictionary{TKey,TValue}"/> using the passed dictionary.
         /// </summary>
-        /// <param name="dictionary">the dicitonary</param>
+        /// <param name="dictionary">the dictionary</param>
         public BlockingMultiKeyDictionary(IDictionary<TKey, TValue> dictionary) : base(dictionary)
         {
             _rwLock = new EnhancedReaderWriterLock(LockRecursionPolicy.NoRecursion);

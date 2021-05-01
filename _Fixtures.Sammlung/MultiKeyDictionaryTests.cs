@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using _Fixtures.Sammlung.Extras;
@@ -20,7 +21,7 @@ namespace _Fixtures.Sammlung
             new MultiKeyDictConstructors<int, string>(
                 () => new BlockingMultiKeyDictionary<int, string>(), 
                 d => new BlockingMultiKeyDictionary<int, string>(d),
-                c => new BlockingMultiKeyDictionary<int, string>(c)),
+                c => new BlockingMultiKeyDictionary<int, string>(c))
         };
 
         [Test]
@@ -44,10 +45,8 @@ namespace _Fixtures.Sammlung
         [TestCaseSource(nameof(CtorTuples))]
         public void AddMultipleKeysAndRetrieveThem(MultiKeyDictConstructors<int, string> multiKeyDictConstructors)
         {
-            var defCtor = multiKeyDictConstructors.Item1;
-            var dictCtor = multiKeyDictConstructors.Item2;
-            var capacityCtor = multiKeyDictConstructors.Item3;
-            
+            var (defCtor, dictCtor, capacityCtor) = multiKeyDictConstructors;
+
             var mkDict = defCtor();
             mkDict[1, 2, 3] = "Hello";
             mkDict.Add(new [] {4, 5}, "World");

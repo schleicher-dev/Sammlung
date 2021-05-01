@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Sammlung.Utilities;
 
 namespace Sammlung.Graphs
 {

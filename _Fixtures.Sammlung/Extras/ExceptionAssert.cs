@@ -8,8 +8,6 @@ namespace _Fixtures.Sammlung.Extras
     [ExcludeFromCodeCoverage]
     public static class ExceptionAssert
     {
-        public static void ProperImplementation<T>() => ProperImplementation(typeof(T));
-        
         public static void ProperImplementation(Type excType)
         {
             Assert.IsTrue(typeof(Exception).IsAssignableFrom(excType),

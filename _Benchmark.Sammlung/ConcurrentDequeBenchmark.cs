@@ -11,6 +11,7 @@ namespace _Benchmark.Sammlung
     public class ConcurrentDequeBenchmark
     {
         [Params(500, 1_000)]
+        // ReSharper disable once UnassignedField.Global
         public int N;
 
         [Benchmark]

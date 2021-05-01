@@ -56,7 +56,7 @@ namespace Sammlung.Dictionaries.Concurrent
             this(new Dictionary<TKey, TValue>(dictionary.RequireNotNull(nameof(dictionary)), keyComparer.RequireNotNull(nameof(keyComparer)))) { }
         
         /// <summary>
-        /// Creates a new <see cref="BlockingDictionary{TKey,TValue}"/> using the passed dicitionary.
+        /// Creates a new <see cref="BlockingDictionary{TKey,TValue}"/> using the passed dictionary.
         /// </summary>
         /// <param name="dictionary">the dictionary to use</param>
         public BlockingDictionary(IDictionary<TKey, TValue> dictionary)

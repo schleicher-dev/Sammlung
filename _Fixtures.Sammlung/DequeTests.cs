@@ -173,6 +173,7 @@ namespace _Fixtures.Sammlung
 
             var result = new List<int>();
             var enumerator = ((System.Collections.IEnumerable) deque).GetEnumerator();
+            // ReSharper disable once PossibleNullReferenceException
             while (enumerator.MoveNext()) result.Add((int) enumerator.Current);
             CollectionAssert.AreEqual(new[] {1, 2, 3, 4}, result);
         }

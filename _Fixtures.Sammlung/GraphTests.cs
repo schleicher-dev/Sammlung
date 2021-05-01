@@ -25,7 +25,7 @@ namespace _Fixtures.Sammlung
                 new Edge<int, int>(3, 4, 1),
                 new Edge<int, int>(4, 5, 1),
                 new Edge<int, int>(5, 6, 1),
-                new Edge<int, int>(6, 7, 1),
+                new Edge<int, int>(6, 7, 1)
             };
             
             CollectionAssert.AreEquivalent(expectedEdges, graph.Edges);
@@ -52,42 +52,42 @@ namespace _Fixtures.Sammlung
             {
                 new Edge<int, int>(1, 1, 1),
                 new Edge<int, int>(2, 1, 1),
-                new Edge<int, int>(3, 1, 1),
+                new Edge<int, int>(3, 1, 1)
             }, graph.GetIncomingEdges(1));
 
             CollectionAssert.AreEquivalent(new List<IEdge<int, int>>
             {
                 new Edge<int, int>(1, 1, 1),
                 new Edge<int, int>(1, 2, 1),
-                new Edge<int, int>(1, 3, 1),
+                new Edge<int, int>(1, 3, 1)
             }, graph.GetOutgoingEdges(1));
 
             CollectionAssert.AreEquivalent(new List<IEdge<int, int>>
             {
                 new Edge<int, int>(1, 2, 1),
                 new Edge<int, int>(2, 2, 1),
-                new Edge<int, int>(3, 2, 1),
+                new Edge<int, int>(3, 2, 1)
             }, graph.GetIncomingEdges(2));
 
             CollectionAssert.AreEquivalent(new List<IEdge<int, int>>
             {
                 new Edge<int, int>(2, 1, 1),
                 new Edge<int, int>(2, 2, 1),
-                new Edge<int, int>(2, 3, 1),
+                new Edge<int, int>(2, 3, 1)
             }, graph.GetOutgoingEdges(2));
             
             CollectionAssert.AreEquivalent(new List<IEdge<int, int>>
             {
                 new Edge<int, int>(1, 3, 1),
                 new Edge<int, int>(2, 3, 1),
-                new Edge<int, int>(3, 3, 1),
+                new Edge<int, int>(3, 3, 1)
             }, graph.GetIncomingEdges(3));
 
             CollectionAssert.AreEquivalent(new List<IEdge<int, int>>
             {
                 new Edge<int, int>(3, 1, 1),
                 new Edge<int, int>(3, 2, 1),
-                new Edge<int, int>(3, 3, 1),
+                new Edge<int, int>(3, 3, 1)
             }, graph.GetOutgoingEdges(3));
             
             Assert.IsTrue(graph.HasEdge(3, 1));
@@ -133,6 +133,7 @@ namespace _Fixtures.Sammlung
             Assert.IsTrue(edgeA.Equals((object) edgeB));
             Assert.IsFalse(edgeA.Equals((object) edgeC));
             Assert.IsFalse(edgeA.Equals(default(object)));
+            // ReSharper disable once SuspiciousTypeConversion.Global
             Assert.IsFalse(edgeA.Equals("A"));
         }
 
