@@ -93,9 +93,13 @@ Ticked means available in the newest package.
     - [ ] Binary Search Tree
     - [ ] ABSearchTree :: (a,b)-tree
     - [ ] RedBlackSearchTree :: red-black tree
-- [ ] Circular Buffers
-    - [ ] Circular Buffer
-        - [ ] Non-Thread-Safe
+- [X] Circular Buffers
+    - [X] Static Circular Buffer
+        - [X] Non-Thread-Safe (Sammlung.CircularBuffers.StaticCircularBuffer)
+        - [ ] Thread-Safe, Blocking
+        - [ ] Thread-Safe, Lock-Free
+    - [X] Dynamic Circular Buffer
+        - [X] Non-Thread-Safe (Sammlung.CircularBuffers.DynamicCircularBuffer)
         - [ ] Thread-Safe, Blocking
         - [ ] Thread-Safe, Lock-Free
     - [ ] BipBuffers
