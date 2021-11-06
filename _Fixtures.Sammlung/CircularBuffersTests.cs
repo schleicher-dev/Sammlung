@@ -59,7 +59,11 @@ namespace _Fixtures.Sammlung
             Assert.IsTrue(buffer.TryPut(putItems));
             
             var takeItems = new byte[25];
+            Assert.IsFalse(buffer.TryPeek(takeItems, 1, 25));
             Assert.IsFalse(buffer.TryTake(takeItems, 1, 25));
+            
+            Assert.IsTrue(buffer.TryPeek(takeItems, 0, 25));
+            CollectionAssert.AreEqual(Enumerable.Range(0, 25).Select(i => (byte)i), takeItems);
             Assert.IsTrue(buffer.TryTake(takeItems, 0, 25));
             CollectionAssert.AreEqual(Enumerable.Range(0, 25).Select(i => (byte)i), takeItems);
         }

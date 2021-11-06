@@ -9,10 +9,8 @@ namespace Sammlung.CircularBuffers
     /// <typeparam name="T">the buffered type</typeparam>
     public class StaticCircularBuffer<T> : CircularBufferBase<T>
     {
-        private readonly T[] _storage;
-        
         /// <inheritdoc />
-        public override int Capacity => _storage.Length;
+        public override int Capacity => Storage.Length;
 
         /// <summary>
         /// Creates a new <see cref="StaticCircularBuffer{T}"/> using the initial capacity.
@@ -24,7 +22,7 @@ namespace Sammlung.CircularBuffers
             capacity = 0 < capacity
                 ? capacity
                 : throw new ArgumentOutOfRangeException(nameof(capacity), ErrorMessages.ValueMustBeStrictlyPositive);
-            _storage = new T[capacity];
+            Storage = new T[capacity];
         }
 
         /// <inheritdoc />
@@ -34,17 +32,7 @@ namespace Sammlung.CircularBuffers
             if (Capacity < Count + numItems)
                 return false;
 
-            InternalPut(_storage, putItems);
-            return true;
-        }
-
-        /// <inheritdoc />
-        public override bool TryTake(T[] takeItems, int offset, int length)
-        {
-            if (!base.TryTake(takeItems, offset, length))
-                return false;
-            
-            InternalTake(_storage, takeItems, offset, length);
+            InternalPut(Storage, putItems);
             return true;
         }
     }

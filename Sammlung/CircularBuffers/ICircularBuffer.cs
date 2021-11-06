@@ -33,5 +33,15 @@ namespace Sammlung.CircularBuffers
         /// <param name="length">the amount of items to take</param>
         /// <returns>true if there were enough items and the destination array has enough space else false</returns>
         bool TryTake(T[] takeItems, int offset, int length);
+
+        /// <summary>
+        /// Tries to peek the items from the buffer and writes them to the passed destination array at the offset and
+        /// the amount of items.
+        /// </summary>
+        /// <param name="peekItems">the destination array</param>
+        /// <param name="offset">the offset inside the array</param>
+        /// <param name="length">the amount of items to take</param>
+        /// <returns>true if there were enough items and the destination array has enough space else false</returns>
+        bool TryPeek(T[] peekItems, int offset, int length);
     }
 }

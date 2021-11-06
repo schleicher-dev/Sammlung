@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Sammlung.CircularBuffers
 {
@@ -11,6 +12,7 @@ namespace Sammlung.CircularBuffers
     {
         protected int Head;
         protected int Tail;
+        protected T[] Storage;
 
         protected CircularBufferBase()
         {
@@ -42,7 +44,7 @@ namespace Sammlung.CircularBuffers
             Count += numHeadItems;
         }
 
-        protected void InternalTake(T[] storage, T[] takeItems, int offset, int length)
+        private void InternalTake(T[] storage, T[] takeItems, int offset, int length)
         {
             var position = offset;
             var numTailItems = Math.Max(0, Math.Min(length, Capacity - Head));
@@ -58,11 +60,41 @@ namespace Sammlung.CircularBuffers
             Count -= numHeadItems;
         }
 
+        private void InternalPeek(T[] storage, T[] peekItems, int offset, int length)
+        {
+            var position = offset;
+            var numTailItems = Math.Max(0, Math.Min(length, Capacity - Head));
+            Array.Copy(storage, Head, peekItems, position, numTailItems);
+            length -= numTailItems;
+            position += numTailItems;
+            
+            var numHeadItems = Math.Max(0, Math.Min(length, Tail - Head));
+            Array.Copy(storage, Head, peekItems, position, numHeadItems);
+        }
+        
+        private bool CheckArguments(ICollection<T> array, int offset, int length) =>
+            length <= Count && length <= array.Count - offset;
+
         /// <inheritdoc />
         public abstract bool TryPut(params T[] putItems);
 
         /// <inheritdoc />
-        public virtual bool TryTake(T[] takeItems, int offset, int length) =>
-            length <= Count && length <= takeItems.Length - offset;
+        public bool TryTake(T[] takeItems, int offset, int length)
+        {
+            if (!CheckArguments(takeItems, offset, length))
+                return false;
+            
+            InternalTake(Storage, takeItems, offset, length);
+            return true;
+        }
+
+        public bool TryPeek(T[] peekItems, int offset, int length)
+        {
+            if (!CheckArguments(peekItems, offset, length))
+                return false;
+            
+            InternalPeek(Storage, peekItems, offset, length);
+            return true;
+        }
     }
 }
