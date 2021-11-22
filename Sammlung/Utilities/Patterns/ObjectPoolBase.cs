@@ -15,11 +15,7 @@ namespace Sammlung.Utilities.Patterns
 
         protected ObjectPoolBase(int maxPoolSize = DefaultMaxPoolSize)
         {
-            _maxPoolSize = 0 < maxPoolSize
-                ? maxPoolSize
-                : throw new ArgumentOutOfRangeException(nameof(maxPoolSize), maxPoolSize,
-                    string.Format(ErrorMessages.ValueMustBeStrictlyPositive, maxPoolSize));
-
+            _maxPoolSize = maxPoolSize.RequireStrictlyPositive(nameof(maxPoolSize));
             _rwLock = new EnhancedReaderWriterLock(LockRecursionPolicy.NoRecursion);
             _pool = new Stack<T>();
         }

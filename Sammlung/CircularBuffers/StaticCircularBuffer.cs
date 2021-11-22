@@ -1,5 +1,6 @@
 using System;
 using Sammlung.Resources;
+using Sammlung.Utilities;
 
 namespace Sammlung.CircularBuffers
 {
@@ -20,9 +21,7 @@ namespace Sammlung.CircularBuffers
         /// <exception cref="ArgumentOutOfRangeException">when the capacity is not strictly positive</exception>
         public StaticCircularBuffer(int capacity)
         {
-            capacity = 0 < capacity
-                ? capacity
-                : throw new ArgumentOutOfRangeException(nameof(capacity), ErrorMessages.ValueMustBeStrictlyPositive);
+            capacity = capacity.RequireStrictlyPositive(nameof(capacity));
             Storage = new T[capacity];
         }
 
