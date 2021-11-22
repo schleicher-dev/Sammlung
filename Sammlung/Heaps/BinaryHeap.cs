@@ -13,7 +13,7 @@ namespace Sammlung.Heaps
     /// </summary>
     /// <typeparam name="T">the element type</typeparam>
     /// <typeparam name="TPriority">the priority type</typeparam>
-    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "PublicAPI")]
+    [JetBrains.Annotations.PublicAPI]
     public sealed class BinaryHeap<T, TPriority> : IHeap<T, TPriority>
         where TPriority : IComparable<TPriority>
     {

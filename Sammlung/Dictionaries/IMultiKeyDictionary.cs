@@ -7,9 +7,9 @@ namespace Sammlung.Dictionaries
     /// The <see cref="IMultiKeyDictionary{TKey,TValue}"/> extends the ability of a
     /// <seealso cref="IDictionary{TKey,TValue}"/> by the ability to add elements using multiple keys.
     /// </summary>
-    /// <typeparam name="TKey"></typeparam>
-    /// <typeparam name="TValue"></typeparam>
-    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "PublicAPI")]
+    /// <typeparam name="TKey">the key type</typeparam>
+    /// <typeparam name="TValue">the value type</typeparam>
+    [JetBrains.Annotations.PublicAPI]
     public interface IMultiKeyDictionary<TKey, TValue> : IDictionary<TKey, TValue> where TValue : class
     {
         /// <summary>

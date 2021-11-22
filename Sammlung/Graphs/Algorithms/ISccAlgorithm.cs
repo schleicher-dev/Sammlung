@@ -11,7 +11,7 @@ namespace Sammlung.Graphs.Algorithms
     /// <typeparam name="T">the vertex type</typeparam>
     /// <typeparam name="TWeight">the edge weight type</typeparam>
     /// <remarks>SCC stands for strongly connected components</remarks>
-    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "PublicAPI")]
+    [JetBrains.Annotations.PublicAPI]
     public interface ISccAlgorithm<T, TWeight>
         where TWeight : IComparable<TWeight>
     {

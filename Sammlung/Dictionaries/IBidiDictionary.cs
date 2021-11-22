@@ -7,6 +7,7 @@ namespace Sammlung.Dictionaries
     /// </summary>
     /// <typeparam name="TFwd">the forward key type</typeparam>
     /// <typeparam name="TRev">the reverse key type</typeparam>
+    [JetBrains.Annotations.PublicAPI]
     public interface IBidiDictionary<TFwd, TRev> : 
         System.Collections.Generic.IDictionary<TFwd, TRev>
     {

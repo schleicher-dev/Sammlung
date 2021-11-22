@@ -11,6 +11,7 @@ namespace Sammlung.Graphs.Algorithms.SCC
     /// </summary>
     /// <typeparam name="T">the vertex type</typeparam>
     /// <typeparam name="TWeight">the weight type</typeparam>
+    [JetBrains.Annotations.PublicAPI]
     internal class TarjanSccAlgorithm<T, TWeight> 
         : ISccAlgorithm<T, TWeight>
         where TWeight : IComparable<TWeight>

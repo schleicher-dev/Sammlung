@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Threading;
 using Sammlung.Utilities;
 using Sammlung.Utilities.Concurrent;
@@ -8,19 +8,10 @@ using Sammlung.Utilities.Concurrent;
 namespace Sammlung.Queues.Concurrent
 {
     /// <summary>
-    /// The <see cref="BlockingDeque"/> is a static class which can decorate a <see cref="IDeque{T}"/>.
-    /// </summary>
-    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "PublicAPI")]
-    public static class BlockingDeque
-    {
-        public static IDeque<T> Wrap<T>(IDeque<T> inner) => new BlockingDeque<T>(inner);
-    }
-    
-    /// <summary>
     /// The <see cref="BlockingDeque{T}"/> is a decorator for any <see cref="IDeque{T}"/> type which is thread-safe.
     /// </summary>
     /// <typeparam name="T">the type</typeparam>
-    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "PublicAPI")]
+    [JetBrains.Annotations.PublicAPI]
     public class BlockingDeque<T> : IDeque<T>
     {
         private readonly IDeque<T> _inner;
@@ -89,9 +80,23 @@ namespace Sammlung.Queues.Concurrent
         }
 
         /// <inheritdoc />
-        IEnumerator<T> IEnumerable<T>.GetEnumerator() => _inner.GetEnumerator();
+        IEnumerator<T> IEnumerable<T>.GetEnumerator()
+        {
+            using (_rwLock.UseReadLock())
+            {
+                var snapshot = _inner.ToList();
+                return snapshot.GetEnumerator();
+            }
+        }
 
         /// <inheritdoc />
-        IEnumerator IEnumerable.GetEnumerator() => _inner.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            using (_rwLock.UseReadLock())
+            {
+                var snapshot = _inner.ToList();
+                return ((IEnumerable) snapshot).GetEnumerator();
+            }
+        }
     }
 }

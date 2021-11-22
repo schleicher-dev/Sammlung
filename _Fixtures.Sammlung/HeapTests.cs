@@ -9,6 +9,33 @@ namespace _Fixtures.Sammlung
     [ExcludeFromCodeCoverage]
     public class HeapTests
     {
+        public enum HeapType
+        {
+            BinaryHeap,
+        }
+
+        public enum HeapBehaviour
+        {
+            NonBlocking,
+            Blocking
+        }
+
+        private static IHeap<T1, T2> CreateHeap<T1, T2>(HeapType type, HeapBehaviour behaviour) where T2 : IComparable<T2>
+        {
+            IHeap<T1, T2> heap = type switch
+            {
+                HeapType.BinaryHeap => new BinaryHeap<T1, T2>(),
+                _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+            };
+
+            return behaviour switch
+            {
+                HeapBehaviour.NonBlocking => heap,
+                HeapBehaviour.Blocking => heap.Wrap(),
+                _ => throw new ArgumentOutOfRangeException(nameof(behaviour), behaviour, null)
+            };
+        }
+        
         [SetUp]
         public void Setup() { }
 
@@ -22,9 +49,9 @@ namespace _Fixtures.Sammlung
         }
 
         [Test]
-        public void PushAndPop_SunnyPath()
+        public void PushAndPop_SunnyPath([Values] HeapType type, [Values] HeapBehaviour behaviour)
         {
-            var heap = new BinaryHeap<string, int>();
+            var heap = CreateHeap<string, int>(type, behaviour);
             var items = Enumerable.Range(1, 10_000).Zip(GetNames(), Tuple.Create).ToList();
             foreach (var (priority, value) in items.AsEnumerable().Reverse())
             {
@@ -37,10 +64,10 @@ namespace _Fixtures.Sammlung
         }
         
         [Test]
-        public void PushAndPop_Randomized_SunnyPath()
+        public void PushAndPop_Randomized_SunnyPath([Values] HeapType type, [Values] HeapBehaviour behaviour)
         {
+            var heap = CreateHeap<int, int>(type, behaviour);
             var random = new Random(0);
-            var heap = new BinaryHeap<int, int>();
 
             for (var i = 0; i < 10_000; ++i)
             {
@@ -58,9 +85,10 @@ namespace _Fixtures.Sammlung
         }
 
         [Test]
-        public void CheckAllCases_Of_InvalidOperationException()
+        public void CheckAllCases_Of_InvalidOperationException([Values] HeapType type, [Values] HeapBehaviour behaviour)
         {
-            var heap = new BinaryHeap<string, int>();
+            var heap = CreateHeap<string, int>(type, behaviour);
+            Assert.AreEqual(0, heap.Count);
             Assert.IsTrue(heap.IsEmpty);
             Assert.IsFalse(heap.TryPop(out _));
             Assert.Throws<InvalidOperationException>(() => heap.Pop());
@@ -73,9 +101,9 @@ namespace _Fixtures.Sammlung
         }
 
         [Test]
-        public void UpdateReplace_SunnyPath()
+        public void UpdateReplace_SunnyPath([Values] HeapType type, [Values] HeapBehaviour behaviour)
         {
-            var heap = new BinaryHeap<string, int>();
+            var heap = CreateHeap<string, int>(type, behaviour);
             heap.Push("A", 100);
             heap.Push("B", 50);
             heap.Push("C", 150);
@@ -122,9 +150,9 @@ namespace _Fixtures.Sammlung
         }
 
         [Test]
-        public void EnumerateHeap()
+        public void EnumerateHeap([Values] HeapType type, [Values] HeapBehaviour behaviour)
         {
-            var heap = new BinaryHeap<int, int>();
+            var heap = CreateHeap<int, int>(type, behaviour);
             heap.Push(1, 200);
             heap.Push(2, 300);
             heap.Push(3, 400);

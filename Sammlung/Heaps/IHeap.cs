@@ -9,7 +9,7 @@ namespace Sammlung.Heaps
     /// </summary>
     /// <typeparam name="T">the value type</typeparam>
     /// <typeparam name="TPriority">the priority type</typeparam>
-    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "PublicAPI")]
+    [JetBrains.Annotations.PublicAPI]
     public interface IHeap<T, TPriority> : IEnumerable<HeapPair<T, TPriority>> 
         where TPriority : IComparable<TPriority>
     {

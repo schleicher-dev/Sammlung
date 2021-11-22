@@ -5,6 +5,7 @@ namespace Sammlung.CircularBuffers
     /// known as ring buffer.
     /// </summary>
     /// <typeparam name="T">the buffered type</typeparam>
+    [JetBrains.Annotations.PublicAPI]
     public interface ICircularBuffer<in T>
     {
         /// <summary>

@@ -17,7 +17,7 @@ namespace _Fixtures.Sammlung
     {
         public static readonly DequeConstructors<int>[] Buffers =
         {
-            new DequeConstructors<int>("BlockingDeque", c => BlockingDeque.Wrap(new ArrayDeque<int>(c))),
+            new DequeConstructors<int>("BlockingDeque", c => BlockingDequeExtensions.Wrap(new ArrayDeque<int>(c))),
             new DequeConstructors<int>("LockFreeLinkedDeque", c => new LockFreeLinkedDeque<int>())
         };
 

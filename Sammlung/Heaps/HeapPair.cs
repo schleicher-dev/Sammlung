@@ -7,7 +7,7 @@ namespace Sammlung.Heaps
     /// The <see cref="HeapPair"/> eases the painful task of creating a new <seealso cref="HeapPair{TValue,TPriority}"/>
     /// by making it possible to skip the generic arguments.
     /// </summary>
-    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "PublicAPI")]
+    [JetBrains.Annotations.PublicAPI]
     public static class HeapPair
     {
         /// <summary>
@@ -27,7 +27,7 @@ namespace Sammlung.Heaps
     /// </summary>
     /// <typeparam name="TValue">the value type</typeparam>
     /// <typeparam name="TPriority">the priority type</typeparam>
-    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "PublicAPI")]
+    [JetBrains.Annotations.PublicAPI]
     public class HeapPair<TValue, TPriority> where TPriority : IComparable<TPriority>
     {
         /// <summary>

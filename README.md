@@ -56,19 +56,19 @@ Ticked means available in the newest package.
 - [X] Heaps / Priority-Queues
     - [X] Binary Heap
         - [X] Non-Thread-Safe (Sammlung.Heaps.BinaryHeap)
-        - [ ] Thread-Safe, Blocking
+        - [X] Thread-Safe, Blocking
         - [ ] Thread-Safe, Lock-Free
     - [ ] Pairing Heap
         - [ ] Non-Thread-Safe
-        - [ ] Thread-Safe, Blocking
+        - [X] Thread-Safe, Blocking
         - [ ] Thread-Safe, Lock-Free
     - [ ] Fibonacci Heap
         - [ ] Non-Thread-Safe
-        - [ ] Thread-Safe, Blocking
+        - [X] Thread-Safe, Blocking
         - [ ] Thread-Safe, Lock-Free
     - [ ] Brodal Queue
         - [ ] Non-Thread-Safe
-        - [ ] Thread-Safe, Blocking
+        - [X] Thread-Safe, Blocking
         - [ ] Thread-Safe, Lock-Free
 - [ ] Priority-Stacks
 - [X] Queues
@@ -96,15 +96,15 @@ Ticked means available in the newest package.
 - [X] Circular Buffers
     - [X] Static Circular Buffer
         - [X] Non-Thread-Safe (Sammlung.CircularBuffers.StaticCircularBuffer)
-        - [ ] Thread-Safe, Blocking
+        - [X] Thread-Safe, Blocking
         - [ ] Thread-Safe, Lock-Free
     - [X] Dynamic Circular Buffer
         - [X] Non-Thread-Safe (Sammlung.CircularBuffers.DynamicCircularBuffer)
-        - [ ] Thread-Safe, Blocking
+        - [X] Thread-Safe, Blocking
         - [ ] Thread-Safe, Lock-Free
     - [ ] BipBuffers
         - [ ] Non-Thread-Safe
-        - [ ] Thread-Safe, Blocking
+        - [X] Thread-Safe, Blocking
         - [ ] Thread-Safe, Lock-Free
 
 ## Literature

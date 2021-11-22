@@ -6,7 +6,7 @@ namespace Sammlung.Queues
     /// The <see cref="IDeque{T}"/> represents a double-ended queue.
     /// </summary>
     /// <typeparam name="T">the element type</typeparam>
-    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "PublicAPI")]
+    [JetBrains.Annotations.PublicAPI]
     public interface IDeque<T> : IQueue<T>
     {
         /// <summary>

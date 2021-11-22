@@ -14,7 +14,7 @@ namespace Sammlung.Dictionaries
     /// </summary>
     /// <typeparam name="TFwd">the forward type</typeparam>
     /// <typeparam name="TRev">the reverse type</typeparam>
-    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "PublicAPI")]
+    [JetBrains.Annotations.PublicAPI]
     public class BidiDictionary<TFwd, TRev> : IBidiDictionary<TFwd, TRev>
     {
         private readonly IDictionary<TFwd, TRev> _forwardMap;

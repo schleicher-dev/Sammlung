@@ -7,7 +7,6 @@ using Sammlung.Queues.Concurrent;
 namespace _Benchmark.Sammlung
 {
     [ExcludeFromCodeCoverage]
-    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "PublicAPI")]
     public class ConcurrentDequeBenchmark
     {
         [Params(500, 1_000)]
@@ -24,7 +23,7 @@ namespace _Benchmark.Sammlung
         [Benchmark]
         public void PushAll_BlockingDeque()
         {
-            var deque = BlockingDeque.Wrap(new ArrayDeque<int>(N));
+            var deque = BlockingDequeExtensions.Wrap(new ArrayDeque<int>(N));
             Parallel.For(0, N, i => deque.PushLeft(i));
         }
 

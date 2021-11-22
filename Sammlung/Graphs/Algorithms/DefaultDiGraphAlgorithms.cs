@@ -9,7 +9,7 @@ namespace Sammlung.Graphs.Algorithms
     /// <summary>
     /// The <see cref="DefaultDiGraphAlgorithms"/> class exposes methods to calculate default properties of a graph.
     /// </summary>
-    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "PublicAPI")]
+    [JetBrains.Annotations.PublicAPI]
     public class DefaultDiGraphAlgorithms : IDiGraphAlgorithms
     {
         /// <inheritdoc />

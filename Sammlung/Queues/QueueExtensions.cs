@@ -6,7 +6,7 @@ namespace Sammlung.Queues
     /// <summary>
     /// The <see cref="QueueExtensions"/> extends any <seealso cref="IQueue{T}"/> with additional methods.
     /// </summary>
-    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "PublicAPI")]
+    [JetBrains.Annotations.PublicAPI]
     public static class QueueExtensions
     {
         /// <summary>

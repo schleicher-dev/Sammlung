@@ -19,13 +19,16 @@ namespace _Fixtures.Sammlung
         }
         
         [Test]
-        public void StaticBufferTest()
+        public void StaticBufferTest([Values] bool blocking)
         {
             const byte offset = 5;
             const byte capacity = 20;
             
-            var buffer = new StaticCircularBuffer<byte>(capacity);
+            ICircularBuffer<byte> buffer = new StaticCircularBuffer<byte>(capacity);
+            buffer = !blocking ? buffer : buffer.Wrap();
+            
             OffsetBufferBy(buffer, offset);
+            Assert.AreEqual(0, buffer.Count);
             
             for (byte i = 0; i < capacity + 5; ++i)
             {
@@ -37,6 +40,7 @@ namespace _Fixtures.Sammlung
                 
                 Assert.IsFalse(buffer.TryPut(i));
             }
+            Assert.AreEqual(capacity, buffer.Count);
 
             var items = new byte[capacity];
             Assert.IsFalse(buffer.TryTake(items, 0, capacity + 1));
@@ -45,13 +49,15 @@ namespace _Fixtures.Sammlung
         }
 
         [Test]
-        public void DynamicBufferTest()
+        public void DynamicBufferTest([Values] bool blocking)
         {
             const byte capacity = 12;
-            var buffer = new DynamicCircularBuffer<byte>(capacity);
+            ICircularBuffer<byte> buffer = new DynamicCircularBuffer<byte>(capacity);
+            buffer = !blocking ? buffer : buffer.Wrap();
             Assert.AreEqual(16, buffer.Capacity);
             
             OffsetBufferBy(buffer, 12);
+            Assert.AreEqual(0, buffer.Count);
             var residentItems = Enumerable.Range(0, 5).Select(i => (byte)i).ToArray();
             Assert.IsTrue(buffer.TryPut(residentItems));
 

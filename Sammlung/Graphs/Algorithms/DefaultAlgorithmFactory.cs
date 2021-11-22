@@ -7,7 +7,7 @@ namespace Sammlung.Graphs.Algorithms
     /// <summary>
     /// The <see cref="DefaultAlgorithmFactory"/> class exposes factory methods for the graph algorithms.
     /// </summary>
-    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "PublicAPI")]
+    [JetBrains.Annotations.PublicAPI]
     public static class DefaultAlgorithmFactory
     {
         /// <summary>

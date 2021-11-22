@@ -9,7 +9,7 @@ namespace Sammlung.Graphs
     /// </summary>
     /// <typeparam name="T">the vertex type</typeparam>
     /// <typeparam name="TWeight">the edge weight type</typeparam>
-    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "PublicAPI")]
+    [JetBrains.Annotations.PublicAPI]
     public interface IDiGraph<T, TWeight> 
         where TWeight : IComparable<TWeight>
     {

@@ -9,6 +9,7 @@ namespace Sammlung.Graphs
     /// </summary>
     /// <typeparam name="T">the vertex type</typeparam>
     /// <typeparam name="TWeight">the edge weight</typeparam>
+    [JetBrains.Annotations.PublicAPI]
     public class Edge<T, TWeight> : IEdge<T, TWeight>, IEquatable<Edge<T, TWeight>>
     {
         /// <summary>

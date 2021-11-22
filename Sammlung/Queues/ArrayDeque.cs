@@ -10,13 +10,12 @@ namespace Sammlung.Queues
     /// and implements the <seealso cref="IDeque{T}"/> interface.
     /// </summary>
     /// <typeparam name="T">the contained type</typeparam>
-    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "PublicAPI")]
+    [JetBrains.Annotations.PublicAPI]
     public sealed class ArrayDeque<T> : IDeque<T>
     {
         private T[] _array;
         private int _leftPointer;
         private int _rightPointer;
-        private int _count;
 
         /// <summary>
         /// Creates a new <see cref="ArrayDeque{T}"/> using an initial capacity.
@@ -27,7 +26,7 @@ namespace Sammlung.Queues
             _array = new T[capacity];
             _leftPointer = 0;
             _rightPointer = 0;
-            _count = 0;
+            Count = 0;
         }
         
         private void Grow()
@@ -55,9 +54,7 @@ namespace Sammlung.Queues
         private int Capacity => _array.Length;
 
         /// <inheritdoc />
-        [SuppressMessage("ReSharper", "ConvertToAutoPropertyWhenPossible", 
-            Justification = "Cannot make this a auto-property. This is essentially a code analysis bug.")]
-        public int Count => _count;
+        public int Count { get; private set; }
 
         /// <inheritdoc />
         public void PushLeft(T element)
@@ -66,7 +63,7 @@ namespace Sammlung.Queues
             
             _leftPointer = DecrementPointer(_leftPointer);
             _array[_leftPointer] = element;
-            _count += 1;
+            Count += 1;
         }
         
         /// <inheritdoc />
@@ -77,7 +74,7 @@ namespace Sammlung.Queues
 
             _rightPointer = DecrementPointer(_rightPointer);
             _array[_rightPointer] = default;
-            _count -= 1;
+            Count -= 1;
             
             return true;
         }
@@ -99,7 +96,7 @@ namespace Sammlung.Queues
             
             _array[_rightPointer] = element;
             _rightPointer = IncrementPointer(_rightPointer);
-            _count += 1;
+            Count += 1;
         }
         
         /// <inheritdoc />
@@ -110,7 +107,7 @@ namespace Sammlung.Queues
             
             _array[_leftPointer] = default;
             _leftPointer = IncrementPointer(_leftPointer);
-            _count -= 1;
+            Count -= 1;
             
             return true;
         }

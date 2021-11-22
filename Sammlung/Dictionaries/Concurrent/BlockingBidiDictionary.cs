@@ -14,7 +14,7 @@ namespace Sammlung.Dictionaries.Concurrent
     /// </summary>
     /// <typeparam name="TForward">the forward type</typeparam>
     /// <typeparam name="TReverse">the reverse type</typeparam>
-    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "PublicAPI")]
+    [JetBrains.Annotations.PublicAPI]
     public class BlockingBidiDictionary<TForward, TReverse> : IBidiDictionary<TForward, TReverse>
     {
         private readonly EnhancedReaderWriterLock _rwLock;

@@ -7,6 +7,7 @@ namespace Sammlung.CircularBuffers
     /// The <see cref="DynamicCircularBuffer{T}"/> type is a circular buffer which grows when needed.
     /// </summary>
     /// <typeparam name="T">the buffered type</typeparam>
+    [JetBrains.Annotations.PublicAPI]
     public class DynamicCircularBuffer<T> : CircularBufferBase<T>
     {
         private static int NextPowerOfTwo(int value)

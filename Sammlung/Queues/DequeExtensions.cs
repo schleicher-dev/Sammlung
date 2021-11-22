@@ -6,7 +6,7 @@ namespace Sammlung.Queues
     /// <summary>
     /// The <see cref="DequeExtensions"/> extend any <see cref="IDeque{T}"/> implementation with additional methods.
     /// </summary>
-    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "PublicAPI")]
+    [JetBrains.Annotations.PublicAPI]
     public static class DequeExtensions
     {
         /// <summary>

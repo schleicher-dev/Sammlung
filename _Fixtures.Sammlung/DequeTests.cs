@@ -16,14 +16,14 @@ namespace _Fixtures.Sammlung
         public static readonly DequeConstructors<int>[] Buffers =
         {
             new DequeConstructors<int>("ArrayDeque", c => new ArrayDeque<int>(c)),
-            new DequeConstructors<int>("BlockingDeque", c => BlockingDeque.Wrap(new ArrayDeque<int>(c))),
+            new DequeConstructors<int>("BlockingDeque", c => BlockingDequeExtensions.Wrap(new ArrayDeque<int>(c))),
             new DequeConstructors<int>("LinkedDeque", c => new LinkedDeque<int>()),
             new DequeConstructors<int>("LockFreeLinkedDeque", c => new LockFreeLinkedDeque<int>())
         };
         public static readonly DequeConstructors<int>[] NormalBuffers =
         {
             new DequeConstructors<int>("ArrayDeque", c => new ArrayDeque<int>(c)),
-            new DequeConstructors<int>("BlockingDeque", c => BlockingDeque.Wrap(new ArrayDeque<int>(c))),
+            new DequeConstructors<int>("BlockingDeque", c => BlockingDequeExtensions.Wrap(new ArrayDeque<int>(c))),
             new DequeConstructors<int>("LinkedDeque", c => new LinkedDeque<int>())
         };
 

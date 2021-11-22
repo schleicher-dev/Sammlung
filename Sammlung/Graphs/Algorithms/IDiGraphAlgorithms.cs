@@ -8,7 +8,7 @@ namespace Sammlung.Graphs.Algorithms
     /// The <see cref="IDiGraphAlgorithms"/> interface exposes several computation algorithms for graphs.
     /// This interfaces follows the strategy design pattern.
     /// </summary>
-    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "PublicAPI")]
+    [JetBrains.Annotations.PublicAPI]
     public interface IDiGraphAlgorithms
     {
         /// <summary>

@@ -5,7 +5,7 @@ using Sammlung.Resources;
 
 namespace Sammlung.Utilities
 {
-    public static class ExceptionsHelper
+    internal static class ExceptionsHelper
     {
         private static string GetString(string name)
         {

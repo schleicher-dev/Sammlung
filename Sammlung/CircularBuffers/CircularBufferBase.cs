@@ -8,6 +8,7 @@ namespace Sammlung.CircularBuffers
     /// does encapsulate the most common operations.
     /// </summary>
     /// <typeparam name="T">the buffered type</typeparam>
+    [JetBrains.Annotations.PublicAPI]
     public abstract class CircularBufferBase<T> : ICircularBuffer<T>
     {
         protected int Head;
@@ -25,6 +26,7 @@ namespace Sammlung.CircularBuffers
         
         /// <inheritdoc />
         public int Count { get; private set; }
+        
         private int Increment(int ptr, int inc) => (ptr + inc) % Capacity;
 
         protected void InternalPut(T[] storage, T[] putItems)
@@ -88,6 +90,7 @@ namespace Sammlung.CircularBuffers
             return true;
         }
 
+        /// <inheritdoc />
         public bool TryPeek(T[] peekItems, int offset, int length)
         {
             if (!CheckArguments(peekItems, offset, length))

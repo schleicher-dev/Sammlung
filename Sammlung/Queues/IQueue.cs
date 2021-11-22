@@ -6,6 +6,7 @@ namespace Sammlung.Queues
     /// The <see cref="IQueue{T}"/> represents a single-ended queue.
     /// </summary>
     /// <typeparam name="T">the element type</typeparam>
+    [JetBrains.Annotations.PublicAPI]
     public interface IQueue<T> : IEnumerable<T>
     {
         /// <summary>

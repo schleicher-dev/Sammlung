@@ -1,12 +1,23 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
+using Sammlung.Heaps.Concurrent;
 using Sammlung.Utilities;
 
 namespace Sammlung.Heaps
 {
-    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "PublicAPI")]
+    [JetBrains.Annotations.PublicAPI]
     public static class HeapExtensions
     {
+        /// <summary>
+        /// Decorates a <see cref="IHeap{T,TPriority}"/> as a <see cref="BlockingHeap{T,TPriority}"/>.
+        /// </summary>
+        /// <param name="decorated">the heap to be decorated</param>
+        /// <typeparam name="T">the type</typeparam>
+        /// <typeparam name="TPriority">the priority type</typeparam>
+        /// <returns>the blocking heap</returns>
+        public static BlockingHeap<T, TPriority> Wrap<T, TPriority>(this IHeap<T, TPriority> decorated)
+            where TPriority : IComparable<TPriority> => new BlockingHeap<T, TPriority>(decorated);
+        
         /// <summary>
         /// Removes the root node of the heap and returns it.
         /// </summary>

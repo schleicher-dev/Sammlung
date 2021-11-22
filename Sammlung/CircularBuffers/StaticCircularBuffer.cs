@@ -7,6 +7,7 @@ namespace Sammlung.CircularBuffers
     /// The <see cref="StaticCircularBuffer{T}"/> type is a circular buffer which has a fixed size.
     /// </summary>
     /// <typeparam name="T">the buffered type</typeparam>
+    [JetBrains.Annotations.PublicAPI]
     public class StaticCircularBuffer<T> : CircularBufferBase<T>
     {
         /// <inheritdoc />

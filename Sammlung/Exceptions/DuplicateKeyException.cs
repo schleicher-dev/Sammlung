@@ -8,8 +8,8 @@ namespace Sammlung.Exceptions
     /// The <see cref="DuplicateKeyException"/> indicates that a duplicate key was found in a mapping where it is not
     /// allowed.
     /// </summary>
-    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "PublicAPI")]
     [Serializable]
+    [JetBrains.Annotations.PublicAPI]
     public class DuplicateKeyException : Exception
     {
         /// <summary>

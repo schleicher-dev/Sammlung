@@ -10,6 +10,7 @@ namespace Sammlung.Compatibility
     /// </summary>
     /// <typeparam name="TKey">the key type</typeparam>
     /// <typeparam name="TValue">the value type</typeparam>
+    [JetBrains.Annotations.PublicAPI]
     internal class ReadOnlyDictionaryAdapter<TKey, TValue> : IReadOnlyDictionary<TKey, TValue>
     {
         private readonly IDictionary<TKey, TValue> _impl;
