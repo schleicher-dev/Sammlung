@@ -1,5 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
+    <PropertyGroup>
+        <IsPackable>true</IsPackable>
+        <Description>$(Description) This is the common utility package.</Description>
+    </PropertyGroup>
+    
     <ItemGroup>
         <PackageReference Include="JetBrains.Annotations" Version="2021.3.0" PrivateAssets="all" />
     </ItemGroup>

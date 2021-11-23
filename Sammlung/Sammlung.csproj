@@ -1,7 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-    <PropertyGroup>
-        <IsPackable>false</IsPackable>
-    </PropertyGroup>
     <ItemGroup>
       <PackageReference Include="GitVersionTask" Version="5.5.1">
         <PrivateAssets>all</PrivateAssets>
@@ -11,8 +8,6 @@
     </ItemGroup>
     
     <ItemGroup>
-        <None Include="../Images/QuadraticIcon.png" Pack="true" PackagePath="" />
-        <None Include="../LICENSE" Pack="true" PackagePath="" />
         <None Remove="Utilities\Math\**" />
     </ItemGroup>
     

@@ -1,4 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <IsPackable>true</IsPackable>
+    <Description>$(Description) This is the common collection package.</Description>
+  </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Sammlung.Werkzeug\Sammlung.Werkzeug.csproj" />
   </ItemGroup>
