@@ -4,6 +4,10 @@
         <Description>$(Description) This is the collection package for dictionaries.</Description>
     </PropertyGroup>
     <ItemGroup>
+        <PackageReference Include="GitVersion.MsBuild" Version="5.8.1">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
         <PackageReference Include="JetBrains.Annotations" Version="2021.3.0" PrivateAssets="all" />
     </ItemGroup>
     <ItemGroup>

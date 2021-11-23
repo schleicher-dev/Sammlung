@@ -6,8 +6,10 @@
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <GitVersionConfig>$(MSBuildThisFileDirectory)GitVersion.yml</GitVersionConfig>
-        <PackageIcon>$(MSBuildThisFileDirectory)Images\QuadraticIcon.png</PackageIcon>
-        <PackageLicenseFile>$(MSBuildThisFileDirectory)LICENSE</PackageLicenseFile>
+        <PackageIconLocation>$(MSBuildThisFileDirectory)Images\QuadraticIcon.png</PackageIconLocation>
+        <PackageIcon>QuadraticIcon.png</PackageIcon>
+        <PackageLicenseFileLocation>$(MSBuildThisFileDirectory)LICENSE</PackageLicenseFileLocation>
+        <PackageLicenseFile>LICENSE</PackageLicenseFile>
         <UpdateVersionProperties>true</UpdateVersionProperties>
         <UseFullSemVerForNuGet>false</UseFullSemVerForNuGet>
         <SignAssembly>true</SignAssembly>
@@ -20,7 +22,7 @@
         <PackageTags>collections</PackageTags>
     </PropertyGroup>
     <ItemGroup>
-        <None Include="$(PackageLicenseFile)" Pack="true" PackagePath="" />
-        <None Include="$(PackageIcon)" Pack="true" PackagePath="" />
+        <None Include="$(PackageLicenseFileLocation)" Pack="true" PackagePath="" />
+        <None Include="$(PackageIconLocation)" Pack="true" PackagePath="" />
     </ItemGroup>
 </Project>
