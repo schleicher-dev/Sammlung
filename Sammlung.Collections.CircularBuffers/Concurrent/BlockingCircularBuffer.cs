@@ -1,6 +1,6 @@
 using System.Threading;
-using Sammlung.Utilities;
-using Sammlung.Utilities.Concurrent;
+using Sammlung.Werkzeug;
+using Sammlung.Werkzeug.Concurrent;
 
 namespace Sammlung.Collections.CircularBuffers.Concurrent
 {

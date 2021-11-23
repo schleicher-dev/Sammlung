@@ -141,7 +141,7 @@ namespace _Fixtures.Sammlung
         public void ToStringComparison()
         {
             var edgeA = new Edge<int, int>(1, 2, 3);
-            Assert.AreEqual("Sammlung.Graphs.Edge`2[Source=1, Target=2, Weight=3]", edgeA.ToString());
+            Assert.AreEqual("Sammlung.Collections.Graphs.Edge`2[Source=1, Target=2, Weight=3]", edgeA.ToString());
         }
     }
 }

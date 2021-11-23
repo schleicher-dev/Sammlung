@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Sammlung.Utilities;
+using Sammlung.Werkzeug;
 
 namespace Sammlung.Collections.Graphs
 {

@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Sammlung.Compatibility;
-using Sammlung.Utilities;
+using Sammlung.Collections.Dictionaries.Compatibility;
+using Sammlung.Collections.Dictionaries.Resources;
+using Sammlung.Werkzeug;
 
 namespace Sammlung.Collections.Dictionaries
 {
@@ -28,7 +30,7 @@ namespace Sammlung.Collections.Dictionaries
         /// Constructs a new <see cref="BidiDictionary{TForward,TReverse}"/> using the passed dictionary.
         /// </summary>
         /// <param name="other">the dictionary</param>
-        /// <exception cref="Exceptions.DuplicateKeyException">when mapping contains duplicate keys</exception>
+        /// <exception cref="ArgumentException">when mapping contains duplicate keys</exception>
         public BidiDictionary(IDictionary<TFwd, TRev> other)
             : this(other.RequireNotNull(nameof(other)), EqualityComparer<TFwd>.Default, EqualityComparer<TRev>.Default) { }
 
@@ -38,7 +40,7 @@ namespace Sammlung.Collections.Dictionaries
         /// <param name="other">the dictionary</param>
         /// <param name="fwdComparer">the comparer of the forward key</param>
         /// <param name="revComparer">the comparer of the reverse key</param>
-        /// <exception cref="Exceptions.DuplicateKeyException">when mapping contains duplicate keys</exception>
+        /// <exception cref="ArgumentException">when mapping contains duplicate keys</exception>
         public BidiDictionary(IDictionary<TFwd, TRev> other, IEqualityComparer<TFwd> fwdComparer,
             IEqualityComparer<TRev> revComparer) : this(other.RequireNotNull(nameof(other)).AsEnumerable(), fwdComparer.RequireNotNull(nameof(fwdComparer)), revComparer.RequireNotNull(nameof(revComparer))) { }
 
@@ -46,7 +48,7 @@ namespace Sammlung.Collections.Dictionaries
         /// Constructs a new <see cref="BidiDictionary{TForward,TReverse}"/> using the passed enumerable. 
         /// </summary>
         /// <param name="other">the enumerable</param>
-        /// <exception cref="Exceptions.DuplicateKeyException">when mapping contains duplicate keys</exception>
+        /// <exception cref="ArgumentException">when mapping contains duplicate keys</exception>
         public BidiDictionary(IEnumerable<KeyValuePair<TFwd, TRev>> other)
             : this(other.RequireNotNull(nameof(other)), EqualityComparer<TFwd>.Default, EqualityComparer<TRev>.Default) { }
 
@@ -57,7 +59,7 @@ namespace Sammlung.Collections.Dictionaries
         /// <param name="other">the enumerable</param>
         /// <param name="fwdComparer">the comparer of the forward key</param>
         /// <param name="revComparer">the comparer of the reverse key</param>
-        /// <exception cref="Exceptions.DuplicateKeyException">when mapping contains duplicate keys</exception>
+        /// <exception cref="ArgumentException">when mapping contains duplicate keys</exception>
         public BidiDictionary(IEnumerable<KeyValuePair<TFwd, TRev>> other,
             IEqualityComparer<TFwd> fwdComparer, IEqualityComparer<TRev> revComparer)
             : this(other.RequireNotNull(nameof(other)).ToList(), fwdComparer.RequireNotNull(nameof(fwdComparer)), revComparer.RequireNotNull(nameof(revComparer)))
@@ -144,7 +146,7 @@ namespace Sammlung.Collections.Dictionaries
         public void Add(TFwd fwd, TRev rev)
         {
             if (!TryAdd(fwd, rev))
-                throw ExceptionsHelper.NewDuplicateKeyException(fwd, nameof(Add));
+                throw new ArgumentException(string.Format(ErrorMessages.DuplicateKeyError, $"{fwd} or {rev}"), $"{nameof(fwd)} or {nameof(rev)}");
         }
         
         /// <inheritdoc />

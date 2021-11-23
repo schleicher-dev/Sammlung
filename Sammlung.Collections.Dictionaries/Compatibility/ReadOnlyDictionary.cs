@@ -1,7 +1,6 @@
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
-namespace Sammlung.Compatibility
+namespace Sammlung.Collections.Dictionaries.Compatibility
 {
     /// <summary>
     /// The <see cref="ReadOnlyDictionary"/> class exposes methods to wrap a given dictionary.

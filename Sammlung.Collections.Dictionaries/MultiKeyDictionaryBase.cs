@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Sammlung.Utilities;
+using Sammlung.Werkzeug;
 
 namespace Sammlung.Collections.Dictionaries
 {

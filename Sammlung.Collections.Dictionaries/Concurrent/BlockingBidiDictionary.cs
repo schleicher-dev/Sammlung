@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using Sammlung.Utilities;
-using Sammlung.Utilities.Concurrent;
+using Sammlung.Collections.Dictionaries.Resources;
+using Sammlung.Werkzeug;
+using Sammlung.Werkzeug.Concurrent;
 
 namespace Sammlung.Collections.Dictionaries.Concurrent
 {
@@ -29,7 +31,7 @@ namespace Sammlung.Collections.Dictionaries.Concurrent
         /// level and dictionary.
         /// </summary>
         /// <param name="other">the dictionary</param>
-        /// <exception cref="Exceptions.DuplicateKeyException">when mapping contains duplicate keys</exception>
+        /// <exception cref="ArgumentException">when mapping contains duplicate keys</exception>
         public BlockingBidiDictionary(IDictionary<TForward, TReverse> other)
             : this(other.RequireNotNull(nameof(other)), EqualityComparer<TForward>.Default, EqualityComparer<TReverse>.Default) { }
 
@@ -40,7 +42,7 @@ namespace Sammlung.Collections.Dictionaries.Concurrent
         /// <param name="other">the dictionary</param>
         /// <param name="fwdComparer">the comparer of the forward key</param>
         /// <param name="revComparer">the comparer of the reverse key</param>
-        /// <exception cref="Exceptions.DuplicateKeyException">when mapping contains duplicate keys</exception>
+        /// <exception cref="ArgumentException">when mapping contains duplicate keys</exception>
         public BlockingBidiDictionary(IDictionary<TForward, TReverse> other,
             IEqualityComparer<TForward> fwdComparer,
             IEqualityComparer<TReverse> revComparer)
@@ -55,7 +57,7 @@ namespace Sammlung.Collections.Dictionaries.Concurrent
         /// enumerable. 
         /// </summary>
         /// <param name="other">the enumerable</param>
-        /// <exception cref="Exceptions.DuplicateKeyException">when mapping contains duplicate keys</exception>
+        /// <exception cref="ArgumentException">when mapping contains duplicate keys</exception>
         public BlockingBidiDictionary(IEnumerable<KeyValuePair<TForward, TReverse>> other)
             : this(other.RequireNotNull(nameof(other)), EqualityComparer<TForward>.Default, EqualityComparer<TReverse>.Default) { }
 
@@ -66,7 +68,7 @@ namespace Sammlung.Collections.Dictionaries.Concurrent
         /// <param name="other">the enumerable</param>
         /// <param name="fwdComparer">the comparer of the forward key</param>
         /// <param name="revComparer">the comparer of the reverse key</param>
-        /// <exception cref="Exceptions.DuplicateKeyException">when mapping contains duplicate keys</exception>
+        /// <exception cref="ArgumentException">when mapping contains duplicate keys</exception>
         public BlockingBidiDictionary(IEnumerable<KeyValuePair<TForward, TReverse>> other,
             IEqualityComparer<TForward> fwdComparer, IEqualityComparer<TReverse> revComparer)
             : this(other.RequireNotNull(nameof(other)).ToDictionary(kv => kv.Key, kv => kv.Value),
@@ -184,12 +186,12 @@ namespace Sammlung.Collections.Dictionaries.Concurrent
         public void Add(KeyValuePair<TForward, TReverse> item) => Add(item.Key, item.Value);
 
         /// <inheritdoc />
-        public void Add(TForward key, TReverse value)
+        public void Add(TForward fwd, TReverse rev)
         {
-            if (!TryAdd(key, value)) throw ExceptionsHelper.NewDuplicateKeyException(key, nameof(Add));
+            if (!TryAdd(fwd, rev))
+                throw new ArgumentException(string.Format(ErrorMessages.DuplicateKeyError, $"{fwd} or {rev}"), $"{nameof(fwd)} or {nameof(rev)}");
         }
-
-
+        
         /// <inheritdoc />
         public bool TryGetValue(TForward key, out TReverse value)
         {

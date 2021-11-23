@@ -1,6 +1,6 @@
 using System;
 using Sammlung.Collections.Heaps.Concurrent;
-using Sammlung.Utilities;
+using Sammlung.Werkzeug;
 
 namespace Sammlung.Collections.Heaps
 {
@@ -16,7 +16,7 @@ namespace Sammlung.Collections.Heaps
         /// <returns>the blocking heap</returns>
         public static BlockingHeap<T, TPriority> Wrap<T, TPriority>(this IHeap<T, TPriority> decorated)
             where TPriority : IComparable<TPriority> => new BlockingHeap<T, TPriority>(decorated);
-        
+
         /// <summary>
         /// Removes the root node of the heap and returns it.
         /// </summary>
@@ -29,7 +29,7 @@ namespace Sammlung.Collections.Heaps
             where TPriority : IComparable<TPriority> =>
             heap.RequireNotNull(nameof(heap)).TryPop(out var item)
                 ? item
-                : throw ExceptionsHelper.NewEmptyCollectionException(nameof(Pop));
+                : throw ExceptionFactory.NewEmptyCollectionException();
 
         /// <summary>
         /// Returns the root node of the heap without removing it.
@@ -43,7 +43,7 @@ namespace Sammlung.Collections.Heaps
             where TPriority : IComparable<TPriority> =>
             heap.RequireNotNull(nameof(heap)).TryPeek(out var item)
                 ? item
-                : throw ExceptionsHelper.NewEmptyCollectionException(nameof(Peek));
+                : throw ExceptionFactory.NewEmptyCollectionException();
 
         /// <summary>
         /// Replaces the root element with a new value and organizes the collection.
@@ -55,12 +55,12 @@ namespace Sammlung.Collections.Heaps
         /// <typeparam name="TPriority">the priority value</typeparam>
         /// <returns>the popped root element</returns>
         /// <exception cref="System.InvalidOperationException">when collection is empty</exception>
-        public static HeapPair<T, TPriority> 
+        public static HeapPair<T, TPriority>
             Replace<T, TPriority>(this IHeap<T, TPriority> heap, T newValue, TPriority priority)
             where TPriority : IComparable<TPriority> =>
             heap.RequireNotNull(nameof(heap)).TryReplace(newValue, priority, out var oldValue)
                 ? oldValue
-                : throw ExceptionsHelper.NewEmptyCollectionException(nameof(Replace));
+                : throw ExceptionFactory.NewElementNotFoundException(newValue, nameof(newValue));
 
         /// <summary>
         /// Updates the container with the new value.
@@ -75,7 +75,7 @@ namespace Sammlung.Collections.Heaps
             where TPriority : IComparable<TPriority>
         {
             if (!heap.RequireNotNull(nameof(heap)).TryUpdate(oldValue, priority))
-                throw ExceptionsHelper.NewHeapUpdateFailedException(nameof(Update));
+                throw ExceptionFactory.NewElementNotFoundException(oldValue, nameof(oldValue));
         }
     }
 }

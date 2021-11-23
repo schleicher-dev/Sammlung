@@ -1,13 +1,13 @@
 using System;
 using System.Threading;
 
-namespace Sammlung.Utilities.Concurrent
+namespace Sammlung.Werkzeug.Concurrent
 {
     /// <summary>
     /// The <see cref="EnhancedReaderWriterLock"/> extends the <seealso cref="ReaderWriterLockSlim"/> entity with
     /// the RAII pattern. (Resource acquisition is instantiation)
     /// </summary>
-    internal sealed class EnhancedReaderWriterLock : IDisposable
+    public sealed class EnhancedReaderWriterLock : IDisposable
     {
         private readonly ReaderWriterLockSlim _rwLock;
 

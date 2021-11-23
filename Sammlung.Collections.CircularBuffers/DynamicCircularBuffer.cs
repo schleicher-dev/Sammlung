@@ -1,5 +1,5 @@
 using System;
-using Sammlung.Resources;
+using Sammlung.Werkzeug;
 
 namespace Sammlung.Collections.CircularBuffers
 {
@@ -27,9 +27,7 @@ namespace Sammlung.Collections.CircularBuffers
         /// <exception cref="ArgumentOutOfRangeException">when the capacity is not strictly positive</exception>
         public DynamicCircularBuffer(int capacity)
         {
-            capacity = 0 < capacity
-                ? capacity
-                : throw new ArgumentOutOfRangeException(nameof(capacity), ErrorMessages.ValueMustBeStrictlyPositive);
+            capacity = capacity.RequireGreater(0, nameof(capacity));;
 
             var nextCapacity = NextPowerOfTwo(capacity);
             Storage = new T[nextCapacity];

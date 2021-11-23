@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using Sammlung.Utilities;
+using Sammlung.Werkzeug;
 
-namespace Sammlung.Compatibility
+namespace Sammlung.Collections.Dictionaries.Compatibility
 {
     /// <summary>
     /// The <see cref="ReadOnlyDictionaryAdapter{TKey,TValue}"/> adapts a given <seealso cref="IDictionary{TKey,TValue}"/>

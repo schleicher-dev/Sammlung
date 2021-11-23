@@ -3,6 +3,7 @@
         <PackageReference Include="JetBrains.Annotations" Version="2021.3.0" PrivateAssets="all" />
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\Sammlung\Sammlung.csproj" />
+        <ProjectReference Include="..\Sammlung.Collections\Sammlung.Collections.csproj" />
+        <ProjectReference Include="..\Sammlung.Werkzeug\Sammlung.Werkzeug.csproj" />
     </ItemGroup>
 </Project>

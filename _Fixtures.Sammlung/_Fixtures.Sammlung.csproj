@@ -19,7 +19,7 @@
       <ProjectReference Include="..\Sammlung.Collections.Graphs\Sammlung.Collections.Graphs.csproj" />
       <ProjectReference Include="..\Sammlung.Collections.Heaps\Sammlung.Collections.Heaps.csproj" />
       <ProjectReference Include="..\Sammlung.Collections.Queues\Sammlung.Collections.Queues.csproj" />
-      <ProjectReference Include="..\Sammlung\Sammlung.csproj" />
+      <ProjectReference Include="..\Sammlung.Werkzeug\Sammlung.Werkzeug.csproj" />
     </ItemGroup>
 
 </Project>
