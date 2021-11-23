@@ -3,34 +3,34 @@ using System.Collections.Generic;
 using System.Linq;
 using Sammlung.Werkzeug;
 
-namespace Sammlung.Collections.Graphs.Algorithms.SCC
+namespace Sammlung.Graphs.Algorithms.StronglyConnectedComponents
 {
     /// <summary>
-    /// The <see cref="TarjanSccAlgorithm{T,TWeight}"/> is an implementation of an algorithm which
+    /// The <see cref="TarjanStronglyConnectedComponentsAlgorithm{T,TWeight}"/> is an implementation of an algorithm which
     /// determines the strongly connected components of a graph.
     /// </summary>
     /// <typeparam name="T">the vertex type</typeparam>
     /// <typeparam name="TWeight">the weight type</typeparam>
     [JetBrains.Annotations.PublicAPI]
-    internal class TarjanSccAlgorithm<T, TWeight> 
-        : ISccAlgorithm<T, TWeight>
+    public class TarjanStronglyConnectedComponentsAlgorithm<T, TWeight> 
+        : IStronglyConnectedComponentsAlgorithm<T, TWeight>
         where TWeight : IComparable<TWeight>
     {
         /// <inheritdoc />
         public IEnumerable<IDiGraph<T, TWeight>> CalculateComponents(IDiGraph<T, TWeight> graph)
         {
-            var algorithm = new Algorithm(graph.RequireNotNull(nameof(graph)));
+            var algorithm = new AlgorithmState(graph.RequireNotNull(nameof(graph)));
             return algorithm.CalculateComponents();
         }
         
-        private class Algorithm
+        private class AlgorithmState
         {
             private readonly IDiGraph<T, TWeight> _graph;
             private int _index;
             private readonly Stack<T> _stack;
             private readonly Dictionary<T, Metadata> _metadataLookup;
 
-            public Algorithm(IDiGraph<T, TWeight> graph)
+            public AlgorithmState(IDiGraph<T, TWeight> graph)
             {
                 _graph = graph;
                 _metadataLookup = graph.Vertices.ToDictionary(n => n, n => new Metadata(-1, -1, false));

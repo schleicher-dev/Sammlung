@@ -1,4 +1,4 @@
-namespace Sammlung.Collections.Graphs
+namespace Sammlung.Graphs
 {
     /// <summary>
     /// The <see cref="IEdge{TVertex,TWeight}"/> represents a weighted edge in a graph.

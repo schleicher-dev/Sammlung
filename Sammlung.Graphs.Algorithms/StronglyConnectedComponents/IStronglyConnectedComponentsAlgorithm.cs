@@ -1,17 +1,17 @@
 using System;
 using System.Collections.Generic;
 
-namespace Sammlung.Collections.Graphs.Algorithms
+namespace Sammlung.Graphs.Algorithms.StronglyConnectedComponents
 {
     /// <summary>
-    /// The <see cref="ISccAlgorithm{T,TWeight}"/> exposes an interface for the calculation
+    /// The <see cref="IStronglyConnectedComponentsAlgorithm{T,TWeight}"/> exposes an interface for the calculation
     /// of strongly connected components of a graph.
     /// </summary>
     /// <typeparam name="T">the vertex type</typeparam>
     /// <typeparam name="TWeight">the edge weight type</typeparam>
     /// <remarks>SCC stands for strongly connected components</remarks>
     [JetBrains.Annotations.PublicAPI]
-    public interface ISccAlgorithm<T, TWeight>
+    public interface IStronglyConnectedComponentsAlgorithm<T, TWeight>
         where TWeight : IComparable<TWeight>
     {
         /// <summary>

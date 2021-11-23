@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Sammlung.Werkzeug;
 
-namespace Sammlung.Collections.Graphs
+namespace Sammlung.Graphs
 {
     /// <summary>
     /// The <see cref="DiGraph{TVertex,TWeight}"/> class is an implementation of a directed weighted graph.

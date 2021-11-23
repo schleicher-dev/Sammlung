@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Sammlung.Collections.Graphs
+namespace Sammlung.Graphs
 {
     /// <summary>
     /// The <see cref="IDiGraph{TVertex,TWeight}"/> interface is an abstract contract for an directed graph.

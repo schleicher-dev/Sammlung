@@ -26,7 +26,7 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal --configuration Release
     - name: Package
-      run: msbuild -t:Pack -p:Configuration=Release
+      run: msbuild -t:Pack -p:Configuration=Release -p:PackageOutputPath=.artifacts/
     - name: Pushing NuGet packages to nuget.org
-      working-directory: Sammlung/bin/Release/
+      working-directory: .artifacts/
       run: dotnet nuget push *.nupkg *.snupkg --api-key ${{ secrets.NUGETAPIKEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate

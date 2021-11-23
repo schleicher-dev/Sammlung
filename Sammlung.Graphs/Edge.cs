@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Sammlung.Collections.Graphs
+namespace Sammlung.Graphs
 {
     /// <summary>
     /// The <see cref="Edge{TVertex,TWeight}"/> type implements the <seealso cref="IEdge{TVertex,TWeight}"/> interface
