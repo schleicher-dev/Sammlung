@@ -14,6 +14,11 @@
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.4.0" />
     </ItemGroup>
     <ItemGroup>
+      <ProjectReference Include="..\Sammlung.Collections.CircularBuffers\Sammlung.Collections.CircularBuffers.csproj" />
+      <ProjectReference Include="..\Sammlung.Collections.Dictionaries\Sammlung.Collections.Dictionaries.csproj" />
+      <ProjectReference Include="..\Sammlung.Collections.Graphs\Sammlung.Collections.Graphs.csproj" />
+      <ProjectReference Include="..\Sammlung.Collections.Heaps\Sammlung.Collections.Heaps.csproj" />
+      <ProjectReference Include="..\Sammlung.Collections.Queues\Sammlung.Collections.Queues.csproj" />
       <ProjectReference Include="..\Sammlung\Sammlung.csproj" />
     </ItemGroup>
 

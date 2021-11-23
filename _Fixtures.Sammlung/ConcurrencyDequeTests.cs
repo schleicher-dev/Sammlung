@@ -6,8 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using _Fixtures.Sammlung.Extras;
 using NUnit.Framework;
-using Sammlung.Queues;
-using Sammlung.Queues.Concurrent;
+using Sammlung.Collections.Queues;
+using Sammlung.Collections.Queues.Concurrent;
 
 namespace _Fixtures.Sammlung
 {
@@ -17,7 +17,7 @@ namespace _Fixtures.Sammlung
     {
         public static readonly DequeConstructors<int>[] Buffers =
         {
-            new DequeConstructors<int>("BlockingDeque", c => BlockingDequeExtensions.Wrap(new ArrayDeque<int>(c))),
+            new DequeConstructors<int>("BlockingDeque", c => new ArrayDeque<int>(c).Wrap()),
             new DequeConstructors<int>("LockFreeLinkedDeque", c => new LockFreeLinkedDeque<int>())
         };
 

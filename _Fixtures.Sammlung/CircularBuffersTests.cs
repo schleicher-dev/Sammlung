@@ -1,6 +1,6 @@
 using System.Linq;
 using NUnit.Framework;
-using Sammlung.CircularBuffers;
+using Sammlung.Collections.CircularBuffers;
 
 namespace _Fixtures.Sammlung
 {

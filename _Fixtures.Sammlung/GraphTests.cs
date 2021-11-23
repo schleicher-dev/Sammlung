@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using NUnit.Framework;
-using Sammlung.Graphs;
+using Sammlung.Collections.Graphs;
 
 namespace _Fixtures.Sammlung
 {

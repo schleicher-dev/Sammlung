@@ -1,12 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using _Fixtures.Sammlung.Extras;
 using NUnit.Framework;
-using Sammlung.Dictionaries;
-using Sammlung.Dictionaries.Concurrent;
+using Sammlung.Collections.Dictionaries;
+using Sammlung.Collections.Dictionaries.Concurrent;
 using Sammlung.Exceptions;
 
 namespace _Fixtures.Sammlung

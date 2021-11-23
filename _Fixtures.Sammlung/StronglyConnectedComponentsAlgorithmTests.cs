@@ -1,7 +1,7 @@
 using System.Linq;
 using NUnit.Framework;
-using Sammlung.Graphs;
-using Sammlung.Graphs.Algorithms;
+using Sammlung.Collections.Graphs;
+using Sammlung.Collections.Graphs.Algorithms;
 
 namespace _Fixtures.Sammlung
 {
