@@ -11,7 +11,7 @@ jobs:
 
     runs-on: windows-latest
     env:
-      WORKING_DIR: ./.artifacts
+      WORKING_DIR: ${GITHUB_WORKSPACE}/.artifacts
 
     steps:
     - uses: actions/checkout@v2
@@ -28,7 +28,7 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal --configuration Release
     - name: Package
-      run: msbuild -t:Pack -p:Configuration=Release -p:PackageOutputPath=${{ env.WORKING_DIR }}/.artifacts/
+      run: msbuild -t:Pack -p:Configuration=Release -p:PackageOutputPath=${{ env.WORKING_DIR }}
     - name: Pushing NuGet packages to nuget.org
       working-directory: ${{ env.WORKING_DIR }}/.artifacts/
       run: dotnet nuget push *.nupkg *.snupkg --api-key ${{ secrets.NUGETAPIKEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
