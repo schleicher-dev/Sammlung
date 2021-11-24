@@ -34,6 +34,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sammlung.Graphs", "Sammlung
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sammlung.Graphs.Algorithms", "Sammlung.Graphs.Algorithms\Sammlung.Graphs.Algorithms.csproj", "{31E9B7C9-2B92-4BAE-814D-AC09D23D8C02}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sammlung.Numerics", "Sammlung.Numerics\Sammlung.Numerics.csproj", "{72ADA215-F78B-446B-AE08-2AA557094789}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -84,5 +86,9 @@ Global
 		{31E9B7C9-2B92-4BAE-814D-AC09D23D8C02}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{31E9B7C9-2B92-4BAE-814D-AC09D23D8C02}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{31E9B7C9-2B92-4BAE-814D-AC09D23D8C02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72ADA215-F78B-446B-AE08-2AA557094789}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72ADA215-F78B-446B-AE08-2AA557094789}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72ADA215-F78B-446B-AE08-2AA557094789}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72ADA215-F78B-446B-AE08-2AA557094789}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
