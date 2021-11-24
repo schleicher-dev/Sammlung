@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using NUnit.Framework;
-using Sammlung.Dictionaries.Concurrent;
+using Sammlung.Collections.Dictionaries.Concurrent;
 
 namespace _Fixtures.Sammlung
 {

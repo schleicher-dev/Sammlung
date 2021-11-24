@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Sammlung.Dictionaries;
+using Sammlung.Collections.Dictionaries;
 
 namespace _Fixtures.Sammlung.Extras
 {

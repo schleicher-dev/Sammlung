@@ -2,8 +2,7 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
-        <IsPackable>false</IsPackable>
+        <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
         <SignAssembly>true</SignAssembly>
         <AssemblyOriginatorKeyFile>../Sammlung.snk</AssemblyOriginatorKeyFile>
     </PropertyGroup>
@@ -13,6 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Sammlung.Collections.Queues\Sammlung.Collections.Queues.csproj" />
       <ProjectReference Include="..\Sammlung\Sammlung.csproj" />
     </ItemGroup>
 

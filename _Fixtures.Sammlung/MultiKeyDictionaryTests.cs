@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using _Fixtures.Sammlung.Extras;
 using NUnit.Framework;
-using Sammlung.Dictionaries;
-using Sammlung.Dictionaries.Concurrent;
+using Sammlung.Collections.Dictionaries;
+using Sammlung.Collections.Dictionaries.Concurrent;
 
 namespace _Fixtures.Sammlung
 {

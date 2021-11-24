@@ -1,26 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
-    <PropertyGroup>
-        <TargetFrameworks>net35;netstandard2.1</TargetFrameworks>
-        <LangVersion>8.0</LangVersion>
-        <IncludeSymbols>true</IncludeSymbols>
-        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-        <GitVersionConfig>../GitVersion.yml</GitVersionConfig>
-        <PackageIcon>QuadraticIcon.png</PackageIcon>
-        <PackageLicenseFile>LICENSE</PackageLicenseFile>
-        <UpdateVersionProperties>true</UpdateVersionProperties>
-        <UseFullSemVerForNuGet>false</UseFullSemVerForNuGet>
-        <SignAssembly>true</SignAssembly>
-        <AssemblyOriginatorKeyFile>../Sammlung.snk</AssemblyOriginatorKeyFile>
-        <Description>This package contains a library for C# containing a plethora of collection types which are not provided by the .NET standard libraries. Sammlung (/'zamlʊŋ/) is german for collection and is pronounced some-loong. </Description>
-        <Copyright>Ralf Schleicher © 2020</Copyright>
-        <PackageProjectUrl>https://github.com/schleicher-dev/Sammlung</PackageProjectUrl>
-        <RepositoryUrl>https://github.com/schleicher-dev/Sammlung</RepositoryUrl>
-        <RepositoryType>git</RepositoryType>
-        <PackageTags>collections, heap, circular, buffer</PackageTags>
-    </PropertyGroup>
-
     <ItemGroup>
-      <PackageReference Include="GitVersionTask" Version="5.5.1">
+      <PackageReference Include="GitVersion.MsBuild" Version="5.8.1">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
@@ -28,18 +8,16 @@
     </ItemGroup>
     
     <ItemGroup>
-        <None Include="../Images/QuadraticIcon.png" Pack="true" PackagePath="" />
-        <None Include="../LICENSE" Pack="true" PackagePath="" />
+        <None Remove="Utilities\Math\**" />
     </ItemGroup>
     
     <ItemGroup>
-      <Compile Remove="Queues\Concurrent\ConcurrentStaticContinuousDeque.cs" />
       <Compile Update="Resources\ErrorMessages.Designer.cs">
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>
         <DependentUpon>ErrorMessages.resx</DependentUpon>
       </Compile>
-      <Compile Remove="Exceptions\VertexNotFoundException.cs" />
+      <Compile Remove="Utilities\Math\**" />
     </ItemGroup>
     
     <ItemGroup>
@@ -47,6 +25,11 @@
         <Generator>ResXFileCodeGenerator</Generator>
         <LastGenOutput>ErrorMessages.Designer.cs</LastGenOutput>
       </EmbeddedResource>
+      <EmbeddedResource Remove="Utilities\Math\**" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <ProjectReference Include="..\Sammlung.Werkzeug\Sammlung.Werkzeug.csproj" />
     </ItemGroup>
 
     <Target Name="ShowVersion" AfterTargets="PostBuildEvent">

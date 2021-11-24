@@ -1,0 +1,28 @@
+<Project>
+    <PropertyGroup>
+        <IsPackable>false</IsPackable>
+        <TargetFrameworks>net35;netstandard2.1</TargetFrameworks>
+        <LangVersion>8.0</LangVersion>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <GitVersionConfig>$(MSBuildThisFileDirectory)GitVersion.yml</GitVersionConfig>
+        <PackageIconLocation>$(MSBuildThisFileDirectory)Images\QuadraticIcon.png</PackageIconLocation>
+        <PackageIcon>QuadraticIcon.png</PackageIcon>
+        <PackageLicenseFileLocation>$(MSBuildThisFileDirectory)LICENSE</PackageLicenseFileLocation>
+        <PackageLicenseFile>LICENSE</PackageLicenseFile>
+        <UpdateVersionProperties>true</UpdateVersionProperties>
+        <UseFullSemVerForNuGet>false</UseFullSemVerForNuGet>
+        <SignAssembly>true</SignAssembly>
+        <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)Sammlung.snk</AssemblyOriginatorKeyFile>
+        <Description>Sammlung is a library for .NET containing a plethora of collection types which are not provided or where the particular implementation is hidden by the .NET libraries. Sammlung (/'zamlʊŋ/) is german for collection and is pronounced some-loong.</Description>
+        <Copyright>Ralf Schleicher © 2020</Copyright>
+        <PackageProjectUrl>https://github.com/schleicher-dev/Sammlung</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/schleicher-dev/Sammlung</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageTags>collections</PackageTags>
+    </PropertyGroup>
+    <ItemGroup>
+        <None Include="$(PackageLicenseFileLocation)" Pack="true" PackagePath="" />
+        <None Include="$(PackageIconLocation)" Pack="true" PackagePath="" />
+    </ItemGroup>
+</Project>

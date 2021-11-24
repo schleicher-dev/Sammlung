@@ -1,8 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
-using Sammlung.Queues;
-using Sammlung.Queues.Concurrent;
+using Sammlung.Collections.Queues;
+using Sammlung.Collections.Queues.Concurrent;
 
 namespace _Benchmark.Sammlung
 {
@@ -23,7 +23,7 @@ namespace _Benchmark.Sammlung
         [Benchmark]
         public void PushAll_BlockingDeque()
         {
-            var deque = BlockingDequeExtensions.Wrap(new ArrayDeque<int>(N));
+            var deque = new ArrayDeque<int>(N).Wrap();
             Parallel.For(0, N, i => deque.PushLeft(i));
         }
 

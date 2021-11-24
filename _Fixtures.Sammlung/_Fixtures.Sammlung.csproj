@@ -3,7 +3,6 @@
     <PropertyGroup>
         <TargetFrameworks>net48;netcoreapp3.1</TargetFrameworks>
         <LangVersion>8.0</LangVersion>
-        <IsPackable>false</IsPackable>
         <SignAssembly>true</SignAssembly>
         <AssemblyOriginatorKeyFile>../Sammlung.snk</AssemblyOriginatorKeyFile>
     </PropertyGroup>
@@ -14,7 +13,13 @@
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.4.0" />
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\Sammlung\Sammlung.csproj" />
+      <ProjectReference Include="..\Sammlung.Collections.CircularBuffers\Sammlung.Collections.CircularBuffers.csproj" />
+      <ProjectReference Include="..\Sammlung.Collections.Dictionaries\Sammlung.Collections.Dictionaries.csproj" />
+      <ProjectReference Include="..\Sammlung.Collections.Heaps\Sammlung.Collections.Heaps.csproj" />
+      <ProjectReference Include="..\Sammlung.Collections.Queues\Sammlung.Collections.Queues.csproj" />
+      <ProjectReference Include="..\Sammlung.Graphs.Algorithms\Sammlung.Graphs.Algorithms.csproj" />
+      <ProjectReference Include="..\Sammlung.Graphs\Sammlung.Graphs.csproj" />
+      <ProjectReference Include="..\Sammlung.Werkzeug\Sammlung.Werkzeug.csproj" />
     </ItemGroup>
 
 </Project>

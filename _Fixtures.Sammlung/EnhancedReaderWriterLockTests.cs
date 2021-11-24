@@ -1,6 +1,6 @@
 using System.Threading;
 using NUnit.Framework;
-using Sammlung.Utilities.Concurrent;
+using Sammlung.Werkzeug.Concurrent;
 
 namespace _Fixtures.Sammlung
 {

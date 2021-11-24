@@ -1,5 +1,5 @@
 using System;
-using Sammlung.Queues;
+using Sammlung.Collections.Queues;
 
 namespace _Fixtures.Sammlung.Extras
 {

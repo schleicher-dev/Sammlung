@@ -1,13 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using _Fixtures.Sammlung.Extras;
 using NUnit.Framework;
-using Sammlung.Dictionaries;
-using Sammlung.Dictionaries.Concurrent;
-using Sammlung.Exceptions;
+using Sammlung.Collections.Dictionaries;
+using Sammlung.Collections.Dictionaries.Concurrent;
 
 namespace _Fixtures.Sammlung
 {
@@ -80,6 +78,7 @@ namespace _Fixtures.Sammlung
             var bdEnum = ((IEnumerable) bDict).GetEnumerator();
             while (bdEnum.MoveNext())
             {
+                Assert.IsNotNull(bdEnum);
                 var kvPair = (KeyValuePair<int, int>) bdEnum.Current;
                 var fwd = kvPair.Key;
                 var rev = kvPair.Value;
@@ -89,6 +88,7 @@ namespace _Fixtures.Sammlung
             var fwdEnum = ((IEnumerable) bDict.ForwardMap).GetEnumerator();
             while (fwdEnum.MoveNext())
             {
+                Assert.IsNotNull(fwdEnum);
                 var kvPair = (KeyValuePair<int, int>) fwdEnum.Current;
                 var fwd = kvPair.Key;
                 var rev = kvPair.Value;
@@ -125,8 +125,8 @@ namespace _Fixtures.Sammlung
         {
             var (_, df, ef) = tuple;
             var d1 = new Dictionary<int, int> {[0] = 100, [1] = 100};
-            Assert.Throws<DuplicateKeyException>(() =>df(d1));
-            Assert.Throws<DuplicateKeyException>(() => ef(d1.AsEnumerable()));
+            Assert.Throws<ArgumentException>(() =>df(d1));
+            Assert.Throws<ArgumentException>(() => ef(d1.AsEnumerable()));
             
             var d2 = new Dictionary<int, int> {[0] = 100, [1] = 101};
             var b2 = df(d2);

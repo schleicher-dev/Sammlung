@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
-using Sammlung.Heaps;
+using Sammlung.Collections.Heaps;
 
 namespace _Fixtures.Sammlung
 {
@@ -95,9 +95,9 @@ namespace _Fixtures.Sammlung
             Assert.IsFalse(heap.TryPeek(out _));
             Assert.Throws<InvalidOperationException>(() => heap.Peek());
             Assert.IsFalse(heap.TryUpdate("A", 0));
-            Assert.Throws<InvalidOperationException>(() => heap.Update("A", 0));
+            Assert.Throws<ArgumentException>(() => heap.Update("A", 0));
             Assert.IsFalse(heap.TryReplace("A", 0, out _));
-            Assert.Throws<InvalidOperationException>(() => heap.Replace("A", 0));
+            Assert.Throws<ArgumentException>(() => heap.Replace("A", 0));
         }
 
         [Test]
