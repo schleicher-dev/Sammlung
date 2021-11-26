@@ -29,10 +29,14 @@ jobs:
           name: artifacts
           path: .artifacts/
   publish:
+    needs: build
     runs-on: windows-latest
     if: ${{ success() && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/develop') }}
     steps:
       - name: Download package artifacts
         uses: actions/download-artifact@v2
+        with:
+          name: artifacts
+          path: .artifacts/
       - name: Pushing NuGet packages to nuget.org
         run: dotnet nuget push *.nupkg *.snupkg --api-key ${{ secrets.NUGETAPIKEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
