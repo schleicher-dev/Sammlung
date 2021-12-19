@@ -3,29 +3,41 @@ name: .NET
 on:
   push:
     branches: [ master, develop ]
-  pull_request:
-    branches: [ master ]
 
 jobs:
   build:
-
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
-    - name: Setup MSBuild
-      uses: microsoft/setup-msbuild@v1
-    - name: Setup NuGet
-      uses: NuGet/setup-nuget@v1.0.5
-    - name: Restore NuGet Packages
-      run: nuget restore Sammlung.sln
-    - name: Build
-      run: msbuild -t:Build -p:Configuration=Release
-    - name: Test
-      run: dotnet test --no-build --verbosity normal --configuration Release
-    - name: Package
-      run: msbuild -t:Pack -p:Configuration=Release -p:PackageOutputPath=${env:GITHUB_WORKSPACE}/.artifacts
-    - name: Pushing NuGet packages to nuget.org
-      working-directory: ./.artifacts
-      run: dotnet nuget push *.nupkg *.snupkg --api-key ${{ secrets.NUGETAPIKEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v1
+      - name: Setup NuGet
+        uses: NuGet/setup-nuget@v1.0.5
+      - name: Restore NuGet Packages
+        run: nuget restore Sammlung.sln
+      - name: Build
+        run: msbuild -t:Build -p:Configuration=Release
+      - name: Test
+        run: dotnet test --no-build --verbosity normal --configuration Release
+      - name: Package
+        run: msbuild -t:Pack -p:Configuration=Release -p:PackageOutputPath=${env:GITHUB_WORKSPACE}/.artifacts
+      - name: Uploading package artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: artifacts
+          path: .artifacts/
+  publish:
+    needs: build
+    runs-on: windows-latest
+    if: ${{ success() && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/develop') }}
+    steps:
+      - name: Download package artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: artifacts
+          path: .artifacts/
+      - name: Pushing NuGet packages to nuget.org
+        working-directory: ./.artifacts
+        run: dotnet nuget push *.nupkg *.snupkg --api-key ${{ secrets.NUGETAPIKEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate

@@ -7,7 +7,7 @@ namespace Sammlung.Werkzeug
     /// The <see cref="ParamValidationExtensions"/> type extends types with helpful validation checks.
     /// </summary>
     [JetBrains.Annotations.PublicAPI]
-    public static partial class ParamValidationExtensions
+    public static class ParamValidationExtensions
     {
         /// <summary>
         /// Requires parameter to be not null.
@@ -42,12 +42,12 @@ namespace Sammlung.Werkzeug
         /// <typeparam name="T">the type of the parameter which is comparable</typeparam>
         /// <returns>the parameter</returns>
         /// <exception cref="ArgumentOutOfRangeException">The parameter is less or equal to the expected value</exception>
-        public static T RequireGreater<T>(this T param, T expected, string paramName) where T : IComparable<T> =>
-            0 < param.CompareTo(expected)
-                ? param
-                : throw new ArgumentOutOfRangeException(paramName, param,
-                    string.Format(ErrorMessages.ParamRequiredGreater, expected));
-        
+        public static T RequireGreater<T>(this T param, T expected, string paramName) where T : IComparable<T>
+        {
+            var msg = string.Format(ErrorMessages.ParamRequiredGreater, expected);
+            return param.IsGreater(expected) ? param : throw new ArgumentOutOfRangeException(paramName, param, msg);
+        }
+
         /// <summary>
         /// Requires the parameter to be greater than or equal to the expected value.
         /// </summary>
@@ -57,12 +57,12 @@ namespace Sammlung.Werkzeug
         /// <typeparam name="T">the type of the parameter which is comparable</typeparam>
         /// <returns>the parameter</returns>
         /// <exception cref="ArgumentOutOfRangeException">The parameter is less or equal to the expected value</exception>
-        public static T RequireGreaterEqual<T>(this T param, T expected, string paramName) where T : IComparable<T> =>
-            0 <= param.CompareTo(expected)
-                ? param
-                : throw new ArgumentOutOfRangeException(paramName, param,
-                    string.Format(ErrorMessages.ParamRequiredGreaterEqual, expected));
-        
+        public static T RequireGreaterEqual<T>(this T param, T expected, string paramName) where T : IComparable<T>
+        {
+            var msg = string.Format(ErrorMessages.ParamRequiredGreaterEqual, expected);
+            return param.IsGreaterEqual(expected) ? param : throw new ArgumentOutOfRangeException(paramName, param, msg);
+        }
+
         /// <summary>
         /// Requires the parameter to be less than the expected value.
         /// </summary>
@@ -72,12 +72,12 @@ namespace Sammlung.Werkzeug
         /// <typeparam name="T">the type of the parameter which is comparable</typeparam>
         /// <returns>the parameter</returns>
         /// <exception cref="ArgumentOutOfRangeException">The parameter is less or equal to the expected value</exception>
-        public static T RequireLess<T>(this T param, T expected, string paramName) where T : IComparable<T> =>
-            param.CompareTo(expected) < 0
-                ? param
-                : throw new ArgumentOutOfRangeException(paramName, param,
-                    string.Format(ErrorMessages.ParamRequiredGreater, expected));
-        
+        public static T RequireLess<T>(this T param, T expected, string paramName) where T : IComparable<T>
+        {
+            var msg = string.Format(ErrorMessages.ParamRequiredGreater, expected);
+            return param.IsLess(expected) ? param : throw new ArgumentOutOfRangeException(paramName, param, msg);
+        }
+
         /// <summary>
         /// Requires the parameter to be less than or equal to the expected value.
         /// </summary>
@@ -87,10 +87,10 @@ namespace Sammlung.Werkzeug
         /// <typeparam name="T">the type of the parameter which is comparable</typeparam>
         /// <returns>the parameter</returns>
         /// <exception cref="ArgumentOutOfRangeException">The parameter is less or equal to the expected value</exception>
-        public static T RequireLessEqual<T>(this T param, T expected, string paramName) where T : IComparable<T> =>
-            param.CompareTo(expected) <= 0
-                ? param
-                : throw new ArgumentOutOfRangeException(paramName, param,
-                    string.Format(ErrorMessages.ParamRequiredGreaterEqual, expected));
+        public static T RequireLessEqual<T>(this T param, T expected, string paramName) where T : IComparable<T>
+        {
+            var msg = string.Format(ErrorMessages.ParamRequiredGreaterEqual, expected);
+            return param.IsLessEqual(expected) ? param : throw new ArgumentOutOfRangeException(paramName, param, msg);
+        }
     }
 }

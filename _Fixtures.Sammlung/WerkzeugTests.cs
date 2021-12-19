@@ -7,7 +7,7 @@ namespace _Fixtures.Sammlung
 {
     [ExcludeFromCodeCoverage]
     [TestFixture]
-    public class ParamValidationExtensionsTests
+    public class WerkzeugTests
     {
         private static void InternalRequire<T>(Func<T, T, string, T> func, T value, T expected, params T[] wrongValues)
             where T : IComparable<T>
@@ -21,15 +21,15 @@ namespace _Fixtures.Sammlung
         private static void InternalRequireGreater<T>(T value, T expected, params T[] wrongValues)
             where T : IComparable<T> =>
             InternalRequire(ParamValidationExtensions.RequireGreater, value, expected, wrongValues);
-        
+
         private static void InternalRequireGreaterEqual<T>(T value, T expected, params T[] wrongValues)
             where T : IComparable<T> =>
             InternalRequire(ParamValidationExtensions.RequireGreaterEqual, value, expected, wrongValues);
-        
+
         private static void InternalRequireLess<T>(T value, T expected, params T[] wrongValues)
             where T : IComparable<T> =>
             InternalRequire(ParamValidationExtensions.RequireLess, value, expected, wrongValues);
-        
+
         private static void InternalRequireLessEqual<T>(T value, T expected, params T[] wrongValues)
             where T : IComparable<T> =>
             InternalRequire(ParamValidationExtensions.RequireLessEqual, value, expected, wrongValues);
@@ -42,7 +42,7 @@ namespace _Fixtures.Sammlung
             InternalRequireGreater(value, expected, wrongValues.Select(Convert.ToDouble).ToArray());
             InternalRequireGreater(value, expected, wrongValues.Select(Convert.ToDecimal).ToArray());
         }
-        
+
         [TestCase(5, 4, 6)]
         public void RequireGreaterEqual(int value, int expected, params int[] wrongValues)
         {
@@ -51,7 +51,7 @@ namespace _Fixtures.Sammlung
             InternalRequireGreaterEqual(value, expected, wrongValues.Select(Convert.ToDouble).ToArray());
             InternalRequireGreaterEqual(value, expected, wrongValues.Select(Convert.ToDecimal).ToArray());
         }
-        
+
         [TestCase(5, 6, 5, 3)]
         public void RequireLess(int value, int expected, params int[] wrongValues)
         {
@@ -60,7 +60,7 @@ namespace _Fixtures.Sammlung
             InternalRequireLess(value, expected, wrongValues.Select(Convert.ToDouble).ToArray());
             InternalRequireLess(value, expected, wrongValues.Select(Convert.ToDecimal).ToArray());
         }
-        
+
         [TestCase(5, 6, 2, 3)]
         public void RequireLessEqual(int value, int expected, params int[] wrongValues)
         {
@@ -84,6 +84,13 @@ namespace _Fixtures.Sammlung
             Assert.Throws<ArgumentOutOfRangeException>(() => string.Empty.RequireNotNullOrEmpty("ParamName"));
             Assert.Throws<ArgumentOutOfRangeException>(() => "".RequireNotNullOrEmpty("ParamName"));
             Assert.DoesNotThrow(() => "ANY".RequireNotNull("ParamName"));
+        }
+
+        [Test]
+        public void ComparisonExtensions_IsEqual([Range(0, 50)] int value)
+        {
+            Assert.IsTrue(value.IsEqual(value));
+            Assert.IsFalse(value.IsEqual(-value - 1));
         }
     }
 }
