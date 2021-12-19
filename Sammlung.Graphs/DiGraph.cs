@@ -66,6 +66,14 @@ namespace Sammlung.Graphs
                 ? outEdges
                 : Enumerable.Empty<IEdge<T, TWeight>>();
 
+        private static void InternalAddEdge(HashSet<T> vertices, IDictionary<T, HashSet<IEdge<T, TWeight>>> edgeLookup, T vertex, IEdge<T, TWeight> edge)
+        {
+            vertices.Add(vertex);
+            if (!edgeLookup.TryGetValue(vertex, out var edges))
+                edgeLookup[vertex] = edges = new HashSet<IEdge<T, TWeight>>();
+            edges.Add(edge);
+        }
+
         /// <inheritdoc />
         public IEdge<T, TWeight> AddEdge(T source, T target) =>
             AddEdge(source, target, DefaultEdgeWeight);
@@ -75,15 +83,8 @@ namespace Sammlung.Graphs
         {
             IEdge<T, TWeight> edge = new Edge<T, TWeight>(source, target, weight);
 
-            _vertices.Add(source);
-            if (!_outgoingEdges.TryGetValue(source, out var outEdges))
-                _outgoingEdges[source] = outEdges = new HashSet<IEdge<T, TWeight>>();
-            outEdges.Add(edge);
-
-            _vertices.Add(target);
-            if (!_incomingEdges.TryGetValue(target, out var inEdges))
-                _incomingEdges[target] = inEdges = new HashSet<IEdge<T, TWeight>>();
-            inEdges.Add(edge);
+            InternalAddEdge(_vertices, _outgoingEdges, source, edge);
+            InternalAddEdge(_vertices, _incomingEdges, target, edge);
 
             return edge;
         }
