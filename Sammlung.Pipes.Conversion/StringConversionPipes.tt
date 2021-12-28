@@ -1,0 +1,94 @@
+<#@ template language="C#" #>
+<#@ output encoding="utf-8" extension=".gen.cs" #>
+<#@ import namespace="System.Reflection" #>
+<#@ import namespace="System.Globalization" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ include file="GenInfo.ttinclude" #>
+<#
+    var primitiveTypes = new[]
+    {
+        GenInfo.Create<bool>("bool", false),
+        GenInfo.Create<char>("char", false),
+        GenInfo.Create<decimal>("decimal"),
+        GenInfo.Create<double>("double"),
+        GenInfo.Create<float>("float"),
+        GenInfo.Create<int>("int"),
+        GenInfo.Create<uint>("uint"),
+        GenInfo.Create<long>("long"),
+        GenInfo.Create<ulong>("ulong"),
+        GenInfo.Create<short>("short"),
+        GenInfo.Create<ushort>("ushort"),
+    };
+    WriteLine("using System;");
+    WriteLine("using System.Globalization;");
+    WriteLine("");
+    WriteLine("namespace Sammlung.Pipes.Conversion {");
+    
+    foreach (var info in primitiveTypes)
+    {
+        var keywordName = info.KeywordName;
+        var name = info.Name;
+        var className = $"{name}ConvertStringPipe";
+#>
+    /// <summary>
+    /// The <see cref="<#=className#>" /> pipe converts a <#=keywordName#> to a string and vice-versa using the
+    /// <see cref="IFormatProvider" /> passed into the constructor.
+    /// </summary>
+    public class <#=className#> : IBiDiPipe<<#=keywordName#>, string> {
+<#
+        if (info.IsNumber)
+        {
+            PushIndent(new string(' ', 8));
+            WriteLine("private readonly string _formatString;");
+            PopIndent();
+        }
+#>
+        private readonly IFormatProvider _formatProvider;
+        
+        /// <summary>
+        /// Creates a new <see cref="<#=className#>" /> using a <see cref="IFormatProvider" />.
+        /// When not set the <see cref="CultureInfo.InvariantCulture" /> is used.
+        /// </summary>
+<#
+        PushIndent(new string(' ', 8));
+        Write($"public {className}(");
+        if (info.IsNumber) Write("string formatString = null, ");
+        Write("IFormatProvider formatProvider = null");
+        WriteLine(")");
+        WriteLine("{");
+        
+        PushIndent(new string(' ', 4));
+        if (info.IsNumber)
+            WriteLine("_formatString = formatString;");
+        WriteLine("_formatProvider = formatProvider ?? CultureInfo.InvariantCulture;");
+        PopIndent();
+        
+        WriteLine("}");
+        PopIndent();
+#>
+
+        /// <inheritdoc />
+        public string ProcessForward(<#=keywordName#> input)
+<#
+        PushIndent(new string(' ', 12));
+        WriteLine(!info.IsNumber
+            ? "=> input.ToString(_formatProvider);"
+            : "=> input.ToString(_formatString, _formatProvider);");
+        PopIndent();
+#>
+
+        /// <inheritdoc />
+        public <#=keywordName#> ProcessReverse(string input)
+<#
+        PushIndent(new string(' ', 12));
+        WriteLine(!info.IsNumber
+            ? $"=> {keywordName}.Parse(input);"
+            : $"=> {keywordName}.Parse(input, NumberStyles.Any, _formatProvider);");
+        PopIndent();
+#>
+    }
+
+<#
+    }
+    WriteLine("}");
+#>

@@ -20,6 +20,7 @@
       <ProjectReference Include="..\Sammlung.Graphs.Algorithms\Sammlung.Graphs.Algorithms.csproj" />
       <ProjectReference Include="..\Sammlung.Graphs\Sammlung.Graphs.csproj" />
       <ProjectReference Include="..\Sammlung.Numerics\Sammlung.Numerics.csproj" />
+      <ProjectReference Include="..\Sammlung.Pipes.Conversion\Sammlung.Pipes.Conversion.csproj" />
       <ProjectReference Include="..\Sammlung.Werkzeug\Sammlung.Werkzeug.csproj" />
     </ItemGroup>
 
