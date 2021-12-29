@@ -8,7 +8,7 @@ namespace Sammlung.Pipes.SpecialPipes
     /// </summary>
     /// <typeparam name="TSource">the source type</typeparam>
     /// <typeparam name="TTarget">the target type</typeparam>
-    internal class InvertedBiDiPipe<TSource, TTarget> : IBiDiPipe<TTarget, TSource>
+    internal class InvertedBiDiPipe<TSource, TTarget> : BiDiPipeDecorator<TTarget, TSource>
     {
         private readonly IBiDiPipe<TSource, TTarget> _pipe;
 
@@ -22,9 +22,9 @@ namespace Sammlung.Pipes.SpecialPipes
         }
 
         /// <inheritdoc />
-        public TSource ProcessForward(TTarget input) => _pipe.ProcessReverse(input);
+        public override TSource ProcessForward(TTarget input) => _pipe.ProcessReverse(input);
 
         /// <inheritdoc />
-        public TTarget ProcessReverse(TSource input) => _pipe.ProcessForward(input);
+        public override TTarget ProcessReverse(TSource input) => _pipe.ProcessForward(input);
     }
 }

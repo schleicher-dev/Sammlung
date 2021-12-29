@@ -50,8 +50,8 @@ namespace _Fixtures.Sammlung
         {
             var lhsPipe = new DoubleConvertStringPipe(Format, CultureInfo.InvariantCulture);
             var rhsPipe = new DoubleConvertStringPipe(Format, CultureInfo.InvariantCulture);
-            var fwdComposite = lhsPipe.ForwardPipe().Combine(rhsPipe.ReversePipe());
-            var revComposite = lhsPipe.ReversePipe().Combine(rhsPipe.ForwardPipe());
+            var fwdComposite = lhsPipe.ForwardPipe().CreateBiDiPipe(rhsPipe.ReversePipe());
+            var revComposite = lhsPipe.ReversePipe().CreateBiDiPipe(rhsPipe.ForwardPipe());
             var identity = fwdComposite.Concat(revComposite);
             
             Assert.AreEqual(value, identity.ProcessForward(value), Tolerance);
