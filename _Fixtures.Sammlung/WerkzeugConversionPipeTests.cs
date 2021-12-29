@@ -1,5 +1,6 @@
 using System;
 using System.Globalization;
+using _Fixtures.Sammlung.Extras;
 using NUnit.Framework;
 using Sammlung.Pipes;
 using Sammlung.Pipes.Werkzeug.Converters;
@@ -223,6 +224,15 @@ namespace _Fixtures.Sammlung
             Assert.AreEqual("a", pipe.ProcessForward('a'));
             Assert.AreEqual('a', pipe.ProcessReverse("a"));
             Assert.Throws<FormatException>(() => _ = pipe.ProcessReverse("abc"));
+        }
+
+        [Test]
+        public void EnumToStringConversionTests([Random(0, VeryBigEnumConstants.NumVariables, 200)] int value)
+        {
+            var enumValue = (VeryBigEnum)value;
+            var pipe = new EnumConvertStringPipe<VeryBigEnum>();
+            var identityPipe = pipe.ForwardPipe().Concat(pipe.ReversePipe());
+            Assert.AreEqual(enumValue, identityPipe.Process(enumValue));
         }
     }
 }
