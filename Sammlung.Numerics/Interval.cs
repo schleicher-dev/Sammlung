@@ -36,7 +36,7 @@ namespace Sammlung.Numerics
             var lowerValueStr = lowerBound != null ? string.Format(CultureInfo.InvariantCulture, "{0}{1}", lowerBound.Inclusive ? "[" : "(", lowerBound.Value) : "(-Inf";
             var upperValueStr = upperBound != null ? string.Format(CultureInfo.InvariantCulture, "{0}{1}", upperBound.Value, upperBound.Inclusive ? "]" : ")") : "+Inf)";
 
-            return $"{lowerValueStr}, {upperValueStr}";
+            return $"{lowerValueStr}; {upperValueStr}";
         }
 
         private static bool IsValidInterval(Bound<T> lowerBound, Bound<T> upperBound) =>

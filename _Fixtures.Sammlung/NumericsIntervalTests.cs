@@ -14,13 +14,13 @@ namespace _Fixtures.Sammlung
             var lowerUnbounded = Interval.Create(Bound.Empty<int>(), Bound.Exclusive(0));
             Assert.IsTrue(lowerUnbounded.Contains(int.MinValue));
             Assert.IsFalse(lowerUnbounded.Contains(0));
-            Assert.AreEqual("(-Inf, 0)", lowerUnbounded.ToString());
+            Assert.AreEqual("(-Inf; 0)", lowerUnbounded.ToString());
 
             var upperUnbounded = Interval.Create(Bound.Inclusive(0), Bound.Empty<int>());
             Assert.IsTrue(upperUnbounded.Contains(int.MaxValue));
             Assert.IsTrue(upperUnbounded.Contains(0));
             Assert.IsFalse(upperUnbounded.Contains(-1));
-            Assert.AreEqual("[0, +Inf)", upperUnbounded.ToString());
+            Assert.AreEqual("[0; +Inf)", upperUnbounded.ToString());
         }
 
         [TestCase(1, true, 1, true)]

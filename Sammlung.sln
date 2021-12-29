@@ -38,7 +38,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sammlung.Numerics", "Sammlu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sammlung.Pipes", "Sammlung.Pipes\Sammlung.Pipes.csproj", "{48809900-8ABB-4EF4-A8D9-4D65ACFE0306}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sammlung.Pipes.Conversion", "Sammlung.Pipes.Conversion\Sammlung.Pipes.Conversion.csproj", "{50CBFE3F-0E45-4FF0-BA8C-770E3853E1D6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sammlung.Pipes.Werkzeug", "Sammlung.Pipes.Werkzeug\Sammlung.Pipes.Werkzeug.csproj", "{162936FD-7155-4421-88F2-831FA170A854}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -98,9 +98,9 @@ Global
 		{48809900-8ABB-4EF4-A8D9-4D65ACFE0306}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{48809900-8ABB-4EF4-A8D9-4D65ACFE0306}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{48809900-8ABB-4EF4-A8D9-4D65ACFE0306}.Release|Any CPU.Build.0 = Release|Any CPU
-		{50CBFE3F-0E45-4FF0-BA8C-770E3853E1D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{50CBFE3F-0E45-4FF0-BA8C-770E3853E1D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{50CBFE3F-0E45-4FF0-BA8C-770E3853E1D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{50CBFE3F-0E45-4FF0-BA8C-770E3853E1D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{162936FD-7155-4421-88F2-831FA170A854}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{162936FD-7155-4421-88F2-831FA170A854}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{162936FD-7155-4421-88F2-831FA170A854}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{162936FD-7155-4421-88F2-831FA170A854}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

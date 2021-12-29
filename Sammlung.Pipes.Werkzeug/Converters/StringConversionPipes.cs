@@ -1,12 +1,12 @@
-﻿
-using System;
+﻿using System;
 using System.Globalization;
 
-namespace Sammlung.Pipes.Conversion {
+namespace Sammlung.Pipes.Werkzeug.Converters {
     /// <summary>
     /// The <see cref="BooleanConvertStringPipe" /> pipe converts a bool to a string and vice-versa using the
     /// <see cref="IFormatProvider" /> passed into the constructor.
     /// </summary>
+    [JetBrains.Annotations.PublicAPI]
     public class BooleanConvertStringPipe : IBiDiPipe<bool, string> {
         private readonly IFormatProvider _formatProvider;
         
@@ -32,6 +32,7 @@ namespace Sammlung.Pipes.Conversion {
     /// The <see cref="CharConvertStringPipe" /> pipe converts a char to a string and vice-versa using the
     /// <see cref="IFormatProvider" /> passed into the constructor.
     /// </summary>
+    [JetBrains.Annotations.PublicAPI]
     public class CharConvertStringPipe : IBiDiPipe<char, string> {
         private readonly IFormatProvider _formatProvider;
         
@@ -57,6 +58,7 @@ namespace Sammlung.Pipes.Conversion {
     /// The <see cref="DecimalConvertStringPipe" /> pipe converts a decimal to a string and vice-versa using the
     /// <see cref="IFormatProvider" /> passed into the constructor.
     /// </summary>
+    [JetBrains.Annotations.PublicAPI]
     public class DecimalConvertStringPipe : IBiDiPipe<decimal, string> {
         private readonly string _formatString;
         private readonly IFormatProvider _formatProvider;
@@ -84,6 +86,7 @@ namespace Sammlung.Pipes.Conversion {
     /// The <see cref="DoubleConvertStringPipe" /> pipe converts a double to a string and vice-versa using the
     /// <see cref="IFormatProvider" /> passed into the constructor.
     /// </summary>
+    [JetBrains.Annotations.PublicAPI]
     public class DoubleConvertStringPipe : IBiDiPipe<double, string> {
         private readonly string _formatString;
         private readonly IFormatProvider _formatProvider;
@@ -111,6 +114,7 @@ namespace Sammlung.Pipes.Conversion {
     /// The <see cref="SingleConvertStringPipe" /> pipe converts a float to a string and vice-versa using the
     /// <see cref="IFormatProvider" /> passed into the constructor.
     /// </summary>
+    [JetBrains.Annotations.PublicAPI]
     public class SingleConvertStringPipe : IBiDiPipe<float, string> {
         private readonly string _formatString;
         private readonly IFormatProvider _formatProvider;
@@ -138,6 +142,7 @@ namespace Sammlung.Pipes.Conversion {
     /// The <see cref="Int32ConvertStringPipe" /> pipe converts a int to a string and vice-versa using the
     /// <see cref="IFormatProvider" /> passed into the constructor.
     /// </summary>
+    [JetBrains.Annotations.PublicAPI]
     public class Int32ConvertStringPipe : IBiDiPipe<int, string> {
         private readonly string _formatString;
         private readonly IFormatProvider _formatProvider;
@@ -165,6 +170,7 @@ namespace Sammlung.Pipes.Conversion {
     /// The <see cref="UInt32ConvertStringPipe" /> pipe converts a uint to a string and vice-versa using the
     /// <see cref="IFormatProvider" /> passed into the constructor.
     /// </summary>
+    [JetBrains.Annotations.PublicAPI]
     public class UInt32ConvertStringPipe : IBiDiPipe<uint, string> {
         private readonly string _formatString;
         private readonly IFormatProvider _formatProvider;
@@ -192,6 +198,7 @@ namespace Sammlung.Pipes.Conversion {
     /// The <see cref="Int64ConvertStringPipe" /> pipe converts a long to a string and vice-versa using the
     /// <see cref="IFormatProvider" /> passed into the constructor.
     /// </summary>
+    [JetBrains.Annotations.PublicAPI]
     public class Int64ConvertStringPipe : IBiDiPipe<long, string> {
         private readonly string _formatString;
         private readonly IFormatProvider _formatProvider;
@@ -219,6 +226,7 @@ namespace Sammlung.Pipes.Conversion {
     /// The <see cref="UInt64ConvertStringPipe" /> pipe converts a ulong to a string and vice-versa using the
     /// <see cref="IFormatProvider" /> passed into the constructor.
     /// </summary>
+    [JetBrains.Annotations.PublicAPI]
     public class UInt64ConvertStringPipe : IBiDiPipe<ulong, string> {
         private readonly string _formatString;
         private readonly IFormatProvider _formatProvider;
@@ -246,6 +254,7 @@ namespace Sammlung.Pipes.Conversion {
     /// The <see cref="Int16ConvertStringPipe" /> pipe converts a short to a string and vice-versa using the
     /// <see cref="IFormatProvider" /> passed into the constructor.
     /// </summary>
+    [JetBrains.Annotations.PublicAPI]
     public class Int16ConvertStringPipe : IBiDiPipe<short, string> {
         private readonly string _formatString;
         private readonly IFormatProvider _formatProvider;
@@ -273,6 +282,7 @@ namespace Sammlung.Pipes.Conversion {
     /// The <see cref="UInt16ConvertStringPipe" /> pipe converts a ushort to a string and vice-versa using the
     /// <see cref="IFormatProvider" /> passed into the constructor.
     /// </summary>
+    [JetBrains.Annotations.PublicAPI]
     public class UInt16ConvertStringPipe : IBiDiPipe<ushort, string> {
         private readonly string _formatString;
         private readonly IFormatProvider _formatProvider;

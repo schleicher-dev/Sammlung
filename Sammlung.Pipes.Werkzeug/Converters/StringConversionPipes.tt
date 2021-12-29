@@ -1,5 +1,5 @@
 <#@ template language="C#" #>
-<#@ output encoding="utf-8" extension=".gen.cs" #>
+<#@ output encoding="utf-8" extension=".cs" #>
 <#@ import namespace="System.Reflection" #>
 <#@ import namespace="System.Globalization" #>
 <#@ import namespace="System.Collections.Generic" #>
@@ -22,7 +22,7 @@
     WriteLine("using System;");
     WriteLine("using System.Globalization;");
     WriteLine("");
-    WriteLine("namespace Sammlung.Pipes.Conversion {");
+    WriteLine("namespace Sammlung.Pipes.Werkzeug.Converters {");
     
     foreach (var info in primitiveTypes)
     {
@@ -34,6 +34,7 @@
     /// The <see cref="<#=className#>" /> pipe converts a <#=keywordName#> to a string and vice-versa using the
     /// <see cref="IFormatProvider" /> passed into the constructor.
     /// </summary>
+    [JetBrains.Annotations.PublicAPI]
     public class <#=className#> : IBiDiPipe<<#=keywordName#>, string> {
 <#
         if (info.IsNumber)

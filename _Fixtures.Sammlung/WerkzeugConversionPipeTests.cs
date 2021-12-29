@@ -2,13 +2,13 @@ using System;
 using System.Globalization;
 using NUnit.Framework;
 using Sammlung.Pipes;
-using Sammlung.Pipes.Conversion;
+using Sammlung.Pipes.Werkzeug.Converters;
 
 namespace _Fixtures.Sammlung
 {
     [ExcludeFromCodeCoverage]
     [TestFixture]
-    public class ConversionPipeTests
+    public class WerkzeugConversionPipeTests
     {
         private const string GermanCulture = "de-de";
         
