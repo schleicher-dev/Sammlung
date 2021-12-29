@@ -86,5 +86,14 @@ namespace Sammlung.Pipes.Werkzeug.Resources {
                 return ResourceManager.GetString("Validation_Interval_Exc_SingleInterval", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expected value {0} to match regular expression {1}..
+        /// </summary>
+        internal static string Validation_Regex_Exc_Reason {
+            get {
+                return ResourceManager.GetString("Validation_Regex_Exc_Reason", resourceCulture);
+            }
+        }
     }
 }

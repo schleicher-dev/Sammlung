@@ -22,8 +22,6 @@ namespace Sammlung.Pipes.Werkzeug.Validators
         /// <returns>the pipe</returns>
         public static IBiDiPipe<T, T> Create<T>(params Interval<T>[] intervals) 
             where T : IComparable<T> => new IntervalValidatorPipe<T>(intervals);
-        
-        
     }
     
     /// <summary>
@@ -31,7 +29,7 @@ namespace Sammlung.Pipes.Werkzeug.Validators
     /// </summary>
     /// <typeparam name="T">the value type</typeparam>
     [JetBrains.Annotations.PublicAPI]
-    public class IntervalValidatorPipe<T> : IBiDiPipe<T, T> where T : IComparable<T>
+    public class IntervalValidatorPipe<T> : ValidatorPipeBase<T> where T : IComparable<T>
     {
         private readonly Interval<T>[] _intervals;
 
@@ -51,20 +49,16 @@ namespace Sammlung.Pipes.Werkzeug.Validators
             var intervalList = string.Join(", ", _intervals.Select(i => i.ToString()).ToArray());
             return string.Format(Lang.Validation_Interval_Exc_MultiInterval, intervalList);
         }
-
-        private PipelineValidationException GetValidationException(T value)
+        
+        /// <inheritdoc />
+        protected override PipelineValidationException GetException(T value)
         {
             var message = string.Format(Lang.Validation_Interval_Exc_Reason, value, GetIntervalErrorMessage());
             return new PipelineValidationException(message);
         }
 
-        private T Validate(T value) =>
-            _intervals.Any(i => i.Contains(value)) ? value : throw GetValidationException(value);
-
         /// <inheritdoc />
-        public T ProcessForward(T input) => Validate(input);
+        protected override bool TryValidate(T value) =>_intervals.Any(i => i.Contains(value));
 
-        /// <inheritdoc />
-        public T ProcessReverse(T input) => Validate(input);
     }
 }

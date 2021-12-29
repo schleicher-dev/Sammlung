@@ -27,4 +27,7 @@
     <data name="Validation_Interval_Exc_MultiInterval" xml:space="preserve">
         <value>in one of the intervals {0}</value>
     </data>
+    <data name="Validation_Regex_Exc_Reason" xml:space="preserve">
+        <value>Expected value {0} to match regular expression {1}.</value>
+    </data>
 </root>
