@@ -21,10 +21,10 @@ namespace _Fixtures.Sammlung
         private const double UpperFloatTestValue = 1234.25f;
         private const double LowerFloatTestValue = -1234.25f;
 
-        private static void AssertResults<T>(IBiDiPipe<T, string> pipe, T input, string output)
+        private static void AssertResults<T>(IBiDiPipe<string, T> pipe, T input, string output)
         {
-            Assert.AreEqual(output, pipe.ProcessForward(input));
-            Assert.AreEqual(input, pipe.ProcessReverse(output));
+            Assert.AreEqual(output, pipe.ProcessReverse(input));
+            Assert.AreEqual(input, pipe.ProcessForward(output));
         }
         
         [TestCase(null, null, 0, "0")]
@@ -50,9 +50,9 @@ namespace _Fixtures.Sammlung
             var formatProvider = cultureName == null
                 ? CultureInfo.InvariantCulture
                 : CultureInfo.GetCultureInfo(cultureName);
-            var sglPipe = new SingleConvertStringPipe(format, formatProvider);
-            var dblPipe = new DoubleConvertStringPipe(format, formatProvider);
-            var dcmPipe = new DecimalConvertStringPipe(format, formatProvider);
+            var sglPipe = new StringToSingleConverterPipe(format, formatProvider);
+            var dblPipe = new StringToDoubleConverterPipe(format, formatProvider);
+            var dcmPipe = new StringToDecimalConverterPipe(format, formatProvider);
             
             AssertResults(sglPipe, (float) input, output);
             AssertResults(dblPipe, input, output);
@@ -82,7 +82,7 @@ namespace _Fixtures.Sammlung
             var formatProvider = cultureName == null
                 ? CultureInfo.InvariantCulture
                 : CultureInfo.GetCultureInfo(cultureName);
-            var pipe = new Int16ConvertStringPipe(format, formatProvider);
+            var pipe = new StringToInt16ConverterPipe(format, formatProvider);
             AssertResults(pipe, input, output);
         }
 
@@ -103,7 +103,7 @@ namespace _Fixtures.Sammlung
             var formatProvider = cultureName == null
                 ? CultureInfo.InvariantCulture
                 : CultureInfo.GetCultureInfo(cultureName);
-            var pipe = new UInt16ConvertStringPipe(format, formatProvider);
+            var pipe = new StringToUInt16ConverterPipe(format, formatProvider);
             AssertResults(pipe, input, output);
         }
         
@@ -130,7 +130,7 @@ namespace _Fixtures.Sammlung
             var formatProvider = cultureName == null
                 ? CultureInfo.InvariantCulture
                 : CultureInfo.GetCultureInfo(cultureName);
-            var pipe = new Int32ConvertStringPipe(format, formatProvider);
+            var pipe = new StringToInt32ConverterPipe(format, formatProvider);
             AssertResults(pipe, input, output);
         }
 
@@ -151,7 +151,7 @@ namespace _Fixtures.Sammlung
             var formatProvider = cultureName == null
                 ? CultureInfo.InvariantCulture
                 : CultureInfo.GetCultureInfo(cultureName);
-            var pipe = new UInt32ConvertStringPipe(format, formatProvider);
+            var pipe = new StringToUInt32ConverterPipe(format, formatProvider);
             AssertResults(pipe, input, output);
         }
         
@@ -178,7 +178,7 @@ namespace _Fixtures.Sammlung
             var formatProvider = cultureName == null
                 ? CultureInfo.InvariantCulture
                 : CultureInfo.GetCultureInfo(cultureName);
-            var pipe = new Int64ConvertStringPipe(format, formatProvider);
+            var pipe = new StringToInt64ConverterPipe(format, formatProvider);
             AssertResults(pipe, input, output);
         }
 
@@ -199,39 +199,39 @@ namespace _Fixtures.Sammlung
             var formatProvider = cultureName == null
                 ? CultureInfo.InvariantCulture
                 : CultureInfo.GetCultureInfo(cultureName);
-            var pipe = new UInt64ConvertStringPipe(format, formatProvider);
+            var pipe = new StringToUInt64ConverterPipe(format, formatProvider);
             AssertResults(pipe, input, output);
         }
 
         [Test]
         public void BooleanToStringConversionTests()
         {
-            var pipe = new BooleanConvertStringPipe(CultureInfo.InvariantCulture);
+            var pipe = new StringToBooleanConverterPipe(CultureInfo.InvariantCulture);
 
-            Assert.AreEqual("True", pipe.ProcessForward(true));
-            Assert.AreEqual("False", pipe.ProcessForward(false));
-            Assert.AreEqual(true, pipe.ProcessReverse("True"));
-            Assert.AreEqual(false, pipe.ProcessReverse("False"));
-            Assert.AreEqual(true, pipe.ProcessReverse(bool.TrueString));
-            Assert.AreEqual(false, pipe.ProcessReverse(bool.FalseString));
+            Assert.AreEqual(true, pipe.ProcessForward("True"));
+            Assert.AreEqual(false, pipe.ProcessForward("False"));
+            Assert.AreEqual(true, pipe.ProcessForward(bool.TrueString));
+            Assert.AreEqual(false, pipe.ProcessForward(bool.FalseString));
+            Assert.AreEqual("True", pipe.ProcessReverse(true));
+            Assert.AreEqual("False", pipe.ProcessReverse(false));
         }
 
         [Test]
         public void CharToStringConversionTests()
         {
-            var pipe = new CharConvertStringPipe(CultureInfo.InvariantCulture);
+            var pipe = new StringToCharConverterPipe(CultureInfo.InvariantCulture);
             
-            Assert.AreEqual("a", pipe.ProcessForward('a'));
-            Assert.AreEqual('a', pipe.ProcessReverse("a"));
-            Assert.Throws<FormatException>(() => _ = pipe.ProcessReverse("abc"));
+            Assert.AreEqual('a', pipe.ProcessForward("a"));
+            Assert.Throws<FormatException>(() => _ = pipe.ProcessForward("abc"));
+            Assert.AreEqual("a", pipe.ProcessReverse('a'));
         }
 
         [Test]
         public void EnumToStringConversionTests([Random(0, VeryBigEnumConstants.NumVariables, 200)] int value)
         {
             var enumValue = (VeryBigEnum)value;
-            var pipe = new EnumConvertStringPipe<VeryBigEnum>();
-            var identityPipe = pipe.ForwardPipe().Concat(pipe.ReversePipe());
+            var pipe = new StringToEnumConverterPipe<VeryBigEnum>();
+            var identityPipe = pipe.ReversePipe().Concat(pipe.ForwardPipe());
             Assert.AreEqual(enumValue, identityPipe.Process(enumValue));
         }
     }

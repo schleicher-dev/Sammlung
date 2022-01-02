@@ -1,309 +1,310 @@
-﻿using System;
+﻿
+using System;
 using System.Globalization;
 
 namespace Sammlung.Pipes.Werkzeug.Converters {
     /// <summary>
-    /// The <see cref="BooleanConvertStringPipe" /> pipe converts a bool to a string and vice-versa using the
+    /// The <see cref="StringToBooleanConverterPipe" /> pipe converts a bool to a string and vice-versa using the
     /// <see cref="IFormatProvider" /> passed into the constructor.
     /// </summary>
     [JetBrains.Annotations.PublicAPI]
-    public class BooleanConvertStringPipe : IBiDiPipe<bool, string> {
+    public class StringToBooleanConverterPipe : IBiDiPipe<string, bool> {
         private readonly IFormatProvider _formatProvider;
         
         /// <summary>
-        /// Creates a new <see cref="BooleanConvertStringPipe" /> using a <see cref="IFormatProvider" />.
+        /// Creates a new <see cref="StringToBooleanConverterPipe" /> using a <see cref="IFormatProvider" />.
         /// When not set the <see cref="CultureInfo.InvariantCulture" /> is used.
         /// </summary>
-        public BooleanConvertStringPipe(IFormatProvider formatProvider = null)
+        public StringToBooleanConverterPipe(IFormatProvider formatProvider = null)
         {
             _formatProvider = formatProvider ?? CultureInfo.InvariantCulture;
         }
 
         /// <inheritdoc />
-        public string ProcessForward(bool input)
-            => input.ToString(_formatProvider);
-
-        /// <inheritdoc />
-        public bool ProcessReverse(string input)
+        public bool ProcessForward(string input)
             => bool.Parse(input);
-    }
-
-    /// <summary>
-    /// The <see cref="CharConvertStringPipe" /> pipe converts a char to a string and vice-versa using the
-    /// <see cref="IFormatProvider" /> passed into the constructor.
-    /// </summary>
-    [JetBrains.Annotations.PublicAPI]
-    public class CharConvertStringPipe : IBiDiPipe<char, string> {
-        private readonly IFormatProvider _formatProvider;
-        
-        /// <summary>
-        /// Creates a new <see cref="CharConvertStringPipe" /> using a <see cref="IFormatProvider" />.
-        /// When not set the <see cref="CultureInfo.InvariantCulture" /> is used.
-        /// </summary>
-        public CharConvertStringPipe(IFormatProvider formatProvider = null)
-        {
-            _formatProvider = formatProvider ?? CultureInfo.InvariantCulture;
-        }
 
         /// <inheritdoc />
-        public string ProcessForward(char input)
+        public string ProcessReverse(bool input)
             => input.ToString(_formatProvider);
+    }
+
+    /// <summary>
+    /// The <see cref="StringToCharConverterPipe" /> pipe converts a char to a string and vice-versa using the
+    /// <see cref="IFormatProvider" /> passed into the constructor.
+    /// </summary>
+    [JetBrains.Annotations.PublicAPI]
+    public class StringToCharConverterPipe : IBiDiPipe<string, char> {
+        private readonly IFormatProvider _formatProvider;
+        
+        /// <summary>
+        /// Creates a new <see cref="StringToCharConverterPipe" /> using a <see cref="IFormatProvider" />.
+        /// When not set the <see cref="CultureInfo.InvariantCulture" /> is used.
+        /// </summary>
+        public StringToCharConverterPipe(IFormatProvider formatProvider = null)
+        {
+            _formatProvider = formatProvider ?? CultureInfo.InvariantCulture;
+        }
 
         /// <inheritdoc />
-        public char ProcessReverse(string input)
+        public char ProcessForward(string input)
             => char.Parse(input);
+
+        /// <inheritdoc />
+        public string ProcessReverse(char input)
+            => input.ToString(_formatProvider);
     }
 
     /// <summary>
-    /// The <see cref="DecimalConvertStringPipe" /> pipe converts a decimal to a string and vice-versa using the
+    /// The <see cref="StringToDecimalConverterPipe" /> pipe converts a decimal to a string and vice-versa using the
     /// <see cref="IFormatProvider" /> passed into the constructor.
     /// </summary>
     [JetBrains.Annotations.PublicAPI]
-    public class DecimalConvertStringPipe : IBiDiPipe<decimal, string> {
+    public class StringToDecimalConverterPipe : IBiDiPipe<string, decimal> {
         private readonly string _formatString;
         private readonly IFormatProvider _formatProvider;
         
         /// <summary>
-        /// Creates a new <see cref="DecimalConvertStringPipe" /> using a <see cref="IFormatProvider" />.
+        /// Creates a new <see cref="StringToDecimalConverterPipe" /> using a <see cref="IFormatProvider" />.
         /// When not set the <see cref="CultureInfo.InvariantCulture" /> is used.
         /// </summary>
-        public DecimalConvertStringPipe(string formatString = null, IFormatProvider formatProvider = null)
+        public StringToDecimalConverterPipe(string formatString = null, IFormatProvider formatProvider = null)
         {
             _formatString = formatString;
             _formatProvider = formatProvider ?? CultureInfo.InvariantCulture;
         }
 
         /// <inheritdoc />
-        public string ProcessForward(decimal input)
-            => input.ToString(_formatString, _formatProvider);
-
-        /// <inheritdoc />
-        public decimal ProcessReverse(string input)
+        public decimal ProcessForward(string input)
             => decimal.Parse(input, NumberStyles.Any, _formatProvider);
+
+        /// <inheritdoc />
+        public string ProcessReverse(decimal input)
+            => input.ToString(_formatString, _formatProvider);
     }
 
     /// <summary>
-    /// The <see cref="DoubleConvertStringPipe" /> pipe converts a double to a string and vice-versa using the
+    /// The <see cref="StringToDoubleConverterPipe" /> pipe converts a double to a string and vice-versa using the
     /// <see cref="IFormatProvider" /> passed into the constructor.
     /// </summary>
     [JetBrains.Annotations.PublicAPI]
-    public class DoubleConvertStringPipe : IBiDiPipe<double, string> {
+    public class StringToDoubleConverterPipe : IBiDiPipe<string, double> {
         private readonly string _formatString;
         private readonly IFormatProvider _formatProvider;
         
         /// <summary>
-        /// Creates a new <see cref="DoubleConvertStringPipe" /> using a <see cref="IFormatProvider" />.
+        /// Creates a new <see cref="StringToDoubleConverterPipe" /> using a <see cref="IFormatProvider" />.
         /// When not set the <see cref="CultureInfo.InvariantCulture" /> is used.
         /// </summary>
-        public DoubleConvertStringPipe(string formatString = null, IFormatProvider formatProvider = null)
+        public StringToDoubleConverterPipe(string formatString = null, IFormatProvider formatProvider = null)
         {
             _formatString = formatString;
             _formatProvider = formatProvider ?? CultureInfo.InvariantCulture;
         }
 
         /// <inheritdoc />
-        public string ProcessForward(double input)
-            => input.ToString(_formatString, _formatProvider);
-
-        /// <inheritdoc />
-        public double ProcessReverse(string input)
+        public double ProcessForward(string input)
             => double.Parse(input, NumberStyles.Any, _formatProvider);
+
+        /// <inheritdoc />
+        public string ProcessReverse(double input)
+            => input.ToString(_formatString, _formatProvider);
     }
 
     /// <summary>
-    /// The <see cref="SingleConvertStringPipe" /> pipe converts a float to a string and vice-versa using the
+    /// The <see cref="StringToSingleConverterPipe" /> pipe converts a float to a string and vice-versa using the
     /// <see cref="IFormatProvider" /> passed into the constructor.
     /// </summary>
     [JetBrains.Annotations.PublicAPI]
-    public class SingleConvertStringPipe : IBiDiPipe<float, string> {
+    public class StringToSingleConverterPipe : IBiDiPipe<string, float> {
         private readonly string _formatString;
         private readonly IFormatProvider _formatProvider;
         
         /// <summary>
-        /// Creates a new <see cref="SingleConvertStringPipe" /> using a <see cref="IFormatProvider" />.
+        /// Creates a new <see cref="StringToSingleConverterPipe" /> using a <see cref="IFormatProvider" />.
         /// When not set the <see cref="CultureInfo.InvariantCulture" /> is used.
         /// </summary>
-        public SingleConvertStringPipe(string formatString = null, IFormatProvider formatProvider = null)
+        public StringToSingleConverterPipe(string formatString = null, IFormatProvider formatProvider = null)
         {
             _formatString = formatString;
             _formatProvider = formatProvider ?? CultureInfo.InvariantCulture;
         }
 
         /// <inheritdoc />
-        public string ProcessForward(float input)
-            => input.ToString(_formatString, _formatProvider);
-
-        /// <inheritdoc />
-        public float ProcessReverse(string input)
+        public float ProcessForward(string input)
             => float.Parse(input, NumberStyles.Any, _formatProvider);
+
+        /// <inheritdoc />
+        public string ProcessReverse(float input)
+            => input.ToString(_formatString, _formatProvider);
     }
 
     /// <summary>
-    /// The <see cref="Int32ConvertStringPipe" /> pipe converts a int to a string and vice-versa using the
+    /// The <see cref="StringToInt32ConverterPipe" /> pipe converts a int to a string and vice-versa using the
     /// <see cref="IFormatProvider" /> passed into the constructor.
     /// </summary>
     [JetBrains.Annotations.PublicAPI]
-    public class Int32ConvertStringPipe : IBiDiPipe<int, string> {
+    public class StringToInt32ConverterPipe : IBiDiPipe<string, int> {
         private readonly string _formatString;
         private readonly IFormatProvider _formatProvider;
         
         /// <summary>
-        /// Creates a new <see cref="Int32ConvertStringPipe" /> using a <see cref="IFormatProvider" />.
+        /// Creates a new <see cref="StringToInt32ConverterPipe" /> using a <see cref="IFormatProvider" />.
         /// When not set the <see cref="CultureInfo.InvariantCulture" /> is used.
         /// </summary>
-        public Int32ConvertStringPipe(string formatString = null, IFormatProvider formatProvider = null)
+        public StringToInt32ConverterPipe(string formatString = null, IFormatProvider formatProvider = null)
         {
             _formatString = formatString;
             _formatProvider = formatProvider ?? CultureInfo.InvariantCulture;
         }
 
         /// <inheritdoc />
-        public string ProcessForward(int input)
-            => input.ToString(_formatString, _formatProvider);
-
-        /// <inheritdoc />
-        public int ProcessReverse(string input)
+        public int ProcessForward(string input)
             => int.Parse(input, NumberStyles.Any, _formatProvider);
+
+        /// <inheritdoc />
+        public string ProcessReverse(int input)
+            => input.ToString(_formatString, _formatProvider);
     }
 
     /// <summary>
-    /// The <see cref="UInt32ConvertStringPipe" /> pipe converts a uint to a string and vice-versa using the
+    /// The <see cref="StringToUInt32ConverterPipe" /> pipe converts a uint to a string and vice-versa using the
     /// <see cref="IFormatProvider" /> passed into the constructor.
     /// </summary>
     [JetBrains.Annotations.PublicAPI]
-    public class UInt32ConvertStringPipe : IBiDiPipe<uint, string> {
+    public class StringToUInt32ConverterPipe : IBiDiPipe<string, uint> {
         private readonly string _formatString;
         private readonly IFormatProvider _formatProvider;
         
         /// <summary>
-        /// Creates a new <see cref="UInt32ConvertStringPipe" /> using a <see cref="IFormatProvider" />.
+        /// Creates a new <see cref="StringToUInt32ConverterPipe" /> using a <see cref="IFormatProvider" />.
         /// When not set the <see cref="CultureInfo.InvariantCulture" /> is used.
         /// </summary>
-        public UInt32ConvertStringPipe(string formatString = null, IFormatProvider formatProvider = null)
+        public StringToUInt32ConverterPipe(string formatString = null, IFormatProvider formatProvider = null)
         {
             _formatString = formatString;
             _formatProvider = formatProvider ?? CultureInfo.InvariantCulture;
         }
 
         /// <inheritdoc />
-        public string ProcessForward(uint input)
-            => input.ToString(_formatString, _formatProvider);
-
-        /// <inheritdoc />
-        public uint ProcessReverse(string input)
+        public uint ProcessForward(string input)
             => uint.Parse(input, NumberStyles.Any, _formatProvider);
+
+        /// <inheritdoc />
+        public string ProcessReverse(uint input)
+            => input.ToString(_formatString, _formatProvider);
     }
 
     /// <summary>
-    /// The <see cref="Int64ConvertStringPipe" /> pipe converts a long to a string and vice-versa using the
+    /// The <see cref="StringToInt64ConverterPipe" /> pipe converts a long to a string and vice-versa using the
     /// <see cref="IFormatProvider" /> passed into the constructor.
     /// </summary>
     [JetBrains.Annotations.PublicAPI]
-    public class Int64ConvertStringPipe : IBiDiPipe<long, string> {
+    public class StringToInt64ConverterPipe : IBiDiPipe<string, long> {
         private readonly string _formatString;
         private readonly IFormatProvider _formatProvider;
         
         /// <summary>
-        /// Creates a new <see cref="Int64ConvertStringPipe" /> using a <see cref="IFormatProvider" />.
+        /// Creates a new <see cref="StringToInt64ConverterPipe" /> using a <see cref="IFormatProvider" />.
         /// When not set the <see cref="CultureInfo.InvariantCulture" /> is used.
         /// </summary>
-        public Int64ConvertStringPipe(string formatString = null, IFormatProvider formatProvider = null)
+        public StringToInt64ConverterPipe(string formatString = null, IFormatProvider formatProvider = null)
         {
             _formatString = formatString;
             _formatProvider = formatProvider ?? CultureInfo.InvariantCulture;
         }
 
         /// <inheritdoc />
-        public string ProcessForward(long input)
-            => input.ToString(_formatString, _formatProvider);
-
-        /// <inheritdoc />
-        public long ProcessReverse(string input)
+        public long ProcessForward(string input)
             => long.Parse(input, NumberStyles.Any, _formatProvider);
+
+        /// <inheritdoc />
+        public string ProcessReverse(long input)
+            => input.ToString(_formatString, _formatProvider);
     }
 
     /// <summary>
-    /// The <see cref="UInt64ConvertStringPipe" /> pipe converts a ulong to a string and vice-versa using the
+    /// The <see cref="StringToUInt64ConverterPipe" /> pipe converts a ulong to a string and vice-versa using the
     /// <see cref="IFormatProvider" /> passed into the constructor.
     /// </summary>
     [JetBrains.Annotations.PublicAPI]
-    public class UInt64ConvertStringPipe : IBiDiPipe<ulong, string> {
+    public class StringToUInt64ConverterPipe : IBiDiPipe<string, ulong> {
         private readonly string _formatString;
         private readonly IFormatProvider _formatProvider;
         
         /// <summary>
-        /// Creates a new <see cref="UInt64ConvertStringPipe" /> using a <see cref="IFormatProvider" />.
+        /// Creates a new <see cref="StringToUInt64ConverterPipe" /> using a <see cref="IFormatProvider" />.
         /// When not set the <see cref="CultureInfo.InvariantCulture" /> is used.
         /// </summary>
-        public UInt64ConvertStringPipe(string formatString = null, IFormatProvider formatProvider = null)
+        public StringToUInt64ConverterPipe(string formatString = null, IFormatProvider formatProvider = null)
         {
             _formatString = formatString;
             _formatProvider = formatProvider ?? CultureInfo.InvariantCulture;
         }
 
         /// <inheritdoc />
-        public string ProcessForward(ulong input)
-            => input.ToString(_formatString, _formatProvider);
-
-        /// <inheritdoc />
-        public ulong ProcessReverse(string input)
+        public ulong ProcessForward(string input)
             => ulong.Parse(input, NumberStyles.Any, _formatProvider);
+
+        /// <inheritdoc />
+        public string ProcessReverse(ulong input)
+            => input.ToString(_formatString, _formatProvider);
     }
 
     /// <summary>
-    /// The <see cref="Int16ConvertStringPipe" /> pipe converts a short to a string and vice-versa using the
+    /// The <see cref="StringToInt16ConverterPipe" /> pipe converts a short to a string and vice-versa using the
     /// <see cref="IFormatProvider" /> passed into the constructor.
     /// </summary>
     [JetBrains.Annotations.PublicAPI]
-    public class Int16ConvertStringPipe : IBiDiPipe<short, string> {
+    public class StringToInt16ConverterPipe : IBiDiPipe<string, short> {
         private readonly string _formatString;
         private readonly IFormatProvider _formatProvider;
         
         /// <summary>
-        /// Creates a new <see cref="Int16ConvertStringPipe" /> using a <see cref="IFormatProvider" />.
+        /// Creates a new <see cref="StringToInt16ConverterPipe" /> using a <see cref="IFormatProvider" />.
         /// When not set the <see cref="CultureInfo.InvariantCulture" /> is used.
         /// </summary>
-        public Int16ConvertStringPipe(string formatString = null, IFormatProvider formatProvider = null)
+        public StringToInt16ConverterPipe(string formatString = null, IFormatProvider formatProvider = null)
         {
             _formatString = formatString;
             _formatProvider = formatProvider ?? CultureInfo.InvariantCulture;
         }
 
         /// <inheritdoc />
-        public string ProcessForward(short input)
-            => input.ToString(_formatString, _formatProvider);
-
-        /// <inheritdoc />
-        public short ProcessReverse(string input)
+        public short ProcessForward(string input)
             => short.Parse(input, NumberStyles.Any, _formatProvider);
+
+        /// <inheritdoc />
+        public string ProcessReverse(short input)
+            => input.ToString(_formatString, _formatProvider);
     }
 
     /// <summary>
-    /// The <see cref="UInt16ConvertStringPipe" /> pipe converts a ushort to a string and vice-versa using the
+    /// The <see cref="StringToUInt16ConverterPipe" /> pipe converts a ushort to a string and vice-versa using the
     /// <see cref="IFormatProvider" /> passed into the constructor.
     /// </summary>
     [JetBrains.Annotations.PublicAPI]
-    public class UInt16ConvertStringPipe : IBiDiPipe<ushort, string> {
+    public class StringToUInt16ConverterPipe : IBiDiPipe<string, ushort> {
         private readonly string _formatString;
         private readonly IFormatProvider _formatProvider;
         
         /// <summary>
-        /// Creates a new <see cref="UInt16ConvertStringPipe" /> using a <see cref="IFormatProvider" />.
+        /// Creates a new <see cref="StringToUInt16ConverterPipe" /> using a <see cref="IFormatProvider" />.
         /// When not set the <see cref="CultureInfo.InvariantCulture" /> is used.
         /// </summary>
-        public UInt16ConvertStringPipe(string formatString = null, IFormatProvider formatProvider = null)
+        public StringToUInt16ConverterPipe(string formatString = null, IFormatProvider formatProvider = null)
         {
             _formatString = formatString;
             _formatProvider = formatProvider ?? CultureInfo.InvariantCulture;
         }
 
         /// <inheritdoc />
-        public string ProcessForward(ushort input)
-            => input.ToString(_formatString, _formatProvider);
+        public ushort ProcessForward(string input)
+            => ushort.Parse(input, NumberStyles.Any, _formatProvider);
 
         /// <inheritdoc />
-        public ushort ProcessReverse(string input)
-            => ushort.Parse(input, NumberStyles.Any, _formatProvider);
+        public string ProcessReverse(ushort input)
+            => input.ToString(_formatString, _formatProvider);
     }
 
 }

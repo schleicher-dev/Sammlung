@@ -24,11 +24,17 @@
     </ItemGroup>
     <ItemGroup>
         <None Remove="Convertes\StringConversionPipes.tt" />
-        <TextTemplateTransformFiles Include="Converters\StringConversionPipes.tt" />
+        <TextTemplateTransformFiles Include="Converters\StringConversionPipes.tt">
+          <Generator>TextTemplatingFileGenerator</Generator>
+          <LastGenOutput>StringConversionPipes.cs</LastGenOutput>
+        </TextTemplateTransformFiles>
         <Compile Update="Resources\Lang.Designer.cs">
             <DesignTime>True</DesignTime>
             <AutoGen>True</AutoGen>
             <DependentUpon>Lang.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Converters\StringConversionPipes.cs">
+          <DependentUpon>StringConversionPipes.tt</DependentUpon>
         </Compile>
     </ItemGroup>
     <ItemGroup>
