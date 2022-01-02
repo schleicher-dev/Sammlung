@@ -12,12 +12,14 @@
         GenInfo.Create<decimal>("decimal"),
         GenInfo.Create<double>("double"),
         GenInfo.Create<float>("float"),
+        GenInfo.Create<sbyte>("sbyte"),
+        GenInfo.Create<byte>("byte"),
+        GenInfo.Create<short>("short"),
+        GenInfo.Create<ushort>("ushort"),
         GenInfo.Create<int>("int"),
         GenInfo.Create<uint>("uint"),
         GenInfo.Create<long>("long"),
         GenInfo.Create<ulong>("ulong"),
-        GenInfo.Create<short>("short"),
-        GenInfo.Create<ushort>("ushort"),
     };
     WriteLine("using System;");
     WriteLine("using System.Globalization;");

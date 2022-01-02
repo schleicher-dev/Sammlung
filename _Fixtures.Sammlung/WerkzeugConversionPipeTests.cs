@@ -202,6 +202,54 @@ namespace _Fixtures.Sammlung
             var pipe = new StringToUInt64ConverterPipe(format, formatProvider);
             AssertResults(pipe, input, output);
         }
+        
+        [TestCase(null, null, byte.MaxValue, "255")]
+        [TestCase(null, null, byte.MinValue, "0")]
+        [TestCase(null, IntWithSignFormat, byte.MaxValue, "+255")]
+        [TestCase(null, IntWithSignFormat, byte.MinValue, "0")]
+        [TestCase(null, IntWithGroupFormat, byte.MaxValue, "255")]
+        [TestCase(null, IntWithGroupFormat, byte.MinValue, "0")]
+        [TestCase(GermanCulture, null, byte.MaxValue, "255")]
+        [TestCase(GermanCulture, null, byte.MinValue, "0")]
+        [TestCase(GermanCulture, IntWithSignFormat, byte.MaxValue, "+255")]
+        [TestCase(GermanCulture, IntWithSignFormat, byte.MinValue, "0")]
+        [TestCase(GermanCulture, IntWithGroupFormat, byte.MaxValue, "255")]
+        [TestCase(GermanCulture, IntWithGroupFormat, byte.MinValue, "0")]
+        public void ByteToStringConversionTests(string cultureName, string format, byte input, string output)
+        {
+            var formatProvider = cultureName == null
+                ? CultureInfo.InvariantCulture
+                : CultureInfo.GetCultureInfo(cultureName);
+            var pipe = new StringToByteConverterPipe(format, formatProvider);
+            AssertResults(pipe, input, output);
+        }
+
+        [TestCase(null, null, 0, "0")]
+        [TestCase(null, null, sbyte.MaxValue, "127")]
+        [TestCase(null, null, sbyte.MinValue, "-128")]
+        [TestCase(null, IntWithSignFormat, 0, "0")]
+        [TestCase(null, IntWithSignFormat, sbyte.MaxValue, "+127")]
+        [TestCase(null, IntWithSignFormat, sbyte.MinValue, "-128")]
+        [TestCase(null, IntWithGroupFormat, 0, "0")]
+        [TestCase(null, IntWithGroupFormat, sbyte.MaxValue, "127")]
+        [TestCase(null, IntWithGroupFormat, sbyte.MinValue, "-128")]
+        [TestCase(GermanCulture, null, 0, "0")]
+        [TestCase(GermanCulture, null, sbyte.MaxValue, "127")]
+        [TestCase(GermanCulture, null, sbyte.MinValue, "-128")]
+        [TestCase(GermanCulture, IntWithSignFormat, 0, "0")]
+        [TestCase(GermanCulture, IntWithSignFormat, sbyte.MaxValue, "+127")]
+        [TestCase(GermanCulture, IntWithSignFormat, sbyte.MinValue, "-128")]
+        [TestCase(GermanCulture, IntWithGroupFormat, 0, "0")]
+        [TestCase(GermanCulture, IntWithGroupFormat, sbyte.MaxValue, "127")]
+        [TestCase(GermanCulture, IntWithGroupFormat, sbyte.MinValue, "-128")]
+        public void SByteToStringConversionTests(string cultureName, string format, sbyte input, string output)
+        {
+            var formatProvider = cultureName == null
+                ? CultureInfo.InvariantCulture
+                : CultureInfo.GetCultureInfo(cultureName);
+            var pipe = new StringToSByteConverterPipe(format, formatProvider);
+            AssertResults(pipe, input, output);
+        }
 
         [Test]
         public void BooleanToStringConversionTests()

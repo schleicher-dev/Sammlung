@@ -140,6 +140,118 @@ namespace Sammlung.Pipes.Werkzeug.Converters {
     }
 
     /// <summary>
+    /// The <see cref="StringToSByteConverterPipe" /> pipe converts a sbyte to a string and vice-versa using the
+    /// <see cref="IFormatProvider" /> passed into the constructor.
+    /// </summary>
+    [JetBrains.Annotations.PublicAPI]
+    public class StringToSByteConverterPipe : IBiDiPipe<string, sbyte> {
+        private readonly string _formatString;
+        private readonly IFormatProvider _formatProvider;
+        
+        /// <summary>
+        /// Creates a new <see cref="StringToSByteConverterPipe" /> using a <see cref="IFormatProvider" />.
+        /// When not set the <see cref="CultureInfo.InvariantCulture" /> is used.
+        /// </summary>
+        public StringToSByteConverterPipe(string formatString = null, IFormatProvider formatProvider = null)
+        {
+            _formatString = formatString;
+            _formatProvider = formatProvider ?? CultureInfo.InvariantCulture;
+        }
+
+        /// <inheritdoc />
+        public sbyte ProcessForward(string input)
+            => sbyte.Parse(input, NumberStyles.Any, _formatProvider);
+
+        /// <inheritdoc />
+        public string ProcessReverse(sbyte input)
+            => input.ToString(_formatString, _formatProvider);
+    }
+
+    /// <summary>
+    /// The <see cref="StringToByteConverterPipe" /> pipe converts a byte to a string and vice-versa using the
+    /// <see cref="IFormatProvider" /> passed into the constructor.
+    /// </summary>
+    [JetBrains.Annotations.PublicAPI]
+    public class StringToByteConverterPipe : IBiDiPipe<string, byte> {
+        private readonly string _formatString;
+        private readonly IFormatProvider _formatProvider;
+        
+        /// <summary>
+        /// Creates a new <see cref="StringToByteConverterPipe" /> using a <see cref="IFormatProvider" />.
+        /// When not set the <see cref="CultureInfo.InvariantCulture" /> is used.
+        /// </summary>
+        public StringToByteConverterPipe(string formatString = null, IFormatProvider formatProvider = null)
+        {
+            _formatString = formatString;
+            _formatProvider = formatProvider ?? CultureInfo.InvariantCulture;
+        }
+
+        /// <inheritdoc />
+        public byte ProcessForward(string input)
+            => byte.Parse(input, NumberStyles.Any, _formatProvider);
+
+        /// <inheritdoc />
+        public string ProcessReverse(byte input)
+            => input.ToString(_formatString, _formatProvider);
+    }
+
+    /// <summary>
+    /// The <see cref="StringToInt16ConverterPipe" /> pipe converts a short to a string and vice-versa using the
+    /// <see cref="IFormatProvider" /> passed into the constructor.
+    /// </summary>
+    [JetBrains.Annotations.PublicAPI]
+    public class StringToInt16ConverterPipe : IBiDiPipe<string, short> {
+        private readonly string _formatString;
+        private readonly IFormatProvider _formatProvider;
+        
+        /// <summary>
+        /// Creates a new <see cref="StringToInt16ConverterPipe" /> using a <see cref="IFormatProvider" />.
+        /// When not set the <see cref="CultureInfo.InvariantCulture" /> is used.
+        /// </summary>
+        public StringToInt16ConverterPipe(string formatString = null, IFormatProvider formatProvider = null)
+        {
+            _formatString = formatString;
+            _formatProvider = formatProvider ?? CultureInfo.InvariantCulture;
+        }
+
+        /// <inheritdoc />
+        public short ProcessForward(string input)
+            => short.Parse(input, NumberStyles.Any, _formatProvider);
+
+        /// <inheritdoc />
+        public string ProcessReverse(short input)
+            => input.ToString(_formatString, _formatProvider);
+    }
+
+    /// <summary>
+    /// The <see cref="StringToUInt16ConverterPipe" /> pipe converts a ushort to a string and vice-versa using the
+    /// <see cref="IFormatProvider" /> passed into the constructor.
+    /// </summary>
+    [JetBrains.Annotations.PublicAPI]
+    public class StringToUInt16ConverterPipe : IBiDiPipe<string, ushort> {
+        private readonly string _formatString;
+        private readonly IFormatProvider _formatProvider;
+        
+        /// <summary>
+        /// Creates a new <see cref="StringToUInt16ConverterPipe" /> using a <see cref="IFormatProvider" />.
+        /// When not set the <see cref="CultureInfo.InvariantCulture" /> is used.
+        /// </summary>
+        public StringToUInt16ConverterPipe(string formatString = null, IFormatProvider formatProvider = null)
+        {
+            _formatString = formatString;
+            _formatProvider = formatProvider ?? CultureInfo.InvariantCulture;
+        }
+
+        /// <inheritdoc />
+        public ushort ProcessForward(string input)
+            => ushort.Parse(input, NumberStyles.Any, _formatProvider);
+
+        /// <inheritdoc />
+        public string ProcessReverse(ushort input)
+            => input.ToString(_formatString, _formatProvider);
+    }
+
+    /// <summary>
     /// The <see cref="StringToInt32ConverterPipe" /> pipe converts a int to a string and vice-versa using the
     /// <see cref="IFormatProvider" /> passed into the constructor.
     /// </summary>
@@ -248,62 +360,6 @@ namespace Sammlung.Pipes.Werkzeug.Converters {
 
         /// <inheritdoc />
         public string ProcessReverse(ulong input)
-            => input.ToString(_formatString, _formatProvider);
-    }
-
-    /// <summary>
-    /// The <see cref="StringToInt16ConverterPipe" /> pipe converts a short to a string and vice-versa using the
-    /// <see cref="IFormatProvider" /> passed into the constructor.
-    /// </summary>
-    [JetBrains.Annotations.PublicAPI]
-    public class StringToInt16ConverterPipe : IBiDiPipe<string, short> {
-        private readonly string _formatString;
-        private readonly IFormatProvider _formatProvider;
-        
-        /// <summary>
-        /// Creates a new <see cref="StringToInt16ConverterPipe" /> using a <see cref="IFormatProvider" />.
-        /// When not set the <see cref="CultureInfo.InvariantCulture" /> is used.
-        /// </summary>
-        public StringToInt16ConverterPipe(string formatString = null, IFormatProvider formatProvider = null)
-        {
-            _formatString = formatString;
-            _formatProvider = formatProvider ?? CultureInfo.InvariantCulture;
-        }
-
-        /// <inheritdoc />
-        public short ProcessForward(string input)
-            => short.Parse(input, NumberStyles.Any, _formatProvider);
-
-        /// <inheritdoc />
-        public string ProcessReverse(short input)
-            => input.ToString(_formatString, _formatProvider);
-    }
-
-    /// <summary>
-    /// The <see cref="StringToUInt16ConverterPipe" /> pipe converts a ushort to a string and vice-versa using the
-    /// <see cref="IFormatProvider" /> passed into the constructor.
-    /// </summary>
-    [JetBrains.Annotations.PublicAPI]
-    public class StringToUInt16ConverterPipe : IBiDiPipe<string, ushort> {
-        private readonly string _formatString;
-        private readonly IFormatProvider _formatProvider;
-        
-        /// <summary>
-        /// Creates a new <see cref="StringToUInt16ConverterPipe" /> using a <see cref="IFormatProvider" />.
-        /// When not set the <see cref="CultureInfo.InvariantCulture" /> is used.
-        /// </summary>
-        public StringToUInt16ConverterPipe(string formatString = null, IFormatProvider formatProvider = null)
-        {
-            _formatString = formatString;
-            _formatProvider = formatProvider ?? CultureInfo.InvariantCulture;
-        }
-
-        /// <inheritdoc />
-        public ushort ProcessForward(string input)
-            => ushort.Parse(input, NumberStyles.Any, _formatProvider);
-
-        /// <inheritdoc />
-        public string ProcessReverse(ushort input)
             => input.ToString(_formatString, _formatProvider);
     }
 
