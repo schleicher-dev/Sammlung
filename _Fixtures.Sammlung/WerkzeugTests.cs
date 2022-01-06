@@ -10,7 +10,6 @@ namespace _Fixtures.Sammlung
     public class WerkzeugTests
     {
         private static void InternalRequire<T>(Func<T, T, string, T> func, T value, T expected, params T[] wrongValues)
-            where T : IComparable<T>
         {
             const string paramName = "ParameterName";
             Assert.DoesNotThrow(() => func(value, expected, paramName));
@@ -33,6 +32,10 @@ namespace _Fixtures.Sammlung
         private static void InternalRequireLessEqual<T>(T value, T expected, params T[] wrongValues)
             where T : IComparable<T> =>
             InternalRequire(ParamValidationExtensions.RequireLessEqual, value, expected, wrongValues);
+        
+        private static void InternalRequireEqual<T>(T value, T expected, params T[] wrongValues)
+            where T : IEquatable<T> =>
+            InternalRequire(ParamValidationExtensions.RequireEqual, value, expected, wrongValues);
 
         [TestCase(5, 4, 5, 6)]
         public void RequireGreater(int value, int expected, params int[] wrongValues)
@@ -68,6 +71,15 @@ namespace _Fixtures.Sammlung
             InternalRequireLessEqual(value, expected, wrongValues.Select(Convert.ToSingle).ToArray());
             InternalRequireLessEqual(value, expected, wrongValues.Select(Convert.ToDouble).ToArray());
             InternalRequireLessEqual(value, expected, wrongValues.Select(Convert.ToDecimal).ToArray());
+        }
+        
+        [TestCase(5, 5, 2, 3, -10)]
+        public void RequireEqual(int value, int expected, params int[] wrongValues)
+        {
+            InternalRequireEqual(value, expected, wrongValues);
+            InternalRequireEqual(value, expected, wrongValues.Select(Convert.ToSingle).ToArray());
+            InternalRequireEqual(value, expected, wrongValues.Select(Convert.ToDouble).ToArray());
+            InternalRequireEqual(value, expected, wrongValues.Select(Convert.ToDecimal).ToArray());
         }
 
         [Test]

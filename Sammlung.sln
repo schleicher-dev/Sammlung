@@ -40,6 +40,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sammlung.Pipes", "Sammlung.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sammlung.Pipes.Werkzeug", "Sammlung.Pipes.Werkzeug\Sammlung.Pipes.Werkzeug.csproj", "{162936FD-7155-4421-88F2-831FA170A854}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sammlung.CommandLine", "Sammlung.CommandLine\Sammlung.CommandLine.csproj", "{03EE54DE-73CF-4CE9-A64B-E52F432C324C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -102,5 +104,9 @@ Global
 		{162936FD-7155-4421-88F2-831FA170A854}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{162936FD-7155-4421-88F2-831FA170A854}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{162936FD-7155-4421-88F2-831FA170A854}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03EE54DE-73CF-4CE9-A64B-E52F432C324C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03EE54DE-73CF-4CE9-A64B-E52F432C324C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03EE54DE-73CF-4CE9-A64B-E52F432C324C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03EE54DE-73CF-4CE9-A64B-E52F432C324C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

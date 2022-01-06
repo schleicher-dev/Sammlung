@@ -39,4 +39,7 @@
     <data name="ParamRequireNumElements" xml:space="preserve">
         <value>The parameter is expected to have at least {0} element, only {1} could be counted.</value>
     </data>
+    <data name="ParamRequiredEqual" xml:space="preserve">
+        <value>The parameter is expected to be equal to {0}.</value>
+    </data>
 </root>
