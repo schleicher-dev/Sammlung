@@ -1,5 +1,3 @@
-using System.Linq;
-
 namespace Sammlung.CommandLine.Models.Parsing
 {
     public static class ParseStateMachineExtensions

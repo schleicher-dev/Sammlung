@@ -6,11 +6,6 @@
     public interface IMultiplicityTrait
     {
         /// <summary>
-        /// The number of occurrences already found.
-        /// </summary>
-        int NumOccurrences { get; internal set; }
-        
-        /// <summary>
         /// The minimum number of occurrences.
         /// </summary>
         int MinOccurrences { get; }

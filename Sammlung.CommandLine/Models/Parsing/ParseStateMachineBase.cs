@@ -10,6 +10,8 @@ namespace Sammlung.CommandLine.Models.Parsing
     internal abstract class ParseStateMachineBase<T> : IParseStateMachine where T : class, IArityTrait, IMultiplicityTrait
     {
         private readonly T _entity;
+        private int _numOccurrences;
+        protected int _numArity;
         public ParseState CurrentState { get; protected set; }
 
         /// <summary>
@@ -19,6 +21,7 @@ namespace Sammlung.CommandLine.Models.Parsing
         protected ParseStateMachineBase(T entity)
         {
             _entity = entity.RequireNotNull(nameof(entity));
+            _numArity = _numOccurrences = 0;
         }
         
         /// <inheritdoc />
@@ -35,18 +38,18 @@ namespace Sammlung.CommandLine.Models.Parsing
                 case ParseState.RequiresNextOccurrence:
                 case ParseState.ExpectNextOccurrence:
                 case ParseState.ExpectNextToken:
-                    if (_entity.NumArity < _entity.Arity)
+                    if (_numArity < _entity.Arity)
                     {
                         CurrentState = ParseState.ExpectNextToken;
                         break;
                     }
                         
-                    _entity.NumOccurrences += 1;
-                    _entity.NumArity = 0;
+                    _numOccurrences += 1;
+                    _numArity = 0;
 
-                    if (_entity.NumOccurrences < _entity.MinOccurrences)
+                    if (_numOccurrences < _entity.MinOccurrences)
                         CurrentState = ParseState.RequiresNextOccurrence;
-                    else if (_entity.NumOccurrences < _entity.MaxOccurrences)
+                    else if (_numOccurrences < _entity.MaxOccurrences)
                         CurrentState = ParseState.ExpectNextOccurrence;
                     else
                         CurrentState = ParseState.Finalized;

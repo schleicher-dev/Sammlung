@@ -8,18 +8,13 @@ namespace Sammlung.CommandLine.Models.Traits
     public interface IArityTrait
     {
         /// <summary>
-        /// The number of tokens already parsed.
-        /// </summary>
-        int NumArity { get; internal set; }
-        
-        /// <summary>
         /// The arity value.
         /// </summary>
-        int Arity { get; internal set; }
+        int Arity { get; set; }
         
         /// <summary>
         /// The meta names for the arguments at the specified positions.
         /// </summary>
-        IEnumerable<string> MetaNames { get; internal set; }
+        IEnumerable<string> MetaNames { get; set; }
     }
 }

@@ -3,8 +3,16 @@ using Sammlung.Pipes;
 
 namespace Sammlung.CommandLine.Pipes
 {
+    /// <summary>
+    /// The <see cref="RemoveDoubleQuotesPipe"/> removes double quotes during the process.
+    /// </summary>
     public class RemoveDoubleQuotesPipe : IUnDiPipe<string, string>
     {
-        public string Process(string input) => Regex.Replace(input, "^\"(.*)\"$", "$1");
+        /// <inheritdoc />
+        public string Process(string input)
+        {
+            var match = Regex.Match(input, "^\"\\s*(?<content>.*)\\s*\"$");
+            return match.Success ? Regex.Unescape(match.Groups["content"].Value) : input;
+        }
     }
 }

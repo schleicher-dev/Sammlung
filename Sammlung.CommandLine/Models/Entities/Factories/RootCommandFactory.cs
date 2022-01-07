@@ -1,4 +1,5 @@
 using Sammlung.CommandLine.Models.Entities.Bases;
+using Sammlung.CommandLine.Models.Entities.Bases.Commands;
 
 namespace Sammlung.CommandLine.Models.Entities.Factories
 {

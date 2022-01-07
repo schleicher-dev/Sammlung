@@ -2,6 +2,7 @@
 using System.Linq;
 using Sammlung.CommandLine.Models.Entities;
 using Sammlung.CommandLine.Models.Entities.Bases;
+using Sammlung.CommandLine.Models.Entities.Bases.Commands;
 using Sammlung.CommandLine.Models.Traits;
 
 namespace Sammlung.CommandLine.Models.Formatting
@@ -25,7 +26,7 @@ namespace Sammlung.CommandLine.Models.Formatting
             $"<{variableName ?? "!!!NULL!!!"}>";
 
         /// <inheritdoc />
-        public string FormatMultiplicity<T>(T entity) where T : EntityBase, IMultiplicityTrait
+        public string FormatMultiplicity<T>(T entity) where T : IParserEntity, IMultiplicityTrait
         {
             var display = Format(entity);
             var minOccurs = entity.MinOccurrences;

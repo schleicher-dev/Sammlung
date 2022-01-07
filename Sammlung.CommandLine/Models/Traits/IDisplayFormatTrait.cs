@@ -13,6 +13,6 @@ namespace Sammlung.CommandLine.Models.Traits
         /// </summary>
         /// <param name="formatter">the formatter</param>
         /// <returns>the string</returns>
-        public string Format(IEntityFormatter formatter);
+        string Format(IEntityFormatter formatter);
     }
 }

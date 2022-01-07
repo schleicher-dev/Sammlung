@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Sammlung.CommandLine.Exceptions;
 using Sammlung.CommandLine.Models.Entities.Bases;
+using Sammlung.CommandLine.Models.Entities.Bases.Options;
 using Sammlung.CommandLine.Models.Formatting;
 using Sammlung.CommandLine.Models.Parsing;
 using Sammlung.CommandLine.Models.Traits;
@@ -14,34 +15,24 @@ namespace Sammlung.CommandLine.Models.Entities
     public class Option<TData> : BindableOptionBase<TData>, IArityTrait
     {
         private List<string> _metaNames;
-        private readonly IPipeEndpoint<TData, string> _endpoint;
+        private readonly IPipeTerminal<TData, string> _terminal;
+        private int _arity = 1;
 
-        private int NumArity { get; set; }
-
-        int IArityTrait.NumArity
+        public int Arity
         {
-            get => NumArity;
-            set => NumArity = value;
+            get => _arity;
+            set => _arity = value.RequireGreaterEqual(0, nameof(value));
         }
 
-        private int Arity { get; set; } = 1;
-
-        int IArityTrait.Arity
-        {
-            get => Arity;
-            set => Arity = value.RequireGreaterEqual(0, nameof(value));
-        }
-
-        IEnumerable<string> IArityTrait.MetaNames
+        public IEnumerable<string> MetaNames
         {
             get => _metaNames;
             set => _metaNames = value.RequireNotNull(nameof(value)).ToList();
         }
 
-        public Option(IEnumerable<string> keywords, IPipeEndpoint<TData, string> endpoint) : base(keywords)
+        public Option(IEnumerable<string> keywords, IPipeTerminal<TData, string> terminal) : base(keywords)
         {
-            _endpoint = endpoint.RequireNotNull(nameof(endpoint));
-            NumArity = NumOccurrences = 0;
+            _terminal = terminal.RequireNotNull(nameof(terminal));
             ParseStateMachine = new LocalParseStateMachine(this);
         }
 
@@ -49,7 +40,7 @@ namespace Sammlung.CommandLine.Models.Entities
         public override string Format(IEntityFormatter formatter) => formatter.FormatOption(this);
 
         /// <inheritdoc />
-        public override void Bind(TData data) => _endpoint.Bind(data);
+        public override void Bind(TData data) => _terminal.Bind(data);
         
         /// <inheritdoc />
         public override IParseStateMachine ParseStateMachine { get; }
@@ -82,8 +73,8 @@ namespace Sammlung.CommandLine.Models.Entities
                         ConsiderNextState();
                         break;
                     case ParseState.ExpectNextToken:
-                        _option._endpoint.PushValue(token);
-                        _option.NumArity += 1;
+                        _option._terminal.ExecuteAll(token);
+                        _numArity += 1;
                         ConsiderNextState();
                         break;
                     case ParseState.Finalized:

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Sammlung.CommandLine.Exceptions;
 using Sammlung.CommandLine.Models.Entities.Bases;
+using Sammlung.CommandLine.Models.Entities.Bases.Options;
 using Sammlung.CommandLine.Models.Formatting;
 using Sammlung.CommandLine.Models.Parsing;
 using Sammlung.CommandLine.Pipes;
@@ -16,16 +17,16 @@ namespace Sammlung.CommandLine.Models.Entities
     /// <typeparam name="TData">the data type</typeparam>
     public class Flag<TData> : BindableOptionBase<TData>
     {
-        private readonly IPipeEndpoint<TData, string> _endpoint;
+        private readonly IPipeTerminal<TData, string> _terminal;
 
         /// <summary>
-        /// Creates a new <see cref="Flag{TData}"/> using the keywords and the <see cref="IPipeEndpoint{TData, T}"/>
+        /// Creates a new <see cref="Flag{TData}"/> using the keywords and the <see cref="IPipeTerminal{TData,T}"/>
         /// </summary>
         /// <param name="keywords">the keywords</param>
-        /// <param name="endpoint">the endpoint of the pipe</param>
-        public Flag(IEnumerable<string> keywords, IPipeEndpoint<TData, string> endpoint) : base(keywords)
+        /// <param name="terminal">the endpoint of the pipe</param>
+        public Flag(IEnumerable<string> keywords, IPipeTerminal<TData, string> terminal) : base(keywords)
         {
-            _endpoint = endpoint.RequireNotNull(nameof(endpoint));
+            _terminal = terminal.RequireNotNull(nameof(terminal));
             AssignMultiplicity(0, 1);
             ParseStateMachine = new LocalParseStateMachine(this);
         }
@@ -34,7 +35,7 @@ namespace Sammlung.CommandLine.Models.Entities
         public override string Format(IEntityFormatter formatter) => formatter.FormatFlag(this);
         
         /// <inheritdoc />
-        public override void Bind(TData data) => _endpoint.Bind(data);
+        public override void Bind(TData data) => _terminal.Bind(data);
 
         public override IParseStateMachine ParseStateMachine { get; }
         
@@ -45,7 +46,8 @@ namespace Sammlung.CommandLine.Models.Entities
         private class LocalParseStateMachine : IParseStateMachine
         {
             private readonly Flag<TData> _flag;
-            
+            private int _numOccurrences;
+
             /// <inheritdoc />
             public ParseState CurrentState { get; private set; }
 
@@ -57,6 +59,7 @@ namespace Sammlung.CommandLine.Models.Entities
             {
                 _flag = flag.RequireNotNull(nameof(flag));
                 CurrentState = _flag.MinOccurrences <= 0 ? ParseState.ExpectNextOccurrence : ParseState.RequiresNextOccurrence;
+                _numOccurrences = 0;
             }
 
             /// <inheritdoc />
@@ -66,7 +69,7 @@ namespace Sammlung.CommandLine.Models.Entities
                 {
                     case ParseState.RequiresNextOccurrence:
                     case ParseState.ExpectNextOccurrence:
-                        _flag._endpoint.PushValue(bool.TrueString);
+                        _flag._terminal.ExecuteAll(bool.TrueString);
                         ConsiderNextState();
                         break;
                     case ParseState.ExpectNextToken:
@@ -83,10 +86,10 @@ namespace Sammlung.CommandLine.Models.Entities
                 {
                     case ParseState.RequiresNextOccurrence:
                     case ParseState.ExpectNextOccurrence:
-                        _flag.NumOccurrences += 1;
-                        if (_flag.NumOccurrences < _flag.MinOccurrences)
+                        _numOccurrences += 1;
+                        if (_numOccurrences < _flag.MinOccurrences)
                             CurrentState = ParseState.RequiresNextOccurrence;
-                        else if (_flag.NumOccurrences < _flag.MaxOccurrences)
+                        else if (_numOccurrences < _flag.MaxOccurrences)
                             CurrentState = ParseState.ExpectNextOccurrence;
                         else
                             CurrentState = ParseState.Finalized;

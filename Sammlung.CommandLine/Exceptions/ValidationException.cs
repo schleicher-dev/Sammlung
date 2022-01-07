@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
-namespace Sammlung.CommandLine.Models
+namespace Sammlung.CommandLine.Exceptions
 {
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public class ValidationException : Exception
     {
         //

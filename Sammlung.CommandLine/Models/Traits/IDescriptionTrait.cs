@@ -8,6 +8,6 @@
         /// <summary>
         /// The description.
         /// </summary>
-        string Description { get; internal set; }
+        string Description { get; set; }
     }
 }

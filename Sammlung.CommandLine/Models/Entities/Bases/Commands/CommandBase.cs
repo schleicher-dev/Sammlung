@@ -7,12 +7,12 @@ using Sammlung.CommandLine.Terminal;
 using Sammlung.CommandLine.Utilities;
 using Sammlung.Werkzeug;
 
-namespace Sammlung.CommandLine.Models.Entities.Bases
+namespace Sammlung.CommandLine.Models.Entities.Bases.Commands
 {
     /// <summary>
     /// The <see cref="CommandBase"/> type is the root type for all commands associated with the command line.
     /// </summary>
-    public abstract class CommandBase : EntityBase, IKeywordsTrait
+    public abstract class CommandBase : IParserEntity, IKeywordsTrait
     {
         protected static void RequireUniqueNames(IEnumerable<string> knownKeywords, IList<string> newKeywords)
         {
@@ -52,13 +52,6 @@ namespace Sammlung.CommandLine.Models.Entities.Bases
             Commands.Add(command);
             command.Parent = this;
         }
-
-        protected bool TryGetCommand(string keyword, out CommandBase command)
-        {
-            command = Commands.FirstOrDefault(c =>
-                c.Keywords.Contains(keyword, StringComparer.InvariantCultureIgnoreCase));
-            return command != null;
-        }
         
         public TerminationInfo ShowHelp(ITerminal terminal = null, Exception ex = null)
         {
@@ -71,6 +64,7 @@ namespace Sammlung.CommandLine.Models.Entities.Bases
 
         public abstract TerminationInfo Parse(IEnumerable<string> args, ITerminal terminal = null);
         
-        public override string Format(IEntityFormatter formatter) => formatter.FormatCommand(this);
+        public string Format(IEntityFormatter formatter) => formatter.FormatCommand(this);
+        public string Description { get; set; }
     }
 }

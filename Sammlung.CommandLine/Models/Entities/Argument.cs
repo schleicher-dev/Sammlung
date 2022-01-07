@@ -1,5 +1,6 @@
 using System;
 using Sammlung.CommandLine.Models.Entities.Bases;
+using Sammlung.CommandLine.Models.Entities.Bases.Arguments;
 using Sammlung.CommandLine.Models.Fluent;
 using Sammlung.CommandLine.Models.Formatting;
 using Sammlung.CommandLine.Models.Parsing;
@@ -11,11 +12,11 @@ namespace Sammlung.CommandLine.Models.Entities
 {
     public class Argument<TData> : ArgumentBase, IBindableTrait<TData>
     {
-        private readonly IPipeEndpoint<TData, string> _endpoint;
+        private readonly IPipeTerminal<TData, string> _terminal;
 
-        public Argument(IPipeEndpoint<TData, string> endpoint)
+        public Argument(IPipeTerminal<TData, string> terminal)
         {
-            _endpoint = endpoint.RequireNotNull(nameof(endpoint));
+            _terminal = terminal.RequireNotNull(nameof(terminal));
             this.SetArity(1);
             ParseStateMachine = new LocalParseStateMachine(this);
         }
@@ -23,7 +24,7 @@ namespace Sammlung.CommandLine.Models.Entities
         /// <inheritdoc />
         public override string Format(IEntityFormatter formatter) => formatter.FormatArgument(this);
         
-        public void Bind(TData data) => _endpoint.Bind(data);
+        public void Bind(TData data) => _terminal.Bind(data);
         
         public override IParseStateMachine ParseStateMachine { get; }
         
@@ -35,6 +36,7 @@ namespace Sammlung.CommandLine.Models.Entities
             {
                 _argument = argument.RequireNotNull(nameof(argument));
                 CurrentState = ParseState.RequiresNextOccurrence;
+                _numArity = 0;
             }
             
             /// <inheritdoc />
@@ -45,8 +47,8 @@ namespace Sammlung.CommandLine.Models.Entities
                     case ParseState.RequiresNextOccurrence:
                     case ParseState.ExpectNextOccurrence:
                     case ParseState.ExpectNextToken:
-                        _argument._endpoint.PushValue(token);
-                        _argument.NumArity += 1;
+                        _argument._terminal.ExecuteAll(token);
+                        _numArity += 1;
                         ConsiderNextState();
                         break;
                     case ParseState.Finalized:

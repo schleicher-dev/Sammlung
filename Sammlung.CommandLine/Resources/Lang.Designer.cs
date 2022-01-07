@@ -9,6 +9,9 @@
 //------------------------------------------------------------------------------
 
 namespace Sammlung.CommandLine.Resources {
+    using System;
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -36,7 +39,7 @@ namespace Sammlung.CommandLine.Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("CommandLineParser.Common.Resources.Lang", typeof(Lang).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sammlung.CommandLine.Resources.Lang", typeof(Lang).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -67,7 +70,7 @@ namespace Sammlung.CommandLine.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cannot bind to parameters of type {0} expected {1}.
+        ///   Looks up a localized string similar to Cannot bind to data of type {0} expected {1}.
         /// </summary>
         internal static string BindFailure {
             get {
@@ -76,11 +79,11 @@ namespace Sammlung.CommandLine.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to IValueHolder {0} is unbound..
+        ///   Looks up a localized string similar to The object is not bound..
         /// </summary>
-        internal static string ValueHolderUnbound {
+        internal static string ObjectIsUnbound {
             get {
-                return ResourceManager.GetString("ValueHandlerUnbound", resourceCulture);
+                return ResourceManager.GetString("ObjectIsUnbound", resourceCulture);
             }
         }
     }

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Sammlung.CommandLine.Models.Entities.Bases;
+using Sammlung.CommandLine.Models.Entities.Bases.Commands;
 using Sammlung.CommandLine.Models.Traits;
 using Sammlung.CommandLine.Terminal;
-using Sammlung.Werkzeug;
 
 namespace Sammlung.CommandLine.Models.Entities
 {

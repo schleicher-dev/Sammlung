@@ -3,42 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Sammlung.CommandLine.Models.Entities.Bases;
+using Sammlung.CommandLine.Models.Entities.Bases.Commands;
 using Sammlung.CommandLine.Models.Formatting;
 using Sammlung.CommandLine.Models.Traits;
 using Sammlung.CommandLine.Resources;
 using Sammlung.CommandLine.Terminal;
 using Sammlung.CommandLine.Terminal.Styles;
-using Sammlung.CommandLine.Terminal.Styles.Neutral;
 using Sammlung.Werkzeug;
 
 namespace Sammlung.CommandLine.Utilities
 {
-    internal class CompositeTextStyles
-    {
-        private const int NumIndentSpaces = 4;
-        
-        private readonly IStyleBuilderFactory _styleBuilderFactory;
-
-        public CompositeTextStyles(IStyleBuilderFactory styleBuilderFactory)
-        {
-            _styleBuilderFactory = styleBuilderFactory ?? new NeutralStyleBuilderFactory();
-        }
-        
-        public string SectionHeader(string text) => 
-            _styleBuilderFactory.Create(text).Bold().Build();
-
-        public string IndentedText(string text, int numLevels = 1) => 
-            _styleBuilderFactory.Create(text).Indent(NumIndentSpaces * numLevels).Build();
-
-        public string TwoColumnsText(string lhs, string rhs, int lhsPadding, int numLevels) =>
-            _styleBuilderFactory
-                .Create(lhs)
-                .PadRight((ushort)(lhsPadding + NumIndentSpaces))
-                .Append(rhs)
-                .Indent(NumIndentSpaces + numLevels)
-                .Build();
-    }
-    
     public class HelpVisualizer
     {
         private readonly IOutputWriter _writer;
@@ -123,6 +97,16 @@ namespace Sammlung.CommandLine.Utilities
         public void ShowException(Exception exception)
         {
             if (exception == null) return;
+
+            foreach (var line in GetExceptionSection(exception.ToString()))
+                _writer.WriteLine(line);
+        }
+
+        private IEnumerable<string> GetExceptionSection(string exString)
+        {
+            yield return _textStyles.SectionHeader("EXCEPTION");
+            yield return exString;
+            yield return string.Empty;
         }
     }
 }

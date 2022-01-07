@@ -8,6 +8,6 @@
         /// <summary>
         /// The application name.
         /// </summary>
-        string ApplicationName { get; internal set; }
+        string ApplicationName { get; set; }
     }
 }

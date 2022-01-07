@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
@@ -6,7 +6,7 @@ namespace Sammlung.CommandLine.Exceptions
 {
     [Serializable]
     [ExcludeFromCodeCoverage]
-    public class ParseException : Exception
+    public class GenericException : Exception
     {
         //
         // For guidelines regarding the creation of new exception types, see
@@ -15,19 +15,19 @@ namespace Sammlung.CommandLine.Exceptions
         //    http://msdn.microsoft.com/library/default.asp?url=/library/en-us/dncscol/html/csharp07192001.asp
         //
 
-        public ParseException()
+        public GenericException()
         {
         }
 
-        public ParseException(string message) : base(message)
+        public GenericException(string message) : base(message)
         {
         }
 
-        public ParseException(string message, Exception inner) : base(message, inner)
+        public GenericException(string message, Exception inner) : base(message, inner)
         {
         }
 
-        protected ParseException(
+        protected GenericException(
             SerializationInfo info,
             StreamingContext context) : base(info, context)
         {

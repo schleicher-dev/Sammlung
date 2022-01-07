@@ -1,5 +1,6 @@
 using Sammlung.CommandLine.Models.Entities;
 using Sammlung.CommandLine.Models.Entities.Bases;
+using Sammlung.CommandLine.Models.Entities.Bases.Commands;
 using Sammlung.CommandLine.Models.Traits;
 
 namespace Sammlung.CommandLine.Models.Formatting
@@ -26,7 +27,7 @@ namespace Sammlung.CommandLine.Models.Formatting
         /// <param name="entity">the entity</param>
         /// <typeparam name="T">the type of the entity</typeparam>
         /// <returns>the representation of the entity</returns>
-        string FormatMultiplicity<T>(T entity) where T : EntityBase, IMultiplicityTrait;
+        string FormatMultiplicity<T>(T entity) where T : IParserEntity, IMultiplicityTrait;
         
         /// <summary>
         /// Formats an <see cref="Argument{TData}"/>.

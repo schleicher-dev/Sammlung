@@ -1,5 +1,6 @@
 using Sammlung.CommandLine.Models.Entities;
 using Sammlung.CommandLine.Models.Entities.Bases;
+using Sammlung.CommandLine.Models.Entities.Bases.Commands;
 using Sammlung.CommandLine.Pipes;
 
 namespace Sammlung.CommandLine.Models.Fluent
@@ -33,13 +34,13 @@ namespace Sammlung.CommandLine.Models.Fluent
             return parent;
         }
 
-        public static Flag<TData> BuildFlag<TData>(this IPipeEndpoint<TData, string> endpoint,
-            params string[] keywords) => new Flag<TData>(keywords, endpoint);
+        public static Flag<TData> BuildFlag<TData>(this IPipeTerminal<TData, string> terminal,
+            params string[] keywords) => new Flag<TData>(keywords, terminal);
 
-        public static Option<TData> BuildOption<TData>(this IPipeEndpoint<TData, string> endpoint,
-            params string[] keywords) => new Option<TData>(keywords, endpoint);
+        public static Option<TData> BuildOption<TData>(this IPipeTerminal<TData, string> terminal,
+            params string[] keywords) => new Option<TData>(keywords, terminal);
 
-        public static Argument<TData> BuildArgument<TData>(this IPipeEndpoint<TData, string> endpoint) =>
-            new Argument<TData>(endpoint);
+        public static Argument<TData> BuildArgument<TData>(this IPipeTerminal<TData, string> terminal) =>
+            new Argument<TData>(terminal);
     }
 }

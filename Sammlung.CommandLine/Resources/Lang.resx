@@ -24,7 +24,7 @@
     <data name="BindFailure" xml:space="preserve">
         <value>Cannot bind to data of type {0} expected {1}</value>
     </data>
-    <data name="ValueHandlerUnbound" xml:space="preserve">
-        <value>IValueHandler {0} is unbound.</value>
+    <data name="ObjectIsUnbound" xml:space="preserve">
+        <value>The object is not bound.</value>
     </data>
 </root>

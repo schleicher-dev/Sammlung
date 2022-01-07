@@ -1,27 +1,26 @@
-using Sammlung.CommandLine.Exceptions;
+using Sammlung.CommandLine.Models.Formatting;
 using Sammlung.CommandLine.Models.Parsing;
 using Sammlung.CommandLine.Models.Traits;
 using Sammlung.Werkzeug;
 
 namespace Sammlung.CommandLine.Models.Entities.Bases
 {
-    public abstract class EntityWithMultiplicityBase : EntityBase, IMultiplicityTrait, IParseTrait
+    /// <summary>
+    /// The <see cref="MultiParserEntityBase"/> is the base type for all entities which may be used many times in the parser.
+    /// </summary>
+    public abstract class MultiParserEntityBase : IParserEntity, IMultiplicityTrait, IParseTrait
     {
-        protected int NumOccurrences { get; set; }
+        /// <inheritdoc />
+        public string Description { get; set; }
+        
+        /// <inheritdoc />
+        public abstract string Format(IEntityFormatter formatter);
+        
+        /// <inheritdoc />
+        public int MinOccurrences { get; private set; } = 1;
 
-        int IMultiplicityTrait.NumOccurrences
-        {
-            get => NumOccurrences;
-            set => NumOccurrences = value;
-        }
-
-        public int MinOccurrences { get; private set; }
-        public int? MaxOccurrences { get; private set; }
-
-        protected EntityWithMultiplicityBase()
-        {
-            AssignMultiplicity(1, 1);
-        }
+        /// <inheritdoc />
+        public int? MaxOccurrences { get; private set; } = 1;
 
         /// <inheritdoc />
         public void AssignMultiplicity(int minOccurrences, int? maxOccurrences)
@@ -32,7 +31,6 @@ namespace Sammlung.CommandLine.Models.Entities.Bases
             MaxOccurrences = maxOccurrences?.RequireGreaterEqual(0, nameof(maxOccurrences)) ?? default;
         }
 
-        /// <inheritdoc />
         public abstract IParseStateMachine ParseStateMachine { get; }
     }
 }
