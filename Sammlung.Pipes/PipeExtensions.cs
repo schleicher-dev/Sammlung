@@ -49,7 +49,7 @@ namespace Sammlung.Pipes
         /// <typeparam name="T2">the intermediate type</typeparam>
         /// <typeparam name="T3">the target type</typeparam>
         /// <returns>the concatenated pipe</returns>
-        public static IBiDiPipe<T1, T3> Concat<T1, T2, T3>(this IBiDiPipe<T1, T2> lhsPipe, IBiDiPipe<T2, T3> rhsPipe) =>
+        public static IBiDiPipe<T1, T3> Append<T1, T2, T3>(this IBiDiPipe<T1, T2> lhsPipe, IBiDiPipe<T2, T3> rhsPipe) =>
             new ConcatenatedBiDiPipe<T1, T2, T3>(lhsPipe, rhsPipe);
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Sammlung.Pipes
         /// <typeparam name="T2">the intermediate type</typeparam>
         /// <typeparam name="T3">the target type</typeparam>
         /// <returns>the concatenated pipe</returns>
-        public static IUnDiPipe<T1, T3> Concat<T1, T2, T3>(this IBiDiPipe<T1, T2> lhsPipe, IUnDiPipe<T2, T3> rhsPipe) =>
+        public static IUnDiPipe<T1, T3> Append<T1, T2, T3>(this IBiDiPipe<T1, T2> lhsPipe, IUnDiPipe<T2, T3> rhsPipe) =>
             new ConcatenatedUnDiPipe<T1, T2, T3>(lhsPipe.ForwardPipe(), rhsPipe);
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace Sammlung.Pipes
         /// <typeparam name="T2">the intermediate type</typeparam>
         /// <typeparam name="T3">the target type</typeparam>
         /// <returns>the concatenated pipe</returns>
-        public static IUnDiPipe<T1, T3> Concat<T1, T2, T3>(this IUnDiPipe<T1, T2> lhsPipe, IUnDiPipe<T2, T3> rhsPipe) =>
+        public static IUnDiPipe<T1, T3> Append<T1, T2, T3>(this IUnDiPipe<T1, T2> lhsPipe, IUnDiPipe<T2, T3> rhsPipe) =>
             new ConcatenatedUnDiPipe<T1, T2, T3>(lhsPipe, rhsPipe);
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Sammlung.Pipes
         /// <typeparam name="T2">the intermediate type</typeparam>
         /// <typeparam name="T3">the target type</typeparam>
         /// <returns>the concatenated pipe</returns>
-        public static IUnDiPipe<T1, T3> Concat<T1, T2, T3>(this IUnDiPipe<T1, T2> lhsPipe, IBiDiPipe<T2, T3> rhsPipe) =>
+        public static IUnDiPipe<T1, T3> Append<T1, T2, T3>(this IUnDiPipe<T1, T2> lhsPipe, IBiDiPipe<T2, T3> rhsPipe) =>
             new ConcatenatedUnDiPipe<T1, T2, T3>(lhsPipe, rhsPipe.ForwardPipe());
 
         /// <summary>

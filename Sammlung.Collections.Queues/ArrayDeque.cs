@@ -124,6 +124,7 @@ namespace Sammlung.Collections.Queues
         /// <inheritdoc />
         IEnumerator<T> IEnumerable<T>.GetEnumerator()
         {
+            if (Count == 0) yield break;
             for (var i = _leftPointer; _rightPointer <= _leftPointer && i < _array.Length; ++i)
                 yield return _array[i];
             for (var i = 0; _rightPointer <= _leftPointer && i < _rightPointer; ++i)
