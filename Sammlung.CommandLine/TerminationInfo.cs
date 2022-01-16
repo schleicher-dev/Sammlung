@@ -28,7 +28,7 @@ namespace Sammlung.CommandLine
             new TerminationInfo(0, "Terminated regularly");
         
         public static readonly TerminationInfo DisplayingHelp =
-            new TerminationInfo(1, "Showing help");
+            new TerminationInfo(1, "Displaying help");
 
         /// <summary>
         /// The exit code.

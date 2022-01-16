@@ -19,10 +19,12 @@ namespace Sammlung.CommandLine.Utilities
         private readonly IEntityFormatter _formatter;
         private readonly CompositeTextStyles _textStyles;
 
-        private static string GetApplicationName(CommandBase command) =>
-            (command as IApplicationNameTrait)?.ApplicationName ??
-            Assembly.GetEntryAssembly()?.GetName().Name ??
-            throw new InvalidOperationException(Lang.ApplicationNameNotFound);
+        private static string GetApplicationName(CommandBase command)
+        {
+            return (command.Root as IApplicationNameTrait)?.ApplicationName ??
+                   Assembly.GetEntryAssembly()?.GetName().Name ??
+                   throw new InvalidOperationException(Lang.ApplicationNameNotFound);
+        }
 
         public HelpVisualizer(IOutputWriter writer, IEntityFormatter formatter = null,
             IStyleBuilderFactory styleBuilderFactory = null)
@@ -37,24 +39,31 @@ namespace Sammlung.CommandLine.Utilities
             yield return command.Description ?? "No description";
         }
 
-        private string GetUsageHint<TData>(BindableCommandBase<TData> command)
+        private IEnumerable<string> GetUsageSegments(CommandBase command, bool skipCommands = false)
         {
-            IEnumerable<string> Lines()
+            if (command.Parent != null)
+            {
+                foreach (var segments in GetUsageSegments(command.Parent, true))
+                    yield return segments;
+                yield return _formatter.FormatCommand(command);
+            }
+            else
             {
                 yield return "$";
                 yield return GetApplicationName(command);
-                foreach (var argument in command.Arguments)
-                    yield return _formatter.FormatMultiplicity(argument);
-                foreach (var option in command.Options)
-                    yield return _formatter.FormatMultiplicity(option);
-                if (!command.Commands.Any()) yield break;
-                yield return _formatter.FormatVariableName("Command");
             }
-
-            return string.Join(" ", Lines());
+            
+            foreach (var argument in command.Arguments)
+                yield return _formatter.FormatMultiplicity(argument);
+            foreach (var option in command.Options)
+                yield return _formatter.FormatMultiplicity(option);
+            if (!command.Commands.Any() || skipCommands) yield break;
+            yield return _formatter.FormatVariableName("Command");
         }
 
-        private IEnumerable<string> GetUsageSection<TData>(BindableCommandBase<TData> command)
+        private string GetUsageHint(CommandBase command) => string.Join(" ", GetUsageSegments(command));
+
+        private IEnumerable<string> GetUsageSection(CommandBase command)
         {
             yield return _textStyles.SectionHeader("USAGE");
             yield return _textStyles.IndentedText(GetUsageHint(command));
@@ -81,11 +90,11 @@ namespace Sammlung.CommandLine.Utilities
             yield return new[] { string.Empty };
             yield return GetUsageSection(command);
             yield return new[] { string.Empty };
-            yield return GetSection("ARGUMENTS", command.Arguments);
+            yield return GetSection("ARGUMENTS", command.Arguments.ToList());
             yield return new[] { string.Empty };
-            yield return GetSection("OPTIONS", command.Options);
+            yield return GetSection("OPTIONS", command.Options.ToList());
             yield return new[] { string.Empty };
-            yield return GetSection("COMMANDS", command.Commands);
+            yield return GetSection("COMMANDS", command.Commands.ToList());
         }
 
         public void ShowHelp<TData>(BindableCommandBase<TData> command)

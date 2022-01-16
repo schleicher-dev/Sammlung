@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Sammlung.Collections.Queues
 {
@@ -12,6 +14,11 @@ namespace Sammlung.Collections.Queues
     [JetBrains.Annotations.PublicAPI]
     public sealed class ArrayDeque<T> : IDeque<T>
     {
+        private const int DefaultSize = 1 << 6;
+        
+        private static int GetSize(IEnumerable<T> enumerable) => 
+            enumerable is ICollection collection ? collection.Count : DefaultSize;
+
         private T[] _array;
         private int _leftPointer;
         private int _rightPointer;
@@ -27,7 +34,23 @@ namespace Sammlung.Collections.Queues
             _rightPointer = 0;
             Count = 0;
         }
-        
+
+        /// <summary>
+        /// Creates a new <see cref="ArrayDeque{T}"/> using the items and the construction direction.
+        /// </summary>
+        /// <param name="items"></param>
+        /// <param name="direction"></param>
+        public ArrayDeque(IEnumerable<T> items, ConstructionDirection direction)
+        {
+            _array = direction switch
+            {
+                ConstructionDirection.LeftToRight => items.ToArray(),
+                ConstructionDirection.RightToLeft => items.Reverse().ToArray(),
+                _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
+            };
+            _leftPointer = _rightPointer = 0;
+        }
+
         private void Grow()
         {
             var oldSize = Capacity;

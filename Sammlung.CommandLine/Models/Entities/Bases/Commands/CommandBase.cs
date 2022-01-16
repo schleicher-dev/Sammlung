@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Sammlung.CommandLine.Models.Entities.Bases.Arguments;
+using Sammlung.CommandLine.Models.Entities.Bases.Options;
 using Sammlung.CommandLine.Models.Formatting;
 using Sammlung.CommandLine.Models.Traits;
 using Sammlung.CommandLine.Terminal;
@@ -30,27 +32,19 @@ namespace Sammlung.CommandLine.Models.Entities.Bases.Commands
         }
         
         private readonly List<string> _keywords;
-        public CommandBase Parent { get; private set; }
-        public List<CommandBase> Commands { get; } = new List<CommandBase>();
+        
+        public CommandBase Root => Parent ?? this;
+        public CommandBase Parent { get; protected internal set; }
+        
+        public abstract IEnumerable<CommandBase> Commands { get; }
+        public abstract IEnumerable<ArgumentBase> Arguments { get; }
+        public abstract IEnumerable<OptionBase> Options { get; }
 
         public IEnumerable<string> Keywords => _keywords;
 
         protected CommandBase(IEnumerable<string> keywords)
         {
             _keywords = keywords.RequireNotNull(nameof(keywords)).ToList();
-        }
-
-        internal void PushCommand(CommandBase command)
-        {
-            command = command.RequireNotNull(nameof(command));
-            if (command.Parent != null)
-                throw new InvalidOperationException("Cannot add command which already has a parent.");
-                    
-            var knownKeywords = Commands.SelectMany(c => c.Keywords).Concat(Reservations.CommandKeywords);
-            RequireUniqueNames(knownKeywords, command.Keywords.ToList());
-            
-            Commands.Add(command);
-            command.Parent = this;
         }
         
         public TerminationInfo ShowHelp(ITerminal terminal = null, Exception ex = null)

@@ -17,14 +17,14 @@ namespace Fixtures.Sammlung.Collections.Queues
         public static readonly DequeConstructors<int>[] Buffers =
         {
             new DequeConstructors<int>("ArrayDeque", c => new ArrayDeque<int>(c)),
-            new DequeConstructors<int>("BlockingDeque", c => new ArrayDeque<int>(c).Wrap()),
+            new DequeConstructors<int>("BlockingDeque", c => new ArrayDeque<int>(c).ToBlockingDeque()),
             new DequeConstructors<int>("LinkedDeque", c => new LinkedDeque<int>()),
             new DequeConstructors<int>("LockFreeLinkedDeque", c => new LockFreeLinkedDeque<int>())
         };
         public static readonly DequeConstructors<int>[] NormalBuffers =
         {
             new DequeConstructors<int>("ArrayDeque", c => new ArrayDeque<int>(c)),
-            new DequeConstructors<int>("BlockingDeque", c => new ArrayDeque<int>(c).Wrap()),
+            new DequeConstructors<int>("BlockingDeque", c => new ArrayDeque<int>(c).ToBlockingDeque()),
             new DequeConstructors<int>("LinkedDeque", c => new LinkedDeque<int>())
         };
 
@@ -137,6 +137,20 @@ namespace Fixtures.Sammlung.Collections.Queues
             Assert.Throws<InvalidOperationException>(() => buffer.PopRight());
             Assert.IsFalse(buffer.TryPopLeft(out _));
             Assert.Throws<InvalidOperationException>(() => buffer.PopLeft());
+        }
+
+        [TestCaseSource(nameof(NormalBuffers))]
+        public void EmptyDequeEnumeration(DequeConstructors<int> constructors)
+        {
+            var capCtor = constructors.Item1;
+            var deque = capCtor.Invoke(6);
+            
+            for(var i = 0; i < 6; ++i)
+                deque.PushLeft(i);
+            for(var i = 0; i < 6; ++i)
+                deque.PopLeft();
+            
+            CollectionAssert.IsEmpty(deque);
         }
 
         [TestCaseSource(nameof(NormalBuffers))]

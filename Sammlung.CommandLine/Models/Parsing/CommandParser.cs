@@ -15,6 +15,7 @@ namespace Sammlung.CommandLine.Models.Parsing
 {
     internal class CommandParser<TData>
     {
+        private readonly CommandBase _command;
         private readonly IDeque<Argument<TData>> _arguments;
         private readonly List<BindableOptionBase<TData>> _options;
         private readonly List<CommandBase> _commands;
@@ -23,8 +24,9 @@ namespace Sammlung.CommandLine.Models.Parsing
         private ITerminal _terminal;
         public TData Data { get; }
 
-        public CommandParser(TData data, List<Argument<TData>> arguments, List<BindableOptionBase<TData>> options, List<CommandBase> commands)
+        public CommandParser(CommandBase command, TData data, List<Argument<TData>> arguments, List<BindableOptionBase<TData>> options, List<CommandBase> commands)
         {
+            _command = command.RequireNotNull(nameof(command));
             _arguments = arguments.RequireNotNull(nameof(arguments)).ToDeque();
             _options = options.RequireNotNull(nameof(options));
             _commands = commands.RequireNotNull(nameof(commands));
@@ -44,6 +46,8 @@ namespace Sammlung.CommandLine.Models.Parsing
                     
                 var token = _tokens.PopLeft();
 
+                if (TryParseHelpCommand(token) || TryParseHelpOption(token))
+                    return _command.ShowHelp(_terminal);
                 if (TryParseCommand(token, out var terminationInfo))
                     return terminationInfo;
                 if (TryActivateOptionStateMachine(token))
@@ -56,7 +60,8 @@ namespace Sammlung.CommandLine.Models.Parsing
             CheckPostConditions();
             return TerminationInfo.RegularTermination;
         }
-            
+
+
         private bool TryGetCommand(string keyword, out CommandBase command)
         {
             command = _commands.FirstOrDefault(c =>
@@ -90,6 +95,10 @@ namespace Sammlung.CommandLine.Models.Parsing
             if (_currentStateMachine == null)
                 throw new ParseException($"The token '{token}' is not treated.");
         }
+
+        private bool TryParseHelpCommand(string token) => Reservations.CommandHelpKeywords.Contains(token);
+
+        private bool TryParseHelpOption(string token)=> Reservations.OptionHelpKeywords.Contains(token);
 
         private bool TryParseCommand(string token, out TerminationInfo terminationInfo)
         {

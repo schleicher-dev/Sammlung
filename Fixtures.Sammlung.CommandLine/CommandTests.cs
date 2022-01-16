@@ -5,7 +5,9 @@ using Sammlung.CommandLine;
 using Sammlung.CommandLine.Models.Entities;
 using Sammlung.CommandLine.Models.Entities.Factories;
 using Sammlung.CommandLine.Models.Fluent;
+using Sammlung.CommandLine.Models.Parsing;
 using Sammlung.CommandLine.Pipes;
+using Sammlung.CommandLine.Reflection;
 
 namespace Fixtures.Sammlung.CommandLine
 {
@@ -15,6 +17,7 @@ namespace Fixtures.Sammlung.CommandLine
         public bool Flag { get; set; }
         public string Hello { get; set; }
         public string World { get; set; }
+        public SubParameters SubParameters { get; set; }
     }
 
     [ExcludeFromCodeCoverage]
@@ -51,7 +54,8 @@ namespace Fixtures.Sammlung.CommandLine
                 .AsPipeTerminal((Parameters p) => p.World)
                 .BuildArgument().SetArity(2).SetMetaNames("FirstName", "SecondName");
 
-            var command = new Command<SubParameters>(new [] {"first_command"}, () => new SubParameters());
+            var cmdProperty = PropertyFactory.Property((Parameters p) => p.SubParameters);
+            var command = new Command<Parameters, SubParameters>(new [] {"first_command"}, () => new SubParameters(), cmdProperty);
             
             return RootCommandFactory.Create<Parameters>()
                 .SetApplicationName("HalloWelt")
@@ -82,11 +86,14 @@ namespace Fixtures.Sammlung.CommandLine
             Assert.AreEqual(expectation, command.Data.Hello);
         }
 
-        [TestCase]
+        [TestCase("-h")]
+        [TestCase("A", "B", "first_command", "--help")]
+        [TestCase("help")]
         public void ShowHelp(params string[] args)
         {
             var command = CreateRoot();
-            command.ShowHelp();
+            var result = command.Parse(args);
+            Assert.AreEqual(TerminationInfo.DisplayingHelp, result);
         }
     }
 }

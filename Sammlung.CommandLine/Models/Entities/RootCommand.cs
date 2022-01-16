@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Sammlung.CommandLine.Exceptions;
 using Sammlung.CommandLine.Models.Entities.Bases;
 using Sammlung.CommandLine.Models.Entities.Bases.Commands;
 using Sammlung.CommandLine.Models.Traits;
@@ -20,7 +21,7 @@ namespace Sammlung.CommandLine.Models.Entities
         public override TerminationInfo Parse(IEnumerable<string> args, ITerminal terminal = null)
         {
             terminal ??= new DefaultTerminal();
-            
+
             try
             {
                 return base.Parse(args, terminal);

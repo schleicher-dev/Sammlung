@@ -106,7 +106,7 @@ namespace Sammlung.Collections.Heaps
             // Assign item and remove it from mapping.
             value = HeapPair.Create(root.Value, root.Priority);
             _lookup.Remove(root.Value);
-            HeapNodePool.Return(root);
+            HeapNodePool.Return(ref root);
 
             // If there aren't any elements left, no sifting is needed.
             if (1 < Count) SiftDown(0);

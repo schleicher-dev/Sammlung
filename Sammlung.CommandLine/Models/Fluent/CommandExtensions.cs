@@ -1,6 +1,7 @@
 using Sammlung.CommandLine.Models.Entities;
 using Sammlung.CommandLine.Models.Entities.Bases;
 using Sammlung.CommandLine.Models.Entities.Bases.Commands;
+using Sammlung.CommandLine.Models.Traits;
 using Sammlung.CommandLine.Pipes;
 
 namespace Sammlung.CommandLine.Models.Fluent
@@ -28,7 +29,8 @@ namespace Sammlung.CommandLine.Models.Fluent
             return parent;
         }
 
-        public static TCmd AddCommand<TCmd>(this TCmd parent, CommandBase command) where TCmd : CommandBase
+        public static TParentCmd AddCommand<TParentCmd, TParentData, TData>(this TParentCmd parent, Command<TParentData, TData> command) 
+            where TParentCmd : BindableCommandBase<TParentData>
         {
             parent.PushCommand(command);
             return parent;

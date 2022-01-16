@@ -67,4 +67,5 @@ namespace Fixtures.Sammlung.Pipes
             Assert.AreEqual(value, pipe.ProcessReverse(value));
         }
     }
+    
 }

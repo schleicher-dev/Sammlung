@@ -22,19 +22,26 @@ namespace Sammlung.Werkzeug.Patterns
 
         protected abstract T ResetInstance(T instance);
 
-        protected T Get()
+        public T Get()
         {
             using var _ = _rwLock.UseWriteLock();
             return _pool.Count != 0 ? _pool.Pop(): CreateInstance();
         }
 
-        public void Return(T instance)
+        public void Return(ref T instance)
         {
-            using var upgradableLockHandle = _rwLock.UseUpgradableReadLock();
-            if (_maxPoolSize <= _pool.Count) return;
-            upgradableLockHandle.Upgrade();
-            var resetInstance = Reset(instance);
-            _pool.Push(resetInstance);
+            try
+            {
+                using var upgradableLockHandle = _rwLock.UseUpgradableReadLock();
+                if (_maxPoolSize <= _pool.Count) return;
+                upgradableLockHandle.Upgrade();
+                var resetInstance = Reset(instance);
+                _pool.Push(resetInstance);
+            }
+            finally
+            {
+                instance = null;
+            }
         }
 
         private T Reset(T instance) => ResetInstance(instance);

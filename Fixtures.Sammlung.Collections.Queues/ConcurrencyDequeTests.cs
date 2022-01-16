@@ -18,7 +18,7 @@ namespace Fixtures.Sammlung.Collections.Queues
     {
         public static readonly DequeConstructors<int>[] Buffers =
         {
-            new DequeConstructors<int>("BlockingDeque", c => new ArrayDeque<int>(c).Wrap()),
+            new DequeConstructors<int>("BlockingDeque", c => new ArrayDeque<int>(c).ToBlockingDeque()),
             new DequeConstructors<int>("LockFreeLinkedDeque", c => new LockFreeLinkedDeque<int>())
         };
 
