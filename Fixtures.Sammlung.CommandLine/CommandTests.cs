@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using NUnit.Framework;
 using Sammlung.CommandLine;
@@ -7,7 +8,7 @@ using Sammlung.CommandLine.Models.Entities.Factories;
 using Sammlung.CommandLine.Models.Fluent;
 using Sammlung.CommandLine.Models.Parsing;
 using Sammlung.CommandLine.Pipes;
-using Sammlung.CommandLine.Reflection;
+using Sammlung.CommandLine.Utilities;
 
 namespace Fixtures.Sammlung.CommandLine
 {
@@ -42,27 +43,34 @@ namespace Fixtures.Sammlung.CommandLine
         private RootCommand<Parameters> CreateRoot()
         {
             var flag = _pipeFactory.BoolPipe(CultureInfo.InvariantCulture)
-                .AsPipeTerminal((Parameters p) => p.Flag)
+                .AsPipeTerminal((Parameters p, bool value) => p.Flag = value)
                 .BuildFlag("-f", "--force");
 
             var stringOption = _pipeFactory.StringPipe()
-                .AsPipeTerminal((Parameters p) => p.Hello)
+                .AsPipeTerminal((Parameters p, string value) => p.Hello = value)
                 .BuildOption("-s", "--string")
                 .SetMultiplicity(0, default);
 
             var argument = _pipeFactory.StringPipe()
-                .AsPipeTerminal((Parameters p) => p.World)
+                .AsPipeTerminal((Parameters p, string value) => p.World = value)
                 .BuildArgument().SetArity(2).SetMetaNames("FirstName", "SecondName");
 
-            var cmdProperty = PropertyFactory.Property((Parameters p) => p.SubParameters);
-            var command = new Command<Parameters, SubParameters>(new [] {"first_command"}, () => new SubParameters(), cmdProperty);
+            var bindableSetter = BindableSetterFactory.Create((Parameters p, SubParameters value) => p.SubParameters = value);
+            var command = CreateFirstCommand(bindableSetter);
             
             return RootCommandFactory.Create<Parameters>()
                 .SetApplicationName("HalloWelt")
-                .AddFlag(flag)
-                .AddOption(stringOption)
-                .AddArgument(argument)
-                .AddCommand(command);
+                .AddFlags(flag)
+                .AddOptions(stringOption)
+                .AddArguments(argument)
+                .AddCommand(command)
+                .SetDescription("This is the root command.");
+        }
+
+        private Command<Parameters, SubParameters> CreateFirstCommand(BindableSetter<Parameters, SubParameters> bindableSetter)
+        {
+            var command = CommandFactory.Create(new [] {"first_command"}, bindableSetter);
+            return command;
         }
 
         [TestCase("A", "B", "-f")]

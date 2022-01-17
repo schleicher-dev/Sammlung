@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Sammlung.Collections.Queues
@@ -16,9 +15,6 @@ namespace Sammlung.Collections.Queues
     {
         private const int DefaultSize = 1 << 6;
         
-        private static int GetSize(IEnumerable<T> enumerable) => 
-            enumerable is ICollection collection ? collection.Count : DefaultSize;
-
         private T[] _array;
         private int _leftPointer;
         private int _rightPointer;
@@ -30,8 +26,7 @@ namespace Sammlung.Collections.Queues
         public ArrayDeque(int capacity)
         {
             _array = new T[capacity];
-            _leftPointer = 0;
-            _rightPointer = 0;
+            _leftPointer = _rightPointer = 0;
             Count = 0;
         }
 
@@ -49,6 +44,7 @@ namespace Sammlung.Collections.Queues
                 _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
             };
             _leftPointer = _rightPointer = 0;
+            Count = _array.Length;
         }
 
         private void Grow()

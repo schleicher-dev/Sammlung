@@ -20,8 +20,8 @@ namespace Sammlung.CommandLine.Models.Entities.Bases.Commands
         public TData Data { get; private set; }
 
         public override IEnumerable<CommandBase> Commands => QualifiedCommands;
-        public override IEnumerable<OptionBase> Options => QualifiedOptions;
-        public override IEnumerable<ArgumentBase> Arguments => QualifiedArguments;
+        public override IEnumerable<OptionBase> Options => QualifiedOptions.OfType<OptionBase>();
+        public override IEnumerable<ArgumentBase> Arguments => QualifiedArguments.OfType<ArgumentBase>();
         
         public List<CommandBase> QualifiedCommands { get; } = new List<CommandBase>();
         public List<BindableOptionBase<TData>> QualifiedOptions { get; } = new List<BindableOptionBase<TData>>();

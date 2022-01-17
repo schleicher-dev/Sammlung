@@ -41,18 +41,17 @@ namespace Sammlung.CommandLine.Utilities
 
         private IEnumerable<string> GetUsageSegments(CommandBase command, bool skipCommands = false)
         {
-            if (command.Parent != null)
+            if (command.Parent == null)
+            {
+                yield return GetApplicationName(command);
+            }
+            else
             {
                 foreach (var segments in GetUsageSegments(command.Parent, true))
                     yield return segments;
                 yield return _formatter.FormatCommand(command);
             }
-            else
-            {
-                yield return "$";
-                yield return GetApplicationName(command);
-            }
-            
+
             foreach (var argument in command.Arguments)
                 yield return _formatter.FormatMultiplicity(argument);
             foreach (var option in command.Options)
@@ -61,12 +60,12 @@ namespace Sammlung.CommandLine.Utilities
             yield return _formatter.FormatVariableName("Command");
         }
 
-        private string GetUsageHint(CommandBase command) => string.Join(" ", GetUsageSegments(command));
+        private string GetFullUsageHint(CommandBase command) => string.Join(" ", GetUsageSegments(command).ToArray());
 
         private IEnumerable<string> GetUsageSection(CommandBase command)
         {
             yield return _textStyles.SectionHeader("USAGE");
-            yield return _textStyles.IndentedText(GetUsageHint(command));
+            yield return _textStyles.UsageHint(GetFullUsageHint(command));
         }
         
         private IEnumerable<string> GetSection<T>(string header, List<T> entities) where T : IDisplayFormatTrait, IDescriptionTrait

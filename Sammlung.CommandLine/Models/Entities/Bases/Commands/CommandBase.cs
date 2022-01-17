@@ -19,16 +19,10 @@ namespace Sammlung.CommandLine.Models.Entities.Bases.Commands
         protected static void RequireUniqueNames(IEnumerable<string> knownKeywords, IList<string> newKeywords)
         {
             var duplicates = knownKeywords
-                .Where(n => newKeywords.Contains(n, StringComparer.InvariantCultureIgnoreCase))
-                .ToList();
+                .Where(n => newKeywords.Contains(n, StringComparer.InvariantCultureIgnoreCase));
 
-            if (!duplicates.Any()) return;
-
-            var exceptions =
-                duplicates.Select(kw => new ArgumentException($"Found a duplicate keyword '{kw}'")).ToList();
-            if (exceptions.Count == 1)
-                throw exceptions[0];
-            throw new AggregateException(exceptions);
+            foreach (var keyword in duplicates)
+                throw new ArgumentException($"Found a duplicate keyword '{keyword}'");
         }
         
         private readonly List<string> _keywords;

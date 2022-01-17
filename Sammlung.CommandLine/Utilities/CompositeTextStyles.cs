@@ -17,6 +17,8 @@ namespace Sammlung.CommandLine.Utilities
         public string SectionHeader(string text) => 
             _styleBuilderFactory.Create(text).Bold().Build();
 
+        public string UsageHint(string text, int numLevels = 1) => IndentedText($"$ {text}", numLevels);
+
         public string IndentedText(string text, int numLevels = 1) => 
             _styleBuilderFactory.Create(text).Indent(NumIndentSpaces * numLevels).Build();
 

@@ -11,6 +11,6 @@ namespace Sammlung.CommandLine.Terminal.Styles.AnsiCodes
         }
 
         protected string GetAnsiSequence(params byte[] values) => 
-            $"\x1b[{string.Join(";", values.Select(v => Convert.ToString(v)))}m";
+            $"\x1b[{string.Join(";", values.Select(v => Convert.ToString(v)).ToArray())}m";
     }
 }

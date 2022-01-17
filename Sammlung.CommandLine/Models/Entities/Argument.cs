@@ -47,7 +47,7 @@ namespace Sammlung.CommandLine.Models.Entities
                     case ParseState.RequiresNextOccurrence:
                     case ParseState.ExpectNextOccurrence:
                     case ParseState.ExpectNextToken:
-                        _argument._terminal.ExecuteAll(token);
+                        _argument._terminal.Execute(token);
                         _numArity += 1;
                         ConsiderNextState();
                         break;

@@ -9,7 +9,7 @@ namespace Sammlung.CommandLine.Models.Formatting
 {
     public class EntityFormatter : IEntityFormatter
     {
-        private static string FormatKeywords(IEnumerable<string> keywords) => string.Join("|", keywords);
+        private static string FormatKeywords(IEnumerable<string> keywords) => string.Join("|", keywords.ToArray());
 
         private IEnumerable<string> FormatArityVariables(IArityTrait arityTrait, string defaultPrefix)
         {
@@ -41,7 +41,7 @@ namespace Sammlung.CommandLine.Models.Formatting
         
         /// <inheritdoc />
         public string FormatArgument<TData>(Argument<TData> argument) => 
-            string.Join(" ", FormatArityVariables(argument, "ARG"));
+            string.Join(" ", FormatArityVariables(argument, "ARG").ToArray());
         
         /// <inheritdoc />
         public string FormatFlag<TData>(Flag<TData> flag) => FormatKeywords(flag.Keywords);
@@ -50,7 +50,9 @@ namespace Sammlung.CommandLine.Models.Formatting
         public string FormatOption<TData>(Option<TData> option)
         {
             var keywords = FormatKeywords(option.Keywords);
-            return string.Join(" ", keywords, string.Join(" ", FormatArityVariables(option, "ARG")));
+
+            var optionArgs = string.Join(" ", FormatArityVariables(option, "ARG").ToArray());
+            return string.Join(" ", new[] { keywords, optionArgs });
         }
 
 

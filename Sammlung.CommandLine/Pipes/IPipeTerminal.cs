@@ -14,21 +14,6 @@ namespace Sammlung.CommandLine.Pipes
         /// bound <see cref="TData"/>.
         /// </summary>
         /// <param name="input">the input</param>
-        void ExecuteConversionStage(T1 input);
-
-        /// <summary>
-        /// Executes the validation stage of the terminal on the value in the <see cref="TData"/> object.
-        /// </summary>
-        void ExecuteValidationStage();
-
-        /// <summary>
-        /// Executes all stages of the terminal on the input parameter and writes the result to the
-        /// bound <see cref="TData"/>.
-        /// </summary>
-        /// <param name="input">the input</param>
-        /// <remarks>
-        /// Executes the <see cref="ExecuteConversionStage"/> and then the <see cref="ExecuteValidationStage"/>.
-        /// </remarks>
-        void ExecuteAll(T1 input);
+        void Execute(T1 input);
     }
 }

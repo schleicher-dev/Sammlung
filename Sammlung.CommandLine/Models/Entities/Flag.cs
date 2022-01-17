@@ -69,7 +69,7 @@ namespace Sammlung.CommandLine.Models.Entities
                 {
                     case ParseState.RequiresNextOccurrence:
                     case ParseState.ExpectNextOccurrence:
-                        _flag._terminal.ExecuteAll(bool.TrueString);
+                        _flag._terminal.Execute(bool.TrueString);
                         ConsiderNextState();
                         break;
                     case ParseState.ExpectNextToken:

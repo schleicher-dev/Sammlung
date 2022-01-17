@@ -204,5 +204,30 @@ namespace Fixtures.Sammlung.Collections.Queues
             Assert.Throws<NotSupportedException>(() => _ = lfDeque.ToArray());
             Assert.Throws<NotSupportedException>(() => ((IEnumerable) lfDeque).GetEnumerator());
         }
+
+        [Test]
+        public void ArrayDeque_LTR_Construction()
+        {
+            var array = Enumerable.Range(0, 10).ToArray();
+            var deque = new ArrayDeque<int>(array, ConstructionDirection.LeftToRight);
+            
+            CollectionAssert.AreEqual(array, deque);
+        }
+        
+        [Test]
+        public void ArrayDeque_RTL_Construction()
+        {
+            var array = Enumerable.Range(0, 10).ToArray();
+            var deque = new ArrayDeque<int>(array, ConstructionDirection.RightToLeft);
+            
+            CollectionAssert.AreEqual(array.Reverse(), deque);
+        }
+        
+        [Test]
+        public void ArrayDeque_Strange_ConstructionDirection_ThrowsArgumentOutOfRange()
+        {
+            var array = Enumerable.Range(0, 10).ToArray();
+            Assert.Throws<ArgumentOutOfRangeException>(() => _ = new ArrayDeque<int>(array, (ConstructionDirection)(-1)));
+        }
     }
 }

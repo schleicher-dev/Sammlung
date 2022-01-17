@@ -27,7 +27,7 @@ namespace Sammlung.CommandLine.Models.Parsing
         public CommandParser(CommandBase command, TData data, List<Argument<TData>> arguments, List<BindableOptionBase<TData>> options, List<CommandBase> commands)
         {
             _command = command.RequireNotNull(nameof(command));
-            _arguments = arguments.RequireNotNull(nameof(arguments)).ToDeque();
+            _arguments = arguments.RequireNotNull(nameof(arguments)).OrderBy(a => a.Position).ToDeque();
             _options = options.RequireNotNull(nameof(options));
             _commands = commands.RequireNotNull(nameof(commands));
             Data = data;
@@ -86,7 +86,7 @@ namespace Sammlung.CommandLine.Models.Parsing
             if (_currentStateMachine != null)
                 throw new ParseException(
                     $"The next token is expected to be passed to another entity but the token '{token}' " +
-                    $"is equivalent a keyword of the entity '{parserEntity}'. Place the token into " +
+                    $"is equivalent to a keyword of the entity '{parserEntity}'. Place the token into " +
                     "double quotes if this was intended.");
         }
 
@@ -150,7 +150,8 @@ namespace Sammlung.CommandLine.Models.Parsing
                 throw new ParseException(
                     "The entity is still expecting at least one occurrence. But the end of the tokens was reached.");
 
-            var stateMachines = _options.Concat<IParseTrait>(_arguments).Select(t => t.ParseStateMachine);
+            var stateMachines = _options.OfType<IParseTrait>().Concat(_arguments.OfType<IParseTrait>())
+                .Select(t => t.ParseStateMachine);
             foreach (var stateMachine in stateMachines)
             {
                 if (stateMachine.HasState(ParseState.ExpectNextToken))

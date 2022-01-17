@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using Sammlung.CommandLine.Models.Entities;
 using Sammlung.CommandLine.Models.Entities.Bases;
 using Sammlung.CommandLine.Models.Entities.Bases.Commands;
@@ -8,24 +10,41 @@ namespace Sammlung.CommandLine.Models.Fluent
 {
     public static class CommandExtensions
     {
-        public static TCmd AddFlag<TCmd, TData>(this TCmd parent, Flag<TData> flag)
+        public static TCmd AddFlags<TCmd, TData>(this TCmd parent, params Flag<TData>[] flags)
+            where TCmd : BindableCommandBase<TData> =>
+            parent.AddFlags(flags.AsEnumerable());
+
+        public static TCmd AddFlags<TCmd, TData>(this TCmd parent, IEnumerable<Flag<TData>> flags)
             where TCmd : BindableCommandBase<TData>
         {
-            parent.PushOption(flag);
+            foreach (var flag in flags)
+                parent.PushOption(flag);
             return parent;
         }
 
-        public static TCmd AddOption<TCmd, TData>(this TCmd parent, Option<TData> option)
+        public static TCmd AddOptions<TCmd, TData>(this TCmd parent, params Option<TData>[] options)
+            where TCmd : BindableCommandBase<TData> =>
+            parent.AddOptions(options.AsEnumerable());
+
+        public static TCmd AddOptions<TCmd, TData>(this TCmd parent, IEnumerable<Option<TData>> options)
             where TCmd : BindableCommandBase<TData>
         {
-            parent.PushOption(option);
+            foreach (var option in options)
+                parent.PushOption(option);
             return parent;
         }
 
-        public static TCmd AddArgument<TCmd, TData>(this TCmd parent, Argument<TData> argument)
+        public static TCmd AddArguments<TCmd, TData>(this TCmd parent, params Argument<TData>[] arguments)
             where TCmd : BindableCommandBase<TData>
         {
-            parent.PushArgument(argument);
+            return parent.AddArguments(arguments.AsEnumerable());
+        }        
+        
+        public static TCmd AddArguments<TCmd, TData>(this TCmd parent, IEnumerable<Argument<TData>> arguments)
+            where TCmd : BindableCommandBase<TData>
+        {
+            foreach (var argument in arguments)
+                parent.PushArgument(argument);
             return parent;
         }
 

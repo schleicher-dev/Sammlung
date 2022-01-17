@@ -5,10 +5,13 @@ using Sammlung.Werkzeug;
 
 namespace Sammlung.CommandLine.Models.Entities.Bases.Arguments
 {
+    
     public abstract class ArgumentBase : MultiParserEntityBase, IArityTrait
     {
         private List<string> _metaNames;
         private int _arity;
+        
+        public int Position { get; set; }
 
         public int Arity
         {

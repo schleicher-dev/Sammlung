@@ -4,18 +4,15 @@ using Sammlung.CommandLine.Models.Traits;
 using Sammlung.CommandLine.Resources;
 using Sammlung.Werkzeug;
 
-namespace Sammlung.CommandLine.Reflection
+namespace Sammlung.CommandLine.Utilities
 {
-    public class Property<T1, T2> : IBindableTrait<T1>
+    public class BindableSetter<T1, T2> : IBindableTrait<T1>
     {
-        
-        private readonly Func<T1, T2> _getter;
         private readonly Action<T1, T2> _setter;
         private T1 _data;
 
-        public Property(Func<T1, T2> getter, Action<T1, T2> setter)
+        public BindableSetter(Action<T1, T2> setter)
         {
-            _getter = getter.RequireNotNull(nameof(getter));
             _setter = setter.RequireNotNull(nameof(setter));
         }
 
@@ -29,11 +26,6 @@ namespace Sammlung.CommandLine.Reflection
 
         public T2 Value
         {
-            get
-            {
-                RequireBinding();
-                return _getter.Invoke(_data);
-            }
             set
             {
                 RequireBinding();

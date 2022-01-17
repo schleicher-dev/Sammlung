@@ -73,7 +73,7 @@ namespace Sammlung.CommandLine.Models.Entities
                         ConsiderNextState();
                         break;
                     case ParseState.ExpectNextToken:
-                        _option._terminal.ExecuteAll(token);
+                        _option._terminal.Execute(token);
                         _numArity += 1;
                         ConsiderNextState();
                         break;
