@@ -61,6 +61,15 @@ namespace Sammlung.Werkzeug.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The parameter is expected to be equal to {0}..
+        /// </summary>
+        internal static string ParamRequiredEqual {
+            get {
+                return ResourceManager.GetString("ParamRequiredEqual", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The parameter is expected to be greater than {0}..
         /// </summary>
         internal static string ParamRequiredGreater {

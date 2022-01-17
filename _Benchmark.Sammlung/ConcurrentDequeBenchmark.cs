@@ -23,7 +23,7 @@ namespace _Benchmark.Sammlung
         [Benchmark]
         public void PushAll_BlockingDeque()
         {
-            var deque = new ArrayDeque<int>(N).Wrap();
+            var deque = new ArrayDeque<int>(N).ToBlockingDeque();
             Parallel.For(0, N, i => deque.PushLeft(i));
         }
 

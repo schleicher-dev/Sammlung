@@ -1,0 +1,29 @@
+<#@ template language="C#" #>
+<#@ output extension=".cs" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#
+    const int numVariables = 200_000;
+#>
+using System.Diagnostics.CodeAnalysis;
+
+namespace Fixtures.Sammlung.Pipes.Werkzeug.Extras
+{
+    [ExcludeFromCodeCoverage]
+    public class VeryBigEnumConstants
+    {
+        public const int NumVariables = <#=numVariables#>;
+    }
+
+    public enum VeryBigEnum
+    {
+<#
+    PushIndent(new string(' ', 8));
+    for (var i = 0; i < numVariables; i++)
+    {
+        WriteLine("Value" + i + ",");
+    }
+    PopIndent();
+#>
+    }
+}

@@ -8,6 +8,6 @@ namespace Sammlung.Collections.Queues
     [JetBrains.Annotations.PublicAPI]
     public static class BlockingDequeExtensions
     {
-        public static IDeque<T> Wrap<T>(this IDeque<T> inner) => new BlockingDeque<T>(inner);
+        public static IDeque<T> ToBlockingDeque<T>(this IDeque<T> inner) => new BlockingDeque<T>(inner);
     }
 }

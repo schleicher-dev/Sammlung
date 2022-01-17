@@ -1,14 +1,14 @@
 using System.Runtime.CompilerServices;
+using Sammlung.Collections;
 
-[assembly: InternalsVisibleTo("_Benchmark.Sammlung, PublicKey=" + Sammlung.Keys.PublicKey)]
-[assembly: InternalsVisibleTo("_Fixtures.Sammlung, PublicKey=" + Sammlung.Keys.PublicKey)]
-[assembly: InternalsVisibleTo("Sammlung.Collections.CircularBuffers, PublicKey=" + Sammlung.Keys.PublicKey)]
-[assembly: InternalsVisibleTo("Sammlung.Collections.Dictionaries, PublicKey=" + Sammlung.Keys.PublicKey)]
-[assembly: InternalsVisibleTo("Sammlung.Collections.Graphs, PublicKey=" + Sammlung.Keys.PublicKey)]
-[assembly: InternalsVisibleTo("Sammlung.Collections.Heaps, PublicKey=" + Sammlung.Keys.PublicKey)]
-[assembly: InternalsVisibleTo("Sammlung.Collections.Queues, PublicKey=" + Sammlung.Keys.PublicKey)]
+[assembly: InternalsVisibleTo("_Benchmark.Sammlung, PublicKey=" + Keys.PublicKey)]
+[assembly: InternalsVisibleTo("Sammlung.Collections.CircularBuffers, PublicKey=" + Keys.PublicKey)]
+[assembly: InternalsVisibleTo("Sammlung.Collections.Dictionaries, PublicKey=" + Keys.PublicKey)]
+[assembly: InternalsVisibleTo("Sammlung.Collections.Graphs, PublicKey=" + Keys.PublicKey)]
+[assembly: InternalsVisibleTo("Sammlung.Collections.Heaps, PublicKey=" + Keys.PublicKey)]
+[assembly: InternalsVisibleTo("Sammlung.Collections.Queues, PublicKey=" + Keys.PublicKey)]
 
-namespace Sammlung
+namespace Sammlung.Collections
 {
     internal static class Keys
     {

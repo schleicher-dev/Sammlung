@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Sammlung.Collections.Queues
 {
@@ -12,6 +13,8 @@ namespace Sammlung.Collections.Queues
     [JetBrains.Annotations.PublicAPI]
     public sealed class ArrayDeque<T> : IDeque<T>
     {
+        private const int DefaultSize = 1 << 6;
+        
         private T[] _array;
         private int _leftPointer;
         private int _rightPointer;
@@ -23,11 +26,27 @@ namespace Sammlung.Collections.Queues
         public ArrayDeque(int capacity)
         {
             _array = new T[capacity];
-            _leftPointer = 0;
-            _rightPointer = 0;
+            _leftPointer = _rightPointer = 0;
             Count = 0;
         }
-        
+
+        /// <summary>
+        /// Creates a new <see cref="ArrayDeque{T}"/> using the items and the construction direction.
+        /// </summary>
+        /// <param name="items"></param>
+        /// <param name="direction"></param>
+        public ArrayDeque(IEnumerable<T> items, ConstructionDirection direction)
+        {
+            _array = direction switch
+            {
+                ConstructionDirection.LeftToRight => items.ToArray(),
+                ConstructionDirection.RightToLeft => items.Reverse().ToArray(),
+                _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
+            };
+            _leftPointer = _rightPointer = 0;
+            Count = _array.Length;
+        }
+
         private void Grow()
         {
             var oldSize = Capacity;
@@ -124,6 +143,7 @@ namespace Sammlung.Collections.Queues
         /// <inheritdoc />
         IEnumerator<T> IEnumerable<T>.GetEnumerator()
         {
+            if (Count == 0) yield break;
             for (var i = _leftPointer; _rightPointer <= _leftPointer && i < _array.Length; ++i)
                 yield return _array[i];
             for (var i = 0; _rightPointer <= _leftPointer && i < _rightPointer; ++i)
