@@ -92,5 +92,13 @@ namespace _Fixtures.Sammlung
             Assert.IsTrue(value.IsEqual(value));
             Assert.IsFalse(value.IsEqual(-value - 1));
         }
+
+        [Test]
+        public void RequireNumElements()
+        {
+            var emptyArray = Array.Empty<double>();
+            Assert.DoesNotThrow(() => emptyArray.RequireNumElements(0, "ParamName"));
+            Assert.Throws<ArgumentException>(() => emptyArray.RequireNumElements(1, "ParamName"));
+        }
     }
 }

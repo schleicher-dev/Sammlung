@@ -14,13 +14,13 @@ namespace _Fixtures.Sammlung
             var lowerUnbounded = Interval.Create(Bound.Empty<int>(), Bound.Exclusive(0));
             Assert.IsTrue(lowerUnbounded.Contains(int.MinValue));
             Assert.IsFalse(lowerUnbounded.Contains(0));
-            Assert.AreEqual("(-Inf, 0)", lowerUnbounded.ToString());
+            Assert.AreEqual("(-Inf; 0)", lowerUnbounded.ToString());
 
             var upperUnbounded = Interval.Create(Bound.Inclusive(0), Bound.Empty<int>());
             Assert.IsTrue(upperUnbounded.Contains(int.MaxValue));
             Assert.IsTrue(upperUnbounded.Contains(0));
             Assert.IsFalse(upperUnbounded.Contains(-1));
-            Assert.AreEqual("[0, +Inf)", upperUnbounded.ToString());
+            Assert.AreEqual("[0; +Inf)", upperUnbounded.ToString());
         }
 
         [TestCase(1, true, 1, true)]
@@ -72,7 +72,7 @@ namespace _Fixtures.Sammlung
         public void IntervalAndContainsCheck<T>(T lowerBound, bool lowerInclusive, T upperBound, bool upperInclusive,
             T inside, T outside) where T : struct, IComparable<T>
         {
-            var interval = Interval.Create<T>(Bound.Create(lowerBound, lowerInclusive),
+            var interval = Interval.Create(Bound.Create(lowerBound, lowerInclusive),
                 Bound.Create(upperBound, upperInclusive));
             Assert.IsTrue(interval.Contains(inside));
             Assert.IsFalse(interval.Contains(outside));
@@ -81,9 +81,18 @@ namespace _Fixtures.Sammlung
         [Test]
         public void RequireInsideInterval()
         {
-            var interval = Interval.Create(Bound.Inclusive(1f), Bound.Exclusive(2f));
+            var interval = Interval.CreateWithInclusiveAndExclusiveBounds(1f, 2f);
             Assert.DoesNotThrow(() => 1.5f.RequireElementOf(interval, "pName"));
             Assert.Throws<ArgumentOutOfRangeException>(() => 2f.RequireElementOf(interval, "pName"));
+        }
+
+        [TestCase(1, 2, "(1; 2)", "[1; 2]", "(1; 2]", "[1; 2)")]
+        public void CheckIntervalRepresentation(int lower, int upper, string exEx, string inIn, string exIn, string inEx)
+        {
+            Assert.AreEqual(exEx, Interval.CreateWithExclusiveBounds(lower, upper).ToString());
+            Assert.AreEqual(inIn, Interval.CreateWithInclusiveBounds(lower, upper).ToString());
+            Assert.AreEqual(exIn, Interval.CreateWithExclusiveAndInclusiveBounds(lower, upper).ToString());
+            Assert.AreEqual(inEx, Interval.CreateWithInclusiveAndExclusiveBounds(lower, upper).ToString());
         }
     }
 }

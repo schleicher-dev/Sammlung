@@ -15,13 +15,54 @@ namespace Sammlung.Numerics
         /// <summary>
         /// Creates a <see cref="Interval{T}"/> with a lower and upper bound.
         /// </summary>
-        /// <param name="lowerValue" />
-        /// <param name="upperValue" />
+        /// <param name="lower" />
+        /// <param name="upper" />
         /// <typeparam name="T">the number type</typeparam>
         /// <returns>the interval</returns>
-        public static Interval<T> Create<T>(Bound<T> lowerValue, Bound<T> upperValue)
-            where T : IComparable<T> => new Interval<T>(lowerValue, upperValue);
+        public static Interval<T> Create<T>(Bound<T> lower, Bound<T> upper)
+            where T : IComparable<T> => new Interval<T>(lower, upper);
         
+        /// <summary>
+        /// Creates an <see cref="Interval{T}"/> with both passed values interpreted as inclusive bounds.
+        /// </summary>
+        /// <param name="lower">the lower value</param>
+        /// <param name="upper">the upper value</param>
+        /// <typeparam name="T">the type of the values</typeparam>
+        /// <returns>the interval</returns>
+        public static Interval<T> CreateWithInclusiveBounds<T>(T lower, T upper) where T : IComparable<T> =>
+            Create(Bound.Inclusive(lower), Bound.Inclusive(upper));
+        
+        /// <summary>
+        /// Creates an <see cref="Interval{T}"/> with both passed values interpreted as exclusive bounds.
+        /// </summary>
+        /// <param name="lower">the lower value</param>
+        /// <param name="upper">the upper value</param>
+        /// <typeparam name="T">the type of the values</typeparam>
+        /// <returns>the interval</returns>
+        public static Interval<T> CreateWithExclusiveBounds<T>(T lower, T upper) where T : IComparable<T> =>
+            Create(Bound.Exclusive(lower), Bound.Exclusive(upper));
+
+        /// <summary>
+        /// Creates an <see cref="Interval{T}"/> with the first argument interpreted as inclusive and the second
+        /// argument interpreted as exclusive bound.
+        /// </summary>
+        /// <param name="lower">the lower value</param>
+        /// <param name="upper">the upper value</param>
+        /// <typeparam name="T">the type of the values</typeparam>
+        /// <returns>the interval</returns>
+        public static Interval<T> CreateWithInclusiveAndExclusiveBounds<T>(T lower, T upper) where T : IComparable<T> =>
+            Create(Bound.Inclusive(lower), Bound.Exclusive(upper));
+        
+        /// <summary>
+        /// Creates an <see cref="Interval{T}"/> with the first argument interpreted as exclusive and the second
+        /// argument interpreted as inclusive bound.
+        /// </summary>
+        /// <param name="lower">the lower value</param>
+        /// <param name="upper">the upper value</param>
+        /// <typeparam name="T">the type of the values</typeparam>
+        /// <returns>the interval</returns>
+        public static Interval<T> CreateWithExclusiveAndInclusiveBounds<T>(T lower, T upper) where T : IComparable<T> =>
+            Create(Bound.Exclusive(lower), Bound.Inclusive(upper));
     }
 
     /// <summary>
@@ -36,7 +77,7 @@ namespace Sammlung.Numerics
             var lowerValueStr = lowerBound != null ? string.Format(CultureInfo.InvariantCulture, "{0}{1}", lowerBound.Inclusive ? "[" : "(", lowerBound.Value) : "(-Inf";
             var upperValueStr = upperBound != null ? string.Format(CultureInfo.InvariantCulture, "{0}{1}", upperBound.Value, upperBound.Inclusive ? "]" : ")") : "+Inf)";
 
-            return $"{lowerValueStr}, {upperValueStr}";
+            return $"{lowerValueStr}; {upperValueStr}";
         }
 
         private static bool IsValidInterval(Bound<T> lowerBound, Bound<T> upperBound) =>

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sammlung.Werkzeug.Resources {
+namespace Sammlung.Pipes.Werkzeug.Resources {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Sammlung.Werkzeug.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class ErrorMessages {
+    internal class Lang {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal ErrorMessages() {
+        internal Lang() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Sammlung.Werkzeug.Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sammlung.Werkzeug.Resources.ErrorMessages", typeof(ErrorMessages).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sammlung.Pipes.Werkzeug.Resources.Lang", typeof(Lang).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,65 +61,38 @@ namespace Sammlung.Werkzeug.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The parameter is expected to be greater than {0}..
+        ///   Looks up a localized string similar to in one of the intervals {0}.
         /// </summary>
-        internal static string ParamRequiredGreater {
+        internal static string Validation_Interval_Exc_MultiInterval {
             get {
-                return ResourceManager.GetString("ParamRequiredGreater", resourceCulture);
+                return ResourceManager.GetString("Validation_Interval_Exc_MultiInterval", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The parameter is expected to be greater than or equal to {0}..
+        ///   Looks up a localized string similar to Expected value {0} to be {1}..
         /// </summary>
-        internal static string ParamRequiredGreaterEqual {
+        internal static string Validation_Interval_Exc_Reason {
             get {
-                return ResourceManager.GetString("ParamRequiredGreaterEqual", resourceCulture);
+                return ResourceManager.GetString("Validation_Interval_Exc_Reason", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The parameter is expected to be less than {0}..
+        ///   Looks up a localized string similar to in the interval {0}.
         /// </summary>
-        internal static string ParamRequiredLess {
+        internal static string Validation_Interval_Exc_SingleInterval {
             get {
-                return ResourceManager.GetString("ParamRequiredLess", resourceCulture);
+                return ResourceManager.GetString("Validation_Interval_Exc_SingleInterval", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The parameter is expected to be less than or equal to {0}..
+        ///   Looks up a localized string similar to Expected value {0} to match regular expression {1}..
         /// </summary>
-        internal static string ParamRequiredLessEqual {
+        internal static string Validation_Regex_Exc_Reason {
             get {
-                return ResourceManager.GetString("ParamRequiredLessEqual", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The parameter is expected to be not null..
-        /// </summary>
-        internal static string ParamRequiredNotNull {
-            get {
-                return ResourceManager.GetString("ParamRequiredNotNull", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The parameter is expected to have at least {0} element, only {1} could be counted..
-        /// </summary>
-        internal static string ParamRequireNumElements {
-            get {
-                return ResourceManager.GetString("ParamRequireNumElements", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The string parameter is expected to be not null or empty..
-        /// </summary>
-        internal static string ParamStringRequiredNotNullOrEmpty {
-            get {
-                return ResourceManager.GetString("ParamStringRequiredNotNullOrEmpty", resourceCulture);
+                return ResourceManager.GetString("Validation_Regex_Exc_Reason", resourceCulture);
             }
         }
     }

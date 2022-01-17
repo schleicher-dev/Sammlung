@@ -1,0 +1,22 @@
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#+
+    public class GenInfo
+    {
+        public static GenInfo Create<T>(string keywordName, bool isNumber = true) => new GenInfo(typeof(T), keywordName, isNumber);
+        
+        public Type Type { get; }
+        public string KeywordName { get; }
+        public bool IsNumber { get; }
+        public string Name { get; set; }
+
+        private GenInfo(Type type, string keywordName, bool isNumber)
+        {
+            Type = type;
+            KeywordName = keywordName;
+            IsNumber = isNumber;
+            Name = type.Name;
+        }
+
+    }
+#>

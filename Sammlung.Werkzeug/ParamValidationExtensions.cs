@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Sammlung.Werkzeug.Resources;
 
 namespace Sammlung.Werkzeug
@@ -92,5 +95,22 @@ namespace Sammlung.Werkzeug
             var msg = string.Format(ErrorMessages.ParamRequiredGreaterEqual, expected);
             return param.IsLessEqual(expected) ? param : throw new ArgumentOutOfRangeException(paramName, param, msg);
         }
+
+        /// <summary>
+        /// Requires the parameter to have at least the given number of element.s
+        /// </summary>
+        /// <param name="param">the parameter collection</param>
+        /// <param name="expected">the expected element count</param>
+        /// <param name="paramName">the name of the parameter</param>
+        /// <typeparam name="T">the type of the collection</typeparam>
+        /// <typeparam name="TCollection">the collection type</typeparam>
+        /// <returns>the parameter</returns>
+        /// <exception cref="ArgumentException">The parameter has less than the expected number of elements</exception>
+        public static TCollection RequireNumElements<TCollection>(this TCollection param, ushort expected,
+            string paramName) where TCollection : ICollection =>
+            expected <= param.Count
+                ? param
+                : throw new ArgumentException(
+                    string.Format(ErrorMessages.ParamRequireNumElements, expected, param.Count), paramName);
     }
 }

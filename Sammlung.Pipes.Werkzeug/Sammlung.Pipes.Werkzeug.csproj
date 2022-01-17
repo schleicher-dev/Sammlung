@@ -1,0 +1,46 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <IsPackable>true</IsPackable>
+        <Description>$(Description) This is the package for pipe mechanisms for conversions.</Description>
+    </PropertyGroup>
+    <PropertyGroup>
+        <TextTemplateTransformAll>False</TextTemplateTransformAll>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="GitVersion.MsBuild" Version="5.8.1">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="JetBrains.Annotations" Version="2021.3.0" PrivateAssets="all" />
+        <PackageReference Include="T4.Build" Version="0.2.3">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Sammlung.Numerics\Sammlung.Numerics.csproj" />
+        <ProjectReference Include="..\Sammlung.Pipes\Sammlung.Pipes.csproj" />
+        <ProjectReference Include="..\Sammlung.Werkzeug\Sammlung.Werkzeug.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+        <None Remove="Convertes\StringConversionPipes.tt" />
+        <TextTemplateTransformFiles Include="Converters\StringConversionPipes.tt">
+          <Generator>TextTemplatingFileGenerator</Generator>
+          <LastGenOutput>StringConversionPipes.cs</LastGenOutput>
+        </TextTemplateTransformFiles>
+        <Compile Update="Resources\Lang.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>Lang.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Converters\StringConversionPipes.cs">
+          <DependentUpon>StringConversionPipes.tt</DependentUpon>
+        </Compile>
+    </ItemGroup>
+    <ItemGroup>
+        <EmbeddedResource Update="Resources\Lang.resx">
+            <Generator>ResXFileCodeGenerator</Generator>
+            <LastGenOutput>Lang.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+    </ItemGroup>
+</Project>
