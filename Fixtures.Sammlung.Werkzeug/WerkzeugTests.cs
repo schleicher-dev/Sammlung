@@ -20,23 +20,23 @@ namespace Fixtures.Sammlung.Werkzeug
 
         private static void InternalRequireGreater<T>(T value, T expected, params T[] wrongValues)
             where T : IComparable<T> =>
-            InternalRequire(ParamValidationExtensions.RequireGreater, value, expected, wrongValues);
+            InternalRequire(GuardExtensions.RequireGreater, value, expected, wrongValues);
 
         private static void InternalRequireGreaterEqual<T>(T value, T expected, params T[] wrongValues)
             where T : IComparable<T> =>
-            InternalRequire(ParamValidationExtensions.RequireGreaterEqual, value, expected, wrongValues);
+            InternalRequire(GuardExtensions.RequireGreaterEqual, value, expected, wrongValues);
 
         private static void InternalRequireLess<T>(T value, T expected, params T[] wrongValues)
             where T : IComparable<T> =>
-            InternalRequire(ParamValidationExtensions.RequireLess, value, expected, wrongValues);
+            InternalRequire(GuardExtensions.RequireLess, value, expected, wrongValues);
 
         private static void InternalRequireLessEqual<T>(T value, T expected, params T[] wrongValues)
             where T : IComparable<T> =>
-            InternalRequire(ParamValidationExtensions.RequireLessEqual, value, expected, wrongValues);
+            InternalRequire(GuardExtensions.RequireLessEqual, value, expected, wrongValues);
         
         private static void InternalRequireEqual<T>(T value, T expected, params T[] wrongValues)
             where T : IEquatable<T> =>
-            InternalRequire(ParamValidationExtensions.RequireEqual, value, expected, wrongValues);
+            InternalRequire(GuardExtensions.RequireEqual, value, expected, wrongValues);
 
         [TestCase(5, 4, 5, 6)]
         public void RequireGreater(int value, int expected, params int[] wrongValues)
@@ -110,8 +110,8 @@ namespace Fixtures.Sammlung.Werkzeug
         public void RequireNumElements()
         {
             var emptyArray = Array.Empty<double>();
-            Assert.DoesNotThrow(() => emptyArray.RequireNumElements(0, "ParamName"));
-            Assert.Throws<ArgumentException>(() => emptyArray.RequireNumElements(1, "ParamName"));
+            Assert.DoesNotThrow(() => emptyArray.RequireAtLeastNumElements(0, "ParamName"));
+            Assert.Throws<ArgumentException>(() => emptyArray.RequireAtLeastNumElements(1, "ParamName"));
         }
     }
 }

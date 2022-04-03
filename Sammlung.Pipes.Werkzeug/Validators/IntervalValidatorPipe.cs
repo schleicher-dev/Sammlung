@@ -39,7 +39,7 @@ namespace Sammlung.Pipes.Werkzeug.Validators
         /// <param name="intervals">the intervals</param>
         public IntervalValidatorPipe(params Interval<T>[] intervals)
         {
-            _intervals = intervals.RequireNotNull(nameof(intervals)).RequireNumElements(1, nameof(intervals));
+            _intervals = intervals.RequireNotNull(nameof(intervals)).RequireAtLeastNumElements(1, nameof(intervals));
         }
 
         private string GetIntervalErrorMessage()

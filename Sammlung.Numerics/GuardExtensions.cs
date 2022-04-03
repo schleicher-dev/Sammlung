@@ -5,10 +5,10 @@ using Sammlung.Werkzeug;
 namespace Sammlung.Numerics
 {
     /// <summary>
-    /// The <see cref="ParamValidationExtensions"/> type extends types with helpful validation checks.
+    /// The <see cref="GuardExtensions"/> type extends types with helpful validation checks.
     /// </summary>
     [JetBrains.Annotations.PublicAPI]
-    public static class ParamValidationExtensions
+    public static class GuardExtensions
     {
         /// <summary>
         /// Requires the value to be an element of the given interval.

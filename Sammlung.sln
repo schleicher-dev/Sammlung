@@ -66,6 +66,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fixtures.Sammlung.Pipes.Wer
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fixtures.Common", "Fixtures.Common\Fixtures.Common.csproj", "{D957F693-20DF-4FC1-8BA0-A2CC3ADEC89C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sammlung.DesignPatterns", "Sammlung.DesignPatterns\Sammlung.DesignPatterns.csproj", "{BCBC57FD-8772-4E0F-8E3F-B36E6CBBCFE6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -172,6 +174,10 @@ Global
 		{D957F693-20DF-4FC1-8BA0-A2CC3ADEC89C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D957F693-20DF-4FC1-8BA0-A2CC3ADEC89C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D957F693-20DF-4FC1-8BA0-A2CC3ADEC89C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCBC57FD-8772-4E0F-8E3F-B36E6CBBCFE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCBC57FD-8772-4E0F-8E3F-B36E6CBBCFE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCBC57FD-8772-4E0F-8E3F-B36E6CBBCFE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCBC57FD-8772-4E0F-8E3F-B36E6CBBCFE6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B362AD2C-1685-4751-B49A-B216FFCDA7CA} = {A895D123-AB56-44D8-9206-B13C7ECB9583}

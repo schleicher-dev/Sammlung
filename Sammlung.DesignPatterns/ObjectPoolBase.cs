@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using System.Threading;
+using Sammlung.Werkzeug;
 using Sammlung.Werkzeug.Concurrent;
 
-namespace Sammlung.Werkzeug.Patterns
+namespace Sammlung.DesignPatterns
 {
     public abstract class ObjectPoolBase<T> where T : class
     {

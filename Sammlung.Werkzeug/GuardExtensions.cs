@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Sammlung.Werkzeug.Resources;
@@ -7,10 +6,10 @@ using Sammlung.Werkzeug.Resources;
 namespace Sammlung.Werkzeug
 {
     /// <summary>
-    /// The <see cref="ParamValidationExtensions"/> type extends types with helpful validation checks.
+    /// The <see cref="GuardExtensions"/> type extends types with helpful validation checks.
     /// </summary>
     [JetBrains.Annotations.PublicAPI]
-    public static class ParamValidationExtensions
+    public static class GuardExtensions
     {
         /// <summary>
         /// Requires parameter to be not null.
@@ -110,22 +109,5 @@ namespace Sammlung.Werkzeug
                 ? param
                 : throw new ArgumentOutOfRangeException(paramName, param,
                     string.Format(ErrorMessages.ParamRequiredEqual, expected));
-
-        /// <summary>
-        /// Requires the parameter to have at least the given number of element.s
-        /// </summary>
-        /// <param name="param">the parameter collection</param>
-        /// <param name="expected">the expected element count</param>
-        /// <param name="paramName">the name of the parameter</param>
-        /// <typeparam name="T">the type of the collection</typeparam>
-        /// <typeparam name="TCollection">the collection type</typeparam>
-        /// <returns>the parameter</returns>
-        /// <exception cref="ArgumentException">The parameter has less than the expected number of elements</exception>
-        public static TCollection RequireNumElements<TCollection>(this TCollection param, int expected,
-            string paramName) where TCollection : ICollection =>
-            expected <= param.Count
-                ? param
-                : throw new ArgumentException(
-                    string.Format(ErrorMessages.ParamRequireNumElements, expected, param.Count), paramName);
     }
 }

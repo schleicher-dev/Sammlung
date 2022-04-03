@@ -61,6 +61,24 @@ namespace Sammlung.Werkzeug.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The parameter is expected to have at least {0} elements, but actually there were {1}..
+        /// </summary>
+        internal static string ParamRequireAtLeastNumElements {
+            get {
+                return ResourceManager.GetString("ParamRequireAtLeastNumElements", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The parameter is expected to have at most {0} elements, but actually there were {1}..
+        /// </summary>
+        internal static string ParamRequireAtMostNumElements {
+            get {
+                return ResourceManager.GetString("ParamRequireAtMostNumElements", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The parameter is expected to be equal to {0}..
         /// </summary>
         internal static string ParamRequiredEqual {
@@ -115,11 +133,11 @@ namespace Sammlung.Werkzeug.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The parameter is expected to have at least {0} element, only {1} could be counted..
+        ///   Looks up a localized string similar to The parameter is expected to have exactly {0} elements, but actually there were {1}..
         /// </summary>
-        internal static string ParamRequireNumElements {
+        internal static string ParamRequireExactlyNumElements {
             get {
-                return ResourceManager.GetString("ParamRequireNumElements", resourceCulture);
+                return ResourceManager.GetString("ParamRequireExactlyNumElements", resourceCulture);
             }
         }
         
