@@ -12,6 +12,7 @@
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\Sammlung.Collections\Sammlung.Collections.csproj" />
+        <ProjectReference Include="..\Sammlung.DesignPatterns\Sammlung.DesignPatterns.csproj" />
         <ProjectReference Include="..\Sammlung.Werkzeug\Sammlung.Werkzeug.csproj" />
     </ItemGroup>
 </Project>

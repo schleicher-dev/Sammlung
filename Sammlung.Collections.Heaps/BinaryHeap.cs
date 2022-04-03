@@ -2,8 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Sammlung.DesignPatterns;
 using Sammlung.Werkzeug;
-using Sammlung.Werkzeug.Patterns;
 
 namespace Sammlung.Collections.Heaps
 {
