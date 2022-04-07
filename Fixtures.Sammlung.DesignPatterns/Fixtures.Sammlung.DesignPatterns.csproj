@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFrameworks>net48;netcoreapp3.1</TargetFrameworks>
+        <LangVersion>8.0</LangVersion>
+        <SignAssembly>true</SignAssembly>
+        <AssemblyOriginatorKeyFile>../Sammlung.snk</AssemblyOriginatorKeyFile>
+    </PropertyGroup>
+    <PropertyGroup>
+        <TextTemplateTransformAll>False</TextTemplateTransformAll>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="nunit" Version="3.12.0" />
+        <PackageReference Include="NUnit3TestAdapter" Version="3.15.1" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.4.0" />
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Sammlung.DesignPatterns\Sammlung.DesignPatterns.csproj" />
+    </ItemGroup>
+</Project>

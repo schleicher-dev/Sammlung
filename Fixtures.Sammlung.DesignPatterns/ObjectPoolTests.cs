@@ -1,8 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
 using NUnit.Framework;
-using Sammlung.Werkzeug.Patterns;
+using Sammlung.DesignPatterns;
 
-namespace Fixtures.Sammlung.Werkzeug
+namespace Fixtures.Sammlung.DesignPatterns
 {
     [TestFixture]
     [ExcludeFromCodeCoverage]

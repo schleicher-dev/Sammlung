@@ -1,6 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk">   
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <IsPackable>true</IsPackable>
+        <Description>$(Description) This is the collection package for design patterns.</Description>
+    </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="GitVersion.MsBuild" Version="5.8.1">
+        <PackageReference Include="GitVersion.MsBuild" Version="5.9.0">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
