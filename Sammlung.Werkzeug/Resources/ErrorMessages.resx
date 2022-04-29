@@ -22,7 +22,7 @@
         <value>The parameter is expected to be not null.</value>
     </data>
     <data name="ParamStringRequiredNotNullOrEmpty" xml:space="preserve">
-        <value>The string parameter is expected to be not null or empty.</value>
+        <value>The string parameter {0} is expected to be not null or empty.</value>
     </data>
     <data name="ParamRequiredGreater" xml:space="preserve">
         <value>The parameter is expected to be greater than {0}.</value>

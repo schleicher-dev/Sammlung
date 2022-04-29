@@ -93,9 +93,9 @@ namespace Fixtures.Sammlung.Werkzeug
         [Test]
         public void RequireNotNullOrEmpty()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => default(string).RequireNotNullOrEmpty("ParamName"));
-            Assert.Throws<ArgumentOutOfRangeException>(() => string.Empty.RequireNotNullOrEmpty("ParamName"));
-            Assert.Throws<ArgumentOutOfRangeException>(() => "".RequireNotNullOrEmpty("ParamName"));
+            Assert.Throws<ArgumentNullException>(() => default(string).RequireNotNullOrEmpty("ParamName"));
+            Assert.Throws<ArgumentException>(() => string.Empty.RequireNotNullOrEmpty("ParamName"));
+            Assert.Throws<ArgumentException>(() => "".RequireNotNullOrEmpty("ParamName"));
             Assert.DoesNotThrow(() => "ANY".RequireNotNull("ParamName"));
         }
 

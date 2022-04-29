@@ -28,12 +28,13 @@ namespace Sammlung.Werkzeug
         /// <param name="param">the string value to be checked for null or empty</param>
         /// <param name="paramName">the name of the parameter</param>
         /// <returns>the parameter</returns>
-        /// <exception cref="ArgumentOutOfRangeException">The string parameter is null or empty</exception>
+        /// <exception cref="ArgumentNullException">The string parameter is null</exception>
+        /// <exception cref="ArgumentException">The string parameter is empty</exception>
         public static string RequireNotNullOrEmpty(this string param, string paramName) =>
-            !string.IsNullOrEmpty(param)
+            param.RequireNotNull(paramName)
+                .Length != 0
                 ? param
-                : throw new ArgumentOutOfRangeException(paramName, param,
-                    ErrorMessages.ParamStringRequiredNotNullOrEmpty);
+                : throw new ArgumentException(ErrorMessages.ParamStringRequiredNotNullOrEmpty, paramName);
 
         /// <summary>
         /// Requires the parameter to be greater than the expected value.
