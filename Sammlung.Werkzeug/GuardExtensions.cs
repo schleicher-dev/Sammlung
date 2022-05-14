@@ -31,8 +31,7 @@ namespace Sammlung.Werkzeug
         /// <exception cref="ArgumentNullException">The string parameter is null</exception>
         /// <exception cref="ArgumentException">The string parameter is empty</exception>
         public static string RequireNotNullOrEmpty(this string param, string paramName) =>
-            param.RequireNotNull(paramName)
-                .Length != 0
+            param.RequireNotNull(paramName).Length != 0
                 ? param
                 : throw new ArgumentException(ErrorMessages.ParamStringRequiredNotNullOrEmpty, paramName);
 
