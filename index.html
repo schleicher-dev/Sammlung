@@ -1,0 +1,267 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title> </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content=" ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="styles/docfx.vendor.css">
+    <link rel="stylesheet" href="styles/docfx.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <meta property="docfx:navrel" content="toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="index.html">
+                <img id="logo" class="svg" src="logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="sammlung"><img src="Images/LogoWithName.svg" alt="Sammlung"></h1>
+
+<p>Sammlung (/'zamlʊŋ/) is german for <em>collection</em> and is pronounced <em>some-loong</em>.</p>
+<p>Is is a library for C# containing a plethora of collection types which are not provided out of the box by the .NET
+standard libraries. The NuGet package is provided for both <strong>.NET Framework 3.5</strong> and newer and <strong>.NET Core</strong> .NET standard 2.1 and newer.</p>
+<h2 id="rationale">Rationale</h2>
+<p>Why is there another collection library? I am a software engineer in my everyday job and I like to use data structures which
+obey the rules of proper software engineering. One of this rules is a guaranteed computational complexity bound and another is a well-implemented,
+well-tested and performant realization of the data structure. Though creating a new library for collections I am not interested
+in inventing the wheel over and over again. If anything I am interested in merging good collections together and create new ones
+which are more performant in other field of application.</p>
+<h2 id="vision">Vision</h2>
+<p>Sammlung has the vision to be the go-to NuGet package, when it comes to collections beyond the standard collections.</p>
+<p>We aim to deliver:</p>
+<ul>
+<li>high-end default collection implementations</li>
+<li>multiple options for a container type, if reasonable</li>
+<li>container types which operate memory-aware and perform on the file system, in this case we prefer cache-oblivious
+algorithms.</li>
+</ul>
+<p>For every collection class there should be a benchmark, testing the performance of the particular container. When
+possible we deliver theoretical bounds for the particular operations of a collection.</p>
+<p>We also use extensive tests to ensure the quality of the library.</p>
+<h2 id="contribution">Contribution</h2>
+<p>We encourage everyone to contribute to this project. Open-source lives from participation!
+If you're not a programmer, you can help translating documentations. If you're a graphic artist you may help us with
+illustrations. If you're not familiar with C#, do code reviews with us. If you're a theoretical computer scientists,
+help us calculating bounds. If you encounter a bug, a vulnerability, a code quality issue, report it! Every input is
+welcome.</p>
+<p>If you'd like to donate to us. Point out a platform where someone can donate to us. I currently have no clue about this
+topic.</p>
+<h2 id="collection-list">Collection List</h2>
+<p>Ticked means available in the newest package.</p>
+<ul>
+<li>[X] Dictionaries
+<ul>
+<li>[X] Bidirectional Dictionary
+<ul>
+<li>[X] Non-Thread-Safe (Sammlung.Dictionaries.BidiDictionary)</li>
+<li>[X] Thread-Safe, Blocking (Sammlung.Dictionaries.Concurrent.BlockingBidiDictionary)</li>
+<li>[ ] Thread-Safe, Lock-Free</li>
+</ul>
+</li>
+<li>[X] Multi-Key Dictionary
+<ul>
+<li>[X] Non-Thread-Safe (Sammlung.Dictionaries.MultiKeyDictionary)</li>
+<li>[X] Thread-Safe, Blocking (Sammlung.Dictionaries.Concurrent.BlockingMultiKeyDictionary)</li>
+<li>[ ] Thread-Safe, Lock-Free</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>[X] Heaps / Priority-Queues
+<ul>
+<li>[X] Binary Heap
+<ul>
+<li>[X] Non-Thread-Safe (Sammlung.Heaps.BinaryHeap)</li>
+<li>[ ] Thread-Safe, Blocking</li>
+<li>[ ] Thread-Safe, Lock-Free</li>
+</ul>
+</li>
+<li>[ ] Pairing Heap
+<ul>
+<li>[ ] Non-Thread-Safe</li>
+<li>[ ] Thread-Safe, Blocking</li>
+<li>[ ] Thread-Safe, Lock-Free</li>
+</ul>
+</li>
+<li>[ ] Fibonacci Heap
+<ul>
+<li>[ ] Non-Thread-Safe</li>
+<li>[ ] Thread-Safe, Blocking</li>
+<li>[ ] Thread-Safe, Lock-Free</li>
+</ul>
+</li>
+<li>[ ] Brodal Queue
+<ul>
+<li>[ ] Non-Thread-Safe</li>
+<li>[ ] Thread-Safe, Blocking</li>
+<li>[ ] Thread-Safe, Lock-Free</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>[ ] Priority-Stacks</li>
+<li>[X] Queues
+<ul>
+<li>[X] <strong>All-Types:</strong> Thread-Safe, Blocking (Sammlung.Queues.Concurrent.BlockingDeque)</li>
+<li>[X] Continuous Queue / Deque
+<ul>
+<li>[X] Non-Thread-Safe (Sammlung.Queues.ArrayDeque)</li>
+</ul>
+</li>
+<li>[X] Pointer Queue / Deque
+<ul>
+<li>[X] Non-Thread-Safe (Sammlung.Queues.LinkedDeque)</li>
+<li>[X] Thread-Safe, Lock-Free (Sammlung.Queues.Concurrent.LockFreeLinkedDeque)</li>
+</ul>
+</li>
+<li>[ ] File-System Based Queue / Deque
+<ul>
+<li>[ ] Non-Thread-Safe</li>
+<li>[ ] Thread-Safe, with transactions</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>[X] Graphs
+<ul>
+<li>[ ] Undirected Graph</li>
+<li>[X] Directed Graph</li>
+<li>[ ] Multi Graph</li>
+<li>[X] Algorithms on Graphs (poss. Separate NuGet package)
+<ul>
+<li>[ ] Dijkstra-Algorithm</li>
+<li>[ ] Kruskal-Algorithm</li>
+<li>[ ] Minimum Spanning tree (MST)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>[ ] Search Trees
+<ul>
+<li>[ ] Binary Search Tree</li>
+<li>[ ] ABSearchTree :: (a,b)-tree</li>
+<li>[ ] RedBlackSearchTree :: red-black tree</li>
+</ul>
+</li>
+<li>[X] Circular Buffers
+<ul>
+<li>[X] Static Circular Buffer
+<ul>
+<li>[X] Non-Thread-Safe (Sammlung.CircularBuffers.StaticCircularBuffer)</li>
+<li>[ ] Thread-Safe, Blocking</li>
+<li>[ ] Thread-Safe, Lock-Free</li>
+</ul>
+</li>
+<li>[X] Dynamic Circular Buffer
+<ul>
+<li>[X] Non-Thread-Safe (Sammlung.CircularBuffers.DynamicCircularBuffer)</li>
+<li>[ ] Thread-Safe, Blocking</li>
+<li>[ ] Thread-Safe, Lock-Free</li>
+</ul>
+</li>
+<li>[ ] BipBuffers
+<ul>
+<li>[ ] Non-Thread-Safe</li>
+<li>[ ] Thread-Safe, Blocking</li>
+<li>[ ] Thread-Safe, Lock-Free</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="literature">Literature</h2>
+<ul>
+<li><a href="https://doi.org/10.1007/978-3-540-77978-0">Algorithms and Data Structures - Kurt Mehlhorn, Peter Sanders</a></li>
+<li><a href="https://doi.org/10.1007/978-3-540-45209-6_92">CAS-Based Lock-Free Algorithm for Shared Deques - Maged M. Michael</a></li>
+</ul>
+<h2 id="documentation">Documentation</h2>
+<p>Our documentation can be found <a href="https://schleicher-dev.github.io/Sammlung/">here</a>.</p>
+<h2 id="contributors">Contributors</h2>
+<ul>
+<li>Ralf Schleicher</li>
+</ul>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/schleicher-dev/Sammlung/blob/master/.docfx/index.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="styles/docfx.js"></script>
+    <script type="text/javascript" src="styles/main.js"></script>
+  </body>
+</html>
