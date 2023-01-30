@@ -70,6 +70,13 @@ namespace Sammlung.Functional
         /// <param name="defaultValue">the value if the encapsulated value is not set</param>
         /// <returns>either the encapsulated value or the default value</returns>
         public T GetOrDefault(T defaultValue = default) => GetOrDefault(x => x, defaultValue);
+        
+        /// <summary>
+        /// Returns the value encapsulated in the monad or the default value.
+        /// </summary>
+        /// <param name="defaultFunction">the function which is called if the monad hasn't a value</param>
+        /// <returns>either the encapsulated value or the default value</returns>
+        public T GetOrDefault(Func<T> defaultFunction) => GetOrDefault(x => x, defaultFunction);
 
         /// <summary>
         /// Returns the value encapsulated in the monad or the default value.

@@ -11,17 +11,12 @@
         <PackageReference Include="JetBrains.Annotations" Version="2022.3.1" PrivateAssets="all" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Update="Resources\ErrorMessages.Designer.cs">
-            <DesignTime>True</DesignTime>
-            <AutoGen>True</AutoGen>
-            <DependentUpon>ErrorMessages.resx</DependentUpon>
-        </Compile>
+        <EmbeddedResource Update="Resources\ErrorMessages.resx">
+            <Generator>ResXFileCodeGenerator</Generator>
+            <StronglyTypedFileName>$(IntermediateOutputPath)\ErrorMessages.Designer.cs</StronglyTypedFileName>
+            <StronglyTypedLanguage>CSharp</StronglyTypedLanguage>
+            <StronglyTypedNamespace>Sammlung.Werkzeug.Resources</StronglyTypedNamespace>
+            <StronglyTypedClassName>ErrorMessages</StronglyTypedClassName>
+        </EmbeddedResource>
     </ItemGroup>
-    <ItemGroup>
-      <EmbeddedResource Update="Resources\ErrorMessages.resx">
-        <Generator>ResXFileCodeGenerator</Generator>
-        <LastGenOutput>ErrorMessages.Designer.cs</LastGenOutput>
-      </EmbeddedResource>
-    </ItemGroup>
-
 </Project>

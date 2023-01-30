@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFrameworks>net48;netcoreapp3.1</TargetFrameworks>
         <SignAssembly>true</SignAssembly>
@@ -8,11 +8,12 @@
         <TextTemplateTransformAll>False</TextTemplateTransformAll>
     </PropertyGroup>
     <ItemGroup>
+        <PackageReference Include="NSubstitute" Version="4.4.0" />
         <PackageReference Include="nunit" Version="3.13.3" />
         <PackageReference Include="NUnit3TestAdapter" Version="4.3.1" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.1" />
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\Sammlung.DesignPatterns\Sammlung.DesignPatterns.csproj" />
+        <ProjectReference Include="..\Sammlung.Functional\Sammlung.Functional.csproj" />
     </ItemGroup>
 </Project>
