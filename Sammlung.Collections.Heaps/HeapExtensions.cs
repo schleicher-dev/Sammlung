@@ -71,7 +71,7 @@ namespace Sammlung.Collections.Heaps
         /// <typeparam name="T">the value type</typeparam>
         /// <typeparam name="TPriority">the priority value</typeparam>
         /// <exception cref="System.InvalidOperationException">when collection is empty</exception>
-        public static void Update<T, TPriority>(this IHeap<T, TPriority> heap, T oldValue, TPriority priority)
+        public static void Update<T, TPriority>(this IHeap<T, TPriority> heap, HeapPair<T, TPriority> oldValue, TPriority priority)
             where TPriority : IComparable<TPriority>
         {
             if (!heap.RequireNotNull(nameof(heap)).TryUpdate(oldValue, priority))

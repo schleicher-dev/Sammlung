@@ -95,8 +95,8 @@ namespace Fixtures.Sammlung.Collections.Heaps
             Assert.Throws<InvalidOperationException>(() => heap.Pop());
             Assert.IsFalse(heap.TryPeek(out _));
             Assert.Throws<InvalidOperationException>(() => heap.Peek());
-            Assert.IsFalse(heap.TryUpdate("A", 0));
-            Assert.Throws<ArgumentException>(() => heap.Update("A", 0));
+            Assert.IsFalse(heap.TryUpdate(HeapPair.Create("A", 100), 0));
+            Assert.Throws<ArgumentException>(() => heap.Update(HeapPair.Create("A", 100), 0));
             Assert.IsFalse(heap.TryReplace("A", 0, out _));
             Assert.Throws<ArgumentException>(() => heap.Replace("A", 0));
         }
@@ -109,10 +109,12 @@ namespace Fixtures.Sammlung.Collections.Heaps
             heap.Push("B", 50);
             heap.Push("C", 150);
             heap.Push("D", 25);
+            heap.Push("D", 105);
             heap.Push("E", 200);
 
             heap.Push("F", 12);
-            heap.Update("D", 400);
+            heap.Update(HeapPair.Create("D", 25), 400);
+            heap.Update(HeapPair.Create("D", 105), 1000);
 
             heap.Replace("F", 500);
             
@@ -124,7 +126,7 @@ namespace Fixtures.Sammlung.Collections.Heaps
                 list.Add(heap.Pop().Value);
             }
             
-            CollectionAssert.AreEqual(new [] {"B", "A", "C", "E", "D", "F"}, list);
+            CollectionAssert.AreEqual(new [] {"B", "A", "C", "E", "D", "F", "D"}, list);
         }
 
         [Test]

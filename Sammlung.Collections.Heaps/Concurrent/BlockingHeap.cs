@@ -91,7 +91,7 @@ namespace Sammlung.Collections.Heaps.Concurrent
         }
 
         /// <inheritdoc />
-        public bool TryUpdate(T oldValue, TPriority priority)
+        public bool TryUpdate(HeapPair<T, TPriority> oldValue, TPriority priority)
         {
             using (_rwLock.UseWriteLock())
             {
