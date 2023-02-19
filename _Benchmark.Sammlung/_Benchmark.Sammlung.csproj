@@ -13,7 +13,5 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Sammlung.Collections.Queues\Sammlung.Collections.Queues.csproj" />
-      <ProjectReference Include="..\Sammlung\Sammlung.csproj" />
     </ItemGroup>
-
 </Project>
