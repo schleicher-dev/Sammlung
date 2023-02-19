@@ -28,19 +28,8 @@
           <Generator>TextTemplatingFileGenerator</Generator>
           <LastGenOutput>StringConversionPipes.cs</LastGenOutput>
         </TextTemplateTransformFiles>
-        <Compile Update="Resources\Lang.Designer.cs">
-            <DesignTime>True</DesignTime>
-            <AutoGen>True</AutoGen>
-            <DependentUpon>Lang.resx</DependentUpon>
-        </Compile>
         <Compile Update="Converters\StringConversionPipes.cs">
           <DependentUpon>StringConversionPipes.tt</DependentUpon>
         </Compile>
-    </ItemGroup>
-    <ItemGroup>
-        <EmbeddedResource Update="Resources\Lang.resx">
-            <Generator>ResXFileCodeGenerator</Generator>
-            <LastGenOutput>Lang.Designer.cs</LastGenOutput>
-        </EmbeddedResource>
     </ItemGroup>
 </Project>

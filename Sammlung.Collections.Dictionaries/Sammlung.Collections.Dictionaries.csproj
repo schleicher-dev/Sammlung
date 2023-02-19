@@ -13,17 +13,4 @@
     <ItemGroup>
         <ProjectReference Include="..\Sammlung.Werkzeug\Sammlung.Werkzeug.csproj" />
     </ItemGroup>
-    <ItemGroup>
-      <EmbeddedResource Update="Resources\ErrorMessages.resx">
-        <Generator>ResXFileCodeGenerator</Generator>
-        <LastGenOutput>ErrorMessages.Designer.cs</LastGenOutput>
-      </EmbeddedResource>
-    </ItemGroup>
-    <ItemGroup>
-      <Compile Update="Resources\ErrorMessages.Designer.cs">
-        <DesignTime>True</DesignTime>
-        <AutoGen>True</AutoGen>
-        <DependentUpon>ErrorMessages.resx</DependentUpon>
-      </Compile>
-    </ItemGroup>
 </Project>
