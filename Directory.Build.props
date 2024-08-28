@@ -10,7 +10,6 @@
         <PackageIcon>QuadraticIcon.png</PackageIcon>
         <PackageLicenseFileLocation>$(MSBuildThisFileDirectory)LICENSE</PackageLicenseFileLocation>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
-        <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
         <UpdateVersionProperties>true</UpdateVersionProperties>
         <UseFullSemVerForNuGet>false</UseFullSemVerForNuGet>
         <SignAssembly>true</SignAssembly>
