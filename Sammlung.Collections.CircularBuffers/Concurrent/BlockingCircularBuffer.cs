@@ -12,8 +12,7 @@ namespace Sammlung.Collections.CircularBuffers.Concurrent
     [JetBrains.Annotations.PublicAPI]
     public class BlockingCircularBuffer<T> : ICircularBuffer<T>
     {
-        private readonly EnhancedReaderWriterLock _rwLock =
-            new EnhancedReaderWriterLock(LockRecursionPolicy.NoRecursion);
+        private readonly EnhancedReaderWriterLock _rwLock = new(LockRecursionPolicy.NoRecursion);
         private readonly ICircularBuffer<T> _decorated;
 
         /// <summary>

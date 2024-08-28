@@ -15,6 +15,6 @@ namespace Sammlung.Collections.CircularBuffers
         /// <typeparam name="T">the type</typeparam>
         /// <returns>the blocking heap</returns>
         public static BlockingCircularBuffer<T> Wrap<T>(this ICircularBuffer<T> decorated)
-            => new BlockingCircularBuffer<T>(decorated);
+            => new(decorated);
     }
 }

@@ -243,7 +243,7 @@ namespace Sammlung.Collections.Heaps
         private class HeapNodeObjectPool : ObjectPoolBase<HeapNode>
         {
             /// <inheritdoc />
-            protected override HeapNode CreateInstance() => new HeapNode();
+            protected override HeapNode CreateInstance() => new();
 
             /// <inheritdoc />
             protected override HeapNode ResetInstance(HeapNode instance)

@@ -102,8 +102,8 @@ namespace Fixtures.Sammlung.Werkzeug
         [Test]
         public void ComparisonExtensions_IsEqual([Range(0, 50)] int value)
         {
-            Assert.IsTrue(value.IsEqual(value));
-            Assert.IsFalse(value.IsEqual(-value - 1));
+            Assert.That(value.IsEqual(value), Is.True);
+            Assert.That(value.IsEqual(-value - 1), Is.False);
         }
 
         [Test]

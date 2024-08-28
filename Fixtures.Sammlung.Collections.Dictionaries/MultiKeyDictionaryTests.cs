@@ -15,11 +15,11 @@ namespace Fixtures.Sammlung.Collections.Dictionaries
     {
         public static readonly MultiKeyDictConstructors<int, string>[] CtorTuples =
         {
-            new MultiKeyDictConstructors<int, string>(
+            new(
                 () => new MultiKeyDictionary<int, string>(), 
                 d => new MultiKeyDictionary<int, string>(d),
                 c => new MultiKeyDictionary<int, string>(c)),
-            new MultiKeyDictConstructors<int, string>(
+            new(
                 () => new BlockingMultiKeyDictionary<int, string>(), 
                 d => new BlockingMultiKeyDictionary<int, string>(d),
                 c => new BlockingMultiKeyDictionary<int, string>(c))
@@ -54,40 +54,40 @@ namespace Fixtures.Sammlung.Collections.Dictionaries
             mkDict[6] = "Goodbye";
             mkDict.Add(7, "Earth");
             mkDict.Add(new KeyValuePair<int, string>(8, "Blue"));
-            
-            Assert.AreEqual("Hello", mkDict[1]);
-            Assert.AreEqual("Hello", mkDict[2]);
-            Assert.AreEqual("Hello", mkDict[3]);
-            Assert.AreEqual("World", mkDict[4]);
-            Assert.AreEqual("World", mkDict[5]);
-            Assert.AreEqual("Goodbye", mkDict[6]);
-            Assert.AreEqual("Earth", mkDict[7]);
-            Assert.AreEqual("Blue", mkDict[8]);
-            Assert.AreEqual(8, mkDict.Count);
-            Assert.IsFalse(mkDict.IsReadOnly);
-            
-            CollectionAssert.AreEquivalent(Enumerable.Range(1, 8), mkDict.Keys);
-            CollectionAssert.AreEquivalent(
-                Enumerable.Repeat("Hello", 3)
+
+            Assert.That(mkDict[1], Is.EqualTo("Hello"));
+            Assert.That(mkDict[2], Is.EqualTo("Hello"));
+            Assert.That(mkDict[3], Is.EqualTo("Hello"));
+            Assert.That(mkDict[4], Is.EqualTo("World"));
+            Assert.That(mkDict[5], Is.EqualTo("World"));
+            Assert.That(mkDict[6], Is.EqualTo("Goodbye"));
+            Assert.That(mkDict[7], Is.EqualTo("Earth"));
+            Assert.That(mkDict[8], Is.EqualTo("Blue"));
+            Assert.That(mkDict.Count, Is.EqualTo(8));
+            Assert.That(mkDict.IsReadOnly, Is.False);
+
+            Assert.That(mkDict.Keys, Is.EquivalentTo(Enumerable.Range(1, 8)));
+            Assert.That(
+                mkDict.Values, Is.EquivalentTo(Enumerable.Repeat("Hello", 3)
                     .Concat(Enumerable.Repeat("World", 2))
                     .Concat(Enumerable.Repeat("Goodbye", 1))
                     .Concat(Enumerable.Repeat("Earth", 1))
-                    .Concat(Enumerable.Repeat("Blue", 1)), mkDict.Values);
-            
-            Assert.IsTrue(mkDict.ContainsKey(1));
-            Assert.IsTrue(mkDict.ContainsKey(8));
-            Assert.IsFalse(mkDict.ContainsKey(0));
-            
-            Assert.IsTrue(mkDict.Contains(new KeyValuePair<int, string>(1, "Hello")));
-            Assert.IsTrue(mkDict.Contains(new KeyValuePair<int, string>(2, "Hello")));
-            Assert.IsTrue(mkDict.Contains(new KeyValuePair<int, string>(8, "Blue")));
-            
-            Assert.IsTrue(mkDict.Remove(new KeyValuePair<int, string>(2, "Hello")));
-            Assert.IsFalse(mkDict.Remove(new KeyValuePair<int, string>(1, "Planet")));
-            Assert.IsTrue(mkDict.Remove(1));
-            
-            Assert.IsFalse(mkDict.TryGetValue(1, out _));
-            Assert.IsTrue(mkDict.TryGetValue(3, out _));
+                    .Concat(Enumerable.Repeat("Blue", 1))));
+
+            Assert.That(mkDict.ContainsKey(1), Is.True);
+            Assert.That(mkDict.ContainsKey(8), Is.True);
+            Assert.That(mkDict.ContainsKey(0), Is.False);
+
+            Assert.That(mkDict.Contains(new KeyValuePair<int, string>(1, "Hello")), Is.True);
+            Assert.That(mkDict.Contains(new KeyValuePair<int, string>(2, "Hello")), Is.True);
+            Assert.That(mkDict.Contains(new KeyValuePair<int, string>(8, "Blue")), Is.True);
+
+            Assert.That(mkDict.Remove(new KeyValuePair<int, string>(2, "Hello")), Is.True);
+            Assert.That(mkDict.Remove(new KeyValuePair<int, string>(1, "Planet")), Is.False);
+            Assert.That(mkDict.Remove(1), Is.True);
+
+            Assert.That(mkDict.TryGetValue(1, out _), Is.False);
+            Assert.That(mkDict.TryGetValue(3, out _), Is.True);
 
             using (var enumerator = mkDict.GetEnumerator())
             {
@@ -96,8 +96,9 @@ namespace Fixtures.Sammlung.Collections.Dictionaries
                 {
                     list.Add(enumerator.Current);
                 }
-                CollectionAssert.AreEquivalent(
-                    new []
+                Assert.That(
+                    list,
+                    Is.EquivalentTo(new[]
                     {
                         new KeyValuePair<int, string>(3, "Hello"),
                         new KeyValuePair<int, string>(4, "World"),
@@ -105,15 +106,15 @@ namespace Fixtures.Sammlung.Collections.Dictionaries
                         new KeyValuePair<int, string>(6, "Goodbye"),
                         new KeyValuePair<int, string>(7, "Earth"),
                         new KeyValuePair<int, string>(8, "Blue")
-                    },
-                    list);
+                    }));
             }
             
             var array = new KeyValuePair<int, string>[mkDict.Count];
             mkDict.CopyTo(array, 0);
-            
-            CollectionAssert.AreEquivalent(
-                new []
+
+            Assert.That(
+                array,
+                Is.EquivalentTo(new[]
                 {
                     new KeyValuePair<int, string>(3, "Hello"),
                     new KeyValuePair<int, string>(4, "World"),
@@ -121,16 +122,15 @@ namespace Fixtures.Sammlung.Collections.Dictionaries
                     new KeyValuePair<int, string>(6, "Goodbye"),
                     new KeyValuePair<int, string>(7, "Earth"),
                     new KeyValuePair<int, string>(8, "Blue")
-                },
-                array);
+                }));
 
             var dmkDict = dictCtor(mkDict);
-            CollectionAssert.AreEquivalent(mkDict, dmkDict);
+            Assert.That(dmkDict, Is.EquivalentTo(mkDict));
             
             Assert.IsNotNull(capacityCtor(200));
             
             mkDict.Clear();
-            CollectionAssert.IsEmpty(mkDict);
+            Assert.That(mkDict, Is.Empty);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Sammlung.Collections.Heaps
         /// <typeparam name="TPriority">the priority type</typeparam>
         /// <returns>the blocking heap</returns>
         public static BlockingHeap<T, TPriority> Wrap<T, TPriority>(this IHeap<T, TPriority> decorated)
-            where TPriority : IComparable<TPriority> => new BlockingHeap<T, TPriority>(decorated);
+            where TPriority : IComparable<TPriority> => new(decorated);
 
         /// <summary>
         /// Removes the root node of the heap and returns it.

@@ -1,12 +1,13 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using NSubstitute;
-using NSubstitute.ReceivedExtensions;
 using NUnit.Framework;
 using Sammlung.Functional;
 
 namespace Fixtures.Sammlung.Functional
 {
     [TestFixture]
+    [ExcludeFromCodeCoverage]
     public class MaybeTests
     {
         [Test]

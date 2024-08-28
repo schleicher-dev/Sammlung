@@ -5,6 +5,7 @@ using Sammlung.DesignPatterns;
 namespace Fixtures.Sammlung.DesignPatterns
 {
     [TestFixture]
+    [Parallelizable(ParallelScope.All)]
     [ExcludeFromCodeCoverage]
     public class ObjectPoolTests
     {
@@ -28,9 +29,9 @@ namespace Fixtures.Sammlung.DesignPatterns
             var item = _objectPool.Get();
             var intermediate = item;
             Assert.DoesNotThrow(() => _objectPool.Return(ref item));
-            Assert.IsNull(item);
+            Assert.That(item, Is.Null);
             var nextItem = _objectPool.Get();
-            Assert.AreSame(intermediate, nextItem);
+            Assert.That(nextItem, Is.SameAs(intermediate));
         }
 
         [Test]
@@ -46,16 +47,16 @@ namespace Fixtures.Sammlung.DesignPatterns
             _objectPool.Return(ref item1);
             _objectPool.Return(ref item2);
             _objectPool.Return(ref item3);
-            
-            Assert.AreSame(inter2, _objectPool.Get());
-            Assert.AreSame(inter1, _objectPool.Get());
+
+            Assert.That(_objectPool.Get(), Is.SameAs(inter2));
+            Assert.That(_objectPool.Get(), Is.SameAs(inter1));
         }
 
         [ExcludeFromCodeCoverage]
         private class ObjectPool : ObjectPoolBase<object>
         {
             public ObjectPool(int maxPoolSize) : base(maxPoolSize) { }
-            protected override object CreateInstance() => new object();
+            protected override object CreateInstance() => new();
 
             protected override object ResetInstance(object instance) => instance;
         }

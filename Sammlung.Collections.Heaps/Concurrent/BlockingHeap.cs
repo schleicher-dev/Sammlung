@@ -17,8 +17,7 @@ namespace Sammlung.Collections.Heaps.Concurrent
     [JetBrains.Annotations.PublicAPI]
     public class BlockingHeap<T, TPriority> : IHeap<T, TPriority> where TPriority : IComparable<TPriority>
     {
-        private readonly EnhancedReaderWriterLock _rwLock =
-            new EnhancedReaderWriterLock(LockRecursionPolicy.NoRecursion);
+        private readonly EnhancedReaderWriterLock _rwLock = new(LockRecursionPolicy.NoRecursion);
         private readonly IHeap<T, TPriority> _decorated;
 
         /// <summary>

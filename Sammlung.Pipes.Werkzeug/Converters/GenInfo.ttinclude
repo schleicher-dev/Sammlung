@@ -1,9 +1,7 @@
-<#@ import namespace="System.Text" #>
-<#@ import namespace="System.Collections.Generic" #>
 <#+
     public class GenInfo
     {
-        public static GenInfo Create<T>(string keywordName, bool isNumber = true) => new GenInfo(typeof(T), keywordName, isNumber);
+        public static GenInfo Create<T>(string keywordName, bool isNumber = true) => new(typeof(T), keywordName, isNumber);
         
         public Type Type { get; }
         public string KeywordName { get; }

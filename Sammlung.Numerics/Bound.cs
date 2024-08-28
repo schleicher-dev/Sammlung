@@ -21,7 +21,7 @@ namespace Sammlung.Numerics
         /// <param name="value">the value of the bound</param>
         /// <typeparam name="T">the number type</typeparam>
         /// <returns>the inclusive bound</returns>
-        public static Bound<T> Inclusive<T>(T value) where T : IComparable<T> => new Bound<T>(value, true);
+        public static Bound<T> Inclusive<T>(T value) where T : IComparable<T> => new(value, true);
         
         /// <summary>
         /// Creates an exclusive <see cref="Bound{T}"/>.
@@ -29,7 +29,7 @@ namespace Sammlung.Numerics
         /// <param name="value">the value of the bound</param>
         /// <typeparam name="T">the number type</typeparam>
         /// <returns>the exclusive bound</returns>
-        public static Bound<T> Exclusive<T>(T value) where T : IComparable<T> => new Bound<T>(value, false);
+        public static Bound<T> Exclusive<T>(T value) where T : IComparable<T> => new(value, false);
 
         /// <summary>
         /// Creates a bound with any attribute.
@@ -39,7 +39,7 @@ namespace Sammlung.Numerics
         /// <typeparam name="T">the number type</typeparam>
         /// <returns>the bound</returns>
         public static Bound<T> Create<T>(T value, bool inclusive) where T : IComparable<T> =>
-            new Bound<T>(value, inclusive);
+            new(value, inclusive);
     }
 
     /// <summary>

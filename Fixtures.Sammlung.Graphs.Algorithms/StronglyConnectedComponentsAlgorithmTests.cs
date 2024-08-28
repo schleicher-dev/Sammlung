@@ -6,7 +6,9 @@ using Sammlung.Graphs.Algorithms;
 
 namespace Fixtures.Sammlung.Graphs.Algorithms
 {
-    [TestFixture, ExcludeFromCodeCoverage]
+    [TestFixture]
+    [Parallelizable(ParallelScope.All)]
+    [ExcludeFromCodeCoverage]
     public class StronglyConnectedComponentsAlgorithmTests
     {
         [Test]
@@ -18,9 +20,9 @@ namespace Fixtures.Sammlung.Graphs.Algorithms
             graph.AddEdge(3, 1);
 
             var components = graph.GetStronglyConnectedComponents().ToList();
-            Assert.AreEqual(1, components.Count);
-            Assert.IsTrue(components.All(g => g.IsStronglyConnected()));
-            Assert.IsFalse(graph.IsAcyclic());
+            Assert.That(components.Count, Is.EqualTo(1));
+            Assert.That(components.All(g => g.IsStronglyConnected()), Is.True);
+            Assert.That(graph.IsAcyclic(), Is.False);
         }
         
         [Test]
@@ -35,8 +37,8 @@ namespace Fixtures.Sammlung.Graphs.Algorithms
             graph.AddEdge(5, 4);
             
             var components = graph.GetStronglyConnectedComponents().ToList();
-            Assert.AreEqual(2, components.Count);
-            Assert.IsTrue(components.All(g => g.IsStronglyConnected()));
+            Assert.That(components.Count, Is.EqualTo(2));
+            Assert.That(components.All(g => g.IsStronglyConnected()), Is.True);
         }
 
         [Test]
@@ -51,9 +53,9 @@ namespace Fixtures.Sammlung.Graphs.Algorithms
             graph.AddEdge(6, 7);
             
             var components = graph.GetStronglyConnectedComponents().ToList();
-            Assert.AreEqual(7, components.Count);
-            Assert.IsTrue(components.All(g => g.IsStronglyConnected()));
-            Assert.IsTrue(graph.IsAcyclic());
+            Assert.That(components.Count, Is.EqualTo(7));
+            Assert.That(components.All(g => g.IsStronglyConnected()), Is.True);
+            Assert.That(graph.IsAcyclic(), Is.True);
         }
     }
 }

@@ -10,6 +10,8 @@ using Sammlung.Collections.Dictionaries.Concurrent;
 
 namespace Fixtures.Sammlung.Collections.Dictionaries
 {
+    [TestFixture]
+    [Parallelizable(ParallelScope.All)]
     [ExcludeFromCodeCoverage]
     public class BidiDictionaryTests
     {
@@ -18,10 +20,10 @@ namespace Fixtures.Sammlung.Collections.Dictionaries
         
         public static readonly BidiDictConstructors[] BidiDictionaries =
         {
-            new BidiDictConstructors(() => new BidiDictionary<int, int>(), 
+            new(() => new BidiDictionary<int, int>(), 
                 d => new BidiDictionary<int, int>(d),
                 e => new BidiDictionary<int, int>(e)), 
-            new BidiDictConstructors(() => new BlockingBidiDictionary<int, int>(),
+            new(() => new BlockingBidiDictionary<int, int>(),
                 d => new BlockingBidiDictionary<int, int>(d),
                 e => new BlockingBidiDictionary<int, int>(e))
         };
@@ -32,25 +34,25 @@ namespace Fixtures.Sammlung.Collections.Dictionaries
             var (zf, _, _) = tuple;
             var pairs = Enumerable.Range(1, 100).Zip(Enumerable.Range(100, 100).Reverse(), Tuple.Create).ToArray();
             var bDict = zf();
-            Assert.IsFalse(bDict.IsReadOnly);
+            Assert.That(bDict.IsReadOnly, Is.False);
             foreach (var (a, b) in pairs)
                 bDict[a] = b;
 
-            Assert.AreEqual(100, bDict.Count);
+            Assert.That(bDict.Count, Is.EqualTo(100));
 
             foreach (var (a, b) in pairs)
             {
-                Assert.AreEqual(b, bDict[a]);
-                Assert.AreEqual(a, bDict.ReverseMap[b]);
-                Assert.AreEqual(b, bDict.ForwardMap[a]);
-                Assert.IsTrue(bDict.Contains(new KeyValuePair<int, int>(a, b)));
-                Assert.IsTrue(bDict.ContainsKey(a));
-                Assert.IsTrue(bDict.ForwardMap.ContainsKey(a));
-                Assert.IsTrue(bDict.ReverseMap.ContainsKey(b));
+                Assert.That(bDict[a], Is.EqualTo(b));
+                Assert.That(bDict.ReverseMap[b], Is.EqualTo(a));
+                Assert.That(bDict.ForwardMap[a], Is.EqualTo(b));
+                Assert.That(bDict.Contains(new KeyValuePair<int, int>(a, b)), Is.True);
+                Assert.That(bDict.ContainsKey(a), Is.True);
+                Assert.That(bDict.ForwardMap.ContainsKey(a), Is.True);
+                Assert.That(bDict.ReverseMap.ContainsKey(b), Is.True);
             }
-            
-            CollectionAssert.AreEquivalent(Enumerable.Range(1, 100), bDict.Keys);
-            CollectionAssert.AreEquivalent(Enumerable.Range(100, 100), bDict.Values);
+
+            Assert.That(bDict.Keys, Is.EquivalentTo(Enumerable.Range(1, 100)));
+            Assert.That(bDict.Values, Is.EquivalentTo(Enumerable.Range(100, 100)));
         }
 
         [TestCaseSource(nameof(BidiDictionaries))]
@@ -63,9 +65,9 @@ namespace Fixtures.Sammlung.Collections.Dictionaries
                 bDict[a] = b;
             
             bDict.Clear();
-            Assert.AreEqual(0, bDict.Count);
-            Assert.AreEqual(0, bDict.ForwardMap.Count);
-            Assert.AreEqual(0, bDict.ReverseMap.Count);
+            Assert.That(bDict.Count, Is.EqualTo(0));
+            Assert.That(bDict.ForwardMap.Count, Is.EqualTo(0));
+            Assert.That(bDict.ReverseMap.Count, Is.EqualTo(0));
         }
 
         [TestCaseSource(nameof(BidiDictionaries))]
@@ -83,7 +85,7 @@ namespace Fixtures.Sammlung.Collections.Dictionaries
                 var kvPair = (KeyValuePair<int, int>) bdEnum.Current;
                 var fwd = kvPair.Key;
                 var rev = kvPair.Value;
-                Assert.IsTrue(fwd == 1 && rev == 2 || fwd == 2 && rev == 3);
+                Assert.That(fwd == 1 && rev == 2 || fwd == 2 && rev == 3, Is.True);
             }
 
             var fwdEnum = ((IEnumerable) bDict.ForwardMap).GetEnumerator();
@@ -93,32 +95,32 @@ namespace Fixtures.Sammlung.Collections.Dictionaries
                 var kvPair = (KeyValuePair<int, int>) fwdEnum.Current;
                 var fwd = kvPair.Key;
                 var rev = kvPair.Value;
-                Assert.IsTrue(fwd == 1 && rev == 2 || fwd == 2 && rev == 3);
+                Assert.That(fwd == 1 && rev == 2 || fwd == 2 && rev == 3, Is.True);
             }
-            
-            CollectionAssert.AreEquivalent(new [] {1, 2}, bDict.ForwardMap.Keys);
-            CollectionAssert.AreEquivalent(new [] {2, 3}, bDict.ForwardMap.Values);
-            CollectionAssert.AreEquivalent(new [] {2, 3}, bDict.ReverseMap.Keys);
-            CollectionAssert.AreEquivalent(new [] {1, 2}, bDict.ReverseMap.Values);
-            CollectionAssert.AreEquivalent(new[] {new KeyValuePair<int, int>(1, 2), new KeyValuePair<int, int>(2, 3)},
-                bDict.ForwardMap);
-            CollectionAssert.AreEquivalent(new[] {new KeyValuePair<int, int>(2, 1), new KeyValuePair<int, int>(3, 2)},
-                bDict.ReverseMap);
-            
-            Assert.IsTrue(bDict.ForwardMap.TryGetValue(1, out var fwdValue));
-            Assert.AreEqual(2, fwdValue);
-            Assert.IsTrue(bDict.ReverseMap.TryGetValue(2, out var revValue));
-            Assert.AreEqual(1, revValue);
-            
-            Assert.AreEqual(2, bDict.ForwardMap[1]);
-            Assert.AreEqual(1, bDict.ReverseMap[2]);
-            Assert.IsTrue(bDict.TryGetValue(1, out var value));
-            Assert.AreEqual(2, value);
-            Assert.IsFalse(bDict.TryGetValue(3, out _));
-            Assert.IsFalse(bDict.Remove(3));
-            Assert.IsTrue(bDict.Remove(2));
-            Assert.IsTrue(bDict.Remove(new KeyValuePair<int, int>(1, 2)));
-            Assert.AreEqual(0, bDict.Count);
+
+            Assert.That(bDict.ForwardMap.Keys, Is.EquivalentTo(new[] { 1, 2 }));
+            Assert.That(bDict.ForwardMap.Values, Is.EquivalentTo(new[] { 2, 3 }));
+            Assert.That(bDict.ReverseMap.Keys, Is.EquivalentTo(new[] { 2, 3 }));
+            Assert.That(bDict.ReverseMap.Values, Is.EquivalentTo(new[] { 1, 2 }));
+            Assert.That(bDict.ForwardMap,
+                Is.EquivalentTo(new[] { new KeyValuePair<int, int>(1, 2), new KeyValuePair<int, int>(2, 3) }));
+            Assert.That(bDict.ReverseMap,
+                Is.EquivalentTo(new[] { new KeyValuePair<int, int>(2, 1), new KeyValuePair<int, int>(3, 2) }));
+
+            Assert.That(bDict.ForwardMap.TryGetValue(1, out var fwdValue), Is.True);
+            Assert.That(fwdValue, Is.EqualTo(2));
+            Assert.That(bDict.ReverseMap.TryGetValue(2, out var revValue), Is.True);
+            Assert.That(revValue, Is.EqualTo(1));
+
+            Assert.That(bDict.ForwardMap[1], Is.EqualTo(2));
+            Assert.That(bDict.ReverseMap[2], Is.EqualTo(1));
+            Assert.That(bDict.TryGetValue(1, out var value), Is.True);
+            Assert.That(value, Is.EqualTo(2));
+            Assert.That(bDict.TryGetValue(3, out _), Is.False);
+            Assert.That(bDict.Remove(3), Is.False);
+            Assert.That(bDict.Remove(2), Is.True);
+            Assert.That(bDict.Remove(new KeyValuePair<int, int>(1, 2)), Is.True);
+            Assert.That(bDict.Count, Is.EqualTo(0));
         }
 
         [TestCaseSource(nameof(BidiDictionaries))]
@@ -131,13 +133,13 @@ namespace Fixtures.Sammlung.Collections.Dictionaries
             
             var d2 = new Dictionary<int, int> {[0] = 100, [1] = 101};
             var b2 = df(d2);
-            Assert.AreEqual(100, b2.ForwardMap[0]);
-            Assert.AreEqual(101, b2.ForwardMap[1]);
-            Assert.AreEqual(0, b2.ReverseMap[100]);
-            Assert.AreEqual(1, b2.ReverseMap[101]);
-            Assert.IsTrue(b2.ForwardRemove(0));
-            Assert.IsTrue(b2.ReverseRemove(101));
-            Assert.AreEqual(0, b2.Count);
+            Assert.That(b2.ForwardMap[0], Is.EqualTo(100));
+            Assert.That(b2.ForwardMap[1], Is.EqualTo(101));
+            Assert.That(b2.ReverseMap[100], Is.EqualTo(0));
+            Assert.That(b2.ReverseMap[101], Is.EqualTo(1));
+            Assert.That(b2.ForwardRemove(0), Is.True);
+            Assert.That(b2.ReverseRemove(101), Is.True);
+            Assert.That(b2.Count, Is.EqualTo(0));
             
             var _ = ef(d2.AsEnumerable());
         }
@@ -150,7 +152,7 @@ namespace Fixtures.Sammlung.Collections.Dictionaries
             var bDict = ef(pairs.Select(t => new KeyValuePair<int, int>(t.Item1, t.Item2)));
             var array = new KeyValuePair<int, int>[100];
             bDict.CopyTo(array, 0);
-            CollectionAssert.AreEquivalent(bDict, array);
+            Assert.That(array, Is.EquivalentTo(bDict));
         }
     }
 }

@@ -6,6 +6,7 @@ using Sammlung.Numerics;
 namespace Fixtures.Sammlung.Numerics
 {
     [TestFixture]
+    [Parallelizable(ParallelScope.All)]
     [ExcludeFromCodeCoverage]
     public class NumericsIntervalTests
     {
@@ -13,15 +14,15 @@ namespace Fixtures.Sammlung.Numerics
         public void ConstructUnboundedIntervals()
         {
             var lowerUnbounded = Interval.Create(Bound.Empty<int>(), Bound.Exclusive(0));
-            Assert.IsTrue(lowerUnbounded.Contains(int.MinValue));
-            Assert.IsFalse(lowerUnbounded.Contains(0));
-            Assert.AreEqual("(-Inf; 0)", lowerUnbounded.ToString());
+            Assert.That(lowerUnbounded.Contains(int.MinValue), Is.True);
+            Assert.That(lowerUnbounded.Contains(0), Is.False);
+            Assert.That(lowerUnbounded.ToString(), Is.EqualTo("(-Inf; 0)"));
 
             var upperUnbounded = Interval.Create(Bound.Inclusive(0), Bound.Empty<int>());
-            Assert.IsTrue(upperUnbounded.Contains(int.MaxValue));
-            Assert.IsTrue(upperUnbounded.Contains(0));
-            Assert.IsFalse(upperUnbounded.Contains(-1));
-            Assert.AreEqual("[0; +Inf)", upperUnbounded.ToString());
+            Assert.That(upperUnbounded.Contains(int.MaxValue), Is.True);
+            Assert.That(upperUnbounded.Contains(0), Is.True);
+            Assert.That(upperUnbounded.Contains(-1), Is.False);
+            Assert.That(upperUnbounded.ToString(), Is.EqualTo("[0; +Inf)"));
         }
 
         [TestCase(1, true, 1, true)]
@@ -75,8 +76,8 @@ namespace Fixtures.Sammlung.Numerics
         {
             var interval = Interval.Create(Bound.Create(lowerBound, lowerInclusive),
                 Bound.Create(upperBound, upperInclusive));
-            Assert.IsTrue(interval.Contains(inside));
-            Assert.IsFalse(interval.Contains(outside));
+            Assert.That(interval.Contains(inside), Is.True);
+            Assert.That(interval.Contains(outside), Is.False);
         }
 
         [Test]
@@ -90,10 +91,10 @@ namespace Fixtures.Sammlung.Numerics
         [TestCase(1, 2, "(1; 2)", "[1; 2]", "(1; 2]", "[1; 2)")]
         public void CheckIntervalRepresentation(int lower, int upper, string exEx, string inIn, string exIn, string inEx)
         {
-            Assert.AreEqual(exEx, Interval.CreateWithExclusiveBounds(lower, upper).ToString());
-            Assert.AreEqual(inIn, Interval.CreateWithInclusiveBounds(lower, upper).ToString());
-            Assert.AreEqual(exIn, Interval.CreateWithExclusiveAndInclusiveBounds(lower, upper).ToString());
-            Assert.AreEqual(inEx, Interval.CreateWithInclusiveAndExclusiveBounds(lower, upper).ToString());
+            Assert.That(Interval.CreateWithExclusiveBounds(lower, upper).ToString(), Is.EqualTo(exEx));
+            Assert.That(Interval.CreateWithInclusiveBounds(lower, upper).ToString(), Is.EqualTo(inIn));
+            Assert.That(Interval.CreateWithExclusiveAndInclusiveBounds(lower, upper).ToString(), Is.EqualTo(exIn));
+            Assert.That(Interval.CreateWithInclusiveAndExclusiveBounds(lower, upper).ToString(), Is.EqualTo(inEx));
         }
     }
 }

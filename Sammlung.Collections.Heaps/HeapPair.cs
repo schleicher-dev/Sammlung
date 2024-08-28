@@ -18,7 +18,7 @@ namespace Sammlung.Collections.Heaps
         /// <typeparam name="TPriority">the priority type</typeparam>
         /// <returns></returns>
         public static HeapPair<TValue, TPriority> Create<TValue, TPriority>(TValue value, TPriority priority)
-            where TPriority : IComparable<TPriority> => new HeapPair<TValue, TPriority>(value, priority);
+            where TPriority : IComparable<TPriority> => new(value, priority);
     }
     
     /// <summary>

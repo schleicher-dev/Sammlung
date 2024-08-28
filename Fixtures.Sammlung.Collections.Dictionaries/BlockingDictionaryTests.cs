@@ -5,8 +5,9 @@ using Sammlung.Collections.Dictionaries.Concurrent;
 
 namespace Fixtures.Sammlung.Collections.Dictionaries
 {
-    [ExcludeFromCodeCoverage]
     [TestFixture]
+    [Parallelizable(ParallelScope.All)]
+    [ExcludeFromCodeCoverage]
     public class BlockingDictionaryTests
     {
         [Test]

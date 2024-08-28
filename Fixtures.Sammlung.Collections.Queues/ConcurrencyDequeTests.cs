@@ -13,13 +13,14 @@ using Sammlung.Collections.Queues.Concurrent;
 namespace Fixtures.Sammlung.Collections.Queues
 {
     [TestFixture]
+    [Parallelizable(ParallelScope.All)]
     [ExcludeFromCodeCoverage]
     public class ConcurrencyDequeTests
     {
         public static readonly DequeConstructors<int>[] Buffers =
         {
-            new DequeConstructors<int>("BlockingDeque", c => new ArrayDeque<int>(c).ToBlockingDeque()),
-            new DequeConstructors<int>("LockFreeLinkedDeque", c => new LockFreeLinkedDeque<int>())
+            new("BlockingDeque", c => new ArrayDeque<int>(c).ToBlockingDeque()),
+            new("LockFreeLinkedDeque", c => new LockFreeLinkedDeque<int>())
         };
 
         [TestCaseSource(nameof(Buffers))]
@@ -30,11 +31,11 @@ namespace Fixtures.Sammlung.Collections.Queues
             var buffer = capCtor(1);
             Parallel.For(0, numItems / 2, i => buffer.PushLeft(i));
             Parallel.For(numItems / 2, numItems, i => buffer.PushRight(i));
-            Assert.AreEqual(numItems, buffer.Count);
+            Assert.That(buffer.Count, Is.EqualTo(numItems));
 
             var list = new List<int>(buffer.Count);
             while (0 < buffer.Count) list.Add(buffer.PopRight());
-            CollectionAssert.AreEquivalent(Enumerable.Range(0, numItems), list);
+            Assert.That(list, Is.EquivalentTo(Enumerable.Range(0, numItems)));
         }
 
         [TestCaseSource(nameof(Buffers))]
@@ -79,7 +80,7 @@ namespace Fixtures.Sammlung.Collections.Queues
                 }
             });
 
-            Assert.AreEqual(numElements, buffer.Count);
+            Assert.That(buffer.Count, Is.EqualTo(numElements));
         }
     }
 }
