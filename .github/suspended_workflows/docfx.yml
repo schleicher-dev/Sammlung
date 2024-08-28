@@ -18,6 +18,7 @@ jobs:
       with:
         args: .docfx/docfx.json
     - name: GitHub Pages
+      if: ${{ success() && (github.ref == 'refs/heads/master') }}
       uses: crazy-max/ghaction-github-pages@v4
       env:
         GH_PAT: ${{ secrets.GH_PAT }}
