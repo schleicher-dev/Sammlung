@@ -127,7 +127,7 @@ namespace Fixtures.Sammlung.Collections.Dictionaries
             var dmkDict = dictCtor(mkDict);
             Assert.That(dmkDict, Is.EquivalentTo(mkDict));
             
-            Assert.IsNotNull(capacityCtor(200));
+            Assert.That(capacityCtor(200), Is.Not.Null);
             
             mkDict.Clear();
             Assert.That(mkDict, Is.Empty);

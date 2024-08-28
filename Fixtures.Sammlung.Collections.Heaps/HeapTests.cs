@@ -82,7 +82,7 @@ namespace Fixtures.Sammlung.Collections.Heaps
             while (!heap.IsEmpty)
             {
                 var current = heap.Pop();
-                Assert.LessOrEqual(last.Value.CompareTo(current.Value), 0);
+                Assert.That(last.Value.CompareTo(current.Value), Is.LessThanOrEqualTo(0));
                 last = current;
             }
         }

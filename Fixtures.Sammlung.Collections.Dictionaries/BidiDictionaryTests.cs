@@ -81,7 +81,7 @@ namespace Fixtures.Sammlung.Collections.Dictionaries
             var bdEnum = ((IEnumerable) bDict).GetEnumerator();
             while (bdEnum.MoveNext())
             {
-                Assert.IsNotNull(bdEnum);
+                Assert.That(bdEnum, Is.Not.Null);
                 var kvPair = (KeyValuePair<int, int>) bdEnum.Current;
                 var fwd = kvPair.Key;
                 var rev = kvPair.Value;
@@ -91,7 +91,7 @@ namespace Fixtures.Sammlung.Collections.Dictionaries
             var fwdEnum = ((IEnumerable) bDict.ForwardMap).GetEnumerator();
             while (fwdEnum.MoveNext())
             {
-                Assert.IsNotNull(fwdEnum);
+                Assert.That(fwdEnum, Is.Not.Null);
                 var kvPair = (KeyValuePair<int, int>) fwdEnum.Current;
                 var fwd = kvPair.Key;
                 var rev = kvPair.Value;
