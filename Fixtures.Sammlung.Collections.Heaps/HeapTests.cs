@@ -7,6 +7,8 @@ using Sammlung.Collections.Heaps;
 
 namespace Fixtures.Sammlung.Collections.Heaps
 {
+    [TestFixture]
+    [Parallelizable(ParallelScope.All)]
     [ExcludeFromCodeCoverage]
     public class HeapTests
     {
@@ -36,7 +38,7 @@ namespace Fixtures.Sammlung.Collections.Heaps
                 _ => throw new ArgumentOutOfRangeException(nameof(behaviour), behaviour, null)
             };
         }
-        
+
         [SetUp]
         public void Setup() { }
 
@@ -60,10 +62,10 @@ namespace Fixtures.Sammlung.Collections.Heaps
             }
 
             var resultList = new List<string>();
-            while(!heap.IsEmpty) resultList.Add(heap.Pop().Value);
-            CollectionAssert.AreEqual(items.Select(kv => kv.Item2), resultList);
+            while (!heap.IsEmpty) resultList.Add(heap.Pop().Value);
+            Assert.That(resultList, Is.EqualTo(items.Select(kv => kv.Item2)).AsCollection);
         }
-        
+
         [Test]
         public void PushAndPop_Randomized_SunnyPath([Values] HeapType type, [Values] HeapBehaviour behaviour)
         {
@@ -80,7 +82,7 @@ namespace Fixtures.Sammlung.Collections.Heaps
             while (!heap.IsEmpty)
             {
                 var current = heap.Pop();
-                Assert.LessOrEqual(last.Value.CompareTo(current.Value), 0);
+                Assert.That(last.Value.CompareTo(current.Value), Is.LessThanOrEqualTo(0));
                 last = current;
             }
         }
@@ -89,15 +91,15 @@ namespace Fixtures.Sammlung.Collections.Heaps
         public void CheckAllCases_Of_InvalidOperationException([Values] HeapType type, [Values] HeapBehaviour behaviour)
         {
             var heap = CreateHeap<string, int>(type, behaviour);
-            Assert.AreEqual(0, heap.Count);
-            Assert.IsTrue(heap.IsEmpty);
-            Assert.IsFalse(heap.TryPop(out _));
+            Assert.That(heap.Count, Is.EqualTo(0));
+            Assert.That(heap.IsEmpty, Is.True);
+            Assert.That(heap.TryPop(out _), Is.False);
             Assert.Throws<InvalidOperationException>(() => heap.Pop());
-            Assert.IsFalse(heap.TryPeek(out _));
+            Assert.That(heap.TryPeek(out _), Is.False);
             Assert.Throws<InvalidOperationException>(() => heap.Peek());
-            Assert.IsFalse(heap.TryUpdate("A", 0));
-            Assert.Throws<ArgumentException>(() => heap.Update("A", 0));
-            Assert.IsFalse(heap.TryReplace("A", 0, out _));
+            Assert.That(heap.TryUpdate(HeapPair.Create("A", 100), 0), Is.False);
+            Assert.Throws<ArgumentException>(() => heap.Update(HeapPair.Create("A", 100), 0));
+            Assert.That(heap.TryReplace("A", 0, out _), Is.False);
             Assert.Throws<ArgumentException>(() => heap.Replace("A", 0));
         }
 
@@ -109,22 +111,24 @@ namespace Fixtures.Sammlung.Collections.Heaps
             heap.Push("B", 50);
             heap.Push("C", 150);
             heap.Push("D", 25);
+            heap.Push("D", 105);
             heap.Push("E", 200);
 
             heap.Push("F", 12);
-            heap.Update("D", 400);
+            heap.Update(HeapPair.Create("D", 25), 400);
+            heap.Update(HeapPair.Create("D", 105), 1000);
 
             heap.Replace("F", 500);
-            
-            Assert.AreEqual("B", heap.Peek().Value);
+
+            Assert.That(heap.Peek().Value, Is.EqualTo("B"));
 
             var list = new List<string>();
             while (!heap.IsEmpty)
             {
                 list.Add(heap.Pop().Value);
             }
-            
-            CollectionAssert.AreEqual(new [] {"B", "A", "C", "E", "D", "F"}, list);
+
+            Assert.That(list, Is.EqualTo(new[] { "B", "A", "C", "E", "D", "F", "D" }).AsCollection);
         }
 
         [Test]
@@ -141,13 +145,13 @@ namespace Fixtures.Sammlung.Collections.Heaps
 
             var comparerA = Comparer<int>.Default;
             var heapA = new BinaryHeap<int, int>(list);
-            
+
             var listA = new List<int>();
             while (!heapA.IsEmpty)
             {
                 listA.Add(heapA.Pop().Value);
             }
-            CollectionAssert.IsOrdered(listA, comparerA);
+            Assert.That(listA, Is.Ordered.Using((IComparer<int>)comparerA));
         }
 
         [Test]
@@ -158,15 +162,15 @@ namespace Fixtures.Sammlung.Collections.Heaps
             heap.Push(2, 300);
             heap.Push(3, 400);
             heap.Push(4, 100);
-            
-            CollectionAssert.AreEquivalent(new[] {1, 2, 3, 4}, heap.Select(v => v.Value).ToArray());
-            CollectionAssert.AreEquivalent(new[] {100, 200, 300, 400}, heap.Select(v => v.Priority).ToArray());
+
+            Assert.That(heap.Select(v => v.Value).ToArray(), Is.EquivalentTo(new[] { 1, 2, 3, 4 }));
+            Assert.That(heap.Select(v => v.Priority).ToArray(), Is.EquivalentTo(new[] { 100, 200, 300, 400 }));
 
             var result = new List<int>();
-            var enumerator = ((System.Collections.IEnumerable) heap).GetEnumerator();
+            var enumerator = ((System.Collections.IEnumerable)heap).GetEnumerator();
             // ReSharper disable once PossibleNullReferenceException
-            while (enumerator.MoveNext()) result.Add(((HeapPair<int, int>) enumerator.Current).Value);
-            CollectionAssert.AreEquivalent(new[] {1, 2, 3, 4}, result);
+            while (enumerator.MoveNext()) result.Add(((HeapPair<int, int>)enumerator.Current).Value);
+            Assert.That(result, Is.EquivalentTo(new[] { 1, 2, 3, 4 }));
         }
     }
 }

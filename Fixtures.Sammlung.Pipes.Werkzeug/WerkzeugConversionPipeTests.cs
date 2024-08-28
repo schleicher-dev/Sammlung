@@ -8,24 +8,25 @@ using Sammlung.Pipes.Werkzeug.Converters;
 
 namespace Fixtures.Sammlung.Pipes.Werkzeug
 {
-    [ExcludeFromCodeCoverage]
     [TestFixture]
+    [Parallelizable(ParallelScope.All)]
+    [ExcludeFromCodeCoverage]
     public class WerkzeugConversionPipeTests
     {
-        private const string GermanCulture = "de-de";
+        private const string GermanCulture = "de-DE";
         
         private const string IntWithSignFormat = "+#;-#;0";
         private const string IntWithGroupFormat = "N0";
         private const string FloatWithSignFormat = "+#.##;-#.##;0";
-        private const string FloatWithGroupFormat = "N";
+        private const string FloatWithGroupFormat = "N2";
 
         private const double UpperFloatTestValue = 1234.25f;
         private const double LowerFloatTestValue = -1234.25f;
 
         private static void AssertResults<T>(IBiDiPipe<string, T> pipe, T input, string output)
         {
-            Assert.AreEqual(output, pipe.ProcessReverse(input));
-            Assert.AreEqual(input, pipe.ProcessForward(output));
+            Assert.That(pipe.ProcessReverse(input), Is.EqualTo(output));
+            Assert.That(pipe.ProcessForward(output), Is.EqualTo(input));
         }
         
         [TestCase(null, null, 0, "0")]
@@ -257,22 +258,25 @@ namespace Fixtures.Sammlung.Pipes.Werkzeug
         {
             var pipe = new StringToBooleanConverterPipe(CultureInfo.InvariantCulture);
 
-            Assert.AreEqual(true, pipe.ProcessForward("True"));
-            Assert.AreEqual(false, pipe.ProcessForward("False"));
-            Assert.AreEqual(true, pipe.ProcessForward(bool.TrueString));
-            Assert.AreEqual(false, pipe.ProcessForward(bool.FalseString));
-            Assert.AreEqual("True", pipe.ProcessReverse(true));
-            Assert.AreEqual("False", pipe.ProcessReverse(false));
+            Assert.Multiple(() =>
+            {
+                Assert.That(pipe.ProcessForward("True"), Is.EqualTo(true));
+                Assert.That(pipe.ProcessForward("False"), Is.EqualTo(false));
+                Assert.That(pipe.ProcessForward(bool.TrueString), Is.EqualTo(true));
+                Assert.That(pipe.ProcessForward(bool.FalseString), Is.EqualTo(false));
+                Assert.That(pipe.ProcessReverse(true), Is.EqualTo("True"));
+                Assert.That(pipe.ProcessReverse(false), Is.EqualTo("False"));
+            });
         }
 
         [Test]
         public void CharToStringConversionTests()
         {
             var pipe = new StringToCharConverterPipe(CultureInfo.InvariantCulture);
-            
-            Assert.AreEqual('a', pipe.ProcessForward("a"));
+
+            Assert.That(pipe.ProcessForward("a"), Is.EqualTo('a'));
             Assert.Throws<FormatException>(() => _ = pipe.ProcessForward("abc"));
-            Assert.AreEqual("a", pipe.ProcessReverse('a'));
+            Assert.That(pipe.ProcessReverse('a'), Is.EqualTo("a"));
         }
 
         [Test]
@@ -281,7 +285,7 @@ namespace Fixtures.Sammlung.Pipes.Werkzeug
             var enumValue = (VeryBigEnum)value;
             var pipe = new StringToEnumConverterPipe<VeryBigEnum>();
             var identityPipe = pipe.ReversePipe().Append(pipe.ForwardPipe());
-            Assert.AreEqual(enumValue, identityPipe.Process(enumValue));
+            Assert.That(identityPipe.Process(enumValue), Is.EqualTo(enumValue));
         }
     }
 }

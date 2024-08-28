@@ -1,7 +1,5 @@
 <#@ template language="C#" #>
 <#@ output extension=".cs" #>
-<#@ import namespace="System.Text" #>
-<#@ import namespace="System.Collections.Generic" #>
 <#
     const int numVariables = 200_000;
 #>

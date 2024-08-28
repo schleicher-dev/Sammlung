@@ -6,10 +6,9 @@ namespace Sammlung.Collections.Queues.Concurrent.LockFreePrimitives
     /// <typeparam name="T">the element type</typeparam>
     internal sealed class Anchor<T>
     {
-        public static Anchor<T> Create() => new Anchor<T>();
+        public static Anchor<T> Create() => new();
 
-        public static Anchor<T> Create(Node<T> left, Node<T> right, State state) =>
-            new Anchor<T> { LeftMost = left, RightMost = right, State = state };
+        public static Anchor<T> Create(Node<T> left, Node<T> right, State state) => new() { LeftMost = left, RightMost = right, State = state };
 
         public Node<T> LeftMost;
         public Node<T> RightMost;

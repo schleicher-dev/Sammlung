@@ -1,8 +1,8 @@
 <Project>
     <PropertyGroup>
         <IsPackable>false</IsPackable>
-        <TargetFrameworks>net35;netstandard2.0</TargetFrameworks>
-        <LangVersion>8.0</LangVersion>
+        <TargetFrameworks>net35;netstandard2.0;net6.0;net8.0</TargetFrameworks>
+        <LangVersion>10.0</LangVersion>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <GitVersionConfig>$(MSBuildThisFileDirectory)GitVersion.yml</GitVersionConfig>
@@ -15,7 +15,7 @@
         <SignAssembly>true</SignAssembly>
         <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)Sammlung.snk</AssemblyOriginatorKeyFile>
         <Description>Sammlung is a library for .NET containing a plethora of collection types which are not provided or where the particular implementation is hidden by the .NET libraries. Sammlung (/'zamlʊŋ/) is german for collection and is pronounced some-loong.</Description>
-        <Copyright>Ralf Schleicher © 2020</Copyright>
+        <Copyright>Copyright 2020-2024 Ralf Schleicher</Copyright>
         <PackageProjectUrl>https://github.com/schleicher-dev/Sammlung</PackageProjectUrl>
         <RepositoryUrl>https://github.com/schleicher-dev/Sammlung</RepositoryUrl>
         <RepositoryType>git</RepositoryType>

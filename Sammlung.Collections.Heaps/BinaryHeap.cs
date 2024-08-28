@@ -16,18 +16,17 @@ namespace Sammlung.Collections.Heaps
     public sealed class BinaryHeap<T, TPriority> : IHeap<T, TPriority>
         where TPriority : IComparable<TPriority>
     {
-        private static readonly HeapNodeObjectPool HeapNodePool = new HeapNodeObjectPool();
+        private static readonly HeapNodeObjectPool HeapNodePool = new();
 
         private readonly List<HeapNode> _binaryHeap;
         private readonly IComparer<TPriority> _comparer;
-        private readonly Dictionary<T, HeapNode> _lookup;
 
         private static List<HeapNode> HeapOrderedListFromEnumerable(IComparer<TPriority> comparer,
             IEnumerable<KeyValuePair<T, TPriority>> enumerable)
         {
             comparer = comparer.RequireNotNull(nameof(comparer));
             enumerable = enumerable.RequireNotNull(nameof(enumerable));
-            
+
             return enumerable.OrderBy(i => i.Value, comparer)
                 .Select((item, i) => HeapNodePool.Get(i, item.Key, item.Value)).ToList();
         }
@@ -72,7 +71,6 @@ namespace Sammlung.Collections.Heaps
         {
             _comparer = comparer.RequireNotNull(nameof(comparer));
             _binaryHeap = binaryHeap.RequireNotNull(nameof(binaryHeap));
-            _lookup = new Dictionary<T, HeapNode>();
         }
 
         /// <inheritdoc />
@@ -105,7 +103,6 @@ namespace Sammlung.Collections.Heaps
 
             // Assign item and remove it from mapping.
             value = HeapPair.Create(root.Value, root.Priority);
-            _lookup.Remove(root.Value);
             HeapNodePool.Return(ref root);
 
             // If there aren't any elements left, no sifting is needed.
@@ -119,20 +116,16 @@ namespace Sammlung.Collections.Heaps
         {
             var node = HeapNodePool.Get(Count, value, priority);
             _binaryHeap.Add(node);
-            _lookup.Add(value, node);
             SiftUp(Count - 1);
         }
 
         /// <inheritdoc />
         public bool TryReplace(T newValue, TPriority priority, out HeapPair<T, TPriority> oldValue)
         {
-            oldValue = default;
-            if (IsEmpty) return false;
+            if (IsEmpty) return Out.False(out oldValue);
 
             var node = _binaryHeap[0];
             oldValue = HeapPair.Create(node.Value, node.Priority);
-            _lookup.Remove(node.Value);
-            _lookup.Add(newValue, node);
             node.Value = newValue;
             node.Priority = priority;
             SiftDown(node.Index);
@@ -140,11 +133,25 @@ namespace Sammlung.Collections.Heaps
             return true;
         }
 
-        /// <inheritdoc />
-        public bool TryUpdate(T oldValue, TPriority priority)
+        private bool TryFindIndexOf(HeapPair<T, TPriority> pair, out int index)
         {
-            if (!_lookup.TryGetValue(oldValue, out var node)) return false;
+            for (var idx = 0; idx < _binaryHeap.Count; ++idx)
+            {
+                var node = _binaryHeap[idx];
+                if (Equals(pair.Value, node.Value) && _comparer.Compare(pair.Priority, node.Priority) == 0)
+                    return Out.True(idx, out index);
+            }
 
+            return Out.Result(false, -1, out index);
+        }
+
+        /// <inheritdoc />
+        public bool TryUpdate(HeapPair<T, TPriority> oldValue, TPriority priority)
+        {
+            if (!TryFindIndexOf(oldValue, out var nodeIndex))
+                return false;
+
+            var node = _binaryHeap[nodeIndex];
             node.Priority = priority;
             var index = SiftUp(node.Index);
             SiftDown(index);
@@ -236,7 +243,7 @@ namespace Sammlung.Collections.Heaps
         private class HeapNodeObjectPool : ObjectPoolBase<HeapNode>
         {
             /// <inheritdoc />
-            protected override HeapNode CreateInstance() => new HeapNode();
+            protected override HeapNode CreateInstance() => new();
 
             /// <inheritdoc />
             protected override HeapNode ResetInstance(HeapNode instance)
@@ -265,6 +272,6 @@ namespace Sammlung.Collections.Heaps
 
         /// <inheritdoc />
         IEnumerator IEnumerable.GetEnumerator() =>
-            ((IEnumerable<HeapPair<T, TPriority>>) this).GetEnumerator();
+            ((IEnumerable<HeapPair<T, TPriority>>)this).GetEnumerator();
     }
 }

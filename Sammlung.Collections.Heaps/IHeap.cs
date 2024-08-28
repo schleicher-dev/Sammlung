@@ -58,6 +58,6 @@ namespace Sammlung.Collections.Heaps
         /// <param name="oldValue">the old value</param>
         /// <param name="priority">the priority value</param>
         /// <returns>true if update was successful else false</returns>
-        bool TryUpdate(T oldValue, TPriority priority);
+        bool TryUpdate(HeapPair<T, TPriority> oldValue, TPriority priority);
     }
 }

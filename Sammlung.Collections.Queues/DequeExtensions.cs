@@ -1,4 +1,3 @@
-using System;
 using Sammlung.Werkzeug;
 
 namespace Sammlung.Collections.Queues

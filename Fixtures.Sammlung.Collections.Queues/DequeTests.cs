@@ -11,21 +11,22 @@ using Sammlung.Collections.Queues.Concurrent;
 namespace Fixtures.Sammlung.Collections.Queues
 {
     [TestFixture]
+    [Parallelizable(ParallelScope.All)]
     [ExcludeFromCodeCoverage]
     public class DequeTests
     {
         public static readonly DequeConstructors<int>[] Buffers =
         {
-            new DequeConstructors<int>("ArrayDeque", c => new ArrayDeque<int>(c)),
-            new DequeConstructors<int>("BlockingDeque", c => new ArrayDeque<int>(c).ToBlockingDeque()),
-            new DequeConstructors<int>("LinkedDeque", c => new LinkedDeque<int>()),
-            new DequeConstructors<int>("LockFreeLinkedDeque", c => new LockFreeLinkedDeque<int>())
+            new("ArrayDeque", c => new ArrayDeque<int>(c)),
+            new("BlockingDeque", c => new ArrayDeque<int>(c).ToBlockingDeque()),
+            new("LinkedDeque", c => new LinkedDeque<int>()),
+            new("LockFreeLinkedDeque", c => new LockFreeLinkedDeque<int>())
         };
         public static readonly DequeConstructors<int>[] NormalBuffers =
         {
-            new DequeConstructors<int>("ArrayDeque", c => new ArrayDeque<int>(c)),
-            new DequeConstructors<int>("BlockingDeque", c => new ArrayDeque<int>(c).ToBlockingDeque()),
-            new DequeConstructors<int>("LinkedDeque", c => new LinkedDeque<int>())
+            new("ArrayDeque", c => new ArrayDeque<int>(c)),
+            new("BlockingDeque", c => new ArrayDeque<int>(c).ToBlockingDeque()),
+            new("LinkedDeque", c => new LinkedDeque<int>())
         };
 
         [TestCaseSource(nameof(Buffers))]
@@ -36,25 +37,25 @@ namespace Fixtures.Sammlung.Collections.Queues
 
             var buffer = capCtor(1);
             buffer.PushLeft(1);
-            Assert.AreEqual(1, buffer.Count);
+            Assert.That(buffer.Count, Is.EqualTo(1));
             buffer.PushLeft(2);
-            Assert.AreEqual(2, buffer.Count);
+            Assert.That(buffer.Count, Is.EqualTo(2));
             buffer.PushLeft(3);
-            Assert.AreEqual(3, buffer.Count);
+            Assert.That(buffer.Count, Is.EqualTo(3));
             buffer.PushLeft(4);
-            Assert.AreEqual(4, buffer.Count);
+            Assert.That(buffer.Count, Is.EqualTo(4));
             buffer.PushLeft(5);
-            Assert.AreEqual(5, buffer.Count);
-            Assert.AreEqual(1, buffer.PopRight());
-            Assert.AreEqual(4, buffer.Count);
-            Assert.AreEqual(2, buffer.PopRight());
-            Assert.AreEqual(3, buffer.Count);
-            Assert.AreEqual(3, buffer.PopRight());
-            Assert.AreEqual(2, buffer.Count);
-            Assert.AreEqual(4, buffer.PopRight());
-            Assert.AreEqual(1, buffer.Count);
-            Assert.AreEqual(5, buffer.PopRight());
-            Assert.AreEqual(0, buffer.Count);
+            Assert.That(buffer.Count, Is.EqualTo(5));
+            Assert.That(buffer.PopRight(), Is.EqualTo(1));
+            Assert.That(buffer.Count, Is.EqualTo(4));
+            Assert.That(buffer.PopRight(), Is.EqualTo(2));
+            Assert.That(buffer.Count, Is.EqualTo(3));
+            Assert.That(buffer.PopRight(), Is.EqualTo(3));
+            Assert.That(buffer.Count, Is.EqualTo(2));
+            Assert.That(buffer.PopRight(), Is.EqualTo(4));
+            Assert.That(buffer.Count, Is.EqualTo(1));
+            Assert.That(buffer.PopRight(), Is.EqualTo(5));
+            Assert.That(buffer.Count, Is.EqualTo(0));
         }
 
         [TestCaseSource(nameof(Buffers))]
@@ -67,8 +68,8 @@ namespace Fixtures.Sammlung.Collections.Queues
             foreach (var i in Enumerable.Range(1, 100))
             {
                 buffer.PushRight(i);
-                Assert.AreEqual(i, buffer.PeekRight());
-                Assert.AreEqual(1, buffer.PeekLeft());
+                Assert.That(buffer.PeekRight(), Is.EqualTo(i));
+                Assert.That(buffer.PeekLeft(), Is.EqualTo(1));
             }
         }
 
@@ -82,8 +83,8 @@ namespace Fixtures.Sammlung.Collections.Queues
             foreach (var i in Enumerable.Range(1, 100))
             {
                 buffer.PushLeft(i);
-                Assert.AreEqual(i, buffer.PeekLeft());
-                Assert.AreEqual(1, buffer.PeekRight());
+                Assert.That(buffer.PeekLeft(), Is.EqualTo(i));
+                Assert.That(buffer.PeekRight(), Is.EqualTo(1));
             }
         }
 
@@ -117,14 +118,14 @@ namespace Fixtures.Sammlung.Collections.Queues
                     list.Add(buffer.PopRight());
             }
 
-            Assert.AreEqual(15, buffer.PopRight());
-            Assert.AreEqual(16, buffer.PopRight());
+            Assert.That(buffer.PopRight(), Is.EqualTo(15));
+            Assert.That(buffer.PopRight(), Is.EqualTo(16));
 
             var expected = new[]
             {
                 1, 6, 2, 10, 3, 4, 18, 17, 5, 7, 8, 9, 22, 21, 20, 19, 11, 12, 24, 23, 13, 25, 14
             };
-            CollectionAssert.AreEqual(expected, list);
+            Assert.That(list, Is.EqualTo(expected).AsCollection);
         }
 
         [TestCaseSource(nameof(Buffers))]
@@ -133,9 +134,9 @@ namespace Fixtures.Sammlung.Collections.Queues
         {
             var capCtor = constructors.Item1;
             var buffer = capCtor(1);
-            Assert.IsFalse(buffer.TryPopRight(out _));
+            Assert.That(buffer.TryPopRight(out _), Is.False);
             Assert.Throws<InvalidOperationException>(() => buffer.PopRight());
-            Assert.IsFalse(buffer.TryPopLeft(out _));
+            Assert.That(buffer.TryPopLeft(out _), Is.False);
             Assert.Throws<InvalidOperationException>(() => buffer.PopLeft());
         }
 
@@ -149,8 +150,8 @@ namespace Fixtures.Sammlung.Collections.Queues
                 deque.PushLeft(i);
             for(var i = 0; i < 6; ++i)
                 deque.PopLeft();
-            
-            CollectionAssert.IsEmpty(deque);
+
+            Assert.That(deque, Is.Empty);
         }
 
         [TestCaseSource(nameof(NormalBuffers))]
@@ -170,8 +171,8 @@ namespace Fixtures.Sammlung.Collections.Queues
                 
                 deque.PushRight(i);
             }
-            
-            CollectionAssert.AreEqual(new[] {4, 2, 0, 1, 3, 5}, deque.ToArray());
+
+            Assert.That(deque.ToArray(), Is.EqualTo(new[] { 4, 2, 0, 1, 3, 5 }).AsCollection);
         }
 
         [TestCaseSource(nameof(NormalBuffers))]
@@ -184,13 +185,13 @@ namespace Fixtures.Sammlung.Collections.Queues
             for (var i = 0; i < 5; i++) deque.PushRight(i);
             deque.PopLeft();
 
-            CollectionAssert.AreEqual(new[] {1, 2, 3, 4}, deque.ToArray());
+            Assert.That(deque.ToArray(), Is.EqualTo(new[] { 1, 2, 3, 4 }).AsCollection);
 
             var result = new List<int>();
             var enumerator = ((System.Collections.IEnumerable) deque).GetEnumerator();
             // ReSharper disable once PossibleNullReferenceException
             while (enumerator.MoveNext()) result.Add((int) enumerator.Current);
-            CollectionAssert.AreEqual(new[] {1, 2, 3, 4}, result);
+            Assert.That(result, Is.EqualTo(new[] { 1, 2, 3, 4 }).AsCollection);
         }
 
         [Test]
@@ -210,8 +211,8 @@ namespace Fixtures.Sammlung.Collections.Queues
         {
             var array = Enumerable.Range(0, 10).ToArray();
             var deque = new ArrayDeque<int>(array, ConstructionDirection.LeftToRight);
-            
-            CollectionAssert.AreEqual(array, deque);
+
+            Assert.That(deque, Is.EqualTo(array).AsCollection);
         }
         
         [Test]
@@ -219,8 +220,8 @@ namespace Fixtures.Sammlung.Collections.Queues
         {
             var array = Enumerable.Range(0, 10).ToArray();
             var deque = new ArrayDeque<int>(array, ConstructionDirection.RightToLeft);
-            
-            CollectionAssert.AreEqual(array.Reverse(), deque);
+
+            Assert.That(deque, Is.EqualTo(array.Reverse()).AsCollection);
         }
         
         [Test]

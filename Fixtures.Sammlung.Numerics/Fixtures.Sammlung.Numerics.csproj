@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFrameworks>net48;netcoreapp3.1</TargetFrameworks>
-        <LangVersion>8.0</LangVersion>
+        <TargetFrameworks>net48;net8.0</TargetFrameworks>
         <SignAssembly>true</SignAssembly>
         <AssemblyOriginatorKeyFile>../Sammlung.snk</AssemblyOriginatorKeyFile>
     </PropertyGroup>
@@ -9,9 +8,13 @@
         <TextTemplateTransformAll>False</TextTemplateTransformAll>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="nunit" Version="3.12.0" />
-        <PackageReference Include="NUnit3TestAdapter" Version="3.15.1" />
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.4.0" />
+        <PackageReference Include="nunit" Version="4.2.1" />
+        <PackageReference Include="NUnit.Analyzers" Version="4.3.0">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="NUnit3TestAdapter" Version="4.6.0" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.0" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\Sammlung.Numerics\Sammlung.Numerics.csproj" />

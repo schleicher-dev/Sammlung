@@ -68,6 +68,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sammlung.DesignPatterns", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fixtures.Sammlung.DesignPatterns", "Fixtures.Sammlung.DesignPatterns\Fixtures.Sammlung.DesignPatterns.csproj", "{AAADF5B0-60BD-4C81-B1AE-A8E8FC94EE16}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sammlung.Functional", "Sammlung.Functional\Sammlung.Functional.csproj", "{E5BF4A0F-F478-4C11-A59D-CB59DF7F1AF5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fixtures.Sammlung.Functional", "Fixtures.Sammlung.Functional\Fixtures.Sammlung.Functional.csproj", "{8C7E1940-F1E7-4722-80F8-039F90A8999E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -178,6 +182,14 @@ Global
 		{AAADF5B0-60BD-4C81-B1AE-A8E8FC94EE16}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AAADF5B0-60BD-4C81-B1AE-A8E8FC94EE16}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AAADF5B0-60BD-4C81-B1AE-A8E8FC94EE16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5BF4A0F-F478-4C11-A59D-CB59DF7F1AF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5BF4A0F-F478-4C11-A59D-CB59DF7F1AF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5BF4A0F-F478-4C11-A59D-CB59DF7F1AF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5BF4A0F-F478-4C11-A59D-CB59DF7F1AF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C7E1940-F1E7-4722-80F8-039F90A8999E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C7E1940-F1E7-4722-80F8-039F90A8999E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C7E1940-F1E7-4722-80F8-039F90A8999E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C7E1940-F1E7-4722-80F8-039F90A8999E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B362AD2C-1685-4751-B49A-B216FFCDA7CA} = {A895D123-AB56-44D8-9206-B13C7ECB9583}
@@ -194,5 +206,6 @@ Global
 		{7DA866C7-D940-4054-923B-7183664F98E0} = {47493796-5056-46E3-9C0F-F8E08666BB52}
 		{D957F693-20DF-4FC1-8BA0-A2CC3ADEC89C} = {47493796-5056-46E3-9C0F-F8E08666BB52}
 		{AAADF5B0-60BD-4C81-B1AE-A8E8FC94EE16} = {47493796-5056-46E3-9C0F-F8E08666BB52}
+		{8C7E1940-F1E7-4722-80F8-039F90A8999E} = {47493796-5056-46E3-9C0F-F8E08666BB52}
 	EndGlobalSection
 EndGlobal

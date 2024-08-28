@@ -31,7 +31,7 @@ namespace Sammlung.Collections.Queues.Concurrent
         /// <inheritdoc />
         public int Count => _count;
 
-        private static Node<T> CreateNode(T value) => new Node<T>(value);
+        private static Node<T> CreateNode(T value) => new(value);
 
         private static bool CompareAndSwap<TPtr>(ref TPtr field, TPtr exchange, TPtr compare) where TPtr : class =>
             Interlocked.CompareExchange(ref field, exchange, compare) == compare;

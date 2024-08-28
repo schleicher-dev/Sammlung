@@ -1,7 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-
-namespace Sammlung.Pipes
+﻿namespace Sammlung.Pipes
 {
     /// <summary>
     /// The <see cref="IBiDiPipe{TSource,TTarget}"/> type defines a interface which describes a bidirectional

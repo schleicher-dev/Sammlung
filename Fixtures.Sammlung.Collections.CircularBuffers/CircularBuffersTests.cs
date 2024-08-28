@@ -6,17 +6,18 @@ using Sammlung.Collections.CircularBuffers;
 namespace Fixtures.Sammlung.Collections.CircularBuffers
 {
     [TestFixture]
+    [Parallelizable(ParallelScope.All)]
     [ExcludeFromCodeCoverage]
     public class CircularBuffersTests
     {
         private static void OffsetBufferBy(ICircularBuffer<byte> buffer, int offset)
         {
             var putItems = Enumerable.Range(0, offset).Select(i => (byte)i).ToArray();
-            Assert.IsTrue(buffer.TryPut(putItems));
+            Assert.That(buffer.TryPut(putItems), Is.True);
 
             var takeItems = new byte[offset];
-            Assert.IsTrue(buffer.TryTake(takeItems, 0, offset));
-            CollectionAssert.AreEqual(putItems, takeItems);
+            Assert.That(buffer.TryTake(takeItems, 0, offset), Is.True);
+            Assert.That(takeItems, Is.EqualTo(putItems).AsCollection);
         }
         
         [Test]
@@ -29,24 +30,24 @@ namespace Fixtures.Sammlung.Collections.CircularBuffers
             buffer = !blocking ? buffer : buffer.Wrap();
             
             OffsetBufferBy(buffer, offset);
-            Assert.AreEqual(0, buffer.Count);
+            Assert.That(buffer.Count, Is.EqualTo(0));
             
             for (byte i = 0; i < capacity + 5; ++i)
             {
                 if (i < capacity)
                 {
-                    Assert.IsTrue(buffer.TryPut(i));
+                    Assert.That(buffer.TryPut(i), Is.True);
                     continue;
                 }
-                
-                Assert.IsFalse(buffer.TryPut(i));
+
+                Assert.That(buffer.TryPut(i), Is.False);
             }
-            Assert.AreEqual(capacity, buffer.Count);
+            Assert.That(buffer.Count, Is.EqualTo(capacity));
 
             var items = new byte[capacity];
-            Assert.IsFalse(buffer.TryTake(items, 0, capacity + 1));
-            Assert.IsTrue(buffer.TryTake(items, 0, capacity));
-            CollectionAssert.AreEqual(Enumerable.Range(0, capacity).Select(i => (byte)i), items);
+            Assert.That(buffer.TryTake(items, 0, capacity + 1), Is.False);
+            Assert.That(buffer.TryTake(items, 0, capacity), Is.True);
+            Assert.That(items, Is.EqualTo(Enumerable.Range(0, capacity).Select(i => (byte)i)).AsCollection);
         }
 
         [Test]
@@ -55,24 +56,24 @@ namespace Fixtures.Sammlung.Collections.CircularBuffers
             const byte capacity = 12;
             ICircularBuffer<byte> buffer = new DynamicCircularBuffer<byte>(capacity);
             buffer = !blocking ? buffer : buffer.Wrap();
-            Assert.AreEqual(16, buffer.Capacity);
+            Assert.That(buffer.Capacity, Is.EqualTo(16));
             
             OffsetBufferBy(buffer, 12);
-            Assert.AreEqual(0, buffer.Count);
+            Assert.That(buffer.Count, Is.EqualTo(0));
             var residentItems = Enumerable.Range(0, 5).Select(i => (byte)i).ToArray();
-            Assert.IsTrue(buffer.TryPut(residentItems));
+            Assert.That(buffer.TryPut(residentItems), Is.True);
 
             var putItems = Enumerable.Range(5, 20).Select(i => (byte)i).ToArray();
-            Assert.IsTrue(buffer.TryPut(putItems));
+            Assert.That(buffer.TryPut(putItems), Is.True);
             
             var takeItems = new byte[25];
-            Assert.IsFalse(buffer.TryPeek(takeItems, 1, 25));
-            Assert.IsFalse(buffer.TryTake(takeItems, 1, 25));
-            
-            Assert.IsTrue(buffer.TryPeek(takeItems, 0, 25));
-            CollectionAssert.AreEqual(Enumerable.Range(0, 25).Select(i => (byte)i), takeItems);
-            Assert.IsTrue(buffer.TryTake(takeItems, 0, 25));
-            CollectionAssert.AreEqual(Enumerable.Range(0, 25).Select(i => (byte)i), takeItems);
+            Assert.That(buffer.TryPeek(takeItems, 1, 25), Is.False);
+            Assert.That(buffer.TryTake(takeItems, 1, 25), Is.False);
+
+            Assert.That(buffer.TryPeek(takeItems, 0, 25), Is.True);
+            Assert.That(takeItems, Is.EqualTo(Enumerable.Range(0, 25).Select(i => (byte)i)).AsCollection);
+            Assert.That(buffer.TryTake(takeItems, 0, 25), Is.True);
+            Assert.That(takeItems, Is.EqualTo(Enumerable.Range(0, 25).Select(i => (byte)i)).AsCollection);
         }
     }
 }

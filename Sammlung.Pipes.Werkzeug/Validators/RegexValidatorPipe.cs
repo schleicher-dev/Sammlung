@@ -1,4 +1,3 @@
-using System;
 using System.Text.RegularExpressions;
 using Sammlung.Pipes.Werkzeug.Exceptions;
 using Sammlung.Pipes.Werkzeug.Resources;

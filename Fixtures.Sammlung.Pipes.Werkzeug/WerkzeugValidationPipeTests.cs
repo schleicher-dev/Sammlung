@@ -9,14 +9,15 @@ using Sammlung.Pipes.Werkzeug.Validators;
 
 namespace Fixtures.Sammlung.Pipes.Werkzeug
 {
-    [ExcludeFromCodeCoverage]
     [TestFixture]
+    [Parallelizable(ParallelScope.All)]
+    [ExcludeFromCodeCoverage]
     [SetCulture("")]
     public class WerkzeugValidationPipeTests
     {
         private static IEnumerable<Interval<double>> CreateIntervals(IReadOnlyList<double> ranges)
         {
-            Assert.AreEqual(0, ranges.Count % 2, "Ranges should come in pairs. In this case they are not.");
+            Assert.That(ranges.Count % 2, Is.EqualTo(0), "Ranges should come in pairs. In this case they are not.");
             for (var i = 0; i < ranges.Count; i += 2)
             {
                 yield return Interval.CreateWithInclusiveBounds(ranges[i], ranges[i + 1]);
@@ -55,7 +56,7 @@ namespace Fixtures.Sammlung.Pipes.Werkzeug
             var regex = new Regex(regularExpr);
             var pipe = new RegexValidatorPipe(regex);
 
-            CollectionAssert.IsNotEmpty(matchCandidates);
+            Assert.That(matchCandidates, Is.Not.Empty);
             foreach (var matchCandidate in matchCandidates)
                 Assert.DoesNotThrow(() => pipe.ProcessForward(matchCandidate));
         }
@@ -66,7 +67,7 @@ namespace Fixtures.Sammlung.Pipes.Werkzeug
             var regex = new Regex(regularExpr);
             var pipe = new RegexValidatorPipe(regex);
 
-            CollectionAssert.IsNotEmpty(matchCandidates);
+            Assert.That(matchCandidates, Is.Not.Empty);
             foreach (var matchCandidate in matchCandidates)
                 Assert.Throws<PipelineValidationException>(() => pipe.ProcessForward(matchCandidate));
         }

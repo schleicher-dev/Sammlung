@@ -5,7 +5,9 @@ using Sammlung.Graphs;
 
 namespace Fixtures.Sammlung.Graphs
 {
-    [TestFixture, ExcludeFromCodeCoverage]
+    [TestFixture]
+    [Parallelizable(ParallelScope.All)]
+    [ExcludeFromCodeCoverage]
     public class GraphTests
     {
         [Test]
@@ -18,7 +20,7 @@ namespace Fixtures.Sammlung.Graphs
             graph.AddEdge(4, 5);
             graph.AddEdge(5, 6);
             graph.AddEdge(6, 7);
-            
+
             var expectedEdges = new List<IEdge<int, int>>
             {
                 new Edge<int, int>(1, 2, 1),
@@ -28,11 +30,11 @@ namespace Fixtures.Sammlung.Graphs
                 new Edge<int, int>(5, 6, 1),
                 new Edge<int, int>(6, 7, 1)
             };
-            
-            CollectionAssert.AreEquivalent(expectedEdges, graph.Edges);
+
+            Assert.That(graph.Edges, Is.EquivalentTo(expectedEdges));
 
             var copyGraph = new DiGraph<int, int>(graph);
-            CollectionAssert.AreEquivalent(expectedEdges, copyGraph.Edges);
+            Assert.That(copyGraph.Edges, Is.EquivalentTo(expectedEdges));
         }
 
         [Test]
@@ -49,50 +51,53 @@ namespace Fixtures.Sammlung.Graphs
             graph.AddEdge(3, 1);
             graph.AddEdge(1, 3);
 
-            CollectionAssert.AreEquivalent(new List<IEdge<int, int>>
+            Assert.Multiple(() =>
             {
-                new Edge<int, int>(1, 1, 1),
-                new Edge<int, int>(2, 1, 1),
-                new Edge<int, int>(3, 1, 1)
-            }, graph.GetIncomingEdges(1));
+                Assert.That(graph.GetIncomingEdges(1), Is.EquivalentTo(new List<IEdge<int, int>>
+                {
+                    new Edge<int, int>(1, 1, 1),
+                    new Edge<int, int>(2, 1, 1),
+                    new Edge<int, int>(3, 1, 1)
+                }));
 
-            CollectionAssert.AreEquivalent(new List<IEdge<int, int>>
-            {
-                new Edge<int, int>(1, 1, 1),
-                new Edge<int, int>(1, 2, 1),
-                new Edge<int, int>(1, 3, 1)
-            }, graph.GetOutgoingEdges(1));
+                Assert.That(graph.GetOutgoingEdges(1), Is.EquivalentTo(new List<IEdge<int, int>>
+                {
+                    new Edge<int, int>(1, 1, 1),
+                    new Edge<int, int>(1, 2, 1),
+                    new Edge<int, int>(1, 3, 1)
+                }));
 
-            CollectionAssert.AreEquivalent(new List<IEdge<int, int>>
-            {
-                new Edge<int, int>(1, 2, 1),
-                new Edge<int, int>(2, 2, 1),
-                new Edge<int, int>(3, 2, 1)
-            }, graph.GetIncomingEdges(2));
+                Assert.That(graph.GetIncomingEdges(2), Is.EquivalentTo(new List<IEdge<int, int>>
+                {
+                    new Edge<int, int>(1, 2, 1),
+                    new Edge<int, int>(2, 2, 1),
+                    new Edge<int, int>(3, 2, 1)
+                }));
 
-            CollectionAssert.AreEquivalent(new List<IEdge<int, int>>
-            {
-                new Edge<int, int>(2, 1, 1),
-                new Edge<int, int>(2, 2, 1),
-                new Edge<int, int>(2, 3, 1)
-            }, graph.GetOutgoingEdges(2));
-            
-            CollectionAssert.AreEquivalent(new List<IEdge<int, int>>
-            {
-                new Edge<int, int>(1, 3, 1),
-                new Edge<int, int>(2, 3, 1),
-                new Edge<int, int>(3, 3, 1)
-            }, graph.GetIncomingEdges(3));
+                Assert.That(graph.GetOutgoingEdges(2), Is.EquivalentTo(new List<IEdge<int, int>>
+                {
+                    new Edge<int, int>(2, 1, 1),
+                    new Edge<int, int>(2, 2, 1),
+                    new Edge<int, int>(2, 3, 1)
+                }));
 
-            CollectionAssert.AreEquivalent(new List<IEdge<int, int>>
-            {
-                new Edge<int, int>(3, 1, 1),
-                new Edge<int, int>(3, 2, 1),
-                new Edge<int, int>(3, 3, 1)
-            }, graph.GetOutgoingEdges(3));
-            
-            Assert.IsTrue(graph.HasEdge(3, 1));
-            Assert.IsFalse(graph.HasEdge(4, 2));
+                Assert.That(graph.GetIncomingEdges(3), Is.EquivalentTo(new List<IEdge<int, int>>
+                {
+                    new Edge<int, int>(1, 3, 1),
+                    new Edge<int, int>(2, 3, 1),
+                    new Edge<int, int>(3, 3, 1)
+                }));
+
+                Assert.That(graph.GetOutgoingEdges(3), Is.EquivalentTo(new List<IEdge<int, int>>
+                {
+                    new Edge<int, int>(3, 1, 1),
+                    new Edge<int, int>(3, 2, 1),
+                    new Edge<int, int>(3, 3, 1)
+                }));
+
+                Assert.That(graph.HasEdge(3, 1), Is.True);
+                Assert.That(graph.HasEdge(4, 2), Is.False);
+            });
         }
 
         [Test]
@@ -106,16 +111,19 @@ namespace Fixtures.Sammlung.Graphs
             graph.AddEdge(5, 6);
             graph.AddEdge(6, 7);
             graph.AddVertex(99);
-            
-            Assert.IsTrue(graph.HasVertex(1));
-            Assert.IsTrue(graph.HasVertex(2));
-            Assert.IsTrue(graph.HasVertex(3));
-            Assert.IsTrue(graph.HasVertex(4));
-            Assert.IsTrue(graph.HasVertex(5));
-            Assert.IsTrue(graph.HasVertex(6));
-            Assert.IsTrue(graph.HasVertex(7));
-            Assert.IsTrue(graph.HasVertex(99));
-            Assert.IsFalse(graph.HasVertex(8));
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(graph.HasVertex(1), Is.True);
+                Assert.That(graph.HasVertex(2), Is.True);
+                Assert.That(graph.HasVertex(3), Is.True);
+                Assert.That(graph.HasVertex(4), Is.True);
+                Assert.That(graph.HasVertex(5), Is.True);
+                Assert.That(graph.HasVertex(6), Is.True);
+                Assert.That(graph.HasVertex(7), Is.True);
+                Assert.That(graph.HasVertex(99), Is.True);
+                Assert.That(graph.HasVertex(8), Is.False);
+            });
         }
 
         [Test]
@@ -124,25 +132,28 @@ namespace Fixtures.Sammlung.Graphs
             var edgeA = new Edge<int, int>(1, 2, 3);
             var edgeB = new Edge<int, int>(1, 2, 3);
             var edgeC = new Edge<int, int>(1, 2, 4);
-            
-            Assert.IsTrue(edgeA.Equals(edgeA));
-            Assert.IsTrue(edgeA.Equals(edgeB));
-            Assert.IsFalse(edgeA.Equals(edgeC));
-            Assert.IsFalse(edgeA.Equals(null));
-            
-            Assert.IsTrue(edgeA.Equals((object) edgeA));
-            Assert.IsTrue(edgeA.Equals((object) edgeB));
-            Assert.IsFalse(edgeA.Equals((object) edgeC));
-            Assert.IsFalse(edgeA.Equals(default(object)));
-            // ReSharper disable once SuspiciousTypeConversion.Global
-            Assert.IsFalse(edgeA.Equals("A"));
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(edgeA.Equals(edgeA), Is.True);
+                Assert.That(edgeA.Equals(edgeB), Is.True);
+                Assert.That(edgeA.Equals(edgeC), Is.False);
+                Assert.That(edgeA.Equals(null), Is.False);
+
+                Assert.That(edgeA.Equals((object)edgeA), Is.True);
+                Assert.That(edgeA.Equals((object)edgeB), Is.True);
+                Assert.That(edgeA.Equals((object)edgeC), Is.False);
+                Assert.That(edgeA.Equals(default(object)), Is.False);
+                // ReSharper disable once SuspiciousTypeConversion.Global
+                Assert.That(edgeA.Equals("A"), Is.False);
+            });
         }
 
         [Test]
         public void ToStringComparison()
         {
             var edgeA = new Edge<int, int>(1, 2, 3);
-            Assert.AreEqual("Sammlung.Graphs.Edge`2[Source=1, Target=2, Weight=3]", edgeA.ToString());
+            Assert.That(edgeA.ToString(), Is.EqualTo("Sammlung.Graphs.Edge`2[Source=1, Target=2, Weight=3]"));
         }
     }
 }

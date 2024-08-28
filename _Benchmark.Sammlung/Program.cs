@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Reflection.Emit;
 using BenchmarkDotNet.Running;
 
 namespace _Benchmark.Sammlung

@@ -20,7 +20,7 @@ namespace Sammlung.Numerics
         /// <typeparam name="T">the number type</typeparam>
         /// <returns>the interval</returns>
         public static Interval<T> Create<T>(Bound<T> lower, Bound<T> upper)
-            where T : IComparable<T> => new Interval<T>(lower, upper);
+            where T : IComparable<T> => new(lower, upper);
         
         /// <summary>
         /// Creates an <see cref="Interval{T}"/> with both passed values interpreted as inclusive bounds.
