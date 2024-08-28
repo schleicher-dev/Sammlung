@@ -8,13 +8,13 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Setup MSBuild
-        uses: microsoft/setup-msbuild@v1
+        uses: microsoft/setup-msbuild@v2
       - name: Setup NuGet
-        uses: NuGet/setup-nuget@v1.0.5
+        uses: NuGet/setup-nuget@v2
       - name: Restore NuGet Packages
         run: nuget restore Sammlung.sln
       - name: Build
@@ -24,7 +24,7 @@ jobs:
       - name: Package
         run: msbuild -t:Pack -p:Configuration=Release -p:PackageOutputPath=${env:GITHUB_WORKSPACE}/.artifacts
       - name: Uploading package artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: artifacts
           path: .artifacts/
@@ -34,7 +34,7 @@ jobs:
     if: ${{ success() && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/develop') }}
     steps:
       - name: Download package artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: artifacts
           path: .artifacts/
